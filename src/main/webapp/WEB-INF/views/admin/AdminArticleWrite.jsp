@@ -136,7 +136,6 @@
 <script type="text/javascript">
 
     function add_textbox() {
-        /*아직 뭐 안함*/
     }
 
 
