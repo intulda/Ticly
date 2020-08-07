@@ -1,0 +1,9 @@
+${AnsiColor.BRIGHT_RED}   *     (        )           (              (                *                )  (           (
+${AnsiColor.BRIGHT_RED} (  `    )\ )  ( /(   *   )   )\ )    (      )\ )    (      (  `     (      ( /(  )\ )        )\ )
+${AnsiColor.BRIGHT_RED} )\))(  (()/(  )\())` )  /(  (()/(    )\    (()/(    )\     )\))(    )\     )\())(()/(   (   (()/(
+${AnsiColor.BRIGHT_RED}((_)()\  /(_))((_)\  ( )(_))  /(_))((((_)(   /(_))((((_)(  ((_)()\((((_)(  ((_)\  /(_))  )\   /(_))
+${AnsiColor.BRIGHT_RED}(_()((_)(_))   _((_)(_(_())  (_))   )\ _ )\ (_))   )\ _ )\ (_()((_))\ _ )\  _((_)(_))_  ((_) (_))
+${AnsiColor.BRIGHT_CYAN}|  \/  ||_ _| | \| ||_   _|  / __|  ${AnsiColor.BRIGHT_RED}(_)${AnsiColor.BRIGHT_CYAN}_\${AnsiColor.BRIGHT_RED}(_)${AnsiColor.BRIGHT_CYAN}| |    ${AnsiColor.BRIGHT_RED}(_)${AnsiColor.BRIGHT_CYAN}_\${AnsiColor.BRIGHT_RED}(_)${AnsiColor.BRIGHT_CYAN}|  \/  |${AnsiColor.BRIGHT_RED}(_)${AnsiColor.BRIGHT_CYAN}_\${AnsiColor.BRIGHT_RED}(_)${AnsiColor.BRIGHT_CYAN}| \| | |   \ | __|| _ \
+${AnsiColor.BRIGHT_CYAN}| |\/| | | |  | .` |  | |    \__ \   / _ \  | |__   / _ \  | |\/| | / _ \  | .` | | |) || _| |   /
+${AnsiColor.BRIGHT_CYAN}|_|  |_||___| |_|\_|  |_|    |___/  /_/ \_\ |____| /_/ \_\ |_|  |_|/_/ \_\ |_|\_| |___/ |___||_|_\
+${AnsiColor.BRIGHT_GREEN}SPRING VERSION::${AnsiColor.BRIGHT_RED}${spring-boot.version}${AnsiColor.WHITE}
