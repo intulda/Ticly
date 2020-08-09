@@ -1,5 +1,6 @@
 package io.ticly.mint.member;
 
+import io.ticly.mint.member.dto.MemberDTO;
 import io.ticly.mint.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +24,22 @@ public class MemberController {
     }
 
 
-    @RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
+    @PostMapping("/emailCheck")
     @ResponseBody
     public int checkEmail(@RequestParam(value = "email") String userEmail) throws Exception {
         //서비스 측에 요청
         int result = memberService.isDuplicateEmail(userEmail);
 
         return result; //1이면 중복, 0이면 중복 아님
+    }
+
+    @PostMapping("/member/signup")
+    @ResponseBody
+    public int memberSignup(@RequestBody MemberDTO memberDTO) throws Exception {
+        System.out.println("memberDTO"+memberDTO);
+        int checkNum = 0;
+        checkNum = memberService.memberSignup(memberDTO);
+
+        return checkNum; //1이면 데이터 입력 성공
     }
 }

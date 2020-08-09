@@ -3,9 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
+    <!-- ///////////////////// 회원가입 로직 ///////////////////// -->
+    <!-- 이메일 중복확인 SQL -->
     <select id="checkEmail" resultType="int">
         SELECT COUNT(*)
         FROM MEMBER
         WHERE EMAIL = #{email}
     </select>
+
+    <!-- 회원 등록 SQL -->
+    <insert id="signup">
+		insert into MEMBER(EMAIL, PASSWORD)
+		values(#{email}, #{password})
+	</insert>
 </mapper>

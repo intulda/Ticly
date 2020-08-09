@@ -1,6 +1,7 @@
 package io.ticly.mint.member.service;
 
 import io.ticly.mint.member.dao.MemberDAO;
+import io.ticly.mint.member.dto.MemberDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,4 +18,10 @@ public class MemberService {
         int result = memberDAO.isDuplicateEmail(email);
         return result;
     }
+
+    //가입정보 저장
+    public int memberSignup(MemberDTO memberDTO){
+        return memberDAO.signup(memberDTO);
+    }
+
 }

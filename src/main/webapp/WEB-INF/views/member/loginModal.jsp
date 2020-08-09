@@ -46,7 +46,7 @@
                     </div>
                 </form>
                 <footer class="modal-footer">
-                    <button id="signupBtn" class="button">회원가입</button>
+                    <button id="signupSubmitBtn" class="button">회원가입</button>
                 </footer>
             </div>
         </div>
@@ -62,6 +62,8 @@
 
             let signupPasswordElem1 = document.querySelector('#signup-password');
             let signupPasswordElem2 = document.querySelector('#signup-password-confirm');
+
+            let signupSubmitBtn = document.querySelector('#signupSubmitBtn');
 
             let errorLabelElem = document.querySelectorAll('.validation-message');
 
@@ -145,9 +147,50 @@
                 }
             }
 
+            const onSignupHandler  = () => {
+                alert("클릭이벤트")
+                if(signupEmailCheck){
+                    const email = signupEmailElem.value;
+                    const password = signupPasswordElem1.value;
+                    console.log("값 확인 :"+email + password);
+
+
+                    //json객체에 담기
+                    const member={
+                        email : email,
+                        password : password
+                    };
+
+                    axios({
+
+                        method: 'post',
+                        url: '/member/signup',
+                        headers: { 'content-type': 'application/json' },
+                        data : JSON.stringify(member)
+                        /*
+                        params: {
+                            email : email,
+                            password : password
+                        }*/
+                    })
+                        .then(function (result){
+                            alert("전송 성공"+result.data);
+                            if(result.data == "1"){
+                                alert("회원가입이 완료되었습니다.");
+                            } else {
+                                alert("회원가입에 실패했습니다.");
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            }
+
             signupEmailElem.addEventListener('blur', onSignupEmailCheck);
             signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
             signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
+            signupSubmitBtn.addEventListener("click", onSignupHandler);
 
         })();
     </script>
