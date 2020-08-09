@@ -15,7 +15,6 @@ public class MemberService {
     //이메일 중복확인 처리
     public int isDuplicateEmail(String email) throws Exception {
         int result = memberDAO.isDuplicateEmail(email);
-        System.out.println("MemberService result:" + result);
         return result;
     }
 }

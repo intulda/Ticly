@@ -15,7 +15,6 @@ public class MemberDAO {
 
     public int isDuplicateEmail(String email) throws Exception{
         int result = sqlSessionTemplate.selectOne("memberMapper.checkEmail", email);
-        System.out.println("MemberDao result:" + result);
         return result;
     }
 }
