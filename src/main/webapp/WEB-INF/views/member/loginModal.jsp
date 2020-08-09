@@ -66,6 +66,8 @@
             let errorLabelElem = document.querySelectorAll('.validation-message');
 
             let signupEmailCheck = false;
+            let signupPasswordCheck = false;
+
 
 
             const isEmail = (asValue) => {
@@ -74,8 +76,16 @@
             };
 
             const isJobPassword = (asValue) => {
-                const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$/; //  8자 이상, 숫자 조합
-                return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
+                const checkNumber = asValue.search(/[0-9]/g);
+                const checkEnglish = asValue.search(/[a-z]/ig);
+                if(checkNumber <0 || checkEnglish <0){
+                    //숫자와 영문을 혼용하지 않은 경우
+                    return false;
+                }else{
+                    return true;
+                }
+            //    const regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,}$/; //  8자 이상, 숫자 조합
+                //   return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
             };
 
             const onSignupEmailCheck = () => {
@@ -99,7 +109,7 @@
                                 signupEmailCheck = true;
                             } else if(response.data==1){
                                 errorLabelElem[0].innerText = '이미 사용 중인 이메일입니다.'
-                                signupEmailCheck = true;
+                                signupEmailCheck = false;
                             }
                         })
                         .catch(function (error) {
@@ -107,8 +117,24 @@
                         });
                 }
             }
+            const onSignupPasswordCheck = () => {
+                if(signupPasswordElem1.value.trim()==""){
+                    errorLabelElem[1].innerText = '비밀번호를 입력해주세요';
+                    return;
+                } else if(signupPasswordElem1.value.length<8) {
+                    errorLabelElem[1].innerText = '8자 이상의 비밀번호를 입력하세요';
+                    return;
+                } else if(!isJobPassword(signupPasswordElem1.value)) {
+                    errorLabelElem[1].innerText = '숫자와 영문자를 혼용하여야 합니다.';
+                    return;
+                } else {
+                    errorLabelElem[1].innerText = '';
+                    signupPasswordCheck = true;
+                }
+            }
 
             signupEmailElem.addEventListener('blur', onSignupEmailCheck);
+            signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
 
         })();
     </script>
