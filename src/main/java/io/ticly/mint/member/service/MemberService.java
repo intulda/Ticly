@@ -21,7 +21,14 @@ public class MemberService {
 
     //가입정보 저장
     public int memberSignup(MemberDTO memberDTO){
+
+        //닉네임 가져오기
+        String email = memberDTO.getEmail();
+        int nicknamePoint = email.indexOf("@");
+        String nickname = email.substring(0,nicknamePoint);
+        memberDTO.setNickname(nickname);
+
+        //Dao로 넘기기
         return memberDAO.signup(memberDTO);
     }
-
 }

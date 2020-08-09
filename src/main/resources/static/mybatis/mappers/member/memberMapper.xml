@@ -13,7 +13,7 @@
 
     <!-- 회원 등록 SQL -->
     <insert id="signup">
-		insert into MEMBER(EMAIL, PASSWORD)
-		values(#{email}, #{password})
+		insert into MEMBER(EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE)
+		values(#{email}, #{password}, #{nickname}, 3, 'EMAIL')
 	</insert>
 </mapper>

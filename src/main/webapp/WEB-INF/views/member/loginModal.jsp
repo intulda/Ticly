@@ -148,12 +148,9 @@
             }
 
             const onSignupHandler  = () => {
-                alert("클릭이벤트")
                 if(signupEmailCheck){
                     const email = signupEmailElem.value;
                     const password = signupPasswordElem1.value;
-                    console.log("값 확인 :"+email + password);
-
 
                     //json객체에 담기
                     const member={
@@ -174,7 +171,6 @@
                         }*/
                     })
                         .then(function (result){
-                            alert("전송 성공"+result.data);
                             if(result.data == "1"){
                                 alert("회원가입이 완료되었습니다.");
                             } else {
