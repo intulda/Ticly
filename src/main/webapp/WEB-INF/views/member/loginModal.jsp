@@ -67,8 +67,7 @@
 
             let signupEmailCheck = false;
             let signupPasswordCheck = false;
-
-
+            let signupPasswordCompare = false;
 
             const isEmail = (asValue) => {
                 const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -133,8 +132,22 @@
                 }
             }
 
+            const onSignupPasswordCompare = () => {
+                if(signupPasswordElem2.value.trim()===""){
+                    errorLabelElem[2].innerText = '필수 정보입니다.';
+                    return;
+                } else if(signupPasswordElem2.value.trim() !== signupPasswordElem1.value.trim()) {
+                    errorLabelElem[2].innerText = '비밀번호가 일치하지 않습니다.';
+                    return;
+                } else if(signupPasswordElem2.value.trim() === signupPasswordElem1.value.trim()) {
+                    errorLabelElem[2].innerText = '';
+                    signupPasswordCompare = true;
+                }
+            }
+
             signupEmailElem.addEventListener('blur', onSignupEmailCheck);
             signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
+            signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
 
         })();
     </script>
