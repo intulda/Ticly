@@ -3,9 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="articleBoardDAO">
-    <select id="getMember" resultType="ArticleBoardDTO">
+    <!-- @parm String : category -->
+    <select id="getArticleInfo" parameterType="String" resultType="List">
         SELECT
             *
-        FROM MEMBER
+        FROM ARTICLE
+        ORDER BY REG_DATE
     </select>
 </mapper>

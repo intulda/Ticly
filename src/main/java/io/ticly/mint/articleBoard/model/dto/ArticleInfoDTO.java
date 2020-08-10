@@ -16,4 +16,8 @@ public class ArticleInfoDTO {
     private int file_seq;
     private String url;
     private String hashtag;
+    private String category_seq;
+    private String reg_date;
+    private int del;
+
 }
