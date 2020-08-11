@@ -24,15 +24,7 @@
   position: relative;
   border-radius: 30px;
 }
-/*
-input {
-  margin: 15px auto;
-  display: block;
-  width: 50%;
-  padding: 8px;
-  border: 1px solid gray;
-}
-*/
+
 .close {
   position: absolute;
   top: 0;
@@ -54,21 +46,8 @@ input {
 .login-modal-header{
   text-align: center; 
 }
-/*
-.modal-header-title{
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.4px;
-  line-height: 40px;
-}*/
 
 .modal-header-content{
-/*  color: #858899;
-  font-size: 18px;
-  letter-spacing: -0.11px;
-  line-height: 28px;
-
-  margin-bottom: 0px;*/
   margin-top: 12px;
 }
 
@@ -78,7 +57,6 @@ input {
   line-height: 28px;
 }
 
-
 .login-input-group{
   margin-bottom: 16px;
 }
@@ -87,23 +65,22 @@ input {
   margin-bottom: 4px;
 }
 
-
 .required-label{
   color : #FA5F6E;
 }
-/*
-.login-input-group .form-control{
-  letter-spacing: -0.1px;
-  line-height: 24px;
-  padding: 8px 16px;
+
+/*유효성 검사 텍스트*/
+.signup-validation-message{
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
 }
 
-
-.login-input-group .form-control::placeholder{
+.validation-info-icon{
   color: #858899;
-  line-height: 24px;
-  margin-bottom: 1px;
-} */
+  font-size: 14px;
+  padding-right: 3px;
+}
 
 .submitButton {
   background-color: #00A881;
@@ -115,18 +92,11 @@ input {
   margin-top: 24px;
   display: inline-block;
 }
-/*
-.submitButton:hover {
-   background-color: white;
-   color: #00A881;
-   border: 2px solid #00A881;
-}
-*/
+
 /*로그인 메인*/
 .main-login-form{
   text-align: center;
   padding: 96px 50px;
-/*  height: 308px;*/
 }
 
 .login-button-wrapper{
@@ -165,7 +135,6 @@ input {
 /*회원가입*/
 .email-singup-form{
   padding: 60px 50px;
-/*  height: 308px;*/
 }
 
 .signup-content-wrapper{
@@ -199,7 +168,7 @@ input {
   cursor: pointer;
 }
 
-#signupSubmitBt{
+.signup-content-wrapper button{
   height: 60px;
   width: 330px;
 }
