@@ -1,0 +1,44 @@
+/* Intro */
+.rectangle {
+    display: flex;
+    height: 1080px;
+    width: 1920px;
+    opacity: 0.98;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.mask {
+    margin-left: 470px;
+    margin-top: 220px;
+    height: 640px;
+    width: 980px;
+    border-radius: 30px;
+    background-color: #257FF9;
+    display: flex;
+    flex-direction: column;
+}
+
+.intro_img {
+    height: 366px;
+    width: 775px;
+    margin-left: 145px;
+}
+
+#intro_word {
+    margin-top: 50px;
+    margin-left: 60px;
+}
+
+#intro_word2 {
+    margin-top: 8px;
+    margin-left: 60px;
+}
+
+.trendSearchColor {
+    color: #FEE273;
+}
+
+.englishStudyColor {
+    color: #FABAA6;
+}
+
