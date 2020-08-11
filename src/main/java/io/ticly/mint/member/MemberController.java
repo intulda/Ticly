@@ -23,6 +23,11 @@ public class MemberController {
         return "member/loginModal";
     }
 
+    @GetMapping("/modal")
+    public String showModal() throws Exception {
+        return "member/signInUp";
+    }
+
 
     @PostMapping("/emailCheck")
     @ResponseBody
@@ -36,7 +41,6 @@ public class MemberController {
     @PostMapping("/member/signup")
     @ResponseBody
     public int memberSignup(@RequestBody MemberDTO memberDTO) throws Exception {
-        System.out.println("memberDTO"+memberDTO);
         int checkNum = 0;
         checkNum = memberService.memberSignup(memberDTO);
 

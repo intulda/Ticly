@@ -1,0 +1,205 @@
+*{
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box; 
+ font-family: "Noto Sans CJK KR";
+}
+
+
+/* MODAL STARTS */
+.signinup-modal {
+  background-color: rgba(0, 0, 0, 0.8); 
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.signinup-modal-contents{
+  width: 500px;
+  background-color: white;
+  position: relative;
+  border-radius: 30px;
+}
+/*
+input {
+  margin: 15px auto;
+  display: block;
+  width: 50%;
+  padding: 8px;
+  border: 1px solid gray;
+}
+*/
+.close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 42px;
+  color: #333;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+.close:hover {
+  color: #666;
+}
+
+.hidden{
+  display: none;
+}
+
+/*공통*/
+.login-modal-header{
+  text-align: center; 
+}
+/*
+.modal-header-title{
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  line-height: 40px;
+}*/
+
+.modal-header-content{
+/*  color: #858899;
+  font-size: 18px;
+  letter-spacing: -0.11px;
+  line-height: 28px;
+
+  margin-bottom: 0px;*/
+  margin-top: 12px;
+}
+
+.login-modal-footer{
+  display: flex;
+  justify-content: center;
+  line-height: 28px;
+}
+
+
+.login-input-group{
+  margin-bottom: 16px;
+}
+
+.login-label-title{
+  margin-bottom: 4px;
+}
+
+
+.required-label{
+  color : #FA5F6E;
+}
+/*
+.login-input-group .form-control{
+  letter-spacing: -0.1px;
+  line-height: 24px;
+  padding: 8px 16px;
+}
+
+
+.login-input-group .form-control::placeholder{
+  color: #858899;
+  line-height: 24px;
+  margin-bottom: 1px;
+} */
+
+.submitButton {
+  background-color: #00A881;
+  border: 2px solid white;
+  border-radius: 3px;
+  text-decoration: none;
+  padding: 10px 28px;
+  color: white;
+  margin-top: 24px;
+  display: inline-block;
+}
+/*
+.submitButton:hover {
+   background-color: white;
+   color: #00A881;
+   border: 2px solid #00A881;
+}
+*/
+/*로그인 메인*/
+.main-login-form{
+  text-align: center;
+  padding: 96px 50px;
+/*  height: 308px;*/
+}
+
+.login-button-wrapper{
+  padding: 32px 50px;
+}
+
+.login-button{
+  display: block;
+  border-radius: 3px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+
+}
+
+.naver-login-button{
+  color : white;
+  background-color: #5AC452;
+  border: 1px solid #5AC452;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.email-login-button{
+  color: #2B2D36;
+  background-color: rgba(205,206,214,0.08);
+  border: 1px solid #CDCED6;
+  cursor: pointer;
+}
+
+.login-modal-footer-gosignup{
+  padding-left: 8px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/*회원가입*/
+.email-singup-form{
+  padding: 60px 50px;
+/*  height: 308px;*/
+}
+
+.signup-content-wrapper{
+  margin-top: 24px;
+  padding: 0 35px;
+}
+
+.agreements{
+  color: #525463;
+  font-size: 14px;
+  letter-spacing: -0.1px;
+  line-height: 24px;
+}
+
+.agreement-list{
+  display: flex;
+  align-items : baseline;
+}
+
+.agreement-list:nth-child(1){
+  margin-bottom: 8px;
+}
+
+.agreement-list input[type=checkbox]{
+  margin-right: 8px;
+}
+
+.agreement-list label a{
+  color: #525463;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#signupSubmitBt{
+  height: 60px;
+  width: 330px;
+}
