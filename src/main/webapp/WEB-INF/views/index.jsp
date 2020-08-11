@@ -9,10 +9,26 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/fonticon.css">
 </head>
 <body>
-    <h1>들어왔니</h1>
-    <button>getMember</button>
+    <%--부트스트랩 테스트--%>
+    <h1 class="text text-color-green text-weight-bold">들어왔니</h1>
+    <h1 class="text text-color-gray100 text-weight-light">들어왔니</h1>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+    </div>
+    <button class="btn btn-primary btn-lg">getMember</button>
+    <br>
+    <br>
+    <input type="text" class="form-control " placeholder="안녕하세요!">
+    <input type="text" class="form-control form-control-lg " placeholder="안녕하세요!">
+    <i class="icon_close"></i>
+    <i class="icon_translate"></i>
+    <i class="icon_check_circle"></i>
 <script>
     (()=>{
         const getMemberBtn = document.querySelector('button');
