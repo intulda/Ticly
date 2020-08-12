@@ -131,9 +131,13 @@
   text-decoration: underline;
   cursor: pointer;
 }
+/*이메일로 로그인*/
+.email-signin-form{
+  padding: 60px 50px;
+}
 
 /*회원가입*/
-.email-singup-form{
+.email-signup-form{
   padding: 60px 50px;
 }
 
