@@ -1,7 +1,4 @@
 
-
-/*/////////////이메일로 회원가입(signup)///////////////////////*/
-
 let signupEmailElem = document.querySelector('#signup-email');  //이메일
 let signupPasswordElem1 = document.querySelector('#signup-password');   //비밀번호
 let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
@@ -18,7 +15,7 @@ let signupPasswordCompare = false;  //회원가입시, 패스워드 확인의 �
 let acceptTermCheck = false; //회원가입시, 약관 동의 여부를 체크한다.
 
 //이메일 정규식 확인 함수
-const isEmail = (asValue) => {
+function isEmail (asValue){
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
 };
@@ -51,7 +48,6 @@ const onSignupEmailCheck = () => {
         errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일을 입력해주세요.</p>';
     } else if(!isEmail(signupEmailElem.value)) {
         errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일 형식에 맞게 입력해주세요.</p>';
-        return;
     } else {
         axios({
             method: 'post',
@@ -137,7 +133,6 @@ const onSignupHandler  = () => {
             password : password
         };
         axios({
-
             method: 'post',
             url: '/member/signup',
             headers: { 'content-type': 'application/json' },
