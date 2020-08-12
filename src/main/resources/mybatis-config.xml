@@ -5,5 +5,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="io.ticly.mint.login.model.dto.LoginDTO" alias="LoginDTO"/>
+        <typeAlias type="io.ticly.mint.admin.model.dto.ArticleDTO" alias="ArticleDTO"/>
     </typeAliases>
 </configuration>
