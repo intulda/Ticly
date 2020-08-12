@@ -13,14 +13,32 @@ public class MemberService {
         this.memberDAO = memberDAO;
     }
 
-    //이메일 중복확인 처리
-    public int isDuplicateEmail(String email) throws Exception {
-        int result = memberDAO.isDuplicateEmail(email);
+    /**
+     * 로그인시 가입여부 확인
+     * @param memberDTO
+     * @return 1이면 로그인 가능, 1이 아니면 로그인 불가
+     */
+    public int findMemberSignin(MemberDTO memberDTO){
+        int result = memberDAO.findMemberSignin(memberDTO);
         return result;
     }
 
-    //가입정보 저장
-    public int memberSignup(MemberDTO memberDTO){
+    /**
+     * 이메일 중복확인 처리
+     * @param email
+     * @return
+     */
+    public int findDuplicateEmail(String email) {
+        int result = memberDAO.findDuplicateEmail(email);
+        return result;
+    }
+
+    /**
+     * 회원가입 데이터 저장
+     * @param memberDTO
+     * @return
+     */
+    public int insertNewMember(MemberDTO memberDTO){
 
         //닉네임 가져오기
         String email = memberDTO.getEmail();
@@ -29,6 +47,6 @@ public class MemberService {
         memberDTO.setNickname(nickname);
 
         //Dao로 넘기기
-        return memberDAO.signup(memberDTO);
+        return memberDAO.insertNewMember(memberDTO);
     }
 }

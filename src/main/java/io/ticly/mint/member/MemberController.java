@@ -18,32 +18,62 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+    /**
+     * 페이지 이동
+     * @return
+     */
     @GetMapping("/signup")
-    public String showSignup() throws Exception {
+    public String showSignup() {
         return "member/loginModal";
     }
 
+    /**
+     * 모달 페이지로 이동
+     * @return
+     */
     @GetMapping("/modal")
-    public String showModal() throws Exception {
+    public String showModal() {
         return "member/signInUp";
     }
 
-
-    @PostMapping("/emailCheck")
+    /**
+     * 로그인시 가입여부 확인
+     * @param memberDTO
+     * @return 1이면 로그인 가능, 0이면 로그인 불가
+     */
+    @PostMapping("/member/signin")
     @ResponseBody
-    public int checkEmail(@RequestParam(value = "email") String userEmail) throws Exception {
-        //서비스 측에 요청
-        int result = memberService.isDuplicateEmail(userEmail);
+    public int memberSignin(@RequestBody MemberDTO memberDTO) {
+        int checkNum = 0;
+        checkNum = memberService.findMemberSignin(memberDTO);
 
-        return result; //1이면 중복, 0이면 중복 아님
+        return checkNum;
     }
 
+    /**
+     * 회원가입시 이메일 체크
+     * @param userEmail
+     * @return 1이면 중복, 0이면 중복 아님
+     */
+    @PostMapping("/emailCheck")
+    @ResponseBody
+    public int checkEmail(@RequestParam(value = "email") String userEmail) {
+        int result = memberService.findDuplicateEmail(userEmail);
+
+        return result;
+    }
+
+    /**
+     * 이메일로 회원가입시, 멤버 데이터 저장
+     * @param memberDTO
+     * @return 1이면 데이터 입력 성공
+     */
     @PostMapping("/member/signup")
     @ResponseBody
-    public int memberSignup(@RequestBody MemberDTO memberDTO) throws Exception {
+    public int memberSignup(@RequestBody MemberDTO memberDTO) {
         int checkNum = 0;
-        checkNum = memberService.memberSignup(memberDTO);
+        checkNum = memberService.insertNewMember(memberDTO);
 
-        return checkNum; //1이면 데이터 입력 성공
+        return checkNum;
     }
 }

@@ -28,23 +28,23 @@
 
         <!--로그인 메인-->
         <div class="main-login-form hidden" id="main-login-form">
-            <hearder class="login-modal-header">
-                <h1 class="text text-color-gray100 text-weight-medium">Ticly 로그인</h1>
-                <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
-            </hearder>
-            <div class="login-button-wrapper">
-                <div class="login-button naver-login-button">
-                    <img scr="">
-                    <h5 class="text text-color-white text-weight-medium">네이버로 로그인</h5>
+                <hearder class="login-modal-header">
+                    <h1 class="text text-color-gray100 text-weight-medium">Ticly 로그인</h1>
+                    <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
+                </hearder>
+                <div class="login-button-wrapper">
+                    <div class="login-button naver-login-button">
+                        <img scr="">
+                        <h5 class="text text-color-white text-weight-medium">네이버로 로그인</h5>
+                    </div>
+                    <div class="login-button email-login-button" id="login-to-signin">
+                        <h5 class="text text-color-gray100 text-weight-medium">이메일로 로그인</h5>
+                    </div>
                 </div>
-                <div class="login-button email-login-button" id="login-to-signin">
-                    <h5 class="text text-color-gray100 text-weight-medium">이메일로 로그인</h5>
-                </div>
-            </div>
-            <footer class="login-modal-footer">
-                <h6 class="text text-color-gray300 text-weight-regular">아직 회원이 아니신가요?</h6>
-                <h6 class="text text-color-gray200 text-weight-regular login-modal-footer-gosignup" id="login-footer-login-to-signup">회원가입</h6>
-            </footer>
+                <footer class="login-modal-footer">
+                    <h6 class="text text-color-gray300 text-weight-regular">아직 회원이 아니신가요?</h6>
+                    <h6 class="text text-color-gray200 text-weight-regular login-modal-footer-gosignup" id="login-footer-login-to-signup">회원가입</h6>
+                </footer>
         </div>
 
         <!--이메일로 로그인하기-->
@@ -52,19 +52,20 @@
             <hearder class="login-modal-header">
                 <h1 class="text text-color-gray100 text-weight-medium">이메일로 로그인</h1>
             </hearder>
-            <div class="signup-content-wrapper">
+            <div class="login-content-wrapper">
                 <div class="login-input-group">
                     <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                    <input type="text" class="form-control" id="signin-email" name="email" placeholder="ticly@ticly.io" />
-                    <p class="signin-invalidation-message"></p>
+                    <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" />
+                    <div class="signin-validation-message"></div>
                 </div>
                 <div class="login-input-group">
                     <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                    <input type="password" class="form-control" id="signin-password" name="password" placeholder="비밀번호를 입력하세요." />
-                    <p class="signin-validation-message"></p>
+                    <input type="password" class="form-control form-control-lg" id="signin-password" name="password" placeholder="비밀번호를 입력하세요." />
+                    <div class="signin-validation-message"></div>
                 </div>
+                <div class="signin-validation-message"></div>
                 <div class="login-modal-button">
-                    <button id="signinSubmitBtn" class="btn btn-primary disabled">로그인</button>
+                    <button id="signinSubmitBtn" class="btn btn-primary">로그인</button>
                 </div>
             </div>
 
@@ -79,20 +80,20 @@
             <hearder class="login-modal-header">
                 <h1 class="text text-color-gray100 text-weight-medium">이메일로 회원가입</h1>
             </hearder>
-            <div class="signup-content-wrapper">
+            <div class="login-content-wrapper">
                 <div class="login-input-group">
                     <label for="signup-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                    <input type="text" class="form-control" id="signup-email" name="email" placeholder="ticly@ticly.io" />
+                    <input type="text" class="form-control form-control-lg" id="signup-email" name="email" placeholder="ticly@ticly.io" />
                     <div class="signup-validation-message"></div>
                 </div>
                 <div class="login-input-group">
                     <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                    <input type="password" class="form-control" id="signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
+                    <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
                     <p class="signup-validation-message"></p>
                 </div>
                 <div class="login-input-group">
                     <label for="signup-password-confirm" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 확인 <span class="required-label">*</span></label>
-                    <input type="password" class="form-control" id="signup-password-confirm" placeholder="비밀번호를 한 번 더 입력해주세요."/>
+                    <input type="password" class="form-control form-control-lg" id="signup-password-confirm" placeholder="비밀번호를 한 번 더 입력해주세요."/>
                     <p class="signup-validation-message"></p>
                 </div>
 
@@ -120,6 +121,9 @@
 </div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!--이메일로 로그인-->
+<script src="js/member/signinEmail.js"></script>
 
 <!--이메일로 회원가입-->
 <script src="js/member/signupEmail.js"></script>

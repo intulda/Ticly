@@ -8,12 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO {
-
     private String email;
     private String password;
     private String nickname;
-    private String category_seq;
     private int auth;
-    private String signup_type;
-
+    private String signup_type; //회원가입 경로
+    private String reg_date; //회원가입 날짜
 }
