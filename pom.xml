@@ -98,8 +98,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.14</version>
         </dependency>
-
->>>>>>> 9a056da666d0de51e38d10fab5d67bbc9c4aa6eb
     </dependencies>
 
     <build>
