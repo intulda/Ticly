@@ -23,8 +23,8 @@ public class AdminArticleWriteService implements AdminArticleWriteServiceImpl{
 
 
     @Override
-    public int WriteArticle(ArticleDTO articleDTO) throws Exception {
-        return articleDAO.WriteArticle(articleDTO);
+    public void WriteArticle(ArticleDTO articleDTO) throws Exception {
+        articleDAO.WriteArticle(articleDTO);
     }
 
     @Override

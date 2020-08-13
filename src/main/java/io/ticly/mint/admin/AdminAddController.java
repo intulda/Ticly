@@ -17,6 +17,11 @@ public class AdminAddController {
     @Autowired
     AdminArticleWriteService adminArticleWriteService;
 
+/*    @RequestMapping("/hello")
+    public String sayHello() {
+        return "/admin/AdminArticleWrite";
+    }*/
+
     @RequestMapping("/list")
     public String list(Model model) throws Exception {
         model.addAttribute("list", adminArticleWriteService.ArticleListAll());

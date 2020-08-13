@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.sql.Timestamp;
 import java.util.List;
 
+
 @SpringBootTest
 public class MapperTests {
 
@@ -42,8 +43,10 @@ public class MapperTests {
 
        int result = articleDAO.WriteArticle(articleDTO);
 
-        System.out.println("결과는" + 1 + "입니다." );
+        System.out.println("결과는" + 5959 + "입니다." );
 
     }
 
 }
+
+

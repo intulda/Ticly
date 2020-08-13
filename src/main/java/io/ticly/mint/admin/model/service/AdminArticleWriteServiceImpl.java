@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AdminArticleWriteServiceImpl {
 
-    public int WriteArticle(ArticleDTO articleDTO) throws Exception;
+    public void WriteArticle(ArticleDTO articleDTO) throws Exception;
     public List<ArticleDAO> ArticleListAll() throws Exception;
     public int ArticleDetail(int ArticleNum) throws Exception;
     public void ArticleUpdate (ArticleDAO articleDAO) throws Exception;
