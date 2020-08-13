@@ -12,6 +12,18 @@ let signinEmailCheck = false;   //회원가입시, 이메일 유효성을 체크
 let signinPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
 
 
+//눈표시 클릭 시 패스워드 보이기
+document.getElementById('signin-eyes-box').addEventListener("click",function (){
+    //  signupPasswordElem1.classList.toggle('active');
+    if(signinPasswordElem.type=='password'){
+        document.querySelector('#signin-eyes-icon').className="icon_hide";
+        signinPasswordElem.type='text'
+    }else if(signinPasswordElem.type=='text'){
+        document.querySelector('#signin-eyes-icon').className="icon_show";
+        signinPasswordElem.type='password'
+    }
+});
+
 //이메일 정규식 확인 함수
 function isEmail(asValue){
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;

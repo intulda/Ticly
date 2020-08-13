@@ -1,7 +1,7 @@
 
 let signupEmailElem = document.querySelector('#signup-email');  //이메일
 let signupPasswordElem1 = document.querySelector('#signup-password');   //비밀번호
-let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
+//let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
 
 let errorLabelElem = document.querySelectorAll('.signup-validation-message');   //유효성 메세지
 
@@ -13,6 +13,18 @@ let signupEmailCheck = false;   //회원가입시, 이메일 유효성을 체크
 let signupPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
 let signupPasswordCompare = false;  //회원가입시, 패스워드 확인의 유효성을 체크한다.
 let acceptTermCheck = false; //회원가입시, 약관 동의 여부를 체크한다.
+
+//눈표시 클릭 시 패스워드 보이기
+document.getElementById('signup-eyes-box').addEventListener("click",function (){
+  //  signupPasswordElem1.classList.toggle('active');
+    if(signupPasswordElem1.type=='password'){
+        document.querySelector('#signup-eyes-icon').className="icon_hide";
+        signupPasswordElem1.type='text'
+    }else if(signupPasswordElem1.type=='text'){
+        document.querySelector('#signup-eyes-icon').className="icon_show";
+        signupPasswordElem1.type='password'
+    }
+});
 
 //이메일 정규식 확인 함수
 function isEmail (asValue){
@@ -160,6 +172,6 @@ const onSignupHandler  = () => {
 
 signupEmailElem.addEventListener('blur', onSignupEmailCheck);
 signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
-signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
+//signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
 signupSubmitBtn.addEventListener("click", onSignupHandler);
 acceptTermCheckBox.addEventListener("click", signupButtonEvent);
