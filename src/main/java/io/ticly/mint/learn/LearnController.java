@@ -16,6 +16,7 @@ import java.util.List;
  * @create 2020.08.11
  */
 @Controller
+@SessionAttributes("userInfo")
 @RequestMapping(value="/learn/*")
 public class LearnController {
 

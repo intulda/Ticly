@@ -15,7 +15,10 @@ import WordSetCard from './wordSet.js';
         const resData = await axios('/learn/getVocaList', options);
         return resData;
     }
-    vocaList().then(response => response.data);
+    vocaList().then(response => {
+        response.data
+    }).catch(error => console.log(error));
+
     //tab event
     const tabClickElem = document.querySelector('#learnTab');
 
@@ -38,6 +41,8 @@ import WordSetCard from './wordSet.js';
     const wordCardElem = document.querySelector('.leaning-contents-card-wrap');
     const frontCard = document.querySelector('.leaning-contents-card-front');
     const backCard = document.querySelector('.leaning-contents-card-back');
+
+    //progressBar Circle
     const canvas = document.querySelector('.leaning-progress-canvas');
 
     //th클릭
