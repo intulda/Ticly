@@ -1,5 +1,5 @@
-/* Intro */
-.rectangle {
+/* introPage */
+.introPage_Rectangle {
     display: flex;
     height: 1080px;
     width: 1920px;
@@ -7,7 +7,7 @@
     background-color: rgba(0, 0, 0, 0.08);
 }
 
-.mask {
+.introPage_Mask {
     margin-left: 470px;
     margin-top: 220px;
     height: 640px;
@@ -18,20 +18,22 @@
     flex-direction: column;
 }
 
-.intro_img {
+.introPage_img {
     height: 366px;
     width: 775px;
     margin-left: 145px;
 }
 
-#intro_word {
+.introPage_wordI {
     margin-top: 50px;
     margin-left: 60px;
 }
 
-#intro_word2 {
-    margin-top: 8px;
-    margin-left: 60px;
+.introPage_wordII {
+    padding-top: 8px;
+    padding-left: 60px;
+    letter-spacing: -0.4px !important;
+    line-height: 57px !important;
 }
 
 .trendSearchColor {
