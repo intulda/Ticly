@@ -1,6 +1,6 @@
 package io.ticly.mint.learn.model.dao;
 
-import io.ticly.mint.article.model.dto.ArticleDTO;
+import io.ticly.mint.learn.model.dto.LearnArticleDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,7 +21,7 @@ public class LearnDAO {
         this.sqlSessionTemplate = sqlSessionTemplate;
     }
 
-    public ArticleDTO getArticle(UserLearnDTO userLearnDTO) {
+    public LearnArticleDTO getArticle(UserLearnDTO userLearnDTO) {
         return sqlSessionTemplate.selectOne("learnDAO.getArticle", userLearnDTO);
     }
 

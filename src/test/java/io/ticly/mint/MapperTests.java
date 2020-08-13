@@ -4,8 +4,6 @@ import io.ticly.mint.admin.mapper.AdminWriteMapper;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
 import io.ticly.mint.admin.model.dto.ArticleSentenceDTO;
-import io.ticly.mint.login.model.dao.LoginDAO;
-import io.ticly.mint.login.model.dto.LoginDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,10 +16,6 @@ public class MapperTests {
 
     @Autowired
     private ArticleDAO articleDAO;
-
-    @Autowired
-    private LoginDAO loginDAO;
-
 
     @Test
     public void testOfInsert() throws Exception {

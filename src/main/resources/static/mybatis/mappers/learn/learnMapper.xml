@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="learnDAO">
 
-    <select id="getArticle" parameterType="UserLearnDTO" resultType="ArticleDTO">
+    <select id="getArticle" parameterType="UserLearnDTO" resultType="LearnArticleDTO">
         SELECT
             ARTICLE.ARTICLE_SEQ,
             ARTICLE.TITLE,

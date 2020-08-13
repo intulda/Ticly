@@ -18,3 +18,5 @@ public class VocaDTO {
     private int CHECK_READING;
     private int LAST_VOCA;
 }
+
+
