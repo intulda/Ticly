@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="learnDAO">
+
+    <select id="getArticle" parameterType="UserLearnDTO" resultType="ArticleDTO">
+        SELECT
+            ARTICLE.ARTICLE_SEQ,
+            ARTICLE.TITLE,
+            ARTICLE.SUMMARY,
+            ARTICLE.URL,
+            ARTICLE.HASHTAG,
+            ARTICLE.CATEGORY_SEQ,
+            TO_CHAR(ARTICLE.REG_DATE, 'YYYY.MM.DD') AS REG_DATE,
+            CATE.CATEGORY,
+            FM.FILE_CONTENTS,
+            FM.FILE_EXT
+        FROM ARTICLE ARTICLE, FILE_MANAGEMENT FM, CATEGORY CATE
+        WHERE ARTICLE.ARTICLE_SEQ = #{articleSeq}
+        AND ARTICLE.FILE_SEQ = FM.FILE_SEQ(+)
+        AND ARTICLE.CATEGORY_SEQ = CATE.CATEGORY_SEQ(+)
+        AND ARTICLE.DEL != 1
+    </select>
+
+    <insert id="saveUserLearning" parameterType="UserLearnDTO">
+        MERGE INTO USER_LEARNING UL
+        USING (
+            SELECT USER_LEARNING_SEQ
+            FROM USER_LEARNING
+            WHERE ARTICLE_SEQ = #{articleSeq}
+        ) D
+        ON (
+            UL.USER_LEARNING_SEQ = D.USER_LEARNING_SEQ
+        )
+        WHEN MATCHED
+            THEN
+                UPDATE
+                SET LAST_LEARNING_DATE = SYSDATE
+        WHEN NOT MATCHED
+            THEN
+                INSERT (
+                    USER_LEARNING_SEQ,
+                    EMAIL,
+                    ARTICLE_SEQ,
+                    LAST_LEARNING_DATE
+                ) VALUES (
+                    USER_LEARNING_PK_SEQ.NEXTVAL,
+                    #{email},
+                    #{articleSeq},
+                    SYSDATE
+                )
+    </insert>
+
+    <select id="getUserVocaCheck" parameterType="UserLearnDTO" resultType="int">
+        SELECT
+            COUNT(DISTINCT ARTICLE_SEQ)
+        FROM USER_VOCA
+        WHERE ARTICLE_SEQ = #{articleSeq}
+    </select>
+
+    <insert id="saveArticleVocaToUser" parameterType="UserLearnDTO">
+            INSERT INTO USER_VOCA(
+                USER_VOCA_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA
+            ) SELECT
+                USER_VOCA_PK_SEQ.nextval AS USER_VOCA_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA
+            FROM (
+                SELECT DISTINCT
+                    UL.USER_LEARNING_SEQ,
+                    ARTI_VOCA.ARTICLE_SEQ,
+                    VOCA.VOCA
+                FROM ARTICLE_VOCABOOK ARTI_VOCA,
+                     VOCABOOK VOCA,
+                     USER_LEARNING UL
+                WHERE ARTI_VOCA.MEANING_NUM = VOCA.MEANING_NUM
+                AND UL.ARTICLE_SEQ = ARTI_VOCA.ARTICLE_SEQ
+                AND ARTI_VOCA.ARTICLE_SEQ = #{articleSeq}
+            )
+    </insert>
+
+    <select id="getVocaList" parameterType="UserLearnDTO" resultType="VocaDTO">
+        SELECT
+            USER_VOCA_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ, VOCA,
+            CHECK_READING,
+            LAST_VOCA
+        FROM USER_VOCA
+        WHERE ARTICLE_SEQ = #{articleSeq}
+    </select>
+</mapper>
