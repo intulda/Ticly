@@ -4,6 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="io.ticly.mint.login.model.dto.LoginDTO" alias="LoginDTO"/>
+        <typeAlias type="io.ticly.mint.article.model.dto.ArticleDTO" alias="ArticleDTO"/>
+        <typeAlias type="io.ticly.mint.learn.model.dto.UserLearnDTO" alias="UserLearnDTO"/>
+        <typeAlias type="io.ticly.mint.learn.model.dto.VocaDTO" alias="VocaDTO"/>
     </typeAliases>
 </configuration>
