@@ -27,7 +27,7 @@
   border-radius: 30px;
 }
 
-.close {
+.modal-close {
   position: absolute;
   top: 0;
   right: 10px;
@@ -36,7 +36,7 @@
   transform: rotate(45deg);
   cursor: pointer;
 }
-.close:hover {
+.modal-close:hover {
   color: #666;
 }
 
@@ -110,6 +110,10 @@
   max-height: 100%;
   position: relative;
   overflow: scroll;
+}
+
+.main-login-form .login-modal-header{
+  margin-bottom: 0;
 }
 
 .login-button-wrapper{
@@ -198,13 +202,35 @@
   cursor: pointer;
 }
 
-.login-content-wrapper button{
+.login-modal-button button{
   height: 60px;
   width: 100%;
 }
 
 .login-modal-button{
   padding: 24px 0;
+}
+
+.alert-primary{
+  color: #CC3B49;
+  background-color: #FFF3F4;
+  border-color: #FA5F6E;
+}
+
+.signin-alert-message{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+}
+
+.signin-alert-message .close{
+  color: #CC3B49;
+  font-size: inherit;
+}
+
+.signin-alert-message span{
+  margin-left: 5px;
 }
 
 @media (min-height: 475px) {

@@ -94,6 +94,7 @@ const onSignupPasswordCheck = () => {
     signupButtonEvent();
 }
 
+/*
 const onSignupPasswordCompare = () => {
     if(signupPasswordElem2.value.trim()===""){
         errorLabelElem[2].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">필수 정보입니다.</p>';
@@ -110,6 +111,7 @@ const onSignupPasswordCompare = () => {
 
     signupButtonEvent();
 }
+*/
 
 acceptTermCheckBox.addEventListener("click", function (){
     if(acceptTermCheckBox.checked == true){

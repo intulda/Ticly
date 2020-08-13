@@ -24,7 +24,7 @@
     <div class="signinup-modal-contents">
         <!--login-->
         <!--닫기 버튼-->
-        <div class="close" id="modal-close">+</div>
+        <div class="modal-close" id="modal-close">+</div>
 
         <!--로그인 메인-->
         <div class="main-login-form hidden" id="main-login-form">
@@ -53,6 +53,15 @@
                 <h1 class="text text-color-gray100 text-weight-medium">이메일로 로그인</h1>
             </hearder>
             <div class="login-content-wrapper">
+
+                    <div class="bs-component">
+                        <div class="alert alert-primary signin-alert-message">
+                            <i class="icon_info_circle"></i>
+                            <span class="text body1 text-weight-regular">가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.</span>
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                        </div>
+                    </div>
+
                 <div class="login-input-group">
                     <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
                     <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" />
@@ -91,21 +100,22 @@
                     <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
                     <p class="signup-validation-message"></p>
                 </div>
+                <!--
                 <div class="login-input-group">
                     <label for="signup-password-confirm" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 확인 <span class="required-label">*</span></label>
                     <input type="password" class="form-control form-control-lg" id="signup-password-confirm" placeholder="비밀번호를 한 번 더 입력해주세요."/>
                     <p class="signup-validation-message"></p>
-                </div>
+                </div>-->
 
                 <!--회원가입 약관 동의-->
                 <div class="agreements">
                     <div class="agreement-list custom-control custom-checkbox">
                         <input type="checkbox" id="AcceptTerm" class="custom-control-input">
-                        <label for="AcceptTerm" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 <a href="#" class="text text-color-gray200 text-weight-bold">서비스 약관</a>과 <a href="#" class="text text-color-gray200 text-weight-bold">개인정보 취급방침</a>에 대해 <br>동의합니다.(필수)</label>
+                        <label for="AcceptTerm" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 <a href="#" class="text text-color-gray200 text-weight-bold">서비스 약관</a>과 <a href="#" class="text text-color-gray200 text-weight-bold">개인정보 취급방침</a>에 대해 동의합니다.(필수)</label>
                     </div>
                     <div class="agreement-list custom-control custom-checkbox">
                         <input type="checkbox" id="promotion" class="custom-control-input custom-control">
-                        <label for="promotion" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 이벤트, 프로모션, 알림 메일 및 SMS수신에 <br>대해 동의합니다.(선택)</label>
+                        <label for="promotion" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 이벤트, 프로모션, 알림 메일 및 SMS수신에 대해 동의합니다.(선택)</label>
                     </div>
                 </div>
                 <div class="login-modal-button">
