@@ -29,11 +29,10 @@
                         class="form-control nickname_Input"
                         placeholder="변경할 닉네임을 입력하세요."
                 />
-                <input
-                        type="submit"
-                        class="text h6 text-color-green form-control myPage_Button"
-                        value="변경하기"
-                />
+                <button type="submit"
+                        class="btn btn-outline-primary">
+                        변경하기
+                </button>
             </div>
             <span class="div_Contents">이메일</span><br>
             <span class="text h5 text-color-gray100 basicInfo_Email">kkh@ticly.com</span>
@@ -56,14 +55,13 @@
                     placeholder="새로운 비밀번호를 입력하세요."
             />
             <span class="text body2 text-color-gray300 sixPassword_Input">
-                <i class="icon_ InfoIcon_Color InfoIcon_Size sixPassword_Icon"></i>
+                <i class="icon_info_circle InfoIcon_Size sixPassword_Icon"></i>
             6자리 이상의 비밀번호를 입력하세요 </span
             >
-            <input
-                    type="submit"
-                    class="text h6 text-color-green form-control myPage_Button"
-                    value="변경하기"
-            />
+            <button type="submit"
+                    class="btn btn-outline-primary">
+                변경하기
+            </button>
         </div>
     </div>
     <div class="rectangle myPage_Rectangle"></div>
@@ -80,11 +78,10 @@
             ><span>됩니다.</span><br />
                 <span>모든 데이터가 삭제되며 되돌릴 수 없습니다.</span>
             </div>
-            <input
-                    type="submit"
-                    class="text h6 text-color-red form-control myPage_Button"
-                    value="탈퇴하기"
-            />
+            <button type="submit"
+                    class="btn btn-outline-danger">
+                탈퇴하기
+            </button>
         </div>
     </div>
 </div>

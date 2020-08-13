@@ -94,9 +94,7 @@
     margin-bottom: 16px;
 }
 
-.sixPassword_Icon {
-    margin: 0 5px 0 0;
-}
+
 
 .password_ReType {
     margin-top: 4px;
@@ -107,8 +105,8 @@
     font-size: 16px;
 }
 
-.InfoIcon_Color {
-    color: #858899;
+.sixPassword_Icon {
+    margin: 0 5px 0 0;
 }
 
 .withdraw_Warning {
