@@ -1,7 +1,7 @@
 package io.ticly.mint.learn.model.service;
 
-import io.ticly.mint.article.model.dto.ArticleDTO;
 import io.ticly.mint.learn.model.dao.LearnDAO;
+import io.ticly.mint.learn.model.dto.LearnArticleDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import io.ticly.mint.util.CommonUtil;
@@ -28,8 +28,8 @@ public class LearnService {
      * @param userLearnDTO
      * @return
      */
-    public ArticleDTO getArticle(UserLearnDTO userLearnDTO) throws SQLException {
-        ArticleDTO articleDTO =  learnDAO.getArticle(userLearnDTO);
+    public LearnArticleDTO getArticle(UserLearnDTO userLearnDTO) throws SQLException {
+        LearnArticleDTO articleDTO =  learnDAO.getArticle(userLearnDTO);
         String image = CommonUtil.blobImageChange(articleDTO.getFile_contents());
         articleDTO.setFile_url(image);
         return articleDTO;
