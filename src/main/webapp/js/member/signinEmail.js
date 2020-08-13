@@ -6,6 +6,8 @@ let signinPasswordElem = document.getElementById('signin-password');   //비밀�
 
 let signinErrorLabelElem = document.querySelectorAll('.signin-validation-message');   //유효성 메세지
 
+let staySigned = document.getElementById('stay-logined'); //로그인 상태 유지 체크 버튼
+
 let signinSubmitBtn = document.getElementById('signinSubmitBtn'); //회원가입 버튼
 
 let signinEmailCheck = false;   //회원가입시, 이메일 유효성을 체크한다.
@@ -29,6 +31,15 @@ function isEmail(asValue){
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     return regExp.test(asValue); // 형식에 맞는 경우 true 리턴
 };
+
+//로그인 실패시
+function failEmailLogin(){
+    document.getElementById("login-fail-alert").innerHTML = '<div class="alert alert-primary signin-alert-message">\n' +
+        '                            <i class="icon_info_circle"></i>\n' +
+        '                            <span class="text body1 text-weight-regular">가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.</span>\n' +
+        '                            <button type="button" class="close" data-dismiss="alert">×</button>\n' +
+        '                        </div>';
+}
 
 signinSubmitBtn.addEventListener("click", function () {
     if(signinEmailElem.value.trim()==""){
@@ -67,11 +78,10 @@ signinSubmitBtn.addEventListener("click", function () {
             data : JSON.stringify(signinData)
         })
             .then(function (result){
-                alert(result.data)
                 if(result.data == "1"){
                     alert("로그인을 완료했습니다.");
                 } else {
-                    alert("가입 정보가 없습니다.");
+                    failEmailLogin()
                 }
             })
             .catch(function (error) {

@@ -35,6 +35,7 @@
   color: #333;
   transform: rotate(45deg);
   cursor: pointer;
+  z-index: 1;
 }
 .modal-close:hover {
   color: #666;
@@ -169,14 +170,6 @@
   overflow: scroll;
 }
 
-
-.modal-body-scroll-zone{
-  padding: 0 50px;
-  max-height: calc(100% - 100px);
-  position: relative;
-  overflow: scroll;
-}
-
 .login-content-wrapper{
   padding: 0 10px;
 }
@@ -188,6 +181,21 @@
   overflow: scroll;
 }
 
+.signin-check{
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-check-box{
+  display: flex;
+  align-items : baseline;
+}
+
+.label-signin-check{
+  cursor: pointer;
+}
+
+/*이메일로 회원가입*/
 .agreements{
   color: #525463;
   font-size: 14px;
@@ -220,7 +228,8 @@
 }
 
 .login-modal-button{
-  padding: 24px 0;
+  padding-top: 16px;
+  padding-bottom: 24px;
 }
 
 .alert-primary{

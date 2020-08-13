@@ -5,6 +5,7 @@ let signupPasswordElem1 = document.querySelector('#signup-password');   //비밀
 
 let errorLabelElem = document.querySelectorAll('.signup-validation-message');   //유효성 메세지
 
+/*약관동의*/
 let acceptTermCheckBox  = document.querySelector('#AcceptTerm'); //서비스 약관 동의 체크버튼
 
 let signupSubmitBtn = document.querySelector('#signupSubmitBtn'); //회원가입 버튼
@@ -45,9 +46,9 @@ const isJobPassword = (asValue) => {
 
 //모든 유효성이 성립되면 버튼이 활성화된다.
 const signupButtonEvent = () => {
-    console.log(signupEmailCheck)
+/*    console.log(signupEmailCheck)
     console.log(signupPasswordCheck)
-    console.log(signupPasswordCompare)
+    console.log(signupPasswordCompare) */
     if(signupEmailCheck && signupPasswordCheck && signupPasswordCompare && acceptTermCheck){
         signupSubmitBtn.classList.remove('disabled');
     }else{
