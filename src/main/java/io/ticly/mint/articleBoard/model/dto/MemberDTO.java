@@ -5,10 +5,22 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuestDTO {
-    private String Category;
+public class MemberDTO {
+    private String email;
+    private String password;
+    private String nickname;
+    private List<String> categories;
+    private int auth;
+    private String signup_type;
+
+    public MemberDTO(int auth, List<String> categories){
+        this.auth = auth;
+        this.categories = categories;
+    }
 }

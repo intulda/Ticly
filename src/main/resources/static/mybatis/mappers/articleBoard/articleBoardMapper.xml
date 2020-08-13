@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="articleBoardDAO">
-    <!-- @parm String : category -->
-    <select id="getArticleInfo" parameterType="String" resultType="List">
-        SELECT
-            *
-        FROM ARTICLE
-        ORDER BY REG_DATE
+    <!-- @param String : category -->
+    <select id="findMyTypeArticle" parameterType="String" resultType="List">
+        SELECT a.TITLE, a.SUMMARY, a.URL, a.HASHTAG, C.TITLE AS C_TITLE, TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD')
+        FROM ARTICLE a, CATEGORY c
+        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
+            AND C.TITLE IN (#{category})
+        ORDER BY a.REG_DATE
     </select>
 </mapper>

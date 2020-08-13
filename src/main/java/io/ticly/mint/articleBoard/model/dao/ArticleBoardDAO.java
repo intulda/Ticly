@@ -20,8 +20,19 @@ public class ArticleBoardDAO {
 //        return count > 0 ? true : false;
 //    }
 
-    public List<ArticleInfoDTO> getArticleInfo(String[] categories){
-        List<ArticleInfoDTO> list = sqlSessionTemplate.selectList("articleBoardDAO.getArticleInfo");
+    public List<ArticleInfoDTO> findMyTypeArticle(List<String> categoryArr){
+        // 쿼리문에 넣어주기 위해 배열을 ',' 단위로 이어주기
+        String category = "";
+        for (int i = 0; i < categoryArr.size(); i++) {
+            category += "'" + categoryArr.get(i) + "'";
+            System.out.println(categoryArr.get(i));
+
+            if(i < categoryArr.size() -1) {
+                category += ", ";
+            }
+        }
+
+        List<ArticleInfoDTO> list = sqlSessionTemplate.selectList("articleBoardDAO.findMyTypeArticle", category);
         return list;
     }
 }
