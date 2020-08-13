@@ -10,7 +10,7 @@
   font-display: block;
 }
 
-[class^="i"], [class*=" i"] {
+i[class^="icon"], i[class*="icon"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'ticly_icon' !important;
   speak: never;
@@ -27,9 +27,15 @@
 
 .icons.sm { font-size: 16px; } 
 .icons.md { font-size: 20px; } 
-.icons.lg { font-size: 24px; } 
+.icons.lg { font-size: 24px; }
 
 
+.icon_setting:before {
+  content: "\e904";
+}
+.icon_info_notice:before {
+  content: "\e91e";
+}
 .icon_translate:before {
   content: "\e900";
 }
@@ -41,28 +47,6 @@
 }
 .icon_link:before {
   content: "\e903";
-}
-.icon_sort_lower .path1:before {
-  content: "\e904";
-  color: rgb(133, 136, 153);
-}
-.icon_sort_lower .path2:before {
-  content: "\e905";
-  margin-left: -1em;
-  color: rgb(0, 168, 129);
-}
-.icon_sort_upper .path1:before {
-  content: "\e906";
-  color: rgb(0, 168, 129);
-}
-.icon_sort_upper .path2:before {
-  content: "\e907";
-  margin-left: -1em;
-  color: rgb(133, 136, 153);
-}
-.icon_sort:before {
-  content: "\e908";
-  color: #858899;
 }
 .icon_search:before {
   content: "\e909";
