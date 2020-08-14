@@ -60,38 +60,49 @@
     </select>
 
     <insert id="saveArticleVocaToUser" parameterType="UserLearnDTO">
-            INSERT INTO USER_VOCA(
-                USER_VOCA_SEQ,
-                USER_LEARNING_SEQ,
-                ARTICLE_SEQ,
-                VOCA
-            ) SELECT
-                USER_VOCA_PK_SEQ.nextval AS USER_VOCA_SEQ,
-                USER_LEARNING_SEQ,
-                ARTICLE_SEQ,
-                VOCA
-            FROM (
-                SELECT DISTINCT
-                    UL.USER_LEARNING_SEQ,
-                    ARTI_VOCA.ARTICLE_SEQ,
-                    VOCA.VOCA
-                FROM ARTICLE_VOCABOOK ARTI_VOCA,
-                     VOCABOOK VOCA,
-                     USER_LEARNING UL
-                WHERE ARTI_VOCA.MEANING_NUM = VOCA.MEANING_NUM
-                AND UL.ARTICLE_SEQ = ARTI_VOCA.ARTICLE_SEQ
-                AND ARTI_VOCA.ARTICLE_SEQ = #{articleSeq}
-            )
+        INSERT INTO USER_VOCA(
+            USER_VOCA_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA,
+            VOCA_ORDER
+        ) SELECT
+            USER_VOCA_PK_SEQ.nextval AS USER_VOCA_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA,
+            VOCA_ORDER
+        FROM (
+            SELECT
+                UL.USER_LEARNING_SEQ,
+                ARTI_VOCA.ARTICLE_SEQ,
+                ARTI_VOCA.VOCA,
+                VOCA_ORDER
+            FROM ARTICLE_VOCABOOK ARTI_VOCA,
+                 USER_LEARNING UL
+            WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
+            AND ARTI_VOCA.ARTICLE_SEQ = #{articleSeq}
+            ORDER BY ARTI_VOCA.VOCA_ORDER ASC
+        )
     </insert>
 
     <select id="getVocaList" parameterType="UserLearnDTO" resultType="VocaDTO">
-        SELECT
-            USER_VOCA_SEQ,
-            USER_LEARNING_SEQ,
-            ARTICLE_SEQ, VOCA,
-            CHECK_READING,
-            LAST_VOCA
-        FROM USER_VOCA
-        WHERE ARTICLE_SEQ = #{articleSeq}
+        SELECT DISTINCT
+            UV.USER_VOCA_SEQ,
+            UV.USER_LEARNING_SEQ,
+            UV.ARTICLE_SEQ,
+            UV.VOCA,
+            VB.MEANING,
+            UV.CHECK_READING,
+            UV.LAST_VOCA,
+            UV.VOCA_ORDER
+        FROM USER_VOCA UV,
+             VOCABOOK VB,
+             ARTICLE_VOCABOOK AV
+        WHERE UV.VOCA = VB.VOCA
+        AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ
+        AND AV.MEANING_NUM = VB.MEANING_NUM
+        AND UV.ARTICLE_SEQ = #{articleSeq}
+        ORDER BY VOCA_ORDER ASC
     </select>
 </mapper>

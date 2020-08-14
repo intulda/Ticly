@@ -51,13 +51,13 @@
                 </div>
                 <div class="leaning-current-article leaning-current-article-contents mb-3">
                     <div class="leaning-current-article-left">
-                        <div class="leaning-current-article-title text h2 mb-2">
+                        <div class="leaning-current-article-title text h2">
                             ${currentArticle.title}
                         </div>
-                        <div class="leaning-current-article-content text h6 text-weight-light text-color-gray200 mb-2">
+                        <div class="leaning-current-article-content text h6 text-weight-light text-color-gray200">
                             ${currentArticle.summary}
                         </div>
-                        <div class="leaning-current-article-date text body1 text-weight-light text-color-gray300 mb-2">
+                        <div class="leaning-current-article-date text body1 text-weight-light text-color-gray300">
                             발행일 : <span>${currentArticle.reg_date}</span>
                         </div>
                     </div>
