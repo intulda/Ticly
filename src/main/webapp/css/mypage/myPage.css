@@ -1,0 +1,114 @@
+/* myPage */
+.myPage_Nav {
+    height: 80px;
+}
+
+.myPage_Container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myPage_Div {
+    width: 100%;
+}
+
+.myPage_Title {
+    display: inline-block;
+}
+
+.myPage_Subtitle {
+    width: 232px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.myPage_Button {
+    width: 83px !important;
+    height: 40px !important;
+    font-weight: 500 !important;
+}
+
+.basicInfo_Div {
+    margin-top: 24px;
+    display: flex;
+}
+
+.password_Div {
+    display: flex;
+}
+
+.withdraw_Div {
+    display: flex;
+}
+
+.nickname_Change {
+    display: flex;
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+.myPage_Rectangle {
+    width: 100%;
+    height: 1px;
+    background-color: #E1E1E8;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.div_Contents {
+    font-size: 14px;
+    font-weight: 500;
+
+}
+
+.nickname_Input {
+    margin-right: 8px;
+    width: 330px !important;
+    height: 40px !important;
+}
+
+.basicInfo_Email {
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.password_DivContents {
+    width: 330px;
+}
+
+.password_PresentType {
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+.password_NewType {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.sixPassword_Input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+
+
+.password_ReType {
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+.InfoIcon_Size {
+    font-size: 16px;
+}
+
+.sixPassword_Icon {
+    margin: 0 5px 0 0;
+}
+
+.withdraw_Warning {
+    margin-bottom: 8px;
+}

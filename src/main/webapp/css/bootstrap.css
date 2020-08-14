@@ -242,7 +242,6 @@ select,
 optgroup,
 textarea {
     margin: 0;
-    font-family: inherit;
     font-size: inherit;
     line-height: inherit;
 }
@@ -2453,6 +2452,7 @@ fieldset:disabled a.btn {
     color: #fff;
     background-color: #00A881;
     border-color: #00A881;
+    opacity: 32%;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -2470,44 +2470,44 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary {
-    color: #fff;
-    background-color: #858899;
-    border-color: #858899;
+    color: #525463;
+    background-color: #fff;
 }
 
 .btn-secondary:hover {
-    color: #fff;
-    background-color: #717487;
-    border-color: #6b6e80;
+    color: #525463;
+    background: rgba(205,206,214,0.16);
 }
 
 .btn-secondary:focus,
 .btn-secondary.focus {
-    color: #fff;
-    background-color: #717487;
-    border-color: #6b6e80;
-    box-shadow: 0 0 0 0.2rem rgba(151, 154, 168, 0.5);
+    color: #525463;
+    background: rgba(205,206,214,0.32);
+    box-shadow: 0 0 0 0.2rem rgba(205,206,214,0.16);
+    /*border-color: #fff;*/
+    /*box-shadow: 0 0 0 0.2rem rgba(151, 154, 168, 0.5);*/
 }
 
 .btn-secondary.disabled,
 .btn-secondary:disabled {
-    color: #fff;
-    background-color: #858899;
-    border-color: #858899;
+    color: #525463;
+    background-color: #fff;
+    opacity: 32%;
 }
 
 .btn-secondary:not(:disabled):not(.disabled):active,
 .btn-secondary:not(:disabled):not(.disabled).active,
 .show>.btn-secondary.dropdown-toggle {
-    color: #fff;
-    background-color: #6b6e80;
-    border-color: #656879;
+    color: #525463;
+    background: rgba(205,206,214,0.44);
+    box-shadow: 0 0 0 0.2rem rgba(205,206,214,0.16);
+
 }
 
 .btn-secondary:not(:disabled):not(.disabled):active:focus,
 .btn-secondary:not(:disabled):not(.disabled).active:focus,
 .show>.btn-secondary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(151, 154, 168, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(205,206,214, 0.16);
 }
 
 .btn-success {
@@ -3069,7 +3069,7 @@ fieldset:disabled a.btn {
 .btn-lg,
 .btn-group-lg>.btn {
     padding: 0.5rem 1rem;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     line-height: 1.71429;
     border-radius: 0.313rem;
 }
@@ -9700,15 +9700,6 @@ a.text-dark:focus {
     font-size: inherit;
     font-weight: 600;
     text-transform: uppercase;
-}
-
-.btn {
-    font-weight: 600;
-}
-
-.btn-secondary,
-.btn-warning {
-    color: #fff;
 }
 
 .pagination a:hover {

@@ -1,0 +1,65 @@
+.category__tab-wrapper{
+    margin-top: 32px;
+}
+
+.card__outer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.card__wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex: 1 1 30%;
+    flex-direction: column;
+    margin-right: 2rem;
+}
+
+.card__wrapper:nth-child(3n) {
+    margin-right: 0;
+}
+
+.card__img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    backface-visibility: hidden;
+}
+
+.card__body {
+    position: relative;
+    padding-top: 1.5rem;
+}
+
+.card__footer {
+    position: relative;
+    padding-top: 1rem;
+}
+
+button.category__tab {
+    transition: all 0.3s
+}
+
+.category__tab.active {
+    background-color: rgba(0, 168, 129, 0.16);
+    color: #008e6d;
+    font-size: 20px;
+    line-height: 1.75rem;
+    font-weight: 600;
+}
+
+button.category__tab:hover {
+    background-color: rgba(0, 168, 129, 0.08);
+}
+
+.category__tab.inactive {
+    background-color: rgba(0, 168, 129, 0);
+    color: #858899;
+    font-size: 20px;
+    line-height: 1.75rem;
+    font-weight: 600;
+}
