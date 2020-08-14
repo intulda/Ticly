@@ -27,6 +27,11 @@ public class MemberController {
         return "member/loginModal";
     }
 
+    @GetMapping("/login")
+    public String showLogin() {
+        return "login/modalTest";
+    }
+
     /**
      * 모달 페이지로 이동
      * @return
