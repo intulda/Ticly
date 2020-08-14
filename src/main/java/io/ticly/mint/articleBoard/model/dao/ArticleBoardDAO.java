@@ -20,8 +20,18 @@ public class ArticleBoardDAO {
 //        return count > 0 ? true : false;
 //    }
 
-    public List<ArticleInfoDTO> findMyTypeArticle(List<String> categoryList){
-        // 쿼리문에 넣어주기 위해 배열을 ',' 단위로 이어주기
+    public List<ArticleInfoDTO> findNewMyTypeArticle(List<String> categoryList){
+        String categoryStr = getCategoryStr(categoryList);
+        return sqlSessionTemplate.selectList("articleBoardDAO.findNewMyTypeArticle", categoryStr);
+    }
+
+    public List<ArticleInfoDTO> findPopularMyTypeArticle(List<String> categoryList){
+        String categoryStr = getCategoryStr(categoryList);
+        return sqlSessionTemplate.selectList("articleBoardDAO.findPopularMyTypeArticle", categoryStr);
+    }
+
+    // 쿼리문에 넣어주기 위해 관심분 배열을 ',' 단위로 이어주기
+    public String getCategoryStr(List<String> categoryList){
         String categoryStr = "";
         for (int i = 0; i < categoryList.size(); i++) {
             categoryStr += "\'" + categoryList.get(i) + "\'";
@@ -31,7 +41,6 @@ public class ArticleBoardDAO {
                 categoryStr += ", ";
             }
         }
-
-        return sqlSessionTemplate.selectList("articleBoardDAO.findMyTypeArticle", categoryStr);
+        return categoryStr;
     }
 }

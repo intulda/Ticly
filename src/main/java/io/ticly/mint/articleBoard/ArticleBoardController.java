@@ -35,10 +35,6 @@ public class ArticleBoardController {
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
         if(user.getCategories() != null) {
             List<String> categories = user.getCategories();
-
-            // 관심 분야 데이터를 기반으로 아티클 불러와서 리스트에 담기
-            List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
-            model.addAttribute("articleList", list);
             model.addAttribute("userInfo", user);
         }
         return "articleBoard/findArticle";
@@ -54,26 +50,27 @@ public class ArticleBoardController {
         MemberDTO dto = new MemberDTO(auth, categories);
 
         model.addAttribute("userInfo", dto);
-
-        //세션에서 관심 분야 데이터 불러와 아티클 정보를 얻어서 리스트에 담기
-        categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
-        List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
-
-        model.addAttribute("articleList", list);
         return "articleBoard/findArticle";
     }
 
-    // 아티클 찾기 페이지에서 관심 분야 탭 버튼을 누를 때 처
-    @GetMapping("categoryTabEvent")
+    // 아티클 찾기 페이지 카드 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("getNewArticleInfo")
     @ResponseBody
-    public List<ArticleInfoDTO> getArticleInfo(Model model, HttpServletRequest req){
-        //  찾는 categories에 맞는 아티클 정보를 받아서 리스트에 넣어준다.
-        System.out.println("categoryTabEvent까지 왔어");
+    public List<ArticleInfoDTO> getNewArticleInfo(Model model, HttpServletRequest req){
+        // 관심 분야 데이터를 기반으로 최신 아티클 불러와서 리스트에 담기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
-        System.out.println("categories에 담았어");
-        List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
-        System.out.println("list에 담았어");
+        List<ArticleInfoDTO> newList = articleBoardService.findNewMyTypeArticle(categories);
 
-        return list;
+        return newList;
+    }
+
+    @GetMapping("getPopularArticleInfo")
+    @ResponseBody
+    public List<ArticleInfoDTO> getPopularArticleInfo(Model model, HttpServletRequest req){
+        // 관심 분야 데이터를 기반으로 인기 아티클 불러와서 리스트에 담기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        List<ArticleInfoDTO> popularList = articleBoardService.findPopularMyTypeArticle(categories);
+
+        return popularList;
     }
 }
