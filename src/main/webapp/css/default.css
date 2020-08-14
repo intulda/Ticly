@@ -1,0 +1,182 @@
+@charset "utf-8";
+
+/* font */
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 300;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Light'), url(fonts/Noto_Sans_KR/NotoSansKR-Light.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Light.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Regular'), url(fonts/Noto_Sans_KR/NotoSansKR-Regular.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Regular.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Medium'), url(fonts/Noto_Sans_KR/NotoSansKR-Medium.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Medium.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Medium.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 600;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Bold'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Black'), url(fonts/Noto_Sans_KR/NotoSansKR-Black.otf) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Black.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.otf) format('opentype');
+}
+
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+
+/* HTML5 display-role reset for older browsers */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
