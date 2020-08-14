@@ -271,10 +271,10 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="insertword" class="form-control" size="20" placeholder="단어를 입력하세요">
+                                        <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
                                     </td>
                                     <td>
-                                        <input type="text" name="insertmean" class="form-control" size="40" placeholder="뜻을 입력하세요"><br>
+                                        <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
                                     </td>
                                     <td>
                                        <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
@@ -315,10 +315,10 @@
             "                  <col width=\"260px\"><col width=\"568px\"><col width=\"100px\">\n" +
             "                     <tr>\n" +
             "                        <td>\n" +
-            "                            <input type=\"text\" class=\"form-control\" size=\"20\" placeholder=\"단어를 입력하세요\">" +
+            "                            <input type=\"text\" class=\"form-control\" size=\"20\" name=\"insertword\" placeholder=\"단어를 입력하세요\">" +
             "                        </td>\n" +
             "                        <td>\n" +
-            "                            <input type=\"text\" class=\"form-control\" size=\"40\" placeholder=\"뜻을 입력하세요\"><br>\n" +
+            "                            <input type=\"text\" class=\"form-control\" size=\"40\" name=\"insertmean\" placeholder=\"뜻을 입력하세요\"><br>\n" +
             "                        </td>\n" +
             "                        <td>\n" +
             "                            <button type=\"button\" class=\"btn\">삭제</button>\n" +
