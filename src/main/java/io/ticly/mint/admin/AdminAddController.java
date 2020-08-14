@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/AdminWrite")
 public class AdminAddController {
 
     @Autowired
     AdminArticleWriteService adminArticleWriteService;
 
-/*    @RequestMapping("/hello")
-    public String sayHello() {
-        return "/admin/AdminArticleWrite";
-    }*/
+    @RequestMapping("/writeTest")
+    public String Hello() {
+        return "/admin/AdminArticleWriteDemo";
+    }
 
     @RequestMapping("/list")
     public String list(Model model) throws Exception {
@@ -60,11 +59,4 @@ public class AdminAddController {
         adminArticleWriteService.ArticleDelete(anum);
         return "ArticleDAO/admin";
     }
-
-
-
-
-
-
-
 }
