@@ -8,7 +8,8 @@
 
 /* MODAL STARTS */
 .signinup-modal {
-  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.1);
   position: fixed;
   padding-top: 12px;
   width: 100%;
