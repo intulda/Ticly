@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: UserK
+  User: Hyeseung Jang
   Date: 2020-08-12
   Time: 오후 4:02
   To change this template use File | Settings | File Templates.
@@ -103,7 +103,7 @@
 </head>
 <body>
 
-<form action="AdminDataTest.jsp" id="frm">
+<form action="/AdminDataTest" id="frm" method="get">
 
     <div class="flex_container">
 
@@ -153,13 +153,13 @@
                         </td>
                         <td>
                             <p class="text body1 text-weight-medium text-color-gray100"> 카테고리 </p>
-                            <select class="form-control" id="CategoryForm">
-                                <option> 카테고리를 선택하세요 </option>
-                                <option> 개발 </option>
-                                <option> UI/UX </option>
-                                <option> 브랜딩 </option>
-                                <option> 마케팅 </option>
-                                <option> 경제 </option>
+                            <select class="form-control" name="category">
+                                <option value="카테고리X"> 카테고리를 선택하세요 </option>
+                                <option value="개발"> 개발 </option>
+                                <option value="UI/UX"> UI/UX </option>
+                                <option value="브랜딩"> 브랜딩 </option>
+                                <option value="마케팅"> 마케팅 </option>
+                                <option value="경제"> 경제 </option>
                             </select>
                         </td>
                     </tr>
@@ -167,28 +167,30 @@
                     <tr>
                         <td>
                             <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
-                            <input type="text" id="title" class="form-control form-control-lg" placeholder="제목을 입력해주세요">
+                            <input type="text" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td>
+                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
+                            <input type="text" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
-                            <input type="text" name="url" class="form-control" id="ArticleUrl" aria-describedby="basic-addon3" placeholder="http://">
+                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 기사 이미지 파일 </p>
+                            <input type="file" name="imagefile"/>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
                             <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
-                            <textarea name="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."></textarea>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext4 body1 text-weight-medium text-color-gray100"> 태그 </p>
-                            <input type="text" name="hashtag" size="100" placeholder="내용을 입력하세요 (#해시태그)" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                            <textarea name="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
                         </td>
                     </tr>
                 </table>
@@ -205,7 +207,16 @@
                             <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
                         </td>
                         <td>
-						<textarea name="summary" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."></textarea>
+						<textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="top" align="left">
+                            <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
+                        </td>
+                        <td>
+                            <input type="text" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control" id="basic-url" aria-describedby="basic-addon3">
                         </td>
                     </tr>
 
@@ -260,10 +271,10 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="insert-word" class="form-control" size="20" placeholder="단어를 입력하세요">
+                                        <input type="text" name="insertword" class="form-control" size="20" placeholder="단어를 입력하세요">
                                     </td>
                                     <td>
-                                        <input type="text" name="insert-mean" class="form-control" size="40" placeholder="뜻을 입력하세요"><br>
+                                        <input type="text" name="insertmean" class="form-control" size="40" placeholder="뜻을 입력하세요"><br>
                                     </td>
                                     <td>
                                        <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
@@ -287,10 +298,6 @@
         <!-- 가장 바깥 div -->
         </div>
 
-
-
-
-
     </div>
 </form>
 
@@ -298,20 +305,6 @@
 
 <script type="text/javascript">
     var count = 1;
-
-    <%--'단어 추가하기' Button 클릭시 textbox 생성--%>
-    /*
-    $("input.btn").click(function (){
-        alert('input btn');
-
-        $(document).ready(function() {
-           let obj = $(".divTest").val();
-           let WordDiv = $("")
-        });
-
-    });
-    */
-
 
     function Add_WordBox() {
 
@@ -328,7 +321,6 @@
             "                            <input type=\"text\" class=\"form-control\" size=\"40\" placeholder=\"뜻을 입력하세요\"><br>\n" +
             "                        </td>\n" +
             "                        <td>\n" +
-        //    "                            <button type=\"button\" class=\"btn\" onclick=\"Remove_WordBox(this)\"> 삭제 </button>\n" +
             "                            <button type=\"button\" class=\"btn\">삭제</button>\n" +
             "                        </td>\n" +
             "                      </tr>" +
@@ -422,6 +414,7 @@
 
     }
 
+
     /*
     const category = document.querySelector("input[category=category]"),
              title = document.querySelector("input[title=title]"),
@@ -463,10 +456,10 @@
                     pTag.append(text);
                 }
             })
-            .catch(function(error) { // 올바르게 불러오지 못했을 경우(생략가능)
+            .catch(function(error) {
                 console.log(error);
             })
-            .finally(function() { // 동작을 완료했을 경우(생략가능)
+            .finally(function() {
                 // always executed
                 console.log("always executed");
             });
