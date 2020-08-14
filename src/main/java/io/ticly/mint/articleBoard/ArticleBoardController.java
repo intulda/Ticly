@@ -5,10 +5,7 @@ import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.articleBoard.model.service.ArticleBoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,6 +39,7 @@ public class ArticleBoardController {
             // 관심 분야 데이터를 기반으로 아티클 불러와서 리스트에 담기
             List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
             model.addAttribute("articleList", list);
+            model.addAttribute("userInfo", user);
         }
         return "articleBoard/findArticle";
     }
@@ -49,15 +47,12 @@ public class ArticleBoardController {
     // 관심 분야 선택 완료 후 세션 처리 및 이동
     @GetMapping("choiceDone")
     public String choiceDone(Model model, HttpServletRequest req){
-        String[] categoriesStr = req.getParameterValues("categories");
-
+        System.out.println("choiceDone에 왔어");
         // 사용자의 권한과 관심 분야 세션에 등록하기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
         int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();
-        List<String> categories = new ArrayList<String>();
-        for(String key : categoriesStr) {
-            categories.add(key);
-        }
         MemberDTO dto = new MemberDTO(auth, categories);
+
         model.addAttribute("userInfo", dto);
 
         //세션에서 관심 분야 데이터 불러와 아티클 정보를 얻어서 리스트에 담기
@@ -68,5 +63,17 @@ public class ArticleBoardController {
         return "articleBoard/findArticle";
     }
 
+    // 아티클 찾기 페이지에서 관심 분야 탭 버튼을 누를 때 처
+    @GetMapping("categoryTabEvent")
+    @ResponseBody
+    public List<ArticleInfoDTO> getArticleInfo(Model model, HttpServletRequest req){
+        //  찾는 categories에 맞는 아티클 정보를 받아서 리스트에 넣어준다.
+        System.out.println("categoryTabEvent까지 왔어");
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        System.out.println("categories에 담았어");
+        List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
+        System.out.println("list에 담았어");
 
+        return list;
+    }
 }
