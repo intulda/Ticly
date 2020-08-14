@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
 @Controller
 public class AdminController {
 
@@ -11,5 +13,12 @@ public class AdminController {
     public String sayHello() {
         return "/admin/AdminArticleWrite";
     }
+
+    @GetMapping("/WriteTest")
+    public String Test() {
+        return "/admin/AdminArticleWriteDemo";
+    }
+
+
 
 }
