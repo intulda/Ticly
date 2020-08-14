@@ -1,15 +1,22 @@
 /* introPage */
 .introPage_Rectangle {
     display: flex;
-    height: 1080px;
-    width: 1920px;
+    height: 100%;
+    width: 100%;
     opacity: 0.98;
     background-color: rgba(0, 0, 0, 0.08);
+    align-items: center;
+}
+
+.introPage_Container {
+    height: 640px;
+    width: 980px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
 }
 
 .introPage_Mask {
-    margin-left: 470px;
-    margin-top: 220px;
     height: 640px;
     width: 980px;
     border-radius: 30px;
@@ -18,6 +25,21 @@
     flex-direction: column;
 }
 
+.intro_Button_Oval {
+    box-sizing: border-box;
+    border-radius: 100%;
+    height: 70px;
+    width: 70px;
+    border: 4px solid #FFFFFF;
+    background-color: #2B2D36;
+}
+
+.intro_Button_X {
+    font-size: 36px;
+    color: #FFFFFF;
+}
+
+
 .introPage_img {
     height: 366px;
     width: 775px;
@@ -25,7 +47,7 @@
 }
 
 .introPage_wordI {
-    margin-top: 50px;
+    margin-top: 35px;
     margin-left: 60px;
 }
 
