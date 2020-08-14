@@ -51,6 +51,6 @@ public class AdminArticleWriteService implements AdminArticleWriteServiceImpl {
     public void ArticleDelete(int ArticleNum) throws Exception {
         articleDAO.ArticleDelete(ArticleNum);
     }
-}
+
 
 }
