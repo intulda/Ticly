@@ -49,7 +49,7 @@ const signupButtonEvent = () => {
 /*    console.log(signupEmailCheck)
     console.log(signupPasswordCheck)
     console.log(signupPasswordCompare) */
-    if(signupEmailCheck && signupPasswordCheck && signupPasswordCompare && acceptTermCheck){
+    if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
         signupSubmitBtn.classList.remove('disabled');
     }else{
         signupSubmitBtn.classList.add('disabled');
@@ -138,7 +138,7 @@ acceptTermCheckBox.addEventListener("click", function (){
 
 //
 const onSignupHandler  = () => {
-    if(signupEmailCheck && signupPasswordCheck && signupPasswordCompare){
+    if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
         const email = signupEmailElem.value;
         const password = signupPasswordElem1.value;
 

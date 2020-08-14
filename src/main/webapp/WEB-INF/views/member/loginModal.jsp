@@ -159,7 +159,6 @@
                     };
 
                     axios({
-
                         method: 'post',
                         url: '/member/signup',
                         headers: { 'content-type': 'application/json' },
