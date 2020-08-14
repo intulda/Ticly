@@ -15,8 +15,10 @@ public class VocaDTO {
     private int USER_LEARNING_SEQ;
     private int ARTICLE_SEQ;
     private String VOCA;
+    private String MEANING;
     private int CHECK_READING;
     private int LAST_VOCA;
+    private int VOCA_ORDER;
 }
 
 

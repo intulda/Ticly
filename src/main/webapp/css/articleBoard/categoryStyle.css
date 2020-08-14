@@ -1,0 +1,124 @@
+.category__outer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.category__wrapper {
+    position: relative;
+    bottom: 2vw;
+    text-align: center;
+}
+
+.category__title > .h6{
+    margin-top: 1vw;
+    margin-bottom: 2.4vw;
+}
+
+.category__cards {
+    display: grid;
+    grid-template-columns : repeat(5, 1fr);
+    column-gap: 2rem;
+}
+
+.category__item {
+    position: relative;
+    max-height: 294px;
+    max-height: 294px;
+    text-align: center;
+    overflow: hidden;
+    padding-bottom: 1.7vw;
+}
+
+.category__item > img {
+    padding: 0.5vw 1vw 0.5vw;
+    width: 100%;
+}
+
+.category__item.card-item-basic {
+    transition: all 0.1s;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    border: 2px solid rgba(0, 168, 129, 0);
+    box-shadow: 0 -1px 5px 0 rgba(225, 225, 232, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(0, 168, 129, 0) inset;
+}
+
+.category__item.card-item-basic:hover {
+    box-shadow: 0 -2px 8px 0 rgba(225, 225, 232, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(0, 168, 129, 0) inset;
+}
+
+.category__item.card-item-active {
+    transition: all 0.1s;
+    color: #008E6D;
+    background-color: #D6F1EB;
+    border: 2px solid rgba(0, 168, 129, 1);
+}
+
+.category__item.card-item-active:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 56px;
+    height: 56px;
+    background-image: url("../../images/articleBoard/check_badge.svg");
+}
+
+.category__action-btns{
+    margin-top: 2.4vw;
+}
+
+.category__action-btns > button{
+    margin: 0 8px;
+    height: 52px;
+    padding: 11px 20px;
+}
+
+.hide {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .category__cards {
+        display: grid;
+        grid-template-columns : repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .category__action-btns{
+        margin-top: 4vw;
+    }
+}
+
+@media (max-width: 576px) {
+    .category__outer{
+        margin-top: 50px;
+        display: block;
+    }
+
+    .category__cards {
+        display: grid;
+        grid-template-columns : repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .category__action-btns{
+        margin-top: 4vw;
+    }
+
+    .category__action-btns > button{
+        width: 100%;
+        margin: 4px 0;
+        height: 52px;
+        padding: 11px 20px;
+    }
+
+
+    .category__title > .h6{
+        font-size: 14px;
+        margin-top: 8px;
+        margin-bottom: 24px;
+    }
+
+}

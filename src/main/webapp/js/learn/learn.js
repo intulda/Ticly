@@ -16,7 +16,7 @@ import WordSetCard from './wordSet.js';
         return resData;
     }
     vocaList().then(response => {
-        response.data
+        console.log(response.data)
     }).catch(error => console.log(error));
 
     //tab event

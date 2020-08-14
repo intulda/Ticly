@@ -10,6 +10,10 @@
   font-display: block;
 }
 
+.btn > i[class*='icon'], .btn > i[class^='icon']{
+ 
+}
+
 i[class^="icon"], i[class*="icon"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'ticly_icon' !important;
