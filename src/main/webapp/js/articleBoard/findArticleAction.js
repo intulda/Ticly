@@ -7,14 +7,13 @@ import ArticleCard from './articleCard.js';
         categoriesStr = document.querySelectorAll(".js-categories-str");
 
     const NEW_ARTICLE_CARD_PATH = "getNewArticleInfo?",
-        POPULAR_ARTICLE_CARD_PATH = "getPopularArticleInfo?"
-    ;
+        POPULAR_ARTICLE_CARD_PATH = "getPopularArticleInfo?";
 
     // 화면 로드시 아티클 카드를 그려주 함수
     function pageLoadEvent() {
         let pathToNewArticle = NEW_ARTICLE_CARD_PATH;
         let pathToPopularArticle = POPULAR_ARTICLE_CARD_PATH;
-        const categoriesArr = [];
+        let categoriesArr = [];
 
         categoriesStr.forEach(el => {
             categoriesArr.push(el.value);

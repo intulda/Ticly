@@ -29,14 +29,12 @@ public class ArticleBoardController {
         return "articleBoard/category";
     }
 
-    // 이미 관심 분야를 선택했다면, 아티클 찾기 페이지로 단순 이동
+    // 이미 관심 분야를 선택했다면, 아티클 찾기 페이지로 이동.
     @GetMapping(value ="findArticle")
     public String goToFindArticlePage(Model model){
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
-        if(user.getCategories() != null) {
-            List<String> categories = user.getCategories();
-            model.addAttribute("userInfo", user);
-        }
+        model.addAttribute("userInfo", user);
+
         return "articleBoard/findArticle";
     }
 
@@ -53,7 +51,7 @@ public class ArticleBoardController {
         return "articleBoard/findArticle";
     }
 
-    // 아티클 찾기 페이지 카드 정보 로드를 위한 동적 데이터 처리
+    // 아티클 찾기 페이지에서 *새로운* 아티클 정보 로드를 위한 동적 데이터 처리
     @GetMapping("getNewArticleInfo")
     @ResponseBody
     public List<ArticleInfoDTO> getNewArticleInfo(Model model, HttpServletRequest req){
@@ -64,6 +62,7 @@ public class ArticleBoardController {
         return newList;
     }
 
+    // 아티클 찾기 페이지에서 *인기* 아티클 정보 로드를 위한 동적 데이터 처리
     @GetMapping("getPopularArticleInfo")
     @ResponseBody
     public List<ArticleInfoDTO> getPopularArticleInfo(Model model, HttpServletRequest req){
@@ -72,5 +71,32 @@ public class ArticleBoardController {
         List<ArticleInfoDTO> popularList = articleBoardService.findPopularMyTypeArticle(categories);
 
         return popularList;
+    }
+
+    // 검색시 search 페이지로 단순 이동
+    @GetMapping("goToSearchPage")
+    public String goToSearchPage(Model model, HttpServletRequest req){
+
+        // 키워드 및 사용자 정보 내보내기
+        MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+        model.addAttribute("userInfo", user);
+
+        String searchKeyword = req.getParameter("searchKeyword");
+        model.addAttribute("searchKeyword", searchKeyword);
+
+        return "articleBoard/search";
+    }
+
+    // 검색 페이지에서 검색어를 만족하는 아티클 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("findArticleBySearch")
+    @ResponseBody
+    public List<ArticleInfoDTO> findArticleBySearch(Model model, HttpServletRequest req){
+
+        // 사용자가 입력한 검색어를 만족하는 아티클을 불러와서 리스트에 담기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        String searchKeyword = req.getParameter("searchKeyword");
+        List<ArticleInfoDTO> searchResultArticleList = articleBoardService.findArticleBySearch(categories, searchKeyword);
+
+        return searchResultArticleList;
     }
 }

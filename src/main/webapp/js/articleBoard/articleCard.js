@@ -27,13 +27,13 @@ class ArticleCard {
             <div class="card__body">
                 <div class="card__body-tag">
                      <span class="badge badge-neutral">${this.categoryTitle}</span>
-                    <span class="text body2 text-color-gray300">${this.hashtag}</span>
+                    <span class="text body2 text-color-gray300 text-weight-regular">${this.hashtag}</span>
                 </div>
                 <h4 class="card__body-title text text-color-gray100 text-weight-medium">${this.title}</h4>
                 <p class="text body1 text-color-gray200">${this.summary}</p>
             </div>
             <div class="card__footer">
-                <p class="text body1 text-color-gray300 ">${this.regDate}</p>
+                <p class="text body1 text-color-gray300">${this.regDate}</p>
             </div>
 			`
         return this.element;

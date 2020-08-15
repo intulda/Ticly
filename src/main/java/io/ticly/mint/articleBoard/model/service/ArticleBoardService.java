@@ -24,7 +24,7 @@ public class ArticleBoardService {
 
     /**
      * 선택한 관심 분야와 동일한 최신 아티클 찾기
-     * @param  'list' : categoryArr	사용자가 선택한 관심 분야
+     * @param  'list' : 'categoryArr'   사용자가 선택한 관심 분야
      */
     public List<ArticleInfoDTO> findNewMyTypeArticle(List<String> categories) {
         return articleBoardDAO.findNewMyTypeArticle(categories);
@@ -32,15 +32,15 @@ public class ArticleBoardService {
 
     /**
      * 선택한 관심 분야와 동일한 인기 아티클 찾기
-     * @param  'list' : categoryArr	사용자가 선택한 관심 분야
+     * @param  'list' : 'categoryArr'	사용자가 선택한 관심 분야
      */
     public List<ArticleInfoDTO> findPopularMyTypeArticle(List<String> categories) {
         return articleBoardDAO.findPopularMyTypeArticle(categories);
     }
 
     /**
-     * 사용자가 선택 카테고리를 불러오는 메소드
-     * @return List<String> categories
+     * 사용자가 선택한 카테고리를 불러오는 메소드
+     * @return 'List<String>' : 'categories'
      */
     public List<String> getCategoriesAtParameter(Model model, HttpServletRequest req){
         // 전송받은 "categories"의 값을 낚아채 리스트에 넣어준다.
@@ -50,5 +50,14 @@ public class ArticleBoardService {
             categories.add(key);
         }
         return categories;
+    }
+
+    /**
+     * 전달된 키워드와 동일한 아티클을 찾는 메소드
+     * @param  'list'   : 'categoryArr'     사용자가 선택한 관심 분야
+     * @param  'String' : 'searchKeyword'   사용자가 입력한 키워드
+     */
+    public List<ArticleInfoDTO> findArticleBySearch(List<String> categories, String searchKeyword) {
+        return articleBoardDAO.findArticleBySearch(categories, searchKeyword);
     }
 }

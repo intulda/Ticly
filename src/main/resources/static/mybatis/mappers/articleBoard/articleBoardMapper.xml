@@ -37,4 +37,22 @@
             AND c.CATEGORY IN (${categoryStr})
         ORDER BY a.APPLY_COUNT DESC
     </select>
+
+    <select id="findArticleBySearch" parameterType="hashmap" resultType="ArticleInfoDTO">
+        SELECT
+            a.ARTICLE_SEQ,
+            a.TITLE,
+            a.SUMMARY,
+            a.URL,
+            a.HASHTAG,
+            c.CATEGORY AS CATEGORY_TITLE,
+            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
+            a.DEL,
+            a.APPLY_COUNT
+        FROM ARTICLE a, CATEGORY c
+        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
+            AND c.CATEGORY IN (${categoryStr})
+            AND UPPER(a.TITLE) LIKE UPPER(${searchKeyword})
+        ORDER BY a.REG_DATE DESC
+    </select>
 </mapper>

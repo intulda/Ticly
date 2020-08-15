@@ -13,7 +13,7 @@ import java.util.List;
 public class HomeController {
 
     /**
-     * 사이트 진입시 세션을 확인해 이동시키는 메소
+     * 사이트 진입시 세션을 확인해 이동시키는 메소드 
      * @param model 세션 활용을 위한 모델
      * @return path 이동경로
      */
