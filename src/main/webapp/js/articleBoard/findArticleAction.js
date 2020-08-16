@@ -153,8 +153,9 @@ import ArticleCard from './articleCard.js';
     // init
     function init() {
         window.onload = () => {
-            pageLoadEvent()
+            pageLoadEvent();
         };
+
         categoryTabBtn.forEach(el => {
             el.addEventListener("click", handleCategoryTabClickEvent);
             el.addEventListener("click", categoryTabBtnEvent);

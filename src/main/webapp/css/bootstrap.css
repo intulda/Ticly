@@ -4726,11 +4726,7 @@ input[type="button"].btn-block {
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
     list-style: none;
-    background-color: #F0F0F5;
-    border-radius: 0.313rem;
 }
 
 .breadcrumb-item {
@@ -4745,7 +4741,7 @@ input[type="button"].btn-block {
     display: inline-block;
     padding-right: 0.5rem;
     color: #525463;
-    content: "/";
+    content: ">";
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {

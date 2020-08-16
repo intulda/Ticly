@@ -1,0 +1,22 @@
+.search__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search__breadcrumb{
+    text-align: right;
+    padding-left: 0;
+    margin: 0;
+}
+
+.search__null{
+    position: relative;
+    text-align: center;
+    line-height: 1.6;
+    min-height: 100px;
+    padding: 3rem;
+    background-color: #F7F7FA;
+    border-radius: 0.938rem;
+
+}

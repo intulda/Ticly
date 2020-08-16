@@ -165,33 +165,3 @@ button.category__tab:hover {
         margin-left: 0;
     }
 }
-
-.input-add-item {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 260px;
-    padding: 0;
-}
-
-.input-add-item > input {
-    padding: 0 3rem 0 0.875rem;
-    border-radius: 10rem;
-}
-
-.input-add-item > button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 0.875rem;
-    border: none;
-}
-
-.input-add-item > button:focus {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-}

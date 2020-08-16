@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -83,15 +81,14 @@ public class ArticleBoardController {
 
         String searchKeyword = req.getParameter("searchKeyword");
         model.addAttribute("searchKeyword", searchKeyword);
-
-        return "articleBoard/search";
+        return "articleBoard/searchResult";
     }
 
     // 검색 페이지에서 검색어를 만족하는 아티클 정보 로드를 위한 동적 데이터 처리
     @GetMapping("findArticleBySearch")
     @ResponseBody
     public List<ArticleInfoDTO> findArticleBySearch(Model model, HttpServletRequest req){
-
+        System.out.println("findArticleBySearch");
         // 사용자가 입력한 검색어를 만족하는 아티클을 불러와서 리스트에 담기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
         String searchKeyword = req.getParameter("searchKeyword");
