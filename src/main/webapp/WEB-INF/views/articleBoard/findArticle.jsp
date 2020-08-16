@@ -16,12 +16,17 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/findArticleStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchBarStyle.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
 
+    <!-- script -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
+    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 </head>
 <body>
 
@@ -84,10 +89,5 @@
 <c:forEach items="${userInfo.categories}" var="category">
     <input type="hidden" class="js-categories-str" value=${category}>
 </c:forEach>
-
-<!-- script -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
-<script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 </body>
 </html>

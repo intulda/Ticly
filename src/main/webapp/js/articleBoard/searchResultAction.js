@@ -1,4 +1,5 @@
 import ArticleCard from './articleCard.js';
+import SkeletonCard from './skeletonCard.js';
 
 (() => {
     const categoryTabBtn = document.querySelectorAll(".js-category-tab"),
@@ -16,6 +17,10 @@ import ArticleCard from './articleCard.js';
 
     // 화면 로드시 아티클 카드를 그려주 함수
     function pageLoadEvent() {
+        for (let i = 0; i < 6; i++){
+            searchResultCardOuter.appendChild(new SkeletonCard().getElements());
+        }
+
         let pathToSearchResult = SEARCH_RESULT_ARTICLE_CARD_PATH;
         const categoriesArr = [];
 

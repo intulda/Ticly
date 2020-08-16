@@ -1,4 +1,5 @@
 import ArticleCard from './articleCard.js';
+import SkeletonCard from './skeletonCard.js';
 
 (() => {
     const categoryTabBtn = document.querySelectorAll(".js-category-tab"),
@@ -9,27 +10,16 @@ import ArticleCard from './articleCard.js';
     const NEW_ARTICLE_CARD_PATH = "getNewArticleInfo?",
         POPULAR_ARTICLE_CARD_PATH = "getPopularArticleInfo?";
 
-    // 화면 로드시 아티클 카드를 그려주 함수
-    function pageLoadEvent() {
-        let pathToNewArticle = NEW_ARTICLE_CARD_PATH;
-        let pathToPopularArticle = POPULAR_ARTICLE_CARD_PATH;
-        let categoriesArr = [];
+    // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
+    function handleCategoryTabClickEvent(ev) {
+        let target = ev.target;
 
-        categoriesStr.forEach(el => {
-            categoriesArr.push(el.value);
+        categoryTabBtn.forEach(el => {
+            el.classList.add("inactive");
+            el.classList.remove("active");
         });
-
-        // url에 배열 요소 붙여서 전송하기
-        categoriesArr.forEach((el, index) => {
-            pathToNewArticle += "categories=" + el;
-            pathToPopularArticle += "categories=" + el;
-            if (index < categoriesArr.length - 1) {
-                pathToNewArticle += "&";
-                pathToPopularArticle += "&";
-            }
-        });
-        getAndPaintNewArticleInfo(pathToNewArticle);
-        getAndPaintPopularArticleInfo(pathToPopularArticle);
+        target.classList.add("active");
+        target.classList.remove("inactive");
     }
 
     // 관심 분야 버튼을 눌렀을 때 이벤트
@@ -59,30 +49,30 @@ import ArticleCard from './articleCard.js';
             pathToNewArticle += "&categories=" + target.value;
             pathToPopularArticle += "&categories=" + target.value;
         }
-        getAndPaintNewArticleInfo(pathToNewArticle);
-        getAndPaintPopularArticleInfo(pathToPopularArticle);
+
+        getAndPaintArticleInfo(pathToNewArticle, newSectionCardOuter);
+        getAndPaintArticleInfo(pathToPopularArticle, popularSectionCardOuter);
     }
 
-    // 최신 아티클 정보 받아와서 화면에 그려주는 함수
-    function getAndPaintNewArticleInfo(pathToNewArticle) {
+    // 아티클 정보 받아와서 화면에 그려주는 함수
+    function getAndPaintArticleInfo(path, section) {
         // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
         axios({
             method: 'get',
-            url   : pathToNewArticle
+            url   : path
         })
             .then(function (json) {
                 console.log("Receive Success!");
-                console.log(json);
 
                 // newSectionCardOuter의 모든 자식 요소 삭제
-                while (newSectionCardOuter.hasChildNodes()) {
-                    newSectionCardOuter.removeChild(newSectionCardOuter.firstChild);
+                while (section.hasChildNodes()) {
+                    section.removeChild(section.firstChild);
                 }
 
                 // 화면에 새롭게 요소 그려주기
                 let count = 0;
                 for (let key of json.data) {
-                    newSectionCardOuter.appendChild(new ArticleCard(
+                    section.appendChild(new ArticleCard(
                         JSON.stringify(key.article_seq)
                         , JSON.stringify(key.url)
                         , JSON.stringify(key.category_title)
@@ -100,54 +90,36 @@ import ArticleCard from './articleCard.js';
             });
     }
 
-    // 인기 아티클 정보 받아와서 화면에 그려주는 함수
-    function getAndPaintPopularArticleInfo(pathToPopularArticle) {
-        // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
-        axios({
-            method: 'get',
-            url   : pathToPopularArticle
-        })
-            .then(function (json) {
-                console.log("Receive Success!");
-                console.log(json);
+    // 화면 로드시 아티클 카드를 그려주 함수
+    function pageLoadEvent() {
+        for (let i = 0; i < 3; i++){
+            newSectionCardOuter.appendChild(new SkeletonCard().getElements());
+        }
 
-                // newSectionCardOuter의 모든 자식 요소 삭제
-                while (popularSectionCardOuter.hasChildNodes()) {
-                    popularSectionCardOuter.removeChild(popularSectionCardOuter.firstChild);
-                }
+        for (let i = 0; i < 3; i++){
+            popularSectionCardOuter.appendChild(new SkeletonCard().getElements());
+        }
 
-                // 화면에 새롭게 요소 그려주기
-                let count = 0;
-                for (let key of json.data) {
-                    popularSectionCardOuter.appendChild(new ArticleCard(
-                        JSON.stringify(key.article_seq)
-                        , JSON.stringify(key.url)
-                        , JSON.stringify(key.category_title)
-                        , JSON.stringify(key.hashtag)
-                        , JSON.stringify(key.title)
-                        , JSON.stringify(key.summary)
-                        , JSON.stringify(key.reg_date)
-                    ).getElements());
-                    count++;
+        let pathToNewArticle = NEW_ARTICLE_CARD_PATH;
+        let pathToPopularArticle = POPULAR_ARTICLE_CARD_PATH;
+        let categoriesArr = [];
 
-                    if (count === 3){
-                        return;
-                    }
-                }
-            });
-    }
-
-
-    // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
-    function handleCategoryTabClickEvent(ev) {
-        let target = ev.target;
-
-        categoryTabBtn.forEach(el => {
-            el.classList.add("inactive");
-            el.classList.remove("active");
+        categoriesStr.forEach(el => {
+            categoriesArr.push(el.value);
         });
-        target.classList.add("active");
-        target.classList.remove("inactive");
+
+        // url에 배열 요소 붙여서 전송하기
+        categoriesArr.forEach((el, index) => {
+            pathToNewArticle += "categories=" + el;
+            pathToPopularArticle += "categories=" + el;
+            if (index < categoriesArr.length - 1) {
+                pathToNewArticle += "&";
+                pathToPopularArticle += "&";
+            }
+        });
+
+        getAndPaintArticleInfo(pathToNewArticle, newSectionCardOuter);
+        getAndPaintArticleInfo(pathToPopularArticle, popularSectionCardOuter);
     }
 
     // init

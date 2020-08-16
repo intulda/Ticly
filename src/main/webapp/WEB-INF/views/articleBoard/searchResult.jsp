@@ -16,12 +16,18 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/findArticleStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchResultStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchBarStyle.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
+
+    <!-- script -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchResultAction.js"></script>
+    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 
 </head>
 <body>
@@ -67,8 +73,8 @@
     <div class="findArticle__section">
         <div class="search__header">
             <div class="findArticle__section-title text h4 text-color-gray300 text-weight-light">
-                <b class="text text-color-gray100 text-weight-bold">'${searchKeyword}'</b>
-                에 대한 <b class="js-category-value text text-color-gray100 text-weight-bold">모든</b> 검색 결과
+                <b class="text text-color-gray100 text-weight-bold">'${searchKeyword}'</b>에 대한
+                <b class="js-category-value text text-color-gray100 text-weight-bold">모든</b> 검색 결과
                 <b class="js-searchResult-count text text-color-green text-weight-bold">0개</b>
             </div>
             <ol class="search__breadcrumb breadcrumb">
@@ -89,9 +95,5 @@
     <!-- 검색 키워드-->
     <input type="hidden" class="js-search-keyword" value=${searchKeyword}>
 
-    <!-- script -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchResultAction.js"></script>
-    <script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 </body>
 </html>
