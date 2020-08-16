@@ -1,7 +1,7 @@
 package io.ticly.mint.member.service;
 
 import io.ticly.mint.member.dao.MemberDAO;
-import io.ticly.mint.member.dto.MemberDTO;
+import io.ticly.mint.member.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,11 +15,11 @@ public class MemberService {
 
     /**
      * 로그인시 가입여부 확인
-     * @param memberDTO
+     * @param userDTO
      * @return 1이면 로그인 가능, 1이 아니면 로그인 불가
      */
-    public int findMemberSignin(MemberDTO memberDTO){
-        int result = memberDAO.findMemberSignin(memberDTO);
+    public int findMemberSignin(UserDTO userDTO){
+        int result = memberDAO.findMemberSignin(userDTO);
         return result;
     }
 
@@ -35,18 +35,18 @@ public class MemberService {
 
     /**
      * 회원가입 데이터 저장
-     * @param memberDTO
+     * @param userDTO
      * @return
      */
-    public int insertNewMember(MemberDTO memberDTO){
+    public int insertNewMember(UserDTO userDTO){
 
         //닉네임 가져오기
-        String email = memberDTO.getEmail();
+        String email = userDTO.getEmail();
         int nicknamePoint = email.indexOf("@");
         String nickname = email.substring(0,nicknamePoint);
-        memberDTO.setNickname(nickname);
+        userDTO.setNickname(nickname);
 
         //Dao로 넘기기
-        return memberDAO.insertNewMember(memberDTO);
+        return memberDAO.insertNewMember(userDTO);
     }
 }

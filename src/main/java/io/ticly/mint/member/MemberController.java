@@ -1,11 +1,9 @@
 package io.ticly.mint.member;
 
-import io.ticly.mint.member.dto.MemberDTO;
+import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 ;
 
 @Controller
@@ -43,14 +41,14 @@ public class MemberController {
 
     /**
      * 로그인시 가입여부 확인
-     * @param memberDTO
+     * @param userDTO
      * @return 1이면 로그인 가능, 0이면 로그인 불가
      */
     @PostMapping("/member/signin")
     @ResponseBody
-    public int memberSignin(@RequestBody MemberDTO memberDTO) {
+    public int memberSignin(@RequestBody UserDTO userDTO) {
         int checkNum = 0;
-        checkNum = memberService.findMemberSignin(memberDTO);
+        checkNum = memberService.findMemberSignin(userDTO);
 
         return checkNum;
     }
@@ -70,14 +68,14 @@ public class MemberController {
 
     /**
      * 이메일로 회원가입시, 멤버 데이터 저장
-     * @param memberDTO
+     * @param userDTO
      * @return 1이면 데이터 입력 성공
      */
     @PostMapping("/member/signup")
     @ResponseBody
-    public int memberSignup(@RequestBody MemberDTO memberDTO) {
+    public int memberSignup(@RequestBody UserDTO userDTO) {
         int checkNum = 0;
-        checkNum = memberService.insertNewMember(memberDTO);
+        checkNum = memberService.insertNewMember(userDTO);
 
         return checkNum;
     }

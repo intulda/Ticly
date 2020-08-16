@@ -1,6 +1,6 @@
 package io.ticly.mint.member.dao;
 
-import io.ticly.mint.member.dto.MemberDTO;
+import io.ticly.mint.member.dto.UserDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +16,12 @@ public class MemberDAO {
 
     /**
      * 로그인시 가입 여부 확인
-     * @param memberDTO
+     * @param userDTO
      * @return
      */
-    public int findMemberSignin(MemberDTO memberDTO){
-        System.out.println(memberDTO.getEmail() +" " + memberDTO.getPassword());
-        int result = sqlSessionTemplate.selectOne("memberMapper.findMemberSignin", memberDTO);
+    public int findMemberSignin(UserDTO userDTO){
+        System.out.println(userDTO.getEmail() +" " + userDTO.getPassword());
+        int result = sqlSessionTemplate.selectOne("memberMapper.findMemberSignin", userDTO);
         System.out.println("MemberDTO result : "+ result);
         return result;
     }
@@ -38,12 +38,12 @@ public class MemberDAO {
 
     /**
      * 회원가입시 멤버 데이터 저장
-     * @param memberDTO
+     * @param userDTO
      * @return
      */
-    public int insertNewMember(MemberDTO memberDTO){
+    public int insertNewMember(UserDTO userDTO){
         int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.signup", memberDTO);
+        checkNum = sqlSessionTemplate.insert("memberMapper.signup", userDTO);
         System.out.println("MemberDAO checkNum : " + checkNum);
         return checkNum;
     }
