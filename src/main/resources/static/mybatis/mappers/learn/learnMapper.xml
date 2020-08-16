@@ -65,19 +65,22 @@
             USER_LEARNING_SEQ,
             ARTICLE_SEQ,
             VOCA,
-            VOCA_ORDER
+            VOCA_ORDER,
+            VOCA_GROUP
         ) SELECT
             USER_VOCA_PK_SEQ.nextval AS USER_VOCA_SEQ,
             USER_LEARNING_SEQ,
             ARTICLE_SEQ,
             VOCA,
-            VOCA_ORDER
+            VOCA_ORDER,
+            VOCA_GROUP
         FROM (
             SELECT
                 UL.USER_LEARNING_SEQ,
                 ARTI_VOCA.ARTICLE_SEQ,
                 ARTI_VOCA.VOCA,
-                VOCA_ORDER
+                VOCA_ORDER,
+                VOCA_GROUP
             FROM ARTICLE_VOCABOOK ARTI_VOCA,
                  USER_LEARNING UL
             WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
@@ -95,7 +98,8 @@
             VB.MEANING,
             UV.CHECK_READING,
             UV.LAST_VOCA,
-            UV.VOCA_ORDER
+            UV.VOCA_ORDER,
+            UV.VOCA_GROUP
         FROM USER_VOCA UV,
              VOCABOOK VB,
              ARTICLE_VOCABOOK AV
