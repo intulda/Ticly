@@ -4,6 +4,8 @@ import io.ticly.mint.member.dao.MemberDAO;
 import io.ticly.mint.member.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberService {
 
@@ -16,11 +18,14 @@ public class MemberService {
     /**
      * 로그인시 가입여부 확인
      * @param userDTO
-     * @return 1이면 로그인 가능, 1이 아니면 로그인 불가
+     * @return
      */
-    public int findMemberSignin(UserDTO userDTO){
-        int result = memberDAO.findMemberSignin(userDTO);
-        return result;
+    public UserDTO findMemberSignin(UserDTO userDTO){
+        return memberDAO.findMemberInfo(userDTO);
+    }
+
+    public List<String> getUserCategories(String email){
+        return memberDAO.getUserCategories(email);
     }
 
     /**

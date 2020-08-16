@@ -4,12 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
     <!-- ///////////////////// 로그인 로직 ///////////////////// -->
-    <select id="findMemberSignin" resultType="int">
-        SELECT COUNT(*)
+    <!-- 로그인시 가입 여부와 회원정보를 가져오기 위한 SQL -->
+    <select id="findMemberLogin" resultType="UserDTO">
+        SELECT EMAIL, NICKNAME, AUTH
         FROM MEMBER
-        WHERE EMAIL = #{email} AND PASSWORD = #{password}
+        WHERE DEL != 1
+        AND EMAIL = #{email} AND PASSWORD = #{password}
     </select>
-    
+
+    <!-- 로그인한 회원의 카테고리 데이터를 가져오기 위한 SQL -->
+    <select id="getUserCategories" resultType="String">
+        SELECT CATEGORY
+        FROM MEMBER_CATEGORIES MEMBER_CATE, CATEGORY CATE
+        WHERE MEMBER_CATE.CATEGORY_SEQ = CATE.CATEGORY_SEQ
+        AND MEMBER_CATE.EMAIL = #{email}
+    </select>
     
     <!-- ///////////////////// 회원가입 로직 ///////////////////// -->
     <!-- 이메일 중복확인 SQL -->

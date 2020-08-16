@@ -1,10 +1,13 @@
 package io.ticly.mint.member;
 
+import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-;
+;import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class MemberController {
@@ -42,15 +45,26 @@ public class MemberController {
     /**
      * 로그인시 가입여부 확인
      * @param userDTO
-     * @return 1이면 로그인 가능, 0이면 로그인 불가
+     * @return String : 로그인 성공시 '로그인 성공' Stirng 반환
      */
     @PostMapping("/member/signin")
     @ResponseBody
-    public int memberSignin(@RequestBody UserDTO userDTO) {
-        int checkNum = 0;
-        checkNum = memberService.findMemberSignin(userDTO);
+    public String memberSignin(@RequestBody UserDTO userDTO, Model model) {
+        System.out.println(userDTO.getEmail() + userDTO.getPassword());
+        UserDTO userInfo = memberService.findMemberSignin(userDTO);
 
-        return checkNum;
+        //가져온 회원정보가 null이 아닐때, 로그인이 가능할 때
+        if(userInfo != null){
+            //DB에서 회원 카테고리 정보 가져오기
+            List<String> categories = memberService.getUserCategories(userInfo.getEmail());
+            MemberDTO memberDTO = new MemberDTO(userInfo.getEmail(), userInfo.getNickname(), userInfo.getAuth(), categories);
+            model.addAttribute("userInfo", memberDTO);
+            MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+            System.out.println("테스트 : "+user.getAuth());
+            return "로그인성공";
+        }else{ //가져온 회원정보가 없으면, 로그인 불가
+            return "회원정보없음";
+        }
     }
 
     /**

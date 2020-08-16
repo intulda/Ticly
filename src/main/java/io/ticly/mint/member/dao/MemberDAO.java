@@ -4,6 +4,8 @@ import io.ticly.mint.member.dto.UserDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class MemberDAO {
 
@@ -19,11 +21,12 @@ public class MemberDAO {
      * @param userDTO
      * @return
      */
-    public int findMemberSignin(UserDTO userDTO){
-        System.out.println(userDTO.getEmail() +" " + userDTO.getPassword());
-        int result = sqlSessionTemplate.selectOne("memberMapper.findMemberSignin", userDTO);
-        System.out.println("MemberDTO result : "+ result);
-        return result;
+    public UserDTO findMemberInfo(UserDTO userDTO){
+        return sqlSessionTemplate.selectOne("memberMapper.findMemberLogin", userDTO);
+    }
+
+    public List<String> getUserCategories(String email){
+        return sqlSessionTemplate.selectList("memberMapper.getUserCategories", email);
     }
 
     /**
