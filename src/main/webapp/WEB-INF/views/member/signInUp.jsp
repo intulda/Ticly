@@ -161,16 +161,6 @@
 
 <script>
     (() => {
-        /**
-        var naverLogin = new naver.LoginWithNaverId(
-            {
-                isPopup: true
-            }
-        ); */
-
-        /* 설정정보를 초기화하고 연동을 준비
-        naverLogin.init(); */
-
 
         /* 모달 내 이동*/
         //모달 열기
