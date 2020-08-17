@@ -27,13 +27,25 @@ class ArticleTable {
     getElements(obj) {
         this.elements = document.createElement("tr");
         if(obj != null) {
-            this.elements.innerHTML = `<td class="text">${obj.voca}</td>
+            this.elements.innerHTML = `
+            <td>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="tableAllCheck${obj.voca_order}" class="custom-control-input learning-table-checkbox" data-obj="${obj.user_voca_seq}">
+                    <label class="custom-control-label" for="tableAllCheck${obj.voca_order}"></label>
+                </div>
+            </td>
+            <td class="text">${obj.voca}</td>
                 <td class="text">${obj.meaning}</td>
                 <td class="text">
                     <span class="text text-weight-light badge ${obj.check_reading == 1 ? 'badge-primary' : 'badge-neutral'} ">${obj.check_reading == 1 ? '완료' : '미완료'}</span>
-             </td>`;
+             </td>
+             <td>
+                <i class="icon_pen"></i>
+                <i class="icon_trash"></i>
+             </td>
+                `;
         } else {
-            this.elements.innerHTML = `<td class="text text-center" colspan="3">등록 된 단어가 없습니다.</td>`;
+            this.elements.innerHTML = `<td class="text text-center" colspan="5">등록 된 단어가 없습니다.</td>`;
         }
         return this.elements;
     }

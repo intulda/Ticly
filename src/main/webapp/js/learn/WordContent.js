@@ -6,33 +6,45 @@ class WordContent {
     process() {
         const getElementsArray = [];
         let checkPoint = -1;
-        for(let i=0; i<this.data.length; i++) {
 
+        const readingCount = this.data.filter((obj) => {
+            return obj.check_reading == 0
+        })
 
-            if(this.data[i].check_reading === 0) {
+        if(readingCount.length == 0) {
+            for(let i=0; i<this.data.length; i++) {
                 let className = 'word-list-hide';
-                if(checkPoint == -1) {
-                    checkPoint = this.data[i].voca_order;
-                    className = 'act';
-                }
-                getElementsArray.push(this.getElements(this.data[i], className));
-            } else if(this.data[i].check_reading === 1) {
-                let className = 'word-list-end'
-
-                if(checkPoint != -1) {
-                    if (checkPoint < this.data[i].voca_order) {
-                        className = 'word-list-hide'
-                    } else if (checkPoint > this.data[i].voca_order) {
-                        className = 'word-list-end'
-                    }
-                }
-
-                if(this.data[this.data.length-1] === this.data[i]) {
+                if(i == 0) {
                     className = 'act';
                 }
                 getElementsArray.push(this.getElements(this.data[i], className));
             }
+        } else {
+            for(let i=0; i<this.data.length; i++) {
+                if(this.data[i].check_reading === 0) {
+                    let className = 'word-list-hide';
+                    if(checkPoint == -1) {
+                        checkPoint = this.data[i].voca_order;
+                        className = 'act';
+                    }
+                    getElementsArray.push(this.getElements(this.data[i], className));
+                } else if(this.data[i].check_reading === 1) {
+                    let className = 'word-list-end'
+                    if(checkPoint != -1) {
+                        if (checkPoint < this.data[i].voca_order) {
+                            className = 'word-list-hide'
+                        } else if (checkPoint > this.data[i].voca_order) {
+                            className = 'word-list-end'
+                        }
+                    }
 
+                    if(this.data[this.data.length-1] === this.data[i]) {
+                        className = 'act';
+                    }
+
+                    getElementsArray.push(this.getElements(this.data[i], className));
+                }
+            }
         }
         return getElementsArray;
     }
@@ -40,7 +52,7 @@ class WordContent {
     getContentInformation() {
         let _count = 0;
         for(let obj of this.data) {
-            if(obj.checkReading === 1) {
+            if(obj.check_reading === 1) {
                 _count++;
             }
         }

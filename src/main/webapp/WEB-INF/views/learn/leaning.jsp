@@ -242,9 +242,8 @@
                             <span class="table-word-set-count">(10)</span>
                         </div>
                         <div class="leaning-contents-table-add-word">
-                            <button class="btn btn-secondary btn-custom-option table-word-add-btn">
-                                <i class="icon_plus"></i>
-                                단어 추가하기
+                            <button class="btn btn-outline-danger table-word-delet-btn">
+                                삭제하기
                             </button>
                         </div>
                     </div>
@@ -252,6 +251,12 @@
                         <table class="leaning-table">
                             <thead>
                                 <tr>
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="tableAllCheck" class="custom-control-input learning-table-checkbox">
+                                            <label class="custom-control-label" for="tableAllCheck"></label>
+                                        </div>
+                                    </th>
                                     <th class="text">
                                         단어
                                         <i class="icon_sort"></i>
@@ -261,8 +266,11 @@
                                         <i class="icon_sort"></i>
                                     </th>
                                     <th class="text">
-                                        공부 상태
+                                        상태
                                         <i class="icon_sort"></i>
+                                    </th>
+                                    <th>
+
                                     </th>
                                 </tr>
                             </thead>
@@ -297,6 +305,12 @@
                                 </tr>
                                 </tbody>
                         </table>
+                        <div class="leaning-contents-table-down">
+                            <button class="btn btn-outline-primary" id="tableWordAdd">
+                                <i class="icon_plus"></i>
+                                단어 추가하기
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

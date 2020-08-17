@@ -90,6 +90,15 @@ import WordContent from './WordContent.js';
         wordSetProcess() {
             this.wordSetElem.innerHTML = "";
             for(let i=1; i<=this.groupMaxCount; i++) {
+                if(this.currentCount == this.groupDataFilter(i).length) {
+                    this.triggerNumber = i-1;
+                    break;
+                }
+            }
+
+
+
+            for(let i=1; i<=this.groupMaxCount; i++) {
                 this.group = i;
                 for(let j=0; j<this.data.length; j++) {
                     if(i == this.data[j].voca_group) {
@@ -97,14 +106,7 @@ import WordContent from './WordContent.js';
                             this.currentCount++;
                         }
                     }
-
-                    if(this.currentCount == this.data[j].length) {
-                        continue
-                    } else {
-                        this.triggerNumber = i-1;
-                    }
                 }
-
                 this.wordSetAdd(this.groupDataFilter(i).length);
                 this.group = this.groupMaxCount + 1;
                 this.currentCount = 0;
@@ -139,7 +141,6 @@ import WordContent from './WordContent.js';
                 this.articleWordTableElem.appendChild(obj);
             }
             tableInformationElem.innerHTML = _elements.getTableInformation(groupNum);
-            console.log(1);
         }
 
         wordContentFilter(groupNum) {
@@ -191,9 +192,11 @@ import WordContent from './WordContent.js';
         context.lineCap = 'round';
         context.strokeStyle = '#257FF9';
         context.stroke();
-        pie += 0.05;
+        pie += 0.035;
         restart = requestAnimationFrame(circleProgress);
-        if (pie > max) {
+        console.log("pie",pie);
+        console.log("max",max);
+        if (pie >= max) {
             cancelAnimationFrame(restart);
         }
     }
@@ -268,7 +271,7 @@ import WordContent from './WordContent.js';
     function onTableSortHandler(e) {
         let targetElem = e.target;
 
-        if(targetElem.nodeName === 'TD') {
+        if(targetElem.nodeName === 'TD' || targetElem.nodeName === 'I') {
             return;
         }
         if(targetElem.classList.contains('icon_info_circle')){
@@ -335,14 +338,11 @@ import WordContent from './WordContent.js';
     }
 
     function readingCheckHandler(target) {
-        console.log(target);
         if(target != null) {
             const _target = target;
             const vocaSeq = _target.dataset.user_voca_seq;
             const userLearningSeq = _target.dataset.user_learning_seq;
             const checkReading = _target.dataset.check_reading;
-
-            console.log(vocaSeq,userLearningSeq,checkReading);
 
             if(checkReading != 1) {
                 axios('/learn/saveWordReading',{

@@ -530,15 +530,12 @@ div[class*='leaning-contents-card-front']::before {
 .table-word-set-count {
     color: #1F6CD3;
 }
-.table-word-add-btn {
+.table-word-delet-btn {
     display: flex;
     align-items: center;
     height: 32px;
     box-sizing: border-box;
-    border: 1px solid #CDCED6;
     border-radius: 5px;
-    background-color: rgba(205,206,214,0.08);
-
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.1px;
@@ -559,32 +556,62 @@ div[class*='leaning-contents-card-front']::before {
     letter-spacing: -0.1px;
     line-height: 24px;
     cursor: pointer;
+    vertical-align: middle;
 }
 .leaning-table tr td {
-    height: 40px;
+    height: 50px;
     padding: 8px;
     background-color: #fff;
     font-size: 14px;
     letter-spacing: -0.1px;
     line-height: 24px;
     border-bottom: 1px solid #E1E1E8;
+    vertical-align: middle;
 }
-.leaning-table th:nth-child(1)
+
+.learning-table-checkbox {
+    width: 16px;
+    height: 16px;
+}
+
+.leaning-table th:nth-child(1) {
+    width: 5%;
+    padding: 5px 24px;
+}
 .leaning-table td:nth-child(1) {
-    width: 30%;
-    padding: 8px 25px 8px 25px;
+    width: 5%;
+    padding: 5px 24px;
 }
-.leaning-table td:nth-child(2),
-.leaning-table th:nth-child(2) {
-    width: 50%;
-    padding: 8px 25px 8px 25px;
+
+.leaning-table th:nth-child(2)
+.leaning-table td:nth-child(2) {
+    width: 20%;
+    padding: 5px 24px;
 }
 .leaning-table td:nth-child(3),
 .leaning-table th:nth-child(3) {
-    width: 20%;
-    padding: 8px 25px;
-    text-align: right;
+    width: 40%;
+    padding: 5px 24px;
 }
+.leaning-table td:nth-child(4),
+.leaning-table th:nth-child(4) {
+    width: 10%;
+    padding: 5px 24px;
+}
+.leaning-table td:nth-child(5),
+.leaning-table th:nth-child(5) {
+    width: 12%;
+    min-width: 100px;
+    padding: 5px 24px;
+    text-align: center;
+}
+.leaning-table td:nth-child(5) i {
+    cursor: pointer;
+}
+.leaning-table td:nth-child(5) i:first-child {
+    margin-right: 20px;
+}
+
 .leaning-current-article-wrap {
     height: 368px;
     padding: 50px 24px;
@@ -632,5 +659,13 @@ div[class*='leaning-contents-card-front']::before {
 }
 .leaning-current-article {
     min-width: 960px;
+}
+.leaning-contents-table-down {
+    height: 40px;
+    margin: 16px 0 80px 0;
+}
+
+.leaning-contents-table-down button {
+    height: 40px;
 }
 
