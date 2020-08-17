@@ -166,7 +166,7 @@
             <div class="leaning-contents-right">
                 <div class="leaning-contents-right-top">
                     <div class="leaning-contents-right-title">
-                        <h1>단어 세트 1</h1>
+                        <h1 id="contentTitle">단어 세트 1</h1>
                     </div>
                     <div class="leaning-contents-right-word">
                         <div class="leaning-contents-card-prev" id="wordSwipeLeft">
@@ -229,7 +229,7 @@
                         </div>
                     </div>
                     <div class="leaning-contents-card-status">
-                        <ul>
+                        <ul id="contentInformation">
                             <li>공부한 단어 <span class="font-point">1</span>개</li>
                             <li>전체 단어 10개</li>
                         </ul>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="leaning-contents-right-down">
                     <div class="leaning-contents-right-top-info mb-3">
-                        <div class="leaning-contents-table-info">
+                        <div class="leaning-contents-table-info" id="tableInformation">
                             <span>[단어세트3]의 목록</span>
                             <span class="table-word-set-count">(10)</span>
                         </div>

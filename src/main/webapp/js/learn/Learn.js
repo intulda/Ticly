@@ -84,15 +84,16 @@ import WordContent from './WordContent.js';
                         }
                     }
                 }
-                this.wordSetAdd();
+
+                this.wordSetAdd(this.groupDataFilter(i).length);
                 this.group = this.groupMaxCount + 1;
                 this.currentCount = 0;
             }
         }
 
-        wordSetAdd() {
+        wordSetAdd(maxCount) {
             this.wordSetCurrentNumber++;
-            this.wordSetElem.appendChild(new WordSetCard(this.wordSetCurrentNumber, this.currentCount, this.maxCount, this.group).getElements());
+            this.wordSetElem.appendChild(new WordSetCard(this.wordSetCurrentNumber, this.currentCount, maxCount, this.group).getElements());
         }
 
         groupDataFilter(groupNum) {
@@ -103,27 +104,39 @@ import WordContent from './WordContent.js';
         }
 
         tableDataFilter(groupNum) {
+            const tableInformationElem = document.querySelector('#tableInformation');
             this.currentCount = 0;
-            const data = this.groupDataFilter(groupNum);
-            const elements = new ArticleTable(data).process()
+            const _data = this.groupDataFilter(groupNum);
+            const _elements = new ArticleTable(_data);
             this.articleWordTableElem.innerHTML = '';
-            for(let obj of elements) {
+            for(let obj of _elements.process()) {
                 this.articleWordTableElem.appendChild(obj);
             }
+            tableInformationElem.innerHTML = _elements.getTableInformation(groupNum);
         }
 
         wordContentFilter(groupNum) {
-            const data = this.groupDataFilter(groupNum);
+            const _title = document.querySelector("#contentTitle");
+            const _information = document.querySelector("#contentInformation");
+
+            const _data = this.groupDataFilter(groupNum);
             this.wordContentsElem.innerHTML = '';
-            const elements = new WordContent(data).process();
-            for(let obj of elements) {
-                this.wordContentsElem.appendChild(obj);
+            const _elements = new WordContent(_data);
+            _title.innerHTML = `단어 세트 ${groupNum}`;
+            _information.innerHTML = _elements.getContentInformation();
+
+            if(_elements.process().length > 0) {
+                for(let obj of _elements.process()) {
+                    this.wordContentsElem.appendChild(obj);
+                }
+            } else {
+                this.wordContentsElem.appendChild(_elements.getElements(null));
             }
+
         }
 
-        //
         circleProgressInit() {
-            setTimeout(circleProgress, 400);
+            setTimeout(circleProgress, 300);
         }
 
     }
@@ -132,14 +145,13 @@ import WordContent from './WordContent.js';
     learn.setData();
 
     async function circleProgress() {
-        let vocaData = await getVocaList();
+        let vocaData = learn.data;
         currentCount = 0;
         for (let obj of vocaData) {
             if (obj.checkReading === 1) {
                 currentCount++;
             }
         }
-
         const canvasElem = document.querySelector('.leaning-progress-canvas');
         const context = canvasElem.getContext('2d');
         const centerX = canvasElem.width / 2;
@@ -148,12 +160,12 @@ import WordContent from './WordContent.js';
         const max = (currentCount / vocaData.length) * 2;
         percentElem.innerHTML = Math.round((max / 2) * 100) + '%';
         context.beginPath();
-        context.arc(centerX, centerY, radius, 0, (pie / 2) * Math.PI, false);
+        context.arc(centerX, centerY, radius, 0, ((pie / 2) * Math.PI) * 2, false);
         context.lineWidth = 16;
         context.lineCap = 'round';
         context.strokeStyle = '#257FF9';
         context.stroke();
-        pie += 0.045;
+        pie += 0.05;
         restart = requestAnimationFrame(circleProgress);
         if (pie > max) {
             cancelAnimationFrame(restart);
@@ -161,7 +173,7 @@ import WordContent from './WordContent.js';
     }
 
     function onWordSetBtnHandler(e) {
-        learn.wordSetAdd();
+        learn.wordSetAdd(0);
     }
 
     function onWordSetHandler(e) {
