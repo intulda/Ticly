@@ -77,4 +77,12 @@ public class LearnService {
     public List<VocaDTO> getVocaList(UserLearnDTO userLearnDTO) {
         return learnDAO.getVocaList(userLearnDTO);
     }
+
+    public boolean saveWordReading(VocaDTO vocaDTO) throws SQLException {
+        int count = learnDAO.saveWordReading(vocaDTO);
+        if(count <= 0) {
+            throw new SQLException("CheckReading Update error");
+        }
+        return true;
+    }
 }

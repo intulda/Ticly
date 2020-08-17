@@ -11,7 +11,7 @@ class WordSetCard {
         this.element.dataset.group = this.group;
         this.element.innerHTML= ` <span>단어 세트 ${this.num}</span>
             <div class="leaning-contents-word-count-wrap">
-            <span class="leaning-contents-word-count"><span class="font-point">${this.startCount}</span>/${this.endCount}</span>
+            <span class="leaning-contents-word-count"><span id="word${this.group}" class="font-point">${this.startCount}</span>/${this.endCount}</span>
         </div>`
         return this.element;
     }

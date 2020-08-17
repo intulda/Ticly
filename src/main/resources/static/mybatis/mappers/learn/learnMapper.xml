@@ -17,7 +17,7 @@
             FM.FILE_CONTENTS,
             FM.FILE_EXT
         FROM ARTICLE ARTICLE, FILE_MANAGEMENT FM, CATEGORY CATE
-        WHERE ARTICLE.ARTICLE_SEQ = #{articleSeq}
+        WHERE ARTICLE.ARTICLE_SEQ = #{article_seq}
         AND ARTICLE.FILE_SEQ = FM.FILE_SEQ(+)
         AND ARTICLE.CATEGORY_SEQ = CATE.CATEGORY_SEQ(+)
         AND ARTICLE.DEL != 1
@@ -28,7 +28,7 @@
         USING (
             SELECT USER_LEARNING_SEQ
             FROM USER_LEARNING
-            WHERE ARTICLE_SEQ = #{articleSeq}
+            WHERE ARTICLE_SEQ = #{article_seq}
         ) D
         ON (
             UL.USER_LEARNING_SEQ = D.USER_LEARNING_SEQ
@@ -47,7 +47,7 @@
                 ) VALUES (
                     USER_LEARNING_PK_SEQ.NEXTVAL,
                     #{email},
-                    #{articleSeq},
+                    #{article_seq},
                     SYSDATE
                 )
     </insert>
@@ -56,7 +56,7 @@
         SELECT
             COUNT(DISTINCT ARTICLE_SEQ)
         FROM USER_VOCA
-        WHERE ARTICLE_SEQ = #{articleSeq}
+        WHERE ARTICLE_SEQ = #{article_seq}
     </select>
 
     <insert id="saveArticleVocaToUser" parameterType="UserLearnDTO">
@@ -84,29 +84,36 @@
             FROM ARTICLE_VOCABOOK ARTI_VOCA,
                  USER_LEARNING UL
             WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
-            AND ARTI_VOCA.ARTICLE_SEQ = #{articleSeq}
+            AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
             ORDER BY ARTI_VOCA.VOCA_ORDER ASC
         )
     </insert>
 
     <select id="getVocaList" parameterType="UserLearnDTO" resultType="VocaDTO">
         SELECT DISTINCT
-            UV.USER_VOCA_SEQ,
-            UV.USER_LEARNING_SEQ,
-            UV.ARTICLE_SEQ,
-            UV.VOCA,
-            VB.MEANING,
-            UV.CHECK_READING,
-            UV.LAST_VOCA,
-            UV.VOCA_ORDER,
-            UV.VOCA_GROUP
-        FROM USER_VOCA UV,
-             VOCABOOK VB,
-             ARTICLE_VOCABOOK AV
+              UV.USER_VOCA_SEQ,
+              UV.USER_LEARNING_SEQ,
+              UV.ARTICLE_SEQ,
+              UV.VOCA,
+              VB.MEANING,
+              UV.CHECK_READING,
+              UV.LAST_VOCA,
+              UV.VOCA_ORDER,
+              UV.VOCA_GROUP
+         FROM USER_VOCA UV,
+              VOCABOOK VB,
+              ARTICLE_VOCABOOK AV
         WHERE UV.VOCA = VB.VOCA
-        AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ
-        AND AV.MEANING_NUM = VB.MEANING_NUM
-        AND UV.ARTICLE_SEQ = #{articleSeq}
+          AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ
+          AND AV.MEANING_NUM = VB.MEANING_NUM
+          AND UV.ARTICLE_SEQ = #{article_seq}
         ORDER BY VOCA_ORDER ASC
     </select>
+
+    <update id="saveWordReading" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET CHECK_READING = 1
+         WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+           AND USER_VOCA_SEQ = #{user_voca_seq}
+    </update>
 </mapper>

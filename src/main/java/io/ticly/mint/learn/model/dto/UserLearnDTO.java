@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class UserLearnDTO {
 
     private String email;
-    private int articleSeq;
+    private int article_seq;
 }

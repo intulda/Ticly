@@ -35,7 +35,7 @@ public class LearnController {
     public String view(Model model, int seq) throws SQLException {
         UserLearnDTO userLearnDTO = UserLearnDTO.builder()
                 .email("test4@naver.com")
-                .articleSeq(seq)
+                .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
         if(learnService.getUserVocaCheck(userLearnDTO)) {
@@ -56,4 +56,9 @@ public class LearnController {
         return learnService.getVocaList(userLearnDTO);
     }
 
+    @PostMapping(value="saveWordReading")
+    @ResponseBody
+    private boolean saveWordReading(@RequestBody VocaDTO vocaDTO) throws Exception {
+        return learnService.saveWordReading(vocaDTO);
+    }
 }

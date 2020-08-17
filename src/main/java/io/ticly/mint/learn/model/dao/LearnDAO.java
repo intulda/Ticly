@@ -40,4 +40,8 @@ public class LearnDAO {
     public List<VocaDTO> getVocaList(UserLearnDTO userLearnDTO) {
         return sqlSessionTemplate.selectList("learnDAO.getVocaList", userLearnDTO);
     }
+
+    public int saveWordReading(VocaDTO vocaDTO) {
+        return sqlSessionTemplate.update("learnDAO.saveWordReading", vocaDTO);
+    }
 }

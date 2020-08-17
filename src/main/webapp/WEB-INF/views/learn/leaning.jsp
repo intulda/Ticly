@@ -150,7 +150,7 @@
                                 <span class="leaning-progress-span">단어 학습 진도</span>
                             </span>
                         </div>
-                        <canvas class="leaning-progress-canvas" width="162" height="162"/>
+                        <canvas class="leaning-progress-canvas" width="210" height="210"/>
                     </div>
                 </div>
                 <div class="leaning-contents-left-down">

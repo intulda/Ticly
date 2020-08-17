@@ -5,8 +5,34 @@ class WordContent {
 
     process() {
         const getElementsArray = [];
-        for(let obj of this.data) {
-            getElementsArray.push(this.getElements(obj))
+        let checkPoint = -1;
+        for(let i=0; i<this.data.length; i++) {
+
+
+            if(this.data[i].check_reading === 0) {
+                let className = 'word-list-hide';
+                if(checkPoint == -1) {
+                    checkPoint = this.data[i].voca_order;
+                    className = 'act';
+                }
+                getElementsArray.push(this.getElements(this.data[i], className));
+            } else if(this.data[i].check_reading === 1) {
+                let className = 'word-list-end'
+
+                if(checkPoint != -1) {
+                    if (checkPoint < this.data[i].voca_order) {
+                        className = 'word-list-hide'
+                    } else if (checkPoint > this.data[i].voca_order) {
+                        className = 'word-list-end'
+                    }
+                }
+
+                if(this.data[this.data.length-1] === this.data[i]) {
+                    className = 'act';
+                }
+                getElementsArray.push(this.getElements(this.data[i], className));
+            }
+
         }
         return getElementsArray;
     }
@@ -25,12 +51,14 @@ class WordContent {
                 <li>전체 단어 ${this.data.length}개</li>`
     }
 
-    getElements(_data) {
+    getElements(_data, className) {
         const _element = document.createElement('li');
 
         if(_data != null) {
-            _element.dataset.seq = _data.userVocaSeq;
-            _element.classList.add(_data.vocaOrder === 1 ? 'act' : 'word-list-hide');
+            _element.dataset.user_voca_seq = _data.user_voca_seq;
+            _element.dataset.user_learning_seq = _data.user_learning_seq;
+            _element.dataset.check_reading = _data.check_reading;
+            _element.classList.add(className);
             _element.innerHTML = ` <div class="leaning-contents-card-front leaning-card">
                                         <div class="text leaning-contents-card-word display-4 text-weight-black front">
                                             ${_data.voca}

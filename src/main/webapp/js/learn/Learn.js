@@ -8,7 +8,7 @@ import WordContent from './WordContent.js';
         const options = {
             method: 'POST',
             data: JSON.stringify({
-                articleSeq: 43
+                article_seq: 43
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -41,12 +41,12 @@ import WordContent from './WordContent.js';
             this.data = [];
             this.sortData = [];
             this.groupMaxCount = 1;
-            //wordSetElem
             this.wordSetElem = wordSetElem;
             this.wordSetCurrentNumber = 0;
             this.group = 1;
             this.currentCount = 0;
             this.maxCount = 10;
+            this.triggerNumber = 0;
             //wordTable
             this.articleWordTableElem = document.querySelector("#articleWordTable");
 
@@ -54,34 +54,54 @@ import WordContent from './WordContent.js';
             this.wordContentsElem = document.querySelector("#wordList");
         }
 
-        async setData() {
+        async setData(check) {
             const vocaList = await getVocaList();
             this.data = vocaList;
             console.log(this.data);
-
+            this.wordSetCurrentNumber = 0;
             this.totalCount = this.data.length;
             this.wordSetCurrentNumber = this.wordSetElem.children.length;
             this.groupMaxCount = Math.ceil(this.totalCount/this.maxCount);
+            if(check) {
+                this.init();
+            } else {
+                this.currentCount = 0;
+                this.circleProgressInit();
+                for(let i=0; i<this.wordSetElem.children.length; i++) {
+                    if(this.wordSetElem.children[i].classList.contains('active')) {
+                        const groupNumber = this.wordSetElem.children[i].getAttribute('data-group');
+                        this.tableDataFilter(groupNumber);
+                        this.wordCountUpdate(groupNumber);
+                        break;
+                    }
+                }
 
-            this.init();
+            }
         }
 
         init() {
             this.circleProgressInit();
             this.wordSetProcess();
             if(this.wordSetElem.children.length > 0) {
-                this.wordSetElem.children[0].click();
+                this.wordSetElem.children[this.triggerNumber].click();
             }
         }
 
         wordSetProcess() {
+            this.wordSetElem.innerHTML = "";
             for(let i=1; i<=this.groupMaxCount; i++) {
                 this.group = i;
                 for(let j=0; j<this.data.length; j++) {
-                    if(i == this.data[j].vocaGroup) {
-                        if(this.data[j].checkReading === 1) {
+                    if(i == this.data[j].voca_group) {
+                        if(this.data[j].check_reading === 1) {
                             this.currentCount++;
                         }
+                    }
+
+                    if(this.currentCount == this.data[j].length) {
+                        continue
+                    } else {
+                        this.triggerNumber = i-1;
                     }
                 }
 
@@ -96,16 +116,22 @@ import WordContent from './WordContent.js';
             this.wordSetElem.appendChild(new WordSetCard(this.wordSetCurrentNumber, this.currentCount, maxCount, this.group).getElements());
         }
 
+        wordCountUpdate(groupNumber) {
+            const _target = document.querySelector(`#word${groupNumber}`);
+            let number = Number(_target.innerText);
+            _target.innerText = number+1;
+        }
+
         groupDataFilter(groupNum) {
             const data = this.data.filter((obj) => {
-                return obj.vocaGroup == groupNum;
+                return obj.voca_group == groupNum;
             })
             return data;
         }
 
         tableDataFilter(groupNum) {
-            const tableInformationElem = document.querySelector('#tableInformation');
             this.currentCount = 0;
+            const tableInformationElem = document.querySelector('#tableInformation');
             const _data = this.groupDataFilter(groupNum);
             const _elements = new ArticleTable(_data);
             this.articleWordTableElem.innerHTML = '';
@@ -113,6 +139,7 @@ import WordContent from './WordContent.js';
                 this.articleWordTableElem.appendChild(obj);
             }
             tableInformationElem.innerHTML = _elements.getTableInformation(groupNum);
+            console.log(1);
         }
 
         wordContentFilter(groupNum) {
@@ -130,9 +157,8 @@ import WordContent from './WordContent.js';
                     this.wordContentsElem.appendChild(obj);
                 }
             } else {
-                this.wordContentsElem.appendChild(_elements.getElements(null));
+                this.wordContentsElem.appendChild(_elements.getElements(null, 'act'));
             }
-
         }
 
         circleProgressInit() {
@@ -142,13 +168,13 @@ import WordContent from './WordContent.js';
     }
 
     const learn = new Learn();
-    learn.setData();
+    learn.setData(true);
 
     async function circleProgress() {
         let vocaData = learn.data;
         currentCount = 0;
         for (let obj of vocaData) {
-            if (obj.checkReading === 1) {
+            if (obj.check_reading === 1) {
                 currentCount++;
             }
         }
@@ -178,6 +204,7 @@ import WordContent from './WordContent.js';
 
     function onWordSetHandler(e) {
         let targetElem = e.target;
+
         if(targetElem.nodeName === "UL") {
             return;
         }
@@ -292,7 +319,7 @@ import WordContent from './WordContent.js';
             nextTarget.classList.remove('word-list-hide');
             nextTarget.classList.add('act');
             reset(actElem);
-
+            readingCheckHandler(actElem);
         }
     }
 
@@ -308,8 +335,35 @@ import WordContent from './WordContent.js';
     }
 
     function readingCheckHandler(target) {
-        const _target = target;
-        const seqNumber = _target.dataset.seq;
+        console.log(target);
+        if(target != null) {
+            const _target = target;
+            const vocaSeq = _target.dataset.user_voca_seq;
+            const userLearningSeq = _target.dataset.user_learning_seq;
+            const checkReading = _target.dataset.check_reading;
+
+            console.log(vocaSeq,userLearningSeq,checkReading);
+
+            if(checkReading != 1) {
+                axios('/learn/saveWordReading',{
+                    method: 'POST',
+                    data: JSON.stringify({
+                        user_voca_seq: vocaSeq,
+                        user_learning_seq: userLearningSeq,
+                        check_reading: checkReading
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if(response.data) {
+                        learn.setData(false);
+                    } else {
+                        alert("오류났어용");
+                    }
+                })
+            }
+        }
     }
 
     tabClickElem.addEventListener('click', onTabMoveHandler);

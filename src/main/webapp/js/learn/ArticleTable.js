@@ -30,7 +30,7 @@ class ArticleTable {
             this.elements.innerHTML = `<td class="text">${obj.voca}</td>
                 <td class="text">${obj.meaning}</td>
                 <td class="text">
-                    <span class="text text-weight-light badge ${obj.checkReading == 1 ? 'badge-primary' : 'badge-neutral'} ">${obj.checkReading == 1 ? '완료' : '미완료'}</span>
+                    <span class="text text-weight-light badge ${obj.check_reading == 1 ? 'badge-primary' : 'badge-neutral'} ">${obj.check_reading == 1 ? '완료' : '미완료'}</span>
              </td>`;
         } else {
             this.elements.innerHTML = `<td class="text text-center" colspan="3">등록 된 단어가 없습니다.</td>`;

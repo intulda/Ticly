@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VocaDTO {
 
-    private int userVocaSeq;
-    private int userLearningSeq;
-    private int qrticleSeq;
+    private int user_voca_seq;
+    private int user_learning_seq;
+    private int article_seq;
     private String voca;
     private String meaning;
-    private int checkReading;
-    private int lastVoca;
-    private int vocaOrder;
-    private int vocaGroup;
+    private int check_reading;
+    private int last_voca;
+    private int voca_order;
+    private int voca_group;
 }
 
 
