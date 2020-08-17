@@ -2,16 +2,21 @@ package io.ticly.mint.admin;
 
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
-import io.ticly.mint.admin.model.dto.CategoryDTO;
 import io.ticly.mint.admin.model.service.AdminArticleWriteService;
+import io.ticly.mint.admin.model.service.AdminFileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.UUID;
 
 @Controller
 public class AdminAddController {
@@ -19,33 +24,46 @@ public class AdminAddController {
     @Autowired
     AdminArticleWriteService adminArticleWriteService;
 
+    @Autowired
+    AdminFileUploadService adminFileUploadService;
 
-    @RequestMapping("/WriteTest")
-    public String writeTest() {
-        return "/admin/AdminArticleWriteDemo";
-    }
-/*
+    private static final String SAVE_PATH = "/fileimages";
+    private static final String PREFIX_URL = "/fileimages/";
 
-    @RequestMapping(value = "/AdminDataTest", method=RequestMethod.GET)
-    public String dataTest() {
-        return "admin/AdminDataCheck";
-    }
 
-*/
-
-    @RequestMapping(value= "/AdminDataTest", method=RequestMethod.GET)
-    public String goWriteTest(HttpServletRequest request, Model model){
-
-        System.out.println("=== goWriteTest start ===");
-
-        // 선택한 카테고리 문자열로 가져오기
-        String[] category = request.getParameterValues("category");
-        if(category != null) {
-            for(int i=0; i< category.length; i++){
-                System.out.println(Arrays.toString(category));
-            }
+        @RequestMapping("/WriteTest")
+        public String writeTest() {
+            return "/admin/AdminArticleWriteDemo";
         }
 
+
+        /* 아티클 등록시 Detail을 확인할 수 있는 메소드 */
+        @RequestMapping(value="/AdminDataCheck", method=RequestMethod.GET)
+        public String dataTest() {
+            return "/admin/AdminDataTest";
+        }
+
+        /* 아티클 등록시 Parameter 얻어오는 메소드 */
+        @RequestMapping(value="/AdminDataCheck", method=RequestMethod.POST)
+        public String onSubmit(HttpServletRequest request, HttpServletResponse response,
+                               Model model, MultipartFile file) throws IOException {
+
+            System.out.println("=== goWriteTest start ===");
+
+            // 선택한 카테고리 문자열로 가져오기
+            String[] category = request.getParameterValues("category");
+            if(category != null) {
+                for(int i=0; i< category.length; i++){
+                    System.out.println(Arrays.toString(category));
+                }
+            }
+
+        /* 이미지 파일 처리 */
+        String fileUrl = adminFileUploadService.restore(file, request.getSession().getServletContext().getRealPath(PREFIX_URL));
+        model.addAttribute("fileUrl", fileUrl);
+
+
+        // 그 외 기타 아티클 정보들 + 단어,뜻 가져오기
         String title = request.getParameter("title");
         String url = request.getParameter("url");
         String summary = request.getParameter("summary");
@@ -56,15 +74,6 @@ public class AdminAddController {
         String[] insert_mean = request.getParameterValues("insertmean");
 
         System.out.println("단어: " + Arrays.toString(insert_word) + "\n" + "뜻: " + Arrays.toString(insert_mean));
-
-        /*
-        if(insert_word != null && insert_mean != null) {
-            for(int i=0; i< insert_word.length; i++){
-                System.out.println("단어: " + Arrays.toString(insert_word) + "뜻: " + Arrays.toString(insert_mean));
-                // System.out.println(Arrays.toString(insert_mean));
-            }
-        }
-        */
 
         System.out.println("title: " + title);
         System.out.println("원문URL: " + url);
@@ -81,10 +90,8 @@ public class AdminAddController {
         model.addAttribute("insertword", insert_word);
         model.addAttribute("insertmean", insert_mean);
 
-
-        return "/AdminDataTest";
+        return "/admin/AdminDataTest";
     }
-
 
 
     @RequestMapping("/list")

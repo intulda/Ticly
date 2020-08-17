@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %><%--
   Created by IntelliJ IDEA.
   User: Hyeseung Jang
   Date: 2020-08-12
@@ -103,7 +104,9 @@
 </head>
 <body>
 
-<form action="/AdminDataTest" id="frm" method="get">
+
+
+<form action="/AdminDataCheck" id="admin-add-frm" method="post" enctype="multipart/form-data">
 
     <div class="flex_container">
 
@@ -132,8 +135,8 @@
                 <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminMemberList.jsp" > <h6> 회원 관리 </h6> </a>
                 <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminAnalysis.jsp" > <h6> 통계 </h6> </a>
 
-                <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="WriteConfirm">
-                <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;">
+                <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="/AdminDataCheck">
+                <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
 
             </div>
             <hr>
@@ -170,9 +173,6 @@
                             <input type="text" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
                         </td>
                     </tr>
-
-
-
                     <tr>
                         <td>
                             <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
@@ -182,8 +182,9 @@
 
                     <tr>
                         <td>
-                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 기사 이미지 파일 </p>
-                            <input type="file" name="imagefile"/>
+                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
+                            <input type="file" id="file" name="file">
+                            <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
                         </td>
                     </tr>
 
@@ -370,50 +371,6 @@
 </script>
 
 <script>
-
-    /* 1. 데이터 웹에서 보내주기 */
-    function sendData() {
-
-        axios({
-            method: 'GET',
-            url: 'WriteTest?category=send?title=send',
-            data: JSON.stringify({
-                category: '개발',
-                title: 'Apple Glasses: Release date, price, features and leaks'
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            // URL 매개 변수
-            params: {
-                category: category.value,
-                title: title.value,
-                summary: summary.value,
-                url: url.value,
-                hashtag: hashtag.value
-            },
-            const testData = await axios('/admin/AdminArticleList', options);
-            return testData;
-        });
-
-    .
-        then((response) => {
-            console.log("Send Success!");
-
-            console.log(response.data);
-            console.log(response.status);
-            console.log(response.statusText);
-            console.log(response.headers);
-            console.log(response.config);
-
-        }, (error) => {
-            console.log(error);
-        });
-
-        saveBtn.addEventListener("click", getJson);
-
-    }
-
 
     /*
     const category = document.querySelector("input[category=category]"),

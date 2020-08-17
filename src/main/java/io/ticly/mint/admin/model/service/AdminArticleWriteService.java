@@ -3,12 +3,14 @@ package io.ticly.mint.admin.model.service;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
 import lombok.RequiredArgsConstructor;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +27,19 @@ public class AdminArticleWriteService implements AdminArticleWriteServiceImpl {
 //    }
 
 
+/*
     @Override
     public void WriteArticle(ArticleDTO articleDTO) throws Exception {
         articleDAO.WriteArticle(articleDTO);
     }
+    */
+
+    @Override
+    public void WriteArticle(ArticleDTO articleDTO) throws Exception {
+
+        articleDAO.WriteArticle(articleDTO);
+    }
+
 
     @Override
     public List<ArticleDAO> ArticleListAll() throws Exception {
@@ -51,6 +62,5 @@ public class AdminArticleWriteService implements AdminArticleWriteServiceImpl {
     public void ArticleDelete(int ArticleNum) throws Exception {
         articleDAO.ArticleDelete(ArticleNum);
     }
-
 
 }
