@@ -48,4 +48,5 @@ public class ArticleDAO implements ArticleDAOimpl {
     public void hitUpdate(int ArticleNum) throws Exception {
         sqlSessionTemplate.update(namespace+".hitUpdate", ArticleNum);
     }
+
 }

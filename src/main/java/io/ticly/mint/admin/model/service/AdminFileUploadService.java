@@ -3,9 +3,12 @@ package io.ticly.mint.admin.model.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 
 @Service
 public class AdminFileUploadService {
@@ -61,7 +64,7 @@ public class AdminFileUploadService {
     }
 
 
-    // 파일을 실제로 write 하는 메서드
+    // 파일을 실제로 write 하는 메소드
     private boolean writeFile(MultipartFile multipartFile, String saveFileName, String savePath)
             throws IOException {
         boolean result = false;
@@ -73,4 +76,43 @@ public class AdminFileUploadService {
 
         return result;
     }
+    
+    
+    // 파일 이미지를 byte[]로 변환하는 메소드
+    public static byte[] imageToByteArray(String filePath) throws Exception {
+
+        byte[] returnValue = null;
+
+        ByteArrayOutputStream baos = null;
+        FileInputStream fis = null;
+
+        try{
+            baos = new ByteArrayOutputStream();
+            fis = new FileInputStream(filePath);
+
+            byte[] buf = new byte[1024];
+            int read = 0;
+
+            while ((read=fis.read(buf, 0, buf.length)) != -1) {
+                baos.write(buf, 0, read);
+            }
+
+            returnValue = baos.toByteArray();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if (baos != null){
+                baos.close();
+            }
+            if (fis != null){
+                fis.close();
+            }
+        }
+        return returnValue;
+    }
+
+
+    
+    
 }
