@@ -4,6 +4,7 @@ import io.ticly.mint.member.dao.MemberDAO;
 import io.ticly.mint.member.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -26,6 +27,20 @@ public class MemberService {
 
     public List<String> getUserCategories(String email){
         return memberDAO.getUserCategories(email);
+    }
+
+    public void saveUserCategories(String email, List<String> categories){
+
+        /*
+        for (int i=0;)
+
+        int count = memberDAO.saveUserCategories(email, category_);
+
+        if(count <= 0) {
+        //  throw new SQLException("세션 카테고리 -> DB에 insert 실패");
+            System.out.println("세션 카테고리 -> DB에 insert 실패");
+        }
+        */
     }
 
     /**

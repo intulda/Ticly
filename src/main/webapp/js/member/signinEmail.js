@@ -78,7 +78,7 @@ signinSubmitBtn.addEventListener("click", function () {
             data : JSON.stringify(signinData)
         })
             .then(function (result){
-                if(result.data == "로그인성공"){
+                if(result.data == "success"){
                     alert("로그인을 완료했습니다.");
                 } else {
                     failEmailLogin(); //로그인 실패시 경고 alert

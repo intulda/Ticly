@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 ;import javax.servlet.http.HttpSession;
 import java.util.List;
 
+@SessionAttributes("userInfo")
 @Controller
 public class MemberController {
 
@@ -57,13 +58,18 @@ public class MemberController {
         if(userInfo != null){
             //DB에서 회원 카테고리 정보 가져오기
             List<String> categories = memberService.getUserCategories(userInfo.getEmail());
+
+            //session에 로그인한 회원정보 저장
             MemberDTO memberDTO = new MemberDTO(userInfo.getEmail(), userInfo.getNickname(), userInfo.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
+
+            /*확인
             MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
             System.out.println("테스트 : "+user.getAuth());
-            return "로그인성공";
+            */
+            return "success";
         }else{ //가져온 회원정보가 없으면, 로그인 불가
-            return "회원정보없음";
+            return "fail";
         }
     }
 
@@ -81,16 +87,23 @@ public class MemberController {
     }
 
     /**
-     * 이메일로 회원가입시, 멤버 데이터 저장
+     * 이메일로 회원가입시, 멤버 데이터 저장과 관심분야 카테고리를 세션에 저장
      * @param userDTO
      * @return 1이면 데이터 입력 성공
      */
     @PostMapping("/member/signup")
     @ResponseBody
-    public int memberSignup(@RequestBody UserDTO userDTO) {
+    public String memberSignup(@RequestBody UserDTO userDTO, Model model) {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
 
-        return checkNum;
+        if(checkNum==1){
+            //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
+            List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
+            //세션 정보를 User_Categories테이블에 저장한다.
+            memberService.saveUserCategories(userDTO.getEmail(), categories);
+        }
+
+        return "회원가입실패";
     }
 }

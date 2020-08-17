@@ -29,6 +29,13 @@ public class MemberDAO {
         return sqlSessionTemplate.selectList("memberMapper.getUserCategories", email);
     }
 
+    public int saveUserCategories(String email, int category_num){
+        int checkNum = 0;
+        checkNum = sqlSessionTemplate.insert("memberMapper.saveUserCategories", category_num);
+
+        return checkNum;
+    }
+
     /**
      * 회원가입시 이메일 중복 확인
      * @param email

@@ -33,4 +33,10 @@
 		insert into MEMBER(EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE, REG_DATE)
 		values(#{email}, #{password}, #{nickname}, 3, 'EMAIL', sysdate)
 	</insert>
+
+    <!-- 세션에 저장된 관심 카테고리를 DB에 insert -->
+    <insert id="saveUserCategories" parameterType="java.util.List">
+		INSERT INTO MEMBER_CATEGORIES(EMAIL, CATEGORY_SEQ)
+        VALUES(#{email}, 1);
+	</insert>
 </mapper>
