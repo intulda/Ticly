@@ -1,3 +1,4 @@
+
 .search__header{
     display: flex;
     justify-content: space-between;
@@ -18,5 +19,28 @@
     padding: 3rem;
     background-color: #F7F7FA;
     border-radius: 0.938rem;
+}
 
+.search__hashtag-section{
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+
+    /*0.375rem은 태그 버튼의 상단 마진*/
+    margin: calc(1.5rem - (0.375rem)) auto 0;
+    text-align: center;
+    justify-content: center;
+}
+
+.search__hashtag-section > button{
+    margin: 0.375rem;
+}
+
+.search__hashtag-icon{
+    transition: all 0.2s;
+    color: #008E6D;
+}
+
+.search__hashtag-section > button:active .search__hashtag-icon{
+    color: #fff;
 }

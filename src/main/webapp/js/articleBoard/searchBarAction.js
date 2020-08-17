@@ -3,6 +3,8 @@
         searchBtn = document.querySelector(".js-searchBar-search-btn"),
         cancelBtn = document.querySelector(".js-searchBar-cancel-btn");
 
+    //----------------------------------------------------------------------------------------------------
+
     // cancle 버튼을 누르면, 인풋 내용 초기화 하기
     function handleCancelBtnClickEvent() {
         searchBar.firstElementChild.value = "";

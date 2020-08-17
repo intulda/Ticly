@@ -60,7 +60,7 @@
         <!-- search bar -->
         <form class="searchBar js-search-bar" action="goToSearchPage">
             <input type="text" class="form-control" name="searchKeyword" placeholder="학습하고 싶은 아티클을 찾으세요!" autocomplete="off" value="${searchKeyword}">
-            <button class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn" type="button"><i class="icons icon_search sm"></i></button>
+            <button type="button" class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn"><i class="icons icon_search sm"></i></button>
             <!-- 카테고리 전송 -->
             <c:forEach items="${userInfo.categories}" var="category">
                 <input type="hidden" name="categories" value=${category}>
@@ -68,6 +68,9 @@
             <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn"  type="button"><i class="icons icon_error_circle sm"></i></button>
         </form>
     </div>
+    <form class="js-submit-hashtag-form" action="goToSearchPage">
+        <input type="hidden" class="js-submit-hashtag-input" name="searchKeyword">
+    </form>
 
     <!-- search article section -->
     <div class="findArticle__section">
@@ -82,18 +85,16 @@
                 <li class="breadcrumb-item active">검색 결과</li>
             </ol>
         </div>
-        <div class="card__outer js-searchResult-section-card-outer"></div>
+        <div class="card__outer js-searchResult-section-card-outer">
+        </div>
     </div>
-
-    <!-- 관심 분야 탭에서 ALL 버튼을 누를 때
-         리스트에 담겨있는 전체 '사용자가 선택한 관심 분야'를 수집하기 위해
-         categories 리스트의 사이즈 만큼,input 태그를 생성해 value 안에 값을 담아준다. -->
-    <c:forEach items="${userInfo.categories}" var="category">
-        <input type="hidden" class="js-categories-str" value=${category}>
-    </c:forEach>
 
     <!-- 검색 키워드-->
     <input type="hidden" class="js-search-keyword" value=${searchKeyword}>
 
+    <!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
+    <c:forEach items="${userInfo.categories}" var="category">
+        <input type="hidden" class="js-categories-str" value=${category}>
+    </c:forEach>
 </body>
 </html>

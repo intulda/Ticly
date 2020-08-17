@@ -1,6 +1,7 @@
 package io.ticly.mint.articleBoard;
 
 import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
+import io.ticly.mint.articleBoard.model.dto.HashtagDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.articleBoard.model.service.ArticleBoardService;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class ArticleBoardController {
         this.articleBoardService = articleBoardService;
     }
 
-    // 관심 분야 페이지로 단순 이동
+    // TODO 관심 분야 페이지로 단순 이동
     @GetMapping(value ="category")
     public String goToCategoryPage(){
         return "articleBoard/category";
@@ -39,7 +40,6 @@ public class ArticleBoardController {
     // 관심 분야 선택 완료 후 세션 처리 및 이동
     @GetMapping("choiceDone")
     public String choiceDone(Model model, HttpServletRequest req){
-        System.out.println("choiceDone에 왔어");
         // 사용자의 권한과 관심 분야 세션에 등록하기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
         int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();
@@ -88,12 +88,22 @@ public class ArticleBoardController {
     @GetMapping("findArticleBySearch")
     @ResponseBody
     public List<ArticleInfoDTO> findArticleBySearch(Model model, HttpServletRequest req){
-        System.out.println("findArticleBySearch");
+
         // 사용자가 입력한 검색어를 만족하는 아티클을 불러와서 리스트에 담기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
         String searchKeyword = req.getParameter("searchKeyword");
         List<ArticleInfoDTO> searchResultArticleList = articleBoardService.findArticleBySearch(categories, searchKeyword);
 
         return searchResultArticleList;
+    }
+
+    //  검색 결과가 0개일 경우 추천 해시태그 노출을 위한 동적 데이터 처리
+    @GetMapping("getHashTag")
+    @ResponseBody
+    public List<HashtagDTO> getHashtagInfo(Model model, HttpServletRequest req){
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        List<HashtagDTO> hashTagList = articleBoardService.getHashtagInfo(categories);
+
+        return hashTagList;
     }
 }

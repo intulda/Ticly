@@ -9,5 +9,6 @@
         <typeAlias type="io.ticly.mint.learn.model.dto.VocaDTO" alias="VocaDTO"/>
         <typeAlias type="io.ticly.mint.learn.model.dto.LearnArticleDTO" alias="LearnArticleDTO"/>
         <typeAlias type="io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO" alias="ArticleInfoDTO"/>
+        <typeAlias type="io.ticly.mint.articleBoard.model.dto.HashtagDTO" alias="HashtagDTO"/>
     </typeAliases>
 </configuration>

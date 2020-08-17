@@ -10,6 +10,8 @@ import SkeletonCard from './skeletonCard.js';
     const NEW_ARTICLE_CARD_PATH = "getNewArticleInfo?",
         POPULAR_ARTICLE_CARD_PATH = "getPopularArticleInfo?";
 
+    //----------------------------------------------------------------------------------------------------
+
     // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
     function handleCategoryTabClickEvent(ev) {
         let target = ev.target;
@@ -56,6 +58,8 @@ import SkeletonCard from './skeletonCard.js';
 
     // 아티클 정보 받아와서 화면에 그려주는 함수
     function getAndPaintArticleInfo(path, section) {
+        paintSkeletonCard();
+
         // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
         axios({
             method: 'get',
@@ -84,14 +88,13 @@ import SkeletonCard from './skeletonCard.js';
                     count++;
 
                     if (count === 3){
-                        return;
+                        break;
                     }
                 }
             });
     }
 
-    // 화면 로드시 아티클 카드를 그려주 함수
-    function pageLoadEvent() {
+    function paintSkeletonCard() {
         for (let i = 0; i < 3; i++){
             newSectionCardOuter.appendChild(new SkeletonCard().getElements());
         }
@@ -99,6 +102,11 @@ import SkeletonCard from './skeletonCard.js';
         for (let i = 0; i < 3; i++){
             popularSectionCardOuter.appendChild(new SkeletonCard().getElements());
         }
+    }
+
+    // 화면 로드시 아티클 카드를 그려주 함수
+    function pageLoadEvent() {
+        paintSkeletonCard();
 
         let pathToNewArticle = NEW_ARTICLE_CARD_PATH;
         let pathToPopularArticle = POPULAR_ARTICLE_CARD_PATH;

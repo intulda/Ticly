@@ -3,7 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="articleBoardDAO">
-    <!-- @param String : category -->
+
+    <!--DB에서 내 관심분야에 맞는 해시태그 찾기
+        @param categoryList -->
+    <select id="getHashtagInfo" parameterType="String" resultType="HashtagDTO">
+        SELECT
+            DISTINCT TRIM(a.HASHTAG) AS HASHTAG,
+            length(a.HASHTAG)-length(replace(a.HASHTAG, '#', '')) AS HASHTAG_COUNT,
+            a.APPLY_COUNT
+        FROM ARTICLE a, CATEGORY c
+        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
+          AND c.CATEGORY IN (${categoryStr})
+        ORDER BY a.APPLY_COUNT DESC
+    </select>
+
+    <!--DB에서 검색어를 만족하는 아티클 찾기
+        @param categoryList
+        @param searchKeyword -->
+    <select id="findArticleBySearch" parameterType="hashmap" resultType="ArticleInfoDTO">
+        SELECT
+            a.ARTICLE_SEQ,
+            a.TITLE,
+            a.SUMMARY,
+            a.URL,
+            a.HASHTAG,
+            c.CATEGORY AS CATEGORY_TITLE,
+            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
+            a.DEL,
+            a.APPLY_COUNT
+        FROM ARTICLE a, CATEGORY c
+        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
+            AND c.CATEGORY IN (${categoryStr})
+            AND (UPPER(a.TITLE) LIKE UPPER(${searchKeyword}) OR UPPER(a.HASHTAG) LIKE UPPER(${searchKeyword}))
+        ORDER BY a.REG_DATE DESC
+    </select>
+
+    <!--DB에서 내 관심분야 최신순 아티클 찾기
+        @param categoryList -->
     <select id="findNewMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
         SELECT
             a.ARTICLE_SEQ,
@@ -21,6 +57,8 @@
         ORDER BY a.REG_DATE DESC
     </select>
 
+    <!--DB에서 내 관심분야 인기순 아티클 찾기
+        @param categoryList -->
     <select id="findPopularMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
         SELECT
             a.ARTICLE_SEQ,
@@ -36,23 +74,5 @@
         WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
             AND c.CATEGORY IN (${categoryStr})
         ORDER BY a.APPLY_COUNT DESC
-    </select>
-
-    <select id="findArticleBySearch" parameterType="hashmap" resultType="ArticleInfoDTO">
-        SELECT
-            a.ARTICLE_SEQ,
-            a.TITLE,
-            a.SUMMARY,
-            a.URL,
-            a.HASHTAG,
-            c.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
-            a.DEL,
-            a.APPLY_COUNT
-        FROM ARTICLE a, CATEGORY c
-        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
-            AND c.CATEGORY IN (${categoryStr})
-            AND UPPER(a.TITLE) LIKE UPPER(${searchKeyword})
-        ORDER BY a.REG_DATE DESC
     </select>
 </mapper>

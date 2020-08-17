@@ -9,6 +9,8 @@
     const CARD_ACTIVE = "card-item-active",
         DISABLE = "disabled";
 
+    //----------------------------------------------------------------------------------------------------
+
     // 다음에 고를게요 버튼 이벤트
     function handleNextTimePickBtn() {
         categoriesInput.forEach(el => {
