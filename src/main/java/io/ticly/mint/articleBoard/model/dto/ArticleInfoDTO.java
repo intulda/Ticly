@@ -18,4 +18,5 @@ public class ArticleInfoDTO {
     private String category_title;
     private String reg_date;
     private int del;
+    private int apply_count;
 }

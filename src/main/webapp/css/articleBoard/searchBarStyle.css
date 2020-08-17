@@ -1,0 +1,49 @@
+.searchBar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 280px;
+    padding: 0;
+}
+
+.searchBar > input {
+    padding: 0 2.25rem;
+    border-radius: 10rem;
+}
+
+.searchBar > button {
+    position: absolute;
+    height: 100%;
+    padding: 0 0.875rem;
+    border: none;
+}
+
+.input-add-item > button:focus {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.searchBar__search-btn{
+    top: 0;
+    left: 0;
+    cursor: default !important;
+}
+
+.searchBar-cancel-btn{
+    transition: all 0.2s;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.searchBar-cancel-btn:hover{
+    color: #525463;
+}
+
+.searchBar-cancel-btn > i{
+    transition: all 0.2s;
+}
+
+.searchBar-cancel-btn:hover.searchBar-cancel-btn > i{
+    font-size: 17px;
+}

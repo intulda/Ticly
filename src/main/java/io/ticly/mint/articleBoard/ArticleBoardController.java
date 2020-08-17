@@ -1,6 +1,7 @@
 package io.ticly.mint.articleBoard;
 
 import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
+import io.ticly.mint.articleBoard.model.dto.HashtagDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.articleBoard.model.service.ArticleBoardService;
 import org.springframework.stereotype.Controller;
@@ -8,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,57 +22,88 @@ public class ArticleBoardController {
         this.articleBoardService = articleBoardService;
     }
 
-    // 관심 분야 페이지로 단순 이동
+    // TODO 관심 분야 페이지로 단순 이동
     @GetMapping(value ="category")
     public String goToCategoryPage(){
         return "articleBoard/category";
     }
 
-    // 이미 관심 분야를 선택했다면, 아티클 찾기 페이지로 단순 이동
+    // 이미 관심 분야를 선택했다면, 아티클 찾기 페이지로 이동.
     @GetMapping(value ="findArticle")
     public String goToFindArticlePage(Model model){
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
-        if(user.getCategories() != null) {
-            List<String> categories = user.getCategories();
+        model.addAttribute("userInfo", user);
 
-            // 관심 분야 데이터를 기반으로 아티클 불러와서 리스트에 담기
-            List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
-            model.addAttribute("articleList", list);
-            model.addAttribute("userInfo", user);
-        }
         return "articleBoard/findArticle";
     }
 
     // 관심 분야 선택 완료 후 세션 처리 및 이동
     @GetMapping("choiceDone")
     public String choiceDone(Model model, HttpServletRequest req){
-        System.out.println("choiceDone에 왔어");
         // 사용자의 권한과 관심 분야 세션에 등록하기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
         int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();
         MemberDTO dto = new MemberDTO(auth, categories);
 
         model.addAttribute("userInfo", dto);
-
-        //세션에서 관심 분야 데이터 불러와 아티클 정보를 얻어서 리스트에 담기
-        categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
-        List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
-
-        model.addAttribute("articleList", list);
         return "articleBoard/findArticle";
     }
 
-    // 아티클 찾기 페이지에서 관심 분야 탭 버튼을 누를 때 처
-    @GetMapping("categoryTabEvent")
+    // 아티클 찾기 페이지에서 *새로운* 아티클 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("getNewArticleInfo")
     @ResponseBody
-    public List<ArticleInfoDTO> getArticleInfo(Model model, HttpServletRequest req){
-        //  찾는 categories에 맞는 아티클 정보를 받아서 리스트에 넣어준다.
-        System.out.println("categoryTabEvent까지 왔어");
+    public List<ArticleInfoDTO> getNewArticleInfo(Model model, HttpServletRequest req){
+        // 관심 분야 데이터를 기반으로 최신 아티클 불러와서 리스트에 담기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
-        System.out.println("categories에 담았어");
-        List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
-        System.out.println("list에 담았어");
+        List<ArticleInfoDTO> newList = articleBoardService.findNewMyTypeArticle(categories);
 
-        return list;
+        return newList;
+    }
+
+    // 아티클 찾기 페이지에서 *인기* 아티클 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("getPopularArticleInfo")
+    @ResponseBody
+    public List<ArticleInfoDTO> getPopularArticleInfo(Model model, HttpServletRequest req){
+        // 관심 분야 데이터를 기반으로 인기 아티클 불러와서 리스트에 담기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        List<ArticleInfoDTO> popularList = articleBoardService.findPopularMyTypeArticle(categories);
+
+        return popularList;
+    }
+
+    // 검색시 search 페이지로 단순 이동
+    @GetMapping("goToSearchPage")
+    public String goToSearchPage(Model model, HttpServletRequest req){
+
+        // 키워드 및 사용자 정보 내보내기
+        MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+        model.addAttribute("userInfo", user);
+
+        String searchKeyword = req.getParameter("searchKeyword");
+        model.addAttribute("searchKeyword", searchKeyword);
+        return "articleBoard/searchResult";
+    }
+
+    // 검색 페이지에서 검색어를 만족하는 아티클 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("findArticleBySearch")
+    @ResponseBody
+    public List<ArticleInfoDTO> findArticleBySearch(Model model, HttpServletRequest req){
+
+        // 사용자가 입력한 검색어를 만족하는 아티클을 불러와서 리스트에 담기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        String searchKeyword = req.getParameter("searchKeyword");
+        List<ArticleInfoDTO> searchResultArticleList = articleBoardService.findArticleBySearch(categories, searchKeyword);
+
+        return searchResultArticleList;
+    }
+
+    //  검색 결과가 0개일 경우 추천 해시태그 노출을 위한 동적 데이터 처리
+    @GetMapping("getHashTag")
+    @ResponseBody
+    public List<HashtagDTO> getHashtagInfo(Model model, HttpServletRequest req){
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        List<HashtagDTO> hashTagList = articleBoardService.getHashtagInfo(categories);
+
+        return hashTagList;
     }
 }

@@ -8,7 +8,7 @@ public class MyPageController {
 
     @GetMapping("/hello")
     public String sayHello() {
-        return "/mypage/myPage";
+        return "/intro/introPage";
     }
 
 }
