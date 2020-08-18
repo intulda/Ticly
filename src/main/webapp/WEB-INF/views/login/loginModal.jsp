@@ -1,4 +1,8 @@
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!--signinup Modal-->
 <div class="signinup-modal" id="signinup-modal">
     <div class="signinup-modal-contents">
@@ -14,7 +18,7 @@
                     <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
                 </hearder>
                 <div class="login-button-wrapper">
-                    <div class="login-button naver-login-button">
+                    <div class="login-button naver-login-button" id="naverIdLogin">
                         <img scr="">
                         <h5 class="text text-color-white text-weight-medium">네이버로 로그인</h5>
                     </div>
@@ -129,14 +133,55 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<!--메인 로그인-->
+<script src="js/member/login.js"></script>
+
 <!--이메일로 로그인-->
 <script src="js/member/signinEmail.js"></script>
 
 <!--이메일로 회원가입-->
 <script src="js/member/signupEmail.js"></script>
 
+
+<!-- naver login 라이브러리 -->
+<!--
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+-->
+
 <script>
     (() => {
+        /*
+        var naverLogin = new naver.LoginWithNaverId(
+            {
+                clientId: "zxfzewpOgzueAWu6JhMu",
+                callbackUrl: "http://localhost:8090/naver/callback",
+                isPopup: true /!* 팝업을 통한 연동처리 여부 *!/
+            }
+        );
+
+        /!* (3)설정정보를 초기화하고 연동을 준비 *!/
+        naverLogin.init();
+
+        /!* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) *!/
+        window.addEventListener('load', function () {
+            naverLogin.getLoginStatus(function (status) {
+                if (status) {
+                    /!* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 *!/
+                    var email = naverLogin.user.getEmail();
+                    if( email == undefined || email == null) {
+                        alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+                        /!* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 *!/
+                        naverLogin.reprompt();
+                        return;
+                    }
+
+                    window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/sample/main.html");
+                } else {
+                    console.log("callback 처리에 실패하였습니다.");
+                }
+            });
+        });*/
         /* 모달 내 이동*/
         //모달 닫기
         document.getElementById('modal-close').addEventListener("click", function() {

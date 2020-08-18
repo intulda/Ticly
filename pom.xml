@@ -99,6 +99,12 @@
             <artifactId>commons-codec</artifactId>
             <version>1.14</version>
         </dependency>
+        <!--Json-Parser-->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

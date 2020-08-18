@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/fonticon.css">
     <link rel="stylesheet" href="/css/member/singInUp.css">
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 </head>
 <body>
 <div>
@@ -34,7 +35,7 @@
                     <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
                 </hearder>
                 <div class="login-button-wrapper">
-                    <div class="login-button naver-login-button">
+                    <div class="login-button naver-login-button" id="naverIdLogin">
                         <img scr="">
                         <h5 class="text text-color-white text-weight-medium">네이버로 로그인</h5>
                     </div>
@@ -108,7 +109,7 @@
                     </div>
                     <div class="login-input-group">
                         <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                        <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
+                        <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="비밀번호를 입력해주세요." />
                         <div class="eyes-box" id="signup-eyes-box">
                             <i class="icon_show" id="signup-eyes-icon"></i>
                         </div>
@@ -149,6 +150,9 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<!--메인 로그인-->
+<script src="js/member/login.js"></script>
+
 <!--이메일로 로그인-->
 <script src="js/member/signinEmail.js"></script>
 
@@ -157,6 +161,7 @@
 
 <script>
     (() => {
+
         /* 모달 내 이동*/
         //모달 열기
         document.getElementById('modal-open-button').addEventListener("click", function() {
