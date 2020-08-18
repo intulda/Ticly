@@ -41,7 +41,6 @@
 }
 
 .globalHeader-right{
-    cursor: pointer;
     display: flex;
     align-items: center;
 }
@@ -58,6 +57,7 @@
 
 /*프로필*/
 .leaning-header-profile {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,8 +72,19 @@
 }
 
 .header-learing-board{
+    cursor: pointer;
     border: 1px solid #008E6D;
     border-radius: 5px;
     background-color: rgba(0,168,129,0.08);
     margin-right: 16px;
+}
+
+.icon_caret-down{
+    color: #858899;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#modal-open-button{
+    cursor: pointer;
 }

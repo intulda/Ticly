@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonticon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/singInUp.css">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -56,21 +57,34 @@
 
                 </div>
                 <div class="globalHeader-right">
-                    <!--
-                    <h6 class="text text-color-gray200 text-weight-medium">로그인</h6>
-                    -->
-                    <div class="header-learing-board">
-                        <h6 class="text text-color-green text-weight-medium">내 학습 보드</h6>
-                    </div>
-                    <div id="header-profile" class="text leaning-header-profile"><%=nickname%></div>
-                    <i for="header-profile" class="icon_caret-down"></i>
-                    <!--
-                    <div id="header-profile" class="text leaning-header-profile">코</div>
-                    <i for="header-profile" class="drop-down"></i>
-                    -->
+                    <c:choose>
+                        <c:when test="${empty sessionScope.userInfo.email}">
+                             <h6 class="text text-color-gray200 text-weight-medium" id="modal-open-button">로그인</h6>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="header-learing-board">
+                                <h6 class="text text-color-green text-weight-medium">내 학습 보드</h6>
+                            </div>
+                            <div id="header-profile" class="text leaning-header-profile"><%=nickname%></div>
+                            <i for="header-profile" class="icon_caret-down profile-drop-button"></i>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </header>
+
+        <!--modal-->
+        <c:import url="/WEB-INF/views/login/loginModal.jsp"></c:import>
+        <script>
+            //모달 열기
+            document.getElementById('modal-open-button').addEventListener("click", function() {
+                document.getElementById('signinup-modal').style.display = "flex";
+                document.getElementById('main-login-form').classList.remove('hidden');
+                document.getElementById('email-signup-form').classList.add('hidden');
+                document.getElementById('email-signin-form').classList.add('hidden');
+            });
+        </script>
+
         <script>
             /*
             let nickname = "${userInfo.nickname}";
