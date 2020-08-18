@@ -41,9 +41,9 @@ public class MemberDAO {
      * @param email
      * @return
      */
-    public int findDuplicateEmail(String email){
-        int result = sqlSessionTemplate.selectOne("memberMapper.checkEmail", email);
-        return result;
+    public UserDTO findDuplicateEmail(String email){
+        UserDTO userDTO = sqlSessionTemplate.selectOne("memberMapper.checkEmail", email);
+        return userDTO;
     }
 
     /**
@@ -56,5 +56,9 @@ public class MemberDAO {
         checkNum = sqlSessionTemplate.insert("memberMapper.signup", userDTO);
         System.out.println("MemberDAO checkNum : " + checkNum);
         return checkNum;
+    }
+
+    public int insertOAuthMember(UserDTO userDTO){
+        return sqlSessionTemplate.insert("memberMapper.signup", userDTO);
     }
 }

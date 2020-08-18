@@ -1,8 +1,10 @@
 package io.ticly.mint.member;
 
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
+import io.ticly.mint.member.dto.ResponseDto;
 import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,15 +54,15 @@ public class MemberController {
     @ResponseBody
     public String memberSignin(@RequestBody UserDTO userDTO, Model model) {
         System.out.println(userDTO.getEmail() + userDTO.getPassword());
-        UserDTO userInfo = memberService.findMemberSignin(userDTO);
+        UserDTO principal = memberService.findMemberSignin(userDTO); //principal(접근주체)
 
         //가져온 회원정보가 null이 아닐때, 로그인이 가능할 때
-        if(userInfo != null){
+        if(principal != null){
             //DB에서 회원 카테고리 정보 가져오기
-            List<String> categories = memberService.getUserCategories(userInfo.getEmail());
+            List<String> categories = memberService.getUserCategories(principal.getEmail());
 
             //session에 로그인한 회원정보 저장
-            MemberDTO memberDTO = new MemberDTO(userInfo.getEmail(), userInfo.getNickname(), userInfo.getAuth(), categories);
+            MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
 
             /*확인
@@ -89,21 +91,21 @@ public class MemberController {
     /**
      * 이메일로 회원가입시, 멤버 데이터 저장과 관심분야 카테고리를 세션에 저장
      * @param userDTO
-     * @return 1이면 데이터 입력 성공
+     * @return
      */
     @PostMapping("/member/signup")
     @ResponseBody
-    public String memberSignup(@RequestBody UserDTO userDTO, Model model) {
+    public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
-
+        /*
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
             List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
             //세션 정보를 User_Categories테이블에 저장한다.
             memberService.saveUserCategories(userDTO.getEmail(), categories);
-        }
+        }*/
 
-        return "회원가입실패";
+        return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
     }
 }

@@ -22,16 +22,16 @@
     
     <!-- ///////////////////// 회원가입 로직 ///////////////////// -->
     <!-- 이메일 중복확인 SQL -->
-    <select id="checkEmail" resultType="int">
-        SELECT COUNT(*)
+    <select id="checkEmail" resultType="UserDTO">
+        SELECT EMAIL, NICKNAME, AUTH, SIGNUP_TYPE
         FROM MEMBER
-        WHERE EMAIL = #{email}
+        WHERE DEL != 1 AND EMAIL = #{email}
     </select>
 
     <!-- 회원 등록 SQL -->
     <insert id="signup">
 		insert into MEMBER(EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE, REG_DATE)
-		values(#{email}, #{password}, #{nickname}, 3, 'EMAIL', sysdate)
+		values(#{email}, #{password}, #{nickname}, #{auth}, #{signup_type}, sysdate)
 	</insert>
 
     <!-- 세션에 저장된 관심 카테고리를 DB에 insert -->

@@ -12,7 +12,7 @@ let signupSubmitBtn = document.querySelector('#signupSubmitBtn'); //회원가입
 
 let signupEmailCheck = false;   //회원가입시, 이메일 유효성을 체크한다.
 let signupPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
-let signupPasswordCompare = false;  //회원가입시, 패스워드 확인의 유효성을 체크한다.
+//let signupPasswordCompare = false;  //회원가입시, 패스워드 확인의 유효성을 체크한다.
 let acceptTermCheck = false; //회원가입시, 약관 동의 여부를 체크한다.
 
 //눈표시 클릭 시 패스워드 보이기
@@ -159,7 +159,9 @@ const onSignupHandler  = () => {
             }*/
         })
             .then(function (result){
-                if(result.data == "1"){
+                console.log(result);
+
+                if(result.data.message == "success"){
                     alert("회원가입이 완료되었습니다.");
                 } else {
                     alert("회원가입에 실패했습니다.");

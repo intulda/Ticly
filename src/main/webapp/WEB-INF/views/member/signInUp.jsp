@@ -109,7 +109,7 @@
                     </div>
                     <div class="login-input-group">
                         <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                        <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
+                        <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="비밀번호를 입력해주세요." />
                         <div class="eyes-box" id="signup-eyes-box">
                             <i class="icon_show" id="signup-eyes-icon"></i>
                         </div>

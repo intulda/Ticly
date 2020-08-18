@@ -1,8 +1,12 @@
 package io.ticly.mint.member;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.member.dto.OAuthTokenDTO;
-import io.ticly.mint.member.service.OAuthService;
+import io.ticly.mint.member.dto.UserDTO;
+import io.ticly.mint.member.service.MemberService;
+import io.ticly.mint.member.util.NaverLoginUtil;
+import org.apache.tomcat.util.json.JSONParser;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
+import java.util.Map;
 
 @Controller
 public class OAuthController {
+
+    private MemberService memberService;
+
+    public OAuthController(MemberService memberService) {
+
+        this.memberService = memberService;
+    }
+
+
     private String CLIENT_ID = "zxfzewpOgzueAWu6JhMu"; // naver 애플리케이션 클라이언트 아이디값
     private String CLI_SECRET = "3Tn2PL5MCp"; // naver 애플리케이션 클라이언트 시크릿값
     private final String REDIRECT_URI = "http://localhost:8090/naver/callback";
@@ -82,16 +94,11 @@ public class OAuthController {
         apiURL += "&redirect_uri=" + redirectURI;
         apiURL += "&code=" + code;
         apiURL += "&state=" + state;
-        /*
-        String access_token = "";
-        String refresh_token = "";
-         */
 
         System.out.println("apiURL=" + apiURL);
-        //session.setAttribute("apiURL", apiURL);
 
         //데이터 요청 응답 가져오기, AccessToken 획득(개인정보 데이터에 접근하기 위함)
-        String res = requestToServer(apiURL);
+        String res = NaverLoginUtil.requestToServer(apiURL);
         if(res != null && !res.equals("")) {
             System.out.println("response정보" + res);
         //  model.addAttribute("res", res);
@@ -100,21 +107,54 @@ public class OAuthController {
             ObjectMapper objectMapper = new ObjectMapper();
 
             OAuthTokenDTO oAuthTokenDTO = objectMapper.readValue(res, OAuthTokenDTO.class);
-
             System.out.println("네이버 엑세스 토큰 : " + oAuthTokenDTO.getAccess_token());
 
-            /* String형태의 응답값을 Json타입으로 변환
-            Map<String, Object> parsedJson = new JSONParser(res).parseObject();
-            System.out.println("parsedJson = " + parsedJson);
-            session.setAttribute("currentUser", res);
-            session.setAttribute("currentAT", parsedJson.get("access_token"));  //사용자 액세스 토큰 값
-            session.setAttribute("currentRT", parsedJson.get("refresh_token")); //사용자 리프레시 토큰 값, 액세스 토큰이 만료되면 리프레시 토큰 필요.
-            */
+            /*네이버 회원 프로필 조회 및 DB저장 */
+            //1. 로그인 사용자 정보를 가져온다.
+            String apiResult = NaverLoginUtil.getProfileFromNaver(oAuthTokenDTO.getAccess_token());
+            System.out.println(apiResult);
 
-            /*
-            //네이버 회원 프로필 조회 및 DB저장
-            int checkNum = OAuthService.insertOAuthMember(oAuthTokenDTO);
-            */
+            //2. String형식인 apiResult를 json형태(Mapper)로 변환
+            Map<String, Object> profileJson = new JSONParser(apiResult).parseObject();
+            System.out.println("profile parsedJson = " + profileJson);
+            //3. 데이터 파싱
+            System.out.println("profile message" + profileJson.get("message"));
+            String naverUserEmail = (String)((Map<String, Object>)profileJson.get("response")).get("email");
+            String naverUserNickname = (String)((Map<String, Object>)profileJson.get("response")).get("name");
+            //4. DTO에 저장
+            UserDTO userDTO = new UserDTO();
+            userDTO.setEmail(naverUserEmail);
+            userDTO.setNickname(naverUserNickname);
+
+            //이메일로 가입자 혹은 비가입자 체크
+                //가입자의 경우
+                    //이메일로 로그인 했던 회원인 경우 > 이메일로 로그인페이지로 이동
+                    //네이버로 초기에 접속해서 DB에 회원이 경우 > 바로 로그인으로 이동
+                //비가입자인 경우
+                    //DB에 데이터 저장
+
+                //[로직]
+                //이메일이 같은 경우를 찾는다. > DTO로 값 전달 받음
+                    //null일 때 > DB에 저장
+                    //DTO.login_Type == "EMAIL" 인경우, 로그인 이동 페이지로 전달 > return
+
+                    //로그인 처리
+
+            //이메일이 같은 경우를 찾는다. > DTO로 값 전달 받음
+            UserDTO originUser = memberService.findMember(naverUserEmail);
+
+            //처음 로그인 했을 경우(이메일로도 회원가입한적 없고, 회원정보도 없음)
+            if(originUser == null){
+                System.out.println("새로운 회원입니다.");
+                //DB에 가입정보 저장(서비스에서 password와 nickname처리)
+                memberService.insertOAuthMember(userDTO);
+            }else if(originUser.getSignup_type()=="EMAIL"){
+                //로그인 페이지로 이동
+                return;
+            }
+            //해당하지 않는 경우 바로 로그인 처리
+
+
 
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -143,7 +183,7 @@ public class OAuthController {
         apiURL += "&client_secret=" + CLI_SECRET;
         apiURL += "&refresh_token=" + refreshToken;
         System.out.println("apiURL=" + apiURL);
-        String res = requestToServer(apiURL);
+        String res = NaverLoginUtil.requestToServer(apiURL);
         model.addAttribute("res", res);
         session.invalidate();
         return "test-naver-callback";
@@ -166,26 +206,12 @@ public class OAuthController {
         apiURL += "&access_token=" + accessToken;
         apiURL += "&service_provider=NAVER";
         System.out.println("apiURL=" + apiURL);
-        String res = requestToServer(apiURL);
+        String res = NaverLoginUtil.requestToServer(apiURL);
         model.addAttribute("res", res);
         session.invalidate();
         return "test-naver-callback";
     }
-    /**
-     * 액세스 토큰으로 네이버에서 프로필 받기
-     * @param accessToken
-     * @return
-     * @throws IOException
-     */
-    @ResponseBody
-    @RequestMapping("/naver/getProfile")
-    public String getProfileFromNaver(String accessToken) throws IOException {
-        // 네이버 로그인 접근 토큰;
-        String apiURL = "https://openapi.naver.com/v1/nid/me";
-        String headerStr = "Bearer " + accessToken; // Bearer 다음에 공백 추가
-        String res = requestToServer(apiURL, headerStr);
-        return res;
-    }
+
     /**
      * 세션 무효화(로그아웃)
      * @param session
@@ -197,53 +223,19 @@ public class OAuthController {
         return "redirect:/naver";
     }
 
-    /**
-     * 서버 통신 메소드
-     * @param apiURL
+/*    *//**
+     * 액세스 토큰으로 네이버에서 프로필 받기
+     * @param accessToken
      * @return
      * @throws IOException
-     */
-    private String requestToServer(String apiURL) throws IOException {
-        return requestToServer(apiURL, "");
-    }
-
-    /**
-     * 서버 통신 메소드
-     * @param apiURL
-     * @param headerStr
-     * @return
-     * @throws IOException
-     */
-    private String requestToServer(String apiURL, String headerStr) throws IOException {
-        URL url = new URL(apiURL);
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-        con.setRequestMethod("GET");
-        System.out.println("header Str: " + headerStr);
-
-        if(headerStr != null && !headerStr.equals("") ) {
-            con.setRequestProperty("Authorization", headerStr);
-        }
-
-        int responseCode = con.getResponseCode();
-        BufferedReader br;
-        System.out.println("responseCode="+responseCode);
-
-        if(responseCode == 200) { // 정상 호출
-            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-            br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        } else {  // 에러 발생
-            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-        }
-        String inputLine;
-        StringBuffer res = new StringBuffer();
-        while ((inputLine = br.readLine()) != null) {
-            res.append(inputLine);
-        }
-        br.close();
-        if(responseCode==200) {
-            return res.toString();
-        } else {
-            return null;
-        }
-    }
+     *//*
+    @ResponseBody
+    @RequestMapping("/naver/getProfile")
+    public String getProfileFromNaver(String accessToken) throws IOException {
+        // 네이버 로그인 접근 토큰;
+        String apiURL = "https://openapi.naver.com/v1/nid/me";
+        String headerStr = "Bearer " + accessToken; // Bearer 다음에 공백 추가
+        String res = NaverLoginUtil.requestToServer(apiURL, headerStr);
+        return res;
+    }*/
 }
