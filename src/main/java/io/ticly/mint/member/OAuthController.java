@@ -153,9 +153,6 @@ public class OAuthController {
                 return;
             }
             //해당하지 않는 경우 바로 로그인 처리
-
-
-
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>window.close(); opener.parent.location="+"'"+"/"+"'"+";</script>");

@@ -18,16 +18,22 @@
 <body>
 
         <%
-            Object ologin = session.getAttribute("login");
-            MemberDTO memberDTO = null;
+            Object ologin = session.getAttribute("userInfo");
+
             String nickname ="";
+            System.out.println("확인1111111111");
             if(ologin != null){
+                System.out.println("확인222222222");
+                MemberDTO memberDTO = (MemberDTO)ologin;
                 nickname = memberDTO.getNickname();
+                System.out.printf("memberDTO.getNickname() : "+memberDTO.getNickname());
                 byte[] bytes = nickname.getBytes();
                 if(bytes.length > 2 ) {
                     nickname = new String(bytes, 0, 2);
                     System.out.println("nickname");
                 }
+            }else{
+                System.out.println("로그인 세션 정보 없음");
             }
         %>
 
@@ -42,14 +48,14 @@
                     <c:choose>
                         <c:when test="${empty sessionScope.userInfo.email}">
                             <ul class="header-index">
-                                <li class="text nav-list-active h6 text-color-gray200 text-weight-medium "><a herf="/">아티클 찾기</a></li>
+                                <li class="text h6 text-color-gray200 text-weight-medium nav-list-active "><a herf="/">아티클 찾기</a></li>
                                 <li class="text h6 text-color-gray200 text-weight-medium"><a herf="#">서비스보드</a></li>
                                 <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li>
                             </ul>
                         </c:when>
                         <c:otherwise>
                             <ul class="header-index">
-                                <li class="text h6 text-color-gray200 text-weight-medium"><a herf="/">아티클 찾기</a></li>
+                                <li class="text h6 text-color-gray200 text-weight-medium nav-list-active"><a herf="/">아티클 찾기</a></li>
                                 <li class="text h6 text-color-gray200 text-weight-medium"><a herf="#">서비스보드</a></li>
                             </ul>
                         </c:otherwise>
