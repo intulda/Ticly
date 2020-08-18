@@ -25,31 +25,28 @@
 
     <insert id="saveUserLearning" parameterType="UserLearnDTO">
         MERGE INTO USER_LEARNING UL
-        USING (
-            SELECT USER_LEARNING_SEQ
-            FROM USER_LEARNING
-            WHERE ARTICLE_SEQ = #{article_seq}
-        ) D
-        ON (
-            UL.USER_LEARNING_SEQ = D.USER_LEARNING_SEQ
-        )
-        WHEN MATCHED
-            THEN
-                UPDATE
-                SET LAST_LEARNING_DATE = SYSDATE
-        WHEN NOT MATCHED
-            THEN
-                INSERT (
-                    USER_LEARNING_SEQ,
-                    EMAIL,
-                    ARTICLE_SEQ,
-                    LAST_LEARNING_DATE
-                ) VALUES (
-                    USER_LEARNING_PK_SEQ.NEXTVAL,
-                    #{email},
-                    #{article_seq},
-                    SYSDATE
-                )
+            USING DUAL
+            ON (
+                    UL.ARTICLE_SEQ = #{article_seq}
+                AND UL.EMAIL = #{email}
+            )
+            WHEN MATCHED
+                THEN
+                    UPDATE
+                    SET LAST_LEARNING_DATE = SYSDATE
+            WHEN NOT MATCHED
+                THEN
+                    INSERT (
+                        USER_LEARNING_SEQ,
+                        EMAIL,
+                        ARTICLE_SEQ,
+                        LAST_LEARNING_DATE
+                    ) VALUES (
+                        USER_LEARNING_PK_SEQ.NEXTVAL,
+                        #{email},
+                        #{article_seq},
+                        SYSDATE
+                    )
     </insert>
 
     <select id="getUserVocaCheck" parameterType="UserLearnDTO" resultType="int">

@@ -57,7 +57,6 @@ import WordContent from './WordContent.js';
         async setData(check) {
             const vocaList = await getVocaList();
             this.data = vocaList;
-            console.log(this.data);
             this.wordSetCurrentNumber = 0;
             this.totalCount = this.data.length;
             this.wordSetCurrentNumber = this.wordSetElem.children.length;
@@ -65,13 +64,16 @@ import WordContent from './WordContent.js';
             if(check) {
                 this.init();
             } else {
+                const _information = document.querySelector("#contentInformation");
                 this.currentCount = 0;
                 this.circleProgressInit();
+
                 for(let i=0; i<this.wordSetElem.children.length; i++) {
                     if(this.wordSetElem.children[i].classList.contains('active')) {
                         const groupNumber = this.wordSetElem.children[i].getAttribute('data-group');
                         this.tableDataFilter(groupNumber);
                         this.wordCountUpdate(groupNumber);
+                        _information.innerHTML = new WordContent(this.groupDataFilter(groupNumber)).getContentInformation();
                         break;
                     }
                 }
@@ -82,20 +84,25 @@ import WordContent from './WordContent.js';
         init() {
             this.circleProgressInit();
             this.wordSetProcess();
+            console.log(this.triggerNumber);
             if(this.wordSetElem.children.length > 0) {
                 this.wordSetElem.children[this.triggerNumber].click();
             }
         }
 
         wordSetProcess() {
+            let _maxCount = 0;
             this.wordSetElem.innerHTML = "";
             for(let i=1; i<=this.groupMaxCount; i++) {
-                if(this.currentCount == this.groupDataFilter(i).length) {
-                    this.triggerNumber = i-1;
-                    break;
+                if(this.groupDataFilter(i).length == this.groupCheckReadingFilter(i).length) {
+                    _maxCount++;
                 }
             }
-
+            this.triggerNumber = _maxCount;
+            if(_maxCount === this.groupMaxCount) {
+                console.log(1);
+                this.triggerNumber = 0;
+            }
 
 
             for(let i=1; i<=this.groupMaxCount; i++) {
@@ -127,6 +134,13 @@ import WordContent from './WordContent.js';
         groupDataFilter(groupNum) {
             const data = this.data.filter((obj) => {
                 return obj.voca_group == groupNum;
+            })
+            return data;
+        }
+
+        groupCheckReadingFilter(groupNum) {
+            const data = this.data.filter((obj) => {
+                return obj.voca_group == groupNum && obj.check_reading === 1;
             })
             return data;
         }
@@ -194,8 +208,6 @@ import WordContent from './WordContent.js';
         context.stroke();
         pie += 0.035;
         restart = requestAnimationFrame(circleProgress);
-        console.log("pie",pie);
-        console.log("max",max);
         if (pie >= max) {
             cancelAnimationFrame(restart);
         }

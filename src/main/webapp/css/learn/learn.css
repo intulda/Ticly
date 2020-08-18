@@ -595,7 +595,8 @@ div[class*='leaning-contents-card-front']::before {
 }
 .leaning-table td:nth-child(4),
 .leaning-table th:nth-child(4) {
-    width: 10%;
+    width: 11%;
+    min-width: 100px;
     padding: 5px 24px;
 }
 .leaning-table td:nth-child(5),
@@ -667,5 +668,11 @@ div[class*='leaning-contents-card-front']::before {
 
 .leaning-contents-table-down button {
     height: 40px;
+}
+
+.table-sort:after {
+    display: flex;
+    align-items: center;
+    content: url("/images/learn/con_sort.svg");
 }
 

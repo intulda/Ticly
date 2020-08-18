@@ -257,17 +257,23 @@
                                             <label class="custom-control-label" for="tableAllCheck"></label>
                                         </div>
                                     </th>
-                                    <th class="text">
-                                        단어
-                                        <i class="icon_sort"></i>
+                                    <th>
+                                        <span class="text">단어</span>
+                                        <span>
+                                            <img src="${pageContext.request.contextPath}/images/learn/con_sort.svg">
+                                        </span>
                                     </th>
-                                    <th class="text">
-                                        뜻
-                                        <i class="icon_sort"></i>
+                                    <th>
+                                        <span class="text">뜻</span>
+                                        <span>
+                                            <img src="${pageContext.request.contextPath}/images/learn/con_sort.svg">
+                                        </span>
                                     </th>
-                                    <th class="text">
-                                        상태
-                                        <i class="icon_sort"></i>
+                                    <th>
+                                        <span class="text">상태</span>
+                                        <span>
+                                            <img src="${pageContext.request.contextPath}/images/learn/con_sort.svg">
+                                        </span>
                                     </th>
                                     <th>
 

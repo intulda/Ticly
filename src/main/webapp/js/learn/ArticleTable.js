@@ -24,13 +24,19 @@ class ArticleTable {
                 <span class="table-word-set-count">(${this.data.length})</span>`
     }
 
+    getInputElement() {
+        const input = document.createElement("tr");
+
+    }
+
     getElements(obj) {
         this.elements = document.createElement("tr");
         if(obj != null) {
+            this.elements.dataset.vocaSeq = obj.user_voca_seq
             this.elements.innerHTML = `
             <td>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" id="tableAllCheck${obj.voca_order}" class="custom-control-input learning-table-checkbox" data-obj="${obj.user_voca_seq}">
+                    <input type="checkbox" id="tableAllCheck${obj.voca_order}" class="custom-control-input learning-table-checkbox">
                     <label class="custom-control-label" for="tableAllCheck${obj.voca_order}"></label>
                 </div>
             </td>
