@@ -32,6 +32,11 @@ public class MemberController {
         return "login/modalTest";
     }
 
+    @GetMapping("/header")
+    public String showHeader() {
+        return "layout/globalNav";
+    }
+
     /**
      * 모달 페이지로 이동
      * @return
