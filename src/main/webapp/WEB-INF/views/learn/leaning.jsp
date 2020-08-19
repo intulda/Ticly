@@ -20,7 +20,45 @@
         .container {
             padding: 0;
         }
-
+        .word-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform: translate(0%, 0%)
+        }
+        .word-list li {
+            list-style-type: none;
+            width: calc(100% - 387px);
+            height: 100%;
+            opacity: .25;
+            position: absolute;
+            /*left: 50%;*/
+            /*margin-left: -100px;*/
+            border-radius: 2px;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+        .word-list .act {
+            opacity: 1;
+        }
+        .word-list .word-list-hide {
+            opacity : 1;
+        }
+        .word-list-end {
+            transform: translateX(-50%) scale(1);
+        }
+        .word-list-hide {
+            transform: translateX(50%) scale(1);
+        }
+        .word-list .word-list-hide,
+        .word-list .word-list-end {
+            opacity: 0;
+            transition: opacity .2s, transform .2s;
+            z-index: -10;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -94,7 +132,7 @@
                     <span class="text h6">${currentArticle.title}</span>
                 </div>
                 <div class="leaning-sub-header-original">
-                    <button class="btn btn-outline-secondary btn-custom-option btn-link">
+                    <button class="btn btn-outline-secondary btn-custom-option btn-link-button">
                         <i class="icon_link"></i>
                         원문보기
                     </button>
@@ -111,41 +149,12 @@
                                 <span class="leaning-progress-span">단어 학습 진도</span>
                             </span>
                         </div>
-                        <canvas class="leaning-progress-canvas" width="162" height="162"/>
+                        <canvas class="leaning-progress-canvas" width="210" height="210"/>
                     </div>
                 </div>
                 <div class="leaning-contents-left-down">
                     <ul class="leaning-contents-word-set" id="wordSet">
-                        <li>
-                            <span>단어 세트 1</span>
-                            <div class="leaning-contents-word-count-wrap">
-                                <span class="leaning-contents-word-count"><span class="font-point">5</span>/10</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span>단어 세트 2</span>
-                            <div class="leaning-contents-word-count-wrap">
-                                <span class="leaning-contents-word-count"><span class="font-point">5</span>/10</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span>단어 세트 3</span>
-                            <div class="leaning-contents-word-count-wrap">
-                                <span class="leaning-contents-word-count"><span class="font-point">5</span>/10</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span>단어 세트 4</span>
-                            <div class="leaning-contents-word-count-wrap">
-                                <span class="leaning-contents-word-count"><span class="font-point">5</span>/10</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span>단어 세트 5</span>
-                            <div class="leaning-contents-word-count-wrap">
-                                <span class="leaning-contents-word-count"><span class="font-point">5</span>/10</span>
-                            </div>
-                        </li>
+
                     </ul>
                     <button class="btn btn-secondary btn-custom-option" id="wordSetAdd">
                         <i class="icon_plus"></i>
@@ -156,34 +165,70 @@
             <div class="leaning-contents-right">
                 <div class="leaning-contents-right-top">
                     <div class="leaning-contents-right-title">
-                        <h1>단어 세트 1</h1>
+                        <h1 id="contentTitle">단어 세트 1</h1>
                     </div>
                     <div class="leaning-contents-right-word">
-                        <div class="leaning-contents-card-prev">
-                            <span><</span>
+                        <div class="leaning-contents-card-prev" id="wordSwipeLeft">
+                            <i class="icon_chevron-left"></i>
                         </div>
                         <div class="leaning-contents-card-wrap">
-                            <div class="leaning-contents-card-front leaning-card">
-                                <div class="text leaning-contents-card-word display-4 text-weight-black front">
-                                    Null Pointer Exception
-                                </div>
-                                <div class="leaning-contents-card-information text alert-info body1 text-weight-medium">
-                                    <span class="card-information"><i class="icon_info_circle"></i>클릭하시면 두더지 입니다.</span>
-                                </div>
-                            </div>
-                            <div class="leaning-contents-card-back leaning-card">
-                                <div class="text leaning-contents-card-word display-4 text-weight-black back">
-                                    <%-- 카드 뒷면이 될곳 --%>
-                                    눌 포인트 익셉션
-                                </div>
-                            </div>
+                            <ul class="word-list" id="wordList">
+                                <li class="act">
+                                    <div class="leaning-contents-card-front leaning-card">
+                                        <div class="text leaning-contents-card-word display-4 text-weight-black front">
+                                            Null Pointer Exception
+                                        </div>
+                                        <div class="leaning-contents-card-information text alert-info body1 text-weight-medium">
+                                            <span class="card-information"><i class="icon_info_circle"></i>클릭하시면 두더지 입니다.</span>
+                                        </div>
+                                    </div>
+                                    <div class="leaning-contents-card-back leaning-card">
+                                        <div class="text leaning-contents-card-word display-4 text-weight-black back">
+                                            <%-- 카드 뒷면이 될곳 --%>
+                                            눌 포인트 익셉션
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="word-list-hide">
+                                    <div class="leaning-contents-card-front leaning-card">
+                                        <div class="text leaning-contents-card-word display-4 text-weight-black front">
+                                            author
+                                        </div>
+                                        <div class="leaning-contents-card-information text alert-info body1 text-weight-medium">
+                                            <span class="card-information"><i class="icon_info_circle"></i>클릭하시면 두더지 입니다.</span>
+                                        </div>
+                                    </div>
+                                    <div class="leaning-contents-card-back leaning-card">
+                                        <div class="text leaning-contents-card-word display-4 text-weight-black back">
+                                            <%-- 카드 뒷면이 될곳 --%>
+                                            오쓰도 잡아주시구요
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="word-list-hide">
+                                    <div class="leaning-contents-card-front leaning-card">
+                                        <div class="text leaning-contents-card-word display-4 text-weight-black front">
+                                            apply
+                                        </div>
+                                        <div class="leaning-contents-card-information text alert-info body1 text-weight-medium">
+                                            <span class="card-information"><i class="icon_info_circle"></i>클릭하시면 두더지 입니다.</span>
+                                        </div>
+                                    </div>
+                                    <div class="leaning-contents-card-back leaning-card">
+                                        <div class="text leaning-contents-card-word display-4 text-weight-black back">
+                                            <%-- 카드 뒷면이 될곳 --%>
+                                            애플리 잡아주시구요
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="leaning-contents-card-next">
-                            <span>></span>
+                        <div class="leaning-contents-card-next" id="wordSwipeRight">
+                            <i class="icon_chevron-right"></i>
                         </div>
                     </div>
                     <div class="leaning-contents-card-status">
-                        <ul>
+                        <ul id="contentInformation">
                             <li>공부한 단어 <span class="font-point">1</span>개</li>
                             <li>전체 단어 10개</li>
                         </ul>
@@ -191,67 +236,90 @@
                 </div>
                 <div class="leaning-contents-right-down">
                     <div class="leaning-contents-right-top-info mb-3">
-                        <div class="leaning-contents-table-info">
+                        <div class="leaning-contents-table-info" id="tableInformation">
                             <span>[단어세트3]의 목록</span>
                             <span class="table-word-set-count">(10)</span>
                         </div>
                         <div class="leaning-contents-table-add-word">
-                            <button class="btn btn-secondary btn-custom-option table-word-add-btn">
-                                <i class="icon_plus"></i>
-                                단어 추가하기
+                            <button class="btn btn-outline-danger table-word-delet-btn" id="tableWordRemove">
+                                삭제하기
                             </button>
                         </div>
                     </div>
                     <div class="leaning-contents-table-contents">
-                        <table class="leaning-table">
-                            <tr>
-                                <th class="text">
-                                    단어
-                                    <i class="icon_sort"></i>
-                                </th>
-                                <th class="text">
-                                    뜻
-                                    <i class="icon_sort"></i>
-                                </th>
-                                <th class="text">
-                                    공부 상태
-                                    <i class="icon_sort"></i>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td class="text">Null Pointer Exception</td>
-                                <td class="text">눌 포인터 익셉션</td>
-                                <td class="text">
-                                    <span class="text text-weight-light badge badge-primary">완료</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text">Null Pointer Exception</td>
-                                <td class="text">눌 포인터 익셉션</td>
-                                <td class="text">
-                                    <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text">Null Pointer Exception</td>
-                                <td class="text">눌 포인터 익셉션</td>
-                                <td class="text">
-                                    <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text">Null Pointer Exception</td>
-                                <td class="text">눌 포인터 익셉션</td>
-                                <td class="text">
-                                    <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                </td>
-                            </tr>
+                        <table class="leaning-table" data-state="read">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" id="tableAllCheck" class="custom-control-input learning-table-checkbox">
+                                            <label class="custom-control-label" for="tableAllCheck"></label>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <span class="text">단어</span>
+                                        <span>
+                                            <img src="${pageContext.request.contextPath}/images/learn/con_sort.svg">
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="text">뜻</span>
+                                        <span>
+                                            <img src="${pageContext.request.contextPath}/images/learn/con_sort.svg">
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="text">상태</span>
+                                        <span>
+                                            <img src="${pageContext.request.contextPath}/images/learn/con_sort.svg">
+                                        </span>
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="articleWordTable">
+                                <tr>
+                                    <td class="text">Null Pointer Exception</td>
+                                    <td class="text">눌 포인터 익셉션</td>
+                                    <td class="text">
+                                        <span class="text text-weight-light badge badge-primary">완료</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text">Null Pointer Exception</td>
+                                    <td class="text">눌 포인터 익셉션</td>
+                                    <td class="text">
+                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text">Null Pointer Exception</td>
+                                    <td class="text">눌 포인터 익셉션</td>
+                                    <td class="text">
+                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text">Null Pointer Exception</td>
+                                    <td class="text">눌 포인터 익셉션</td>
+                                    <td class="text">
+                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
+                                    </td>
+                                </tr>
+                                </tbody>
                         </table>
+                        <div class="leaning-contents-table-down">
+                            <button class="btn btn-outline-primary table-word-delet-btn" id="tableWordAdd">
+                                단어 추가하기
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-    <script type="module" src="${pageContext.request.contextPath}/js/learn/learn.js"></script>
+    <script type="module" src="${pageContext.request.contextPath}/js/learn/Learn.js"></script>
 </body>
 </html>

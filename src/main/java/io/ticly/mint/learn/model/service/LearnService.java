@@ -77,4 +77,51 @@ public class LearnService {
     public List<VocaDTO> getVocaList(UserLearnDTO userLearnDTO) {
         return learnDAO.getVocaList(userLearnDTO);
     }
+
+    public boolean saveWordReading(VocaDTO vocaDTO) throws SQLException {
+        int count = learnDAO.saveWordReading(vocaDTO);
+        if(count <= 0) {
+            throw new SQLException("CheckReading Update error");
+        }
+        return true;
+    }
+
+    /**
+     * 유저 단어 추가 메소드
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean saveUserVoca(VocaDTO vocaDTO) throws SQLException {
+        int count = learnDAO.saveUserVoca(vocaDTO);
+        if(count <= 0) {
+            throw new SQLException("userVoca insert error");
+        }
+        return true;
+    }
+
+    /**
+     * 유저 단어 삭제 메소드
+     * @param vocaDTOS
+     * @return
+     * @throws SQLException
+     */
+    public boolean deleteUserVoca(List<VocaDTO> vocaDTOS) throws SQLException {
+        int count = 0;
+        for(VocaDTO vocaDTO : vocaDTOS) {
+            count += learnDAO.deleteUserVoca(vocaDTO);
+        }
+        if(count <= 0) {
+            throw new SQLException("userVoca delete error");
+        }
+        return true;
+    }
+
+    public boolean updateUserWord(VocaDTO vocaDTO) throws SQLException {
+        int count = learnDAO.updateUserWord(vocaDTO);
+        if(count <= 0) {
+            throw new SQLException("userVoca update error");
+        }
+        return true;
+    }
 }
