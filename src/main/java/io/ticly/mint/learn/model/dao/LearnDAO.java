@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 public class LearnDAO {
 
+    private final String NAMESPACE = "learnDAO.";
     private SqlSessionTemplate sqlSessionTemplate;
 
     public LearnDAO(SqlSessionTemplate sqlSessionTemplate) {
@@ -22,26 +23,38 @@ public class LearnDAO {
     }
 
     public LearnArticleDTO getArticle(UserLearnDTO userLearnDTO) {
-        return sqlSessionTemplate.selectOne("learnDAO.getArticle", userLearnDTO);
+        return sqlSessionTemplate.selectOne(NAMESPACE+"getArticle", userLearnDTO);
     }
 
     public int saveUserLearning(UserLearnDTO userLearnDTO) {
-        return sqlSessionTemplate.insert("learnDAO.saveUserLearning", userLearnDTO);
+        return sqlSessionTemplate.insert(NAMESPACE+"saveUserLearning", userLearnDTO);
     }
 
     public int getUserVocaCheck(UserLearnDTO userLearnDTO) {
-        return sqlSessionTemplate.selectOne("learnDAO.getUserVocaCheck", userLearnDTO);
+        return sqlSessionTemplate.selectOne(NAMESPACE+"getUserVocaCheck", userLearnDTO);
     }
 
     public int saveArticleVocaToUser(UserLearnDTO userLearnDTO) {
-        return sqlSessionTemplate.insert("learnDAO.saveArticleVocaToUser", userLearnDTO);
+        return sqlSessionTemplate.insert(NAMESPACE+"saveArticleVocaToUser", userLearnDTO);
     }
 
     public List<VocaDTO> getVocaList(UserLearnDTO userLearnDTO) {
-        return sqlSessionTemplate.selectList("learnDAO.getVocaList", userLearnDTO);
+        return sqlSessionTemplate.selectList(NAMESPACE+"getVocaList", userLearnDTO);
     }
 
     public int saveWordReading(VocaDTO vocaDTO) {
-        return sqlSessionTemplate.update("learnDAO.saveWordReading", vocaDTO);
+        return sqlSessionTemplate.update(NAMESPACE+"saveWordReading", vocaDTO);
+    }
+
+    public int saveUserVoca(VocaDTO vocaDTO) {
+        return sqlSessionTemplate.insert(NAMESPACE+"saveUserVoca", vocaDTO);
+    }
+
+    public int deleteUserVoca(VocaDTO vocaDTO) {
+        return sqlSessionTemplate.delete(NAMESPACE+"deleteUserVoca", vocaDTO);
+    }
+
+    public int updateUserWord(VocaDTO vocaDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateUserWord", vocaDTO);
     }
 }

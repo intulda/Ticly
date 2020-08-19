@@ -62,7 +62,6 @@
     </style>
 </head>
 <body>
-    <c:import url="/WEB-INF/views/index.jsp"></c:import>
     <div class="container-xg">
         <header class="leaning-header-wrap">
             <div class="leaning-header">
@@ -242,13 +241,13 @@
                             <span class="table-word-set-count">(10)</span>
                         </div>
                         <div class="leaning-contents-table-add-word">
-                            <button class="btn btn-outline-danger table-word-delet-btn">
+                            <button class="btn btn-outline-danger table-word-delet-btn" id="tableWordRemove">
                                 삭제하기
                             </button>
                         </div>
                     </div>
                     <div class="leaning-contents-table-contents">
-                        <table class="leaning-table">
+                        <table class="leaning-table" data-state="read">
                             <thead>
                                 <tr>
                                     <th>
@@ -312,8 +311,7 @@
                                 </tbody>
                         </table>
                         <div class="leaning-contents-table-down">
-                            <button class="btn btn-outline-primary" id="tableWordAdd">
-                                <i class="icon_plus"></i>
+                            <button class="btn btn-outline-primary table-word-delet-btn" id="tableWordAdd">
                                 단어 추가하기
                             </button>
                         </div>

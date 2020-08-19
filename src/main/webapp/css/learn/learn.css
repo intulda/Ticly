@@ -369,7 +369,7 @@ progress-contents-left {
     border-radius: 12px;
     background-color: #FFFFFF;
     box-shadow: 0 -13px 27px 0 rgba(225,225,232,0.2), 0 13px 26px 0 rgba(0,0,0,0.2);
-    margin: 0 32px;
+    /*margin: 0 32px;*/
 }
 
 div[class*='leaning-contents-card-back']::before,
@@ -595,9 +595,10 @@ div[class*='leaning-contents-card-front']::before {
 }
 .leaning-table td:nth-child(4),
 .leaning-table th:nth-child(4) {
-    width: 11%;
+    width: 15%;
     min-width: 100px;
-    padding: 5px 24px;
+    /*padding: 5px 24px;*/
+    text-align: center;
 }
 .leaning-table td:nth-child(5),
 .leaning-table th:nth-child(5) {
@@ -662,12 +663,12 @@ div[class*='leaning-contents-card-front']::before {
     min-width: 960px;
 }
 .leaning-contents-table-down {
-    height: 40px;
+    height: 32px;
     margin: 16px 0 80px 0;
 }
 
 .leaning-contents-table-down button {
-    height: 40px;
+    height: 100%;
 }
 
 .table-sort:after {
@@ -676,3 +677,18 @@ div[class*='leaning-contents-card-front']::before {
     content: url("/images/learn/con_sort.svg");
 }
 
+button.learning__table {
+    transition: all 0.3s
+}
+
+.learning__table.active {
+    background-color: rgba(0, 168, 129, 0.16);
+    color: #008e6d;
+    font-size: 16px;
+    line-height: 1.75rem;
+    font-weight: 600;
+}
+
+.learning__table-input {
+    height: 32px;
+}
