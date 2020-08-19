@@ -1,8 +1,12 @@
 package io.ticly.mint.member.service;
 
 import io.ticly.mint.member.dao.MemberDAO;
-import io.ticly.mint.member.dto.MemberDTO;
+import io.ticly.mint.member.dto.UserDTO;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MemberService {
@@ -15,38 +19,100 @@ public class MemberService {
 
     /**
      * 로그인시 가입여부 확인
-     * @param memberDTO
-     * @return 1이면 로그인 가능, 1이 아니면 로그인 불가
+     * @param userDTO
+     * @return
      */
-    public int findMemberSignin(MemberDTO memberDTO){
-        int result = memberDAO.findMemberSignin(memberDTO);
-        return result;
+    public UserDTO findMemberSignin(UserDTO userDTO){
+        return memberDAO.findMemberInfo(userDTO);
+    }
+
+    public List<String> getUserCategories(String email){
+        return memberDAO.getUserCategories(email);
+    }
+
+    public void saveUserCategories(String email, List<String> categories){
+
+        /*
+        for (int i=0;)
+
+        int count = memberDAO.saveUserCategories(email, category_);
+
+        if(count <= 0) {
+        //  throw new SQLException("세션 카테고리 -> DB에 insert 실패");
+            System.out.println("세션 카테고리 -> DB에 insert 실패");
+        }
+        */
     }
 
     /**
-     * 이메일 중복확인 처리
+     * 이메일 중복확인 처리(회원가입 시)
      * @param email
      * @return
      */
     public int findDuplicateEmail(String email) {
-        int result = memberDAO.findDuplicateEmail(email);
-        return result;
+        UserDTO userDTO = memberDAO.findDuplicateEmail(email);
+        //중복된 이메일인 경우
+        if(userDTO!=null){
+            return 1;
+        }else { //중복되지 않은 이메일인 경우
+            return 0;
+        }
     }
 
     /**
-     * 회원가입 데이터 저장
-     * @param memberDTO
+     * 회원가입 데이터 저장(이메일로 가입시)
+     * @param userDTO
      * @return
      */
-    public int insertNewMember(MemberDTO memberDTO){
+    public int insertNewMember(UserDTO userDTO){
 
         //닉네임 가져오기
-        String email = memberDTO.getEmail();
+        String email = userDTO.getEmail();
         int nicknamePoint = email.indexOf("@");
         String nickname = email.substring(0,nicknamePoint);
-        memberDTO.setNickname(nickname);
+        userDTO.setNickname(nickname);
 
+        userDTO.setAuth(3);
+        userDTO.setSignup_type("Email");
         //Dao로 넘기기
-        return memberDAO.insertNewMember(memberDTO);
+        return memberDAO.insertNewMember(userDTO);
+    }
+
+    /**
+     * OAuth 가입시, 기존 가입정보가 있는지 확
+     * @param authEmail
+     * @return
+     */
+    public UserDTO findMember(String authEmail){
+        return memberDAO.findDuplicateEmail(authEmail);
+    }
+
+    /**
+     * 네이버 로그인시 회원정보 DB에 저장
+     * @param userDTO
+     * @return
+     */
+    public void insertOAuthMember(UserDTO userDTO){
+        System.out.println("Service에 넘어온 값 확인 : " + userDTO.getEmail());
+
+        //임시 패스워드 값 넣어주기
+        String gabagePassword = UUID.randomUUID().toString();
+        System.out.println("gabagePassword = " + gabagePassword);
+        userDTO.setPassword(gabagePassword);
+
+        //닉네임을 받아오지 못했다면, 이메일에서 아이디만 추출해서 담아준다.
+        if(userDTO.getNickname()==null || userDTO.getNickname().equals("")){
+            String email = userDTO.getEmail();
+            int nicknamePoint = email.indexOf("@");
+            String nickname = email.substring(0,nicknamePoint);
+            userDTO.setNickname(nickname);
+        }
+
+        userDTO.setAuth(3);
+        userDTO.setSignup_type("NAVER");
+
+        //세팅된 DTO를 DAO로 넘기기
+        int checkNum = memberDAO.insertNewMember(userDTO);
+        System.out.println("checkNum = "+checkNum + "(1이면 데이터 저장 성공)");
     }
 }
