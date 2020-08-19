@@ -24,9 +24,16 @@ public class MemberDTO {
         this.categories = categories;
     }
 
-    public MemberDTO(int auth, List<String> categories, String email){
+    public MemberDTO(int auth, List<String> categories, String email) {
         this.auth = auth;
         this.categories = categories;
         this.email = email;
+    }
+
+    public MemberDTO(String email, String nickname, int auth, List<String> categories) {
+        this.email = email;
+        this.nickname = nickname;
+        this.auth = auth;
+        this.categories = categories;
     }
 }
