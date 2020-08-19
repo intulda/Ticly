@@ -626,6 +626,7 @@ div[class*='leaning-contents-card-front']::before {
 }
 .leaning-current-article-contents {
     display: flex;
+    justify-content: space-between;
 }
 .leaning-current-article-right img {
     height: 144px;
