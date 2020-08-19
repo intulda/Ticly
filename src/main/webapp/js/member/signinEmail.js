@@ -78,8 +78,9 @@ signinSubmitBtn.addEventListener("click", function () {
             data : JSON.stringify(signinData)
         })
             .then(function (result){
-                if(result.data == "success"){
+                if(result.data.message == "success"){
                     alert("로그인을 완료했습니다.");
+                    window.location.href = "/articleBoard/findArticle";
 
                     //세션에 있는 유저 카테고리를 확인
                         //있으면 > 메인으로
