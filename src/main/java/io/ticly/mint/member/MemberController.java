@@ -76,6 +76,11 @@ public class MemberController {
             MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
             System.out.println("테스트 : "+user.getAuth());
             */
+
+            //세션체크를 한 뒤
+                //있으면 > '1'
+                //없으면 > '0'
+
             return "success";
         }else{ //가져온 회원정보가 없으면, 로그인 불가
             return "fail";
@@ -106,14 +111,12 @@ public class MemberController {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
 
-        /*
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
-            List<CategoryDTO> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
+            List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
             //세션 정보를 User_Categories테이블에 저장한다.
             memberService.saveUserCategories(userDTO.getEmail(), categories);
         }
-        */
 
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
     }

@@ -31,17 +31,18 @@ public class MemberService {
     }
 
     public void saveUserCategories(String email, List<String> categories){
-
         /*
-        for (int i=0;)
+        for(String i : categories){
+
+            System.out.println(i);
+        }
 
         int count = memberDAO.saveUserCategories(email, category_);
 
         if(count <= 0) {
         //  throw new SQLException("세션 카테고리 -> DB에 insert 실패");
             System.out.println("세션 카테고리 -> DB에 insert 실패");
-        }
-        */
+        }*/
     }
 
     /**

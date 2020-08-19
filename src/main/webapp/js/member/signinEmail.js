@@ -80,6 +80,12 @@ signinSubmitBtn.addEventListener("click", function () {
             .then(function (result){
                 if(result.data == "success"){
                     alert("로그인을 완료했습니다.");
+
+                    //세션에 있는 유저 카테고리를 확인
+                        //있으면 > 메인으로
+                        //없으면 > 카테고리 선택창으로  (http://localhost:8090/articleBoard/category)
+
+
                 } else {
                     failEmailLogin(); //로그인 실패시 경고 alert
                 }

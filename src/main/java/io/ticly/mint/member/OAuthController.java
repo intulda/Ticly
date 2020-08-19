@@ -120,11 +120,24 @@ public class OAuthController {
             //3. 데이터 파싱
             System.out.println("profile message" + profileJson.get("message"));
             String naverUserEmail = (String)((Map<String, Object>)profileJson.get("response")).get("email");
-            String naverUserNickname = (String)((Map<String, Object>)profileJson.get("response")).get("name");
+            String naverUserNickname = (String)((Map<String, Object>)profileJson.get("response")).get("nickname");
+            System.out.println("////////////이메일 : " + naverUserEmail);
+            System.out.println("////////////닉네임 : " + naverUserNickname);
+
+            //이메일을 받아오지 못했다면, 다시 로그인 페이지로 이동.
+
+            //닉네임을 받아오지 못했다면, 이메일에서 아이디만 추출해서 담아준다.
+            if(naverUserNickname==null || naverUserNickname.equals("")){
+                int nicknamePoint = naverUserEmail.indexOf("@");
+                String setNickname = naverUserEmail.substring(0,nicknamePoint);
+                naverUserNickname = setNickname;
+            }
+
             //4. DTO에 저장
             UserDTO userDTO = new UserDTO();
             userDTO.setEmail(naverUserEmail);
             userDTO.setNickname(naverUserNickname);
+
 
             //이메일로 가입자 혹은 비가입자 체크
                 //가입자의 경우
@@ -149,10 +162,17 @@ public class OAuthController {
                 //DB에 가입정보 저장(서비스에서 password와 nickname처리)
                 memberService.insertOAuthMember(userDTO);
             }else if(originUser.getSignup_type()=="EMAIL"){
-                //로그인 페이지로 이동
-                return;
+                //로그인 페이지로 이동, 이메일로 가입한 적이 있기때문이다.
+                //return;
             }
             //해당하지 않는 경우 바로 로그인 처리
+            //
+
+            //세션에 상태 토큰을 저장
+            session.setAttribute("userInfo", userDTO);
+
+       //     (MemberDTO)session.getAttribute("userinfo");\
+
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>window.close(); opener.parent.location="+"'"+"/"+"'"+";</script>");

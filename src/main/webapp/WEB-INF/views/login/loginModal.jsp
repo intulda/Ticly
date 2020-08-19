@@ -8,7 +8,9 @@
     <div class="signinup-modal-contents">
         <!--login-->
         <!--닫기 버튼-->
-        <div class="modal-close" id="modal-close">+</div>
+        <div class="intro_Button_Oval" id="modal-close">
+            <i class="icon_close intro_Button_X"></i>
+        </div>
 
         <!--로그인 메인-->
         <div class="main-login-form hidden" id="main-login-form">

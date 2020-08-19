@@ -1,10 +1,3 @@
-*{
- margin: 0;
- padding: 0;
- box-sizing: border-box; 
- font-family: "Noto Sans CJK KR";
-}
-
 
 /* MODAL STARTS */
 .signinup-modal {
@@ -28,7 +21,7 @@
   max-height: 100%;
   border-radius: 30px;
 }
-
+/*
 .modal-close {
   position: absolute;
   top: 0;
@@ -39,6 +32,29 @@
   cursor: pointer;
   z-index: 1;
 }
+*/
+.intro_Button_Oval {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 100%;
+  height: 70px;
+  width: 70px;
+  border: 4px solid #FFFFFF;
+  background-color: #2B2D36;
+}
+
+.intro_Button_X {
+  font-size: 36px;
+  color: #FFFFFF;
+}
+
+
 .modal-close:hover {
   color: #666;
 }
