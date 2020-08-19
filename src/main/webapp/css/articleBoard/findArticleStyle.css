@@ -5,6 +5,7 @@
 }
 
 .card__outer {
+    cursor: pointer;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem 2rem;
@@ -91,29 +92,10 @@
 }
 
 button.category__tab {
-    transition: all 0.3s
-}
-
-.category__tab.active {
-    background-color: rgba(0, 168, 129, 0.16);
-    color: #008e6d;
-    font-size: 20px;
+    font-size: 1.25rem;
     line-height: 1.75rem;
     font-weight: 500;
 }
-
-button.category__tab:hover {
-    background-color: rgba(0, 168, 129, 0.08);
-}
-
-.category__tab.inactive {
-    background-color: rgba(0, 168, 129, 0);
-    color: #858899;
-    font-size: 20px;
-    line-height: 1.75rem;
-    font-weight: 500;
-}
-
 
 .findArticle__section {
     margin-bottom: 3rem;

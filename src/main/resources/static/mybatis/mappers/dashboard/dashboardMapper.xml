@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dashboardDAO">
+
+    <!--DB에서 사용자가 마지막으로 학습한 아티클 정보 불러오기
+        @param String 이메일-->
+    <select id="getLastLearningArticleInfo" parameterType="String" resultType="UserArticleInfoDTO">
+        SELECT *
+        FROM (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)       AS R_NUM,
+                     U_LEN.USER_LEARNING_SEQ                                    AS USER_LEARNING_SEQ,
+                     TO_CHAR(TO_DATE(U_LEN.LAST_LEARNING_DATE),'YYYY.MM.DD')   AS LAST_LEARNING_DATE,
+                     U_LEN.LAST_LEARNING_TYPE                                   AS LAST_LEARNING_TYPE,
+                     U_LEN.ARTICLE_SEQ                                          AS ARTICLE_SEQ,
+                     A_.URL                                                     AS URL,
+                     A_.TITLE                                                   AS TITLE
+              FROM USER_LEARNING U_LEN,
+                  ARTICLE A_
+              WHERE U_LEN.ARTICLE_SEQ = A_.ARTICLE_SEQ
+                AND U_LEN.EMAIL = #{email})
+        WHERE R_NUM = 1
+    </select>
+
+    <!--DB에서 특정 아티클에서 마지막으로 학습한 VOCA 데이터 가져오기
+    @param String USER_LEARNING_SEQ-->
+    <select id="getLastVoca" parameterType="int" resultType="String">
+        SELECT UV.VOCA AS LAST_LEARNING_VOCA
+        FROM USER_LEARNING UL,
+             USER_VOCA UV
+        WHERE UL.USER_LEARNING_SEQ = UV.USER_LEARNING_SEQ
+          AND UL.USER_LEARNING_SEQ = ${user_learning_seq}
+          AND UV.LAST_VOCA != 0
+    </select>
+
+    <!--DB에서 특정 아티클에서 마지막으로 학습한 문장 데이터 가져오기
+    @param String USER_LEARNING_SEQ-->
+    <select id="getLastSentence" parameterType="int" resultType="String">
+        SELECT ENG_SENTENCE AS LAST_LEARNING_SENTENCE
+        FROM ARTICLE_SENTENCE
+        WHERE ARTICLE_SENTENCE_SEQ = (SELECT U_SEN.ARTICLE_SENTENCE_SEQ
+                                      FROM USER_LEARNING U_LEN,
+                                           USER_SENTENCE U_SEN
+                                      WHERE U_LEN.USER_LEARNING_SEQ = U_SEN.USER_LEARNING_SEQ
+                                        AND U_LEN.USER_LEARNING_SEQ = ${user_learning_seq}
+                                        AND U_SEN.LAST_SENTENCE != 0)
+    </select>
+
+</mapper>

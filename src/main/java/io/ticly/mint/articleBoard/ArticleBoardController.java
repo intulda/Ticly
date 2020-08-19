@@ -22,7 +22,7 @@ public class ArticleBoardController {
         this.articleBoardService = articleBoardService;
     }
 
-    // TODO 관심 분야 페이지로 단순 이동
+    // 관심 분야 페이지로 단순 이동
     @GetMapping(value ="category")
     public String goToCategoryPage(){
         return "articleBoard/category";

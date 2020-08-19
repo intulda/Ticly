@@ -38,19 +38,19 @@
             <c:choose>
                 <%-- 선택한 관심분야가 1개 이상일 경우--%>
                 <c:when test="${fn:length(userInfo.categories) > 1}">
-                    <button class="category__tab btn active js-category-tab">ALL</button>
+                    <button class="category__tab btn btn-tab active js-category-tab">ALL</button>
                     <c:forEach items="${userInfo.categories}" var="category">
-                        <button class="category__tab btn inactive js-category-tab" value="${category}">${category}</button>
+                        <button class="category__tab btn btn-tab js-category-tab" value="${category}">${category}</button>
                     </c:forEach>
                 </c:when>
 
                 <%-- 관심분야를 1개만 선택한 경우--%>
                 <c:otherwise>
-                    <button class="category__tab btn active">${userInfo.categories[0]}</button>
+                    <button class="category__tab btn btn-tab active">${userInfo.categories[0]}</button>
                 </c:otherwise>
 
             </c:choose>
-            <button class="category__tab btn inactive" onclick="location.href ='category'"><i class="icons icon_setting md"></i></button>
+            <button class="category__tab btn btn-tab" onclick="location.href ='category'"><i class="icons icon_setting md"></i></button>
         </div>
 
         <!-- search bar -->
@@ -61,7 +61,7 @@
             <c:forEach items="${userInfo.categories}" var="category">
                 <input type="hidden" name="categories" value=${category}>
             </c:forEach>
-            <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn"  type="button"><i class="icons icon_error_circle sm"></i></button>
+            <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn" type="button"><i class="icons icon_error_circle sm"></i></button>
         </form>
     </div>
 

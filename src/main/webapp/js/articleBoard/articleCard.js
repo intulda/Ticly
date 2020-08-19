@@ -10,7 +10,6 @@ class ArticleCard {
         this.hashtag = hashtag.replace(/\"/g, "");
         this.title = title.replace(/\"/g, "");
         this.summary = summary.replace(/\"/g, "");
-
         this.regDate = regDate.replace(/\"/g, "");
         this.element = document.createElement('div');
     }
