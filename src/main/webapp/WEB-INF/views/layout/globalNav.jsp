@@ -120,13 +120,25 @@
         <c:import url="/WEB-INF/views/login/loginModal.jsp"></c:import>
         <script>
             (() => {
-                //모달 열기
-                document.getElementById('modal-open-button').addEventListener("click", function() {
+            //모달 열기
+
+                if(document.getElementById('modal-open-button') != null) {
+                    document.getElementById('modal-open-button').addEventListener("click", function() {
+                        modalOpen('Ticly 로그인');
+                    });
+
+                    document.getElementById('start-free-btn').addEventListener("click", function() {
+                        modalOpen('Ticly 무료로 시작하기')
+                    });
+                }
+
+                function modalOpen(title) {
+                    document.querySelector('#test').innerText = title;
                     document.getElementById('signinup-modal').style.display = "flex";
                     document.getElementById('main-login-form').classList.remove('hidden');
                     document.getElementById('email-signup-form').classList.add('hidden');
                     document.getElementById('email-signin-form').classList.add('hidden');
-                });
+                }
             })();
         </script>
 

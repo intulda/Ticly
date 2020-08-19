@@ -14,7 +14,7 @@
         <div class="main-login-form hidden" id="main-login-form">
             <div class="scroll-zone">
                 <hearder class="login-modal-header">
-                    <h1 class="text text-color-gray100 text-weight-medium">Ticly 로그인</h1>
+                    <h1 class="text text-color-gray100 text-weight-medium" id="test">Ticly 로그인</h1>
                     <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
                 </hearder>
                 <div class="login-button-wrapper">
