@@ -1,5 +1,6 @@
 package io.ticly.mint.member;
 
+import io.ticly.mint.admin.model.dto.CategoryDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.member.dto.ResponseDto;
 import io.ticly.mint.member.dto.UserDTO;
@@ -105,12 +106,14 @@ public class MemberController {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
 
+        /*
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
-            List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
+            List<CategoryDTO> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
             //세션 정보를 User_Categories테이블에 저장한다.
             memberService.saveUserCategories(userDTO.getEmail(), categories);
         }
+        */
 
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
     }
