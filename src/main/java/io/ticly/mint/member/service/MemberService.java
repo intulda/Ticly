@@ -45,11 +45,12 @@ public class MemberService {
 
             category_seq.add(seq);
         }
-
+        /*
         //List에 저장된 값 확인
         for(Integer i : category_seq){
             System.out.println(i);
         }
+        */
 
         //2.email과 seq를 테이블에 저장한다.
         for(Integer i: category_seq){
@@ -91,7 +92,7 @@ public class MemberService {
         userDTO.setNickname(nickname);
 
         userDTO.setAuth(3);
-        userDTO.setSignup_type("Email");
+        userDTO.setSignup_type("EMAIL");
         //Dao로 넘기기
         return memberDAO.insertNewMember(userDTO);
     }

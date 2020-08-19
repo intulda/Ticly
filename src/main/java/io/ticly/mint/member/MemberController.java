@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 ;import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
 @SessionAttributes("userInfo")
@@ -59,11 +60,11 @@ public class MemberController {
      */
     @PostMapping("/member/signin")
     @ResponseBody
-    public String memberSignin(@RequestBody UserDTO userDTO, Model model) {
+    public ResponseDto<String> memberSignin(@RequestBody UserDTO userDTO, Model model) {
         System.out.println(userDTO.getEmail() + userDTO.getPassword());
         UserDTO principal = memberService.findMemberSignin(userDTO); //principal(접근주체)
 
-        //가져온 회원정보가 null이 아닐때, 로그인이 가능할 때
+        //가져온 회원정보가 null이 아닐때, 로그인이 성공하면 DB에 있는 회원 카테고리 정보를 불러온다.
         if(principal != null){
             //DB에서 회원 카테고리 정보 가져오기
             List<String> categories = memberService.getUserCategories(principal.getEmail());
@@ -72,18 +73,19 @@ public class MemberController {
             MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
 
-            /*확인
-            MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
-            System.out.println("테스트 : "+user.getAuth());
-            */
+
 
             //세션체크를 한 뒤
+                 /* 세션 값 꺼내오기
+                MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+                System.out.println("테스트 : "+user.getAuth());
+                */
                 //있으면 > '1'
                 //없으면 > '0'
 
-            return "success";
+            return new ResponseDto<String>(HttpStatus.OK.value(), "success");
         }else{ //가져온 회원정보가 없으면, 로그인 불가
-            return "fail";
+            return new ResponseDto<String>(HttpStatus.OK.value(), "fail");
         }
     }
 
@@ -107,17 +109,18 @@ public class MemberController {
      */
     @PostMapping("/member/signup")
     @ResponseBody
-    public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) {
+    public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
 
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
-            List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
-            //세션 정보를 User_Categories테이블에 저장한다.
-            memberService.saveUserCategories(userDTO.getEmail(), categories);
+            if((MemberDTO)model.getAttribute("userInfo")!=null){
+                List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
+                //세션 정보를 User_Categories테이블에 저장한다.
+                memberService.saveUserCategories(userDTO.getEmail(), categories);
+            }
         }
-
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
     }
 
@@ -126,6 +129,6 @@ public class MemberController {
      //   session.invalidate();
 
         sessionStatus.setComplete();
-        return "redirect:/header";
+        return "redirect:/articleBoard/findArticle";
     }
 }
