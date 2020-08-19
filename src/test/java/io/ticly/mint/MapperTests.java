@@ -1,21 +1,16 @@
 package io.ticly.mint;
 
-import io.ticly.mint.admin.mapper.AdminWriteMapper;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
 import io.ticly.mint.admin.model.dto.ArticleSentenceDTO;
-import io.ticly.mint.admin.model.dto.ArticleVocabookDTO;
-import io.ticly.mint.admin.model.dto.FileDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 @SpringBootTest
 public class MapperTests {
 
+    /*
     @Autowired
     private ArticleDAO articleDAO;
 
@@ -40,8 +35,8 @@ public class MapperTests {
 
         System.out.println("결과는" + 1 + "입니다." );
     }
-
-
+    */
+    /*
     public void testOfFileInsert() throws Exception {
         FileDTO fileDTO = new FileDTO();
         fileDTO.setFile_seq(1);
@@ -60,6 +55,6 @@ public class MapperTests {
 
 
     }
-
+    */
 
 }

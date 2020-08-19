@@ -1,5 +1,8 @@
 package io.ticly.mint.admin.model.service;
 
+import io.ticly.mint.admin.model.dao.FileDAO;
+import io.ticly.mint.admin.model.dto.FileDTO;
+import org.jcp.xml.dsig.internal.dom.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +16,7 @@ import java.util.HashMap;
 @Service
 public class AdminFileUploadService {
 
-
+    private FileDAO fileDAO;
 
     public String restore(MultipartFile multipartFile, String prefixPath) {
 
@@ -76,9 +79,8 @@ public class AdminFileUploadService {
 
         return result;
     }
-    
-    
-    // 파일 이미지를 byte[]로 변환하는 메소드
+
+    /* 파일 이미지를 byte[]로 변환하는 메소드 */
     public static byte[] imageToByteArray(String filePath) throws Exception {
 
         byte[] returnValue = null;
@@ -113,6 +115,4 @@ public class AdminFileUploadService {
     }
 
 
-    
-    
 }

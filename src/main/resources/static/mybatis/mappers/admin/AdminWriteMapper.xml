@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ArticleDAO">
+    <sql id="ArticleColumns">
+		  article_seq
+		, title
+		, summary
+		, file_seq
+		, url
+		, hashtag
+		, category_seq
+		, reg_date
+		, del
+		, apply_count
+	</sql>
+
+    <select id="ArticleListDao" resultType="ArticleDTO">
+        SELECT
+        <include refid="ArticleColumns" />
+        FROM
+        ARTICLE
+        WHERE
+        del = '0'
+    </select>
+
+    <select id="ArticleDetailDao" resultType="ArticleDTO">
+        SELECT
+        <include refid="ArticleColumns" />
+        FROM
+        ARTICLE
+        WHERE
+        article_seq = #{article_seq}
+    </select>
+
+
+    <insert id="writeArticleDao" parameterType="java.util.HashMap">
+        INSERT INTO ARTICLE( article_seq, title, summary, file_seq, url,
+                            hashtag, category_seq, reg_date, del, apply_count)
+        VALUES ( article_pk_seq.NEXTVAL
+                , #{title}
+                , #{summary}
+                , 1
+                , #{url}
+                , #{hashtag}
+                , 3
+                , SYSDATE
+                , 0
+                , 10
+                )
+    </insert>
+<!--
+
+    <selectKey keyProperty="art_seq" resultType="int" order="AFTER">
+        SELECT article_seq.CURRVAL from dual
+    </selectKey>
+-->
+
+
+    <update id="deleteArticleDao">
+		UPDATE ARTICLE
+		SET
+			del = '1'
+		WHERE
+			article_seq = #{article_seq}
+	</update>
+
+    <select id="ArticleCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			ARTICLE
+		WHERE
+			del = '0'
+	</select>
+
+<!--
+    <update id="readCount" resultType="int">
+        UPDATE ARTICLE
+        SET
+            apply_count = nvl(apply_count, 0) + 1
+        WHERE
+            article_seq = #{article_seq};
+    </update>
+-->
+
+</mapper>

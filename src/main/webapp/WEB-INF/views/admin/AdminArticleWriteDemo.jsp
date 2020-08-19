@@ -106,7 +106,7 @@
 
 
 
-<form action="/AdminDataCheck" id="admin-add-frm" method="post" enctype="multipart/form-data">
+<form action="/write" id="admin-add-frm" method="post" enctype="multipart/form-data">
 
     <div class="flex_container">
 
@@ -130,8 +130,8 @@
         <div class="item">
             <hr>
             <div class="Admin-header-menu-tab" align="left">
-                <a class="text text-color-green text-weight-medium" style="text-decoration:none" href="AdminArticleWrite.jsp"> <h6> 아티클 등록하기 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminArticleList.jsp"> <h6> 아티클 목록 </h6> </a>
+                <a class="text text-color-green text-weight-medium" style="text-decoration:none" href="/writeForm"> <h6> 아티클 등록하기 </h6> </a>
+                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="/ArticleList"> <h6> 아티클 목록 </h6> </a>
                 <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminMemberList.jsp" > <h6> 회원 관리 </h6> </a>
                 <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminAnalysis.jsp" > <h6> 통계 </h6> </a>
 
