@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 ;import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -103,14 +104,22 @@ public class MemberController {
     public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
-        /*
+
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
             List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
             //세션 정보를 User_Categories테이블에 저장한다.
             memberService.saveUserCategories(userDTO.getEmail(), categories);
-        }*/
+        }
 
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
+    }
+
+    @RequestMapping("/member/logout")
+    public String logout(@ModelAttribute("userInfo") MemberDTO memberDTO, SessionStatus sessionStatus){
+     //   session.invalidate();
+
+        sessionStatus.setComplete();
+        return "redirect:/header";
     }
 }
