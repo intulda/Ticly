@@ -117,6 +117,12 @@ public class LearnService {
         return true;
     }
 
+    /**
+     * 유저 단어 수정
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
     public boolean updateUserWord(VocaDTO vocaDTO) throws SQLException {
         int count = learnDAO.updateUserWord(vocaDTO);
         if(count <= 0) {
@@ -124,4 +130,19 @@ public class LearnService {
         }
         return true;
     }
+
+    /**
+     * 마지막 보카 업데이트
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean updateLastVoca(VocaDTO vocaDTO) throws SQLException {
+        int count = learnDAO.updateLastVoca(vocaDTO);
+        if(count <= 0) {
+            throw new SQLException("lastVoca update");
+        }
+        return true;
+    }
+
 }

@@ -68,7 +68,7 @@ import WordContent from './WordContent.js';
             this.wordSetCurrentNumber = 0;
             this.totalCount = this.data.length;
             this.wordSetCurrentNumber = this.wordSetElem.children.length;
-            this.groupMaxCount = Math.ceil(this.totalCount/this.maxCount);
+            this.groupMaxCount = this.maxGroupCount();
             if(check) {
                 this.init();
             } else {
@@ -111,7 +111,6 @@ import WordContent from './WordContent.js';
                 this.triggerNumber = 0;
             }
 
-
             for(let i=1; i<=this.groupMaxCount; i++) {
                 this.group = i;
                 for(let j=0; j<this.data.length; j++) {
@@ -122,13 +121,12 @@ import WordContent from './WordContent.js';
                     }
                 }
                 this.wordSetAdd(this.groupDataFilter(i).length);
-                this.group = this.groupMaxCount + 1;
+                this.group = this.groupMaxCount+1;
                 this.currentCount = 0;
             }
         }
 
         wordSetAdd(maxCount) {
-            console.log(maxCount);
             this.wordSetCurrentNumber++;
             this.wordSetElem.appendChild(new WordSetCard(this.wordSetCurrentNumber, this.currentCount, maxCount, this.group).getElements());
         }
@@ -159,6 +157,16 @@ import WordContent from './WordContent.js';
                 return obj.voca_group == groupNum;
             })
             return data;
+        }
+
+        maxGroupCount() {
+            let _count = 0;
+            for(let i=0; i<this.data.length; i++) {
+                if(this.data[i].voca_group > _count) {
+                    _count = this.data[i].voca_group;
+                }
+            }
+            return _count;
         }
 
         groupCheckReadingFilter(groupNum) {
@@ -200,6 +208,7 @@ import WordContent from './WordContent.js';
                 for(let obj of _elements.process()) {
                     this.wordContentsElem.appendChild(obj);
                 }
+                this.wordContentsElem.appendChild(_elements.getLastCardElement(groupNum, this.maxGroupCount()));
             } else {
                 this.wordContentsElem.appendChild(_elements.getElements(null, 'act'));
             }
@@ -359,12 +368,14 @@ import WordContent from './WordContent.js';
             prevTarget.classList.remove('word-list-end');
             prevTarget.classList.add('act');
             reset(actElem);
+            lastVocaUpdate(prevTarget);
+        } else {
+            lastVocaUpdate(actElem);
         }
     }
 
     function swipeRight () {
         const actElem = document.querySelector(".act");
-        console.log(actElem);
         if(actElem.nextElementSibling != null) {
             const nextTarget = actElem.nextElementSibling;
             actElem.classList.remove('act');
@@ -373,6 +384,7 @@ import WordContent from './WordContent.js';
             nextTarget.classList.add('act');
             reset(actElem);
             readingCheckHandler(actElem);
+            lastVocaUpdate(nextTarget);
         }
     }
 
@@ -387,6 +399,10 @@ import WordContent from './WordContent.js';
         };
     }
 
+    /**
+     * check_reading update
+     * @param target
+     */
     function readingCheckHandler(target) {
         if(target != null) {
             const _target = target;
@@ -415,6 +431,22 @@ import WordContent from './WordContent.js';
             }
         }
     }
+
+    function lastVocaUpdate(nextElem) {
+        const _target = nextElem;
+        const vocaSeq = _target.dataset.user_voca_seq;
+
+        axios('/learn/updateLastVoca',{
+            method: 'POST',
+            data: JSON.stringify({
+                user_voca_seq: vocaSeq
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+
 
     /**
      * 테이블 전체 삭제 체크박스 선택/해제
@@ -634,6 +666,21 @@ import WordContent from './WordContent.js';
         }
     }
 
+    function nextLevel(e) {
+        const targetElem = e.target;
+        if(targetElem.nodeName != 'BUTTON') {
+            return;
+        }
+        if(targetElem.dataset.status != 'sentence') {
+            learn.wordSetElem.children[targetElem.dataset.status-1].click();
+        } else {
+            const learnTabElem = document.querySelector('#learnTab');
+            learnTabElem.children[1].click();
+        }
+    }
+
+    const wordListElem = document.querySelector('#wordList');
+    wordListElem.addEventListener('click', nextLevel);
 
     tabClickElem.addEventListener('click', onTabMoveHandler);
     wordCardElem.addEventListener('click', onCardToggleHandler);

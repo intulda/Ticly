@@ -164,4 +164,15 @@
          WHERE USER_VOCA_SEQ = #{user_voca_seq}
     </update>
 
+    <update id="updateLastVoca" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET LAST_VOCA = 1
+         WHERE USER_VOCA_SEQ = #{user_voca_seq}
+    </update>
+
+    <update id="updateLastVocaAll" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET LAST_VOCA = 0
+         WHERE USER_VOCA_SEQ != #{user_voca_seq}
+    </update>
 </mapper>
