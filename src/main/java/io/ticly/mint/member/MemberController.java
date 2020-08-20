@@ -56,7 +56,7 @@ public class MemberController {
     }
 
     /**
-     * 로그인시 가입여부 확인
+     * 로그인 처리
      * @param userDTO
      * @return String : 로그인 성공시 '로그인 성공' Stirng 반환
      */
