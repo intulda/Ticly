@@ -40,12 +40,14 @@
                         UL.USER_LEARNING_SEQ,
                         UL.EMAIL,
                         UL.ARTICLE_SEQ,
-                        UL.LAST_LEARNING_DATE
+                        UL.LAST_LEARNING_DATE,
+                        UL.LAST_LEARNING_TYPE
                     ) VALUES (
                         USER_LEARNING_PK_SEQ.NEXTVAL,
                         #{email},
                         #{article_seq},
-                        SYSDATE
+                        SYSDATE,
+                        0
                     )
     </update>
 

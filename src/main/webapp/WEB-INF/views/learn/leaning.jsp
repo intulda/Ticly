@@ -37,7 +37,7 @@
                 </div>
             </div>
         </header>
-        <article class="leaning-current-article-wrap">
+        <article class="leaning-current-article-wrap" id="currentArticle" data-article-seq="${currentArticle.article_seq}">
             <div class="container">
                 <div class="leaning-current-article leaning-current-article-tags mb-2">
                     <span class="leaning-current-article-category text text-weight-light badge badge-neutral">${currentArticle.category}</span>

@@ -70,8 +70,7 @@ class WordContent {
         console.log(groupNumber, maxGroupNumber);
         if(groupNumber == maxGroupNumber) {
             _element.innerHTML = `<div class="learning__last-card">
-                                   <div class="text h6 mb-2">잘했어요! 단어세트를 모두 학습하셨습니다!</div>
-                                   <div class="text h4 text-weight-black mb-2">다음 단계</div>     
+                                   <div class="text h6 learning__content-wrod-mb">잘했어요! 단어세트를 모두 학습하셨습니다!</div>
                                    <div class="text">
                                        <button type="button" class="btn btn-primary" data-status="sentence">문장 학습하기</button>                                    
                                    </div>
@@ -79,10 +78,9 @@ class WordContent {
         } else {
             const nextGroup = Number(groupNumber)+1;
             _element.innerHTML = `<div class="learning__last-card">
-                                   <div class="text h6 mb-2">잘했어요! <span class="text text-color-green">${groupNumber}번째</span> 세트를 모두 학습하셨습니다!</div>
-                                   <div class="text h4 text-weight-black mb-2">다음 단계</div>     
+                                   <div class="text h6 learning__content-wrod-mb">잘했어요! <span class="text text-color-green">${groupNumber}번째</span> 세트를 모두 학습하셨습니다!</div>
                                    <div class="text">
-                                       <button type="button" class="btn btn-primary" data-status="${nextGroup}">다음 단어 학습하기</button>                                    
+                                       <button type="button" class="btn btn-primary" data-status="${nextGroup}">다음 세트 학습하기</button>                                    
                                    </div>
                                 </div>`;
         }
