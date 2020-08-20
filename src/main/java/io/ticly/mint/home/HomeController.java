@@ -53,7 +53,7 @@ public class HomeController {
                 // 카테고리를 선택하지 않았다면,
                 if(user.getCategories() == null) {
                     //test code
-                    System.out.println("카테고리를 이미 선택했다.");
+                    System.out.println("카테고리를 선택하지 않았다.");
                     path = "redirect:/articleBoard/category";
                 }
 

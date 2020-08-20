@@ -41,10 +41,21 @@ public class ArticleBoardController {
     @GetMapping("choiceDone")
     public String choiceDone(Model model, HttpServletRequest req){
         // 사용자의 권한과 관심 분야 세션에 등록하기
-        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
-        int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();
-        MemberDTO dto = new MemberDTO(auth, categories);
+        MemberDTO dto = new MemberDTO();
+        //로그인 하지 않은 회원인 경우
+        if(((MemberDTO)model.getAttribute("userInfo")).getEmail()==null){
+            List<String> categories = articleBoardService.getCategoriesAtParameter(model, req); //관심분야 카테고리
+            int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();//권한
+            dto = new MemberDTO(auth, categories);
+        }else{ //로그인한 회원인 경우
+            String email = ((MemberDTO)model.getAttribute("userInfo")).getEmail(); //이메일
+            String nickname = ((MemberDTO)model.getAttribute("userInfo")).getNickname();//닉네임
+            List<String> categories = articleBoardService.getCategoriesAtParameter(model, req); //관심분야 카테고리
+            int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth(); //권한
+            dto = new MemberDTO(email, nickname, auth, categories);
+        }
 
+        //세션 정보 등록
         model.addAttribute("userInfo", dto);
         return "articleBoard/findArticle";
     }
