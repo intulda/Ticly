@@ -8,7 +8,7 @@ import WordContent from './WordContent.js';
         const options = {
             method: 'POST',
             data: JSON.stringify({
-                article_seq: 43
+                article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq")
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -282,6 +282,10 @@ import WordContent from './WordContent.js';
             const groupNumber = targetElem.getAttribute("data-group");
             learn.tableDataFilter(groupNumber);
             learn.wordContentFilter(groupNumber);
+
+            const actElem = document.querySelector(".act");
+            if(actElem.getAttribute("data-user_voca_seq") != null)
+            lastVocaUpdate(actElem);
         }
     }
 

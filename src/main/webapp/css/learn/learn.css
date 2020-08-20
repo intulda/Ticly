@@ -755,3 +755,6 @@ button.learning__table {
     z-index: -10;
     pointer-events: none;
 }
+.learning__content-wrod-mb {
+    margin-bottom: 0.75rem;
+}
