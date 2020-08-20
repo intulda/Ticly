@@ -4,6 +4,7 @@ import io.ticly.mint.learn.model.dao.LearnDAO;
 import io.ticly.mint.learn.model.dto.LearnArticleDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
+import io.ticly.mint.learn.model.dto.VocaGroupDTO;
 import io.ticly.mint.util.CommonUtil;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +71,34 @@ public class LearnService {
     }
 
     /**
+     * 아티클 단어 그룹 유저 단어 그룹에 저장하는 메소드
+     * @param userLearnDTO
+     * @throws SQLException
+     */
+    public void saveArticleGroupToUser(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.saveArticleGroupToUser(userLearnDTO);
+
+        if(count <= 0) {
+            throw new SQLException("아티클 보카 그룹 -> 유저 보카 그룹 insert 실패");
+        }
+    }
+
+    /**
+     * 보카그룹데이터 있는지 확인
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean getGroupDataCheck(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.getGroupDataCheck(userLearnDTO);
+        if(count > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * UserVocaList를 가져오는 메소드
      * @param userLearnDTO
      * @return
@@ -132,7 +161,7 @@ public class LearnService {
     }
 
     /**
-     * 마지막 보카 업데이트
+     * 마지막 단어 업데이트
      * @param vocaDTO
      * @return
      * @throws SQLException
@@ -141,6 +170,37 @@ public class LearnService {
         int count = learnDAO.updateLastVoca(vocaDTO);
         if(count <= 0) {
             throw new SQLException("lastVoca update");
+        }
+        return true;
+    }
+
+    /**
+     * 단어 그룹 리스트 메소드
+     * @param userLearnDTO
+     * @return
+     */
+    public List<VocaGroupDTO> getVocaGroupList(UserLearnDTO userLearnDTO) {
+        return learnDAO.getVocaGroupList(userLearnDTO);
+    }
+
+    /**
+     * 전체 progress 계산
+     * @param userLearnDTO
+     * @return
+     */
+    public int getProgressPercent(UserLearnDTO userLearnDTO) {
+        return learnDAO.getProgressPercent(userLearnDTO);
+    }
+
+    /**
+     * 단어 그룹 추가 메소드
+     * @param vocaGroupDTO
+     * @return
+     */
+    public boolean saveVocaGroup(VocaGroupDTO vocaGroupDTO) throws SQLException {
+        int count = learnDAO.saveVocaGroup(vocaGroupDTO);
+        if(count < 0) {
+            throw new SQLException("단어그룹 추가 오류");
         }
         return true;
     }

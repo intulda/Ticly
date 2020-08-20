@@ -67,7 +67,7 @@
                 <div class="leaning-current-progress-wrap mb-4">
                     <div class="leaning-current-progress-status mb-2">
                         <div class="leaning-current-progress-status-title text h6 text-weight-medium">전체 학습 진도</div>
-                        <div class="leaning-current-progress-status-percent text h3 text-weight-bold">32%</div>
+                        <div class="leaning-current-progress-status-percent text h3 text-weight-bold" id="progressInfo">0%</div>
                     </div>
                     <div class="leaning-current-progress-bar">
                         <div class="leaning-current-progress-bar"></div>

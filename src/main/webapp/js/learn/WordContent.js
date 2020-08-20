@@ -6,46 +6,63 @@ class WordContent {
     process() {
         const getElementsArray = [];
         let checkPoint = -1;
-
-        const readingCount = this.data.filter((obj) => {
-            return obj.check_reading == 0
+        let voca_order = 0;
+        const lastVoca = this.data.filter((obj) => {
+            return obj.last_voca == 1;
         })
 
-        if(readingCount.length == 0) {
+        if(this.data.length > 0) {
+            voca_order = lastVoca.length > 0 ? lastVoca[0].voca_order : this.data[0].voca_order;
             for(let i=0; i<this.data.length; i++) {
-                let className = 'word-list-hide';
-                if(i == 0) {
+                let className = 'word-list-end';
+
+                if(this.data[i].voca_order > voca_order) {
+                    className = 'word-list-hide';
+                } else if(this.data[i].voca_order == voca_order) {
                     className = 'act';
+                } else {
+                    className = 'word-list-end';
                 }
                 getElementsArray.push(this.getElements(this.data[i], className));
             }
-        } else {
-            for(let i=0; i<this.data.length; i++) {
-                if(this.data[i].check_reading === 0) {
-                    let className = 'word-list-hide';
-                    if(checkPoint == -1) {
-                        checkPoint = this.data[i].voca_order;
-                        className = 'act';
-                    }
-                    getElementsArray.push(this.getElements(this.data[i], className));
-                } else if(this.data[i].check_reading === 1) {
-                    let className = 'word-list-end'
-                    if(checkPoint != -1) {
-                        if (checkPoint < this.data[i].voca_order) {
-                            className = 'word-list-hide'
-                        } else if (checkPoint > this.data[i].voca_order) {
-                            className = 'word-list-end'
-                        }
-                    }
-
-                    if(this.data[this.data.length-1] === this.data[i]) {
-                        className = 'act';
-                    }
-
-                    getElementsArray.push(this.getElements(this.data[i], className));
-                }
-            }
         }
+
+
+        // if(readingCount.length == 0) {
+        //     for(let i=0; i<this.data.length; i++) {
+        //         let className = 'word-list-hide';
+        //         if(i == 0) {
+        //             className = 'act';
+        //         }
+        //         getElementsArray.push(this.getElements(this.data[i], className));
+        //     }
+        // } else {
+        //     for(let i=0; i<this.data.length; i++) {
+        //         if(this.data[i].check_reading === 0) {
+        //             let className = 'word-list-hide';
+        //             if(checkPoint == -1) {
+        //                 checkPoint = this.data[i].voca_order;
+        //                 className = 'act';
+        //             }
+        //             getElementsArray.push(this.getElements(this.data[i], className));
+        //         } else if(this.data[i].check_reading === 1) {
+        //             let className = 'word-list-end'
+        //             if(checkPoint != -1) {
+        //                 if (checkPoint < this.data[i].voca_order) {
+        //                     className = 'word-list-hide'
+        //                 } else if (checkPoint > this.data[i].voca_order) {
+        //                     className = 'word-list-end'
+        //                 }
+        //             }
+        //
+        //             if(this.data[this.data.length-1] === this.data[i]) {
+        //                 className = 'act';
+        //             }
+        //
+        //             getElementsArray.push(this.getElements(this.data[i], className));
+        //         }
+        //     }
+        // }
         return getElementsArray;
     }
 
@@ -67,7 +84,6 @@ class WordContent {
         const _element = document.createElement('li');
         _element.dataset.group = groupNumber;
         _element.classList.add("word-list-hide");
-        console.log(groupNumber, maxGroupNumber);
         if(groupNumber == maxGroupNumber) {
             _element.innerHTML = `<div class="learning__last-card">
                                    <div class="text h6 learning__content-wrod-mb">잘했어요! 단어세트를 모두 학습하셨습니다!</div>
@@ -112,7 +128,7 @@ class WordContent {
         } else {
             _element.classList.add('act');
             _element.innerHTML = `<div class="learning__none-word">
-                                       <div class="text display-4 text-weight-black">
+                                       <div class="text h6 learning__content-wrod-mb">
                                             단어를 추가해주세요
                                         </div>
                                 </div>`;

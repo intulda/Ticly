@@ -3,14 +3,18 @@ package io.ticly.mint.learn;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
+import io.ticly.mint.learn.model.dto.VocaGroupDTO;
 import io.ticly.mint.learn.model.service.LearnService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -41,6 +45,9 @@ public class LearnController {
                 .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
+        if(learnService.getGroupDataCheck(userLearnDTO)) {
+            learnService.saveArticleGroupToUser(userLearnDTO);
+        }
         if(learnService.getUserVocaCheck(userLearnDTO)) {
             learnService.saveArticleVocaToUser(userLearnDTO);
         }
@@ -57,6 +64,34 @@ public class LearnController {
     @ResponseBody
     private List<VocaDTO> getVocaList(@RequestBody UserLearnDTO userLearnDTO) {
         return learnService.getVocaList(userLearnDTO);
+    }
+
+    /**
+     * 단어 그룹 가져오는 메소드
+     * @param userLearnDTO
+     * @return
+     */
+    @PostMapping(value="getVocaGroupList")
+    @ResponseBody
+    private List<VocaGroupDTO> getVocaGroupList(@RequestBody UserLearnDTO userLearnDTO, Model model) {
+        MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
+        userLearnDTO.setEmail(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail());
+        return learnService.getVocaGroupList(userLearnDTO);
+    }
+
+    /**
+     * 전체 Progress 계산
+     * @param userLearnDTO
+     * @return
+     */
+    @PostMapping(value="getProgressPercent")
+    @ResponseBody
+    public Map<String, Integer> getProgressPercent(@RequestBody UserLearnDTO userLearnDTO, Model model) {
+        MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
+        userLearnDTO.setEmail(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail());
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("percent", learnService.getProgressPercent(userLearnDTO));
+        return resultMap;
     }
 
     /**
@@ -107,9 +142,29 @@ public class LearnController {
         return learnService.updateUserWord(vocaDTO);
     }
 
+    /**
+     * 마지막단어 업데이트
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
     @PostMapping(value="updateLastVoca")
     @ResponseBody
     private boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
         return learnService.updateLastVoca(vocaDTO);
+    }
+
+    /**
+     * 단어그룹 추가 메소드
+     * @param vocaGroupDTO
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping(value="saveVocaGroup")
+    @ResponseBody
+    private boolean saveVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO, Model model) throws SQLException {
+        MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
+        vocaGroupDTO.setEmail(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail());
+        return learnService.saveVocaGroup(vocaGroupDTO);
     }
 }
