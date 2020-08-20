@@ -73,13 +73,20 @@ public class MemberController {
             MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
 
-
-
+            //memberDTO -> Object -> MemberDTO
             //세션체크를 한 뒤
-                 /* 세션 값 꺼내오기
-                MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
-                System.out.println("테스트 : "+user.getAuth());
-                */
+            // 세션 값 꺼내오기
+            MemberDTO user = (MemberDTO)model.getAttribute("userInfo");
+            System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+user.getCategories());
+
+            String checkCategorieSession = "";
+            if(user.getCategories()!=null){
+
+            }else{
+
+            }
+
+
                 //있으면 > '1'
                 //없으면 > '0'
 
