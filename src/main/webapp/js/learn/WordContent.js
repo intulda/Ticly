@@ -63,6 +63,33 @@ class WordContent {
                 <li>전체 단어 ${this.data.length}개</li>`
     }
 
+    getLastCardElement(groupNumber, maxGroupNumber) {
+        const _element = document.createElement('li');
+        _element.dataset.group = groupNumber;
+        _element.classList.add("word-list-hide");
+        console.log(groupNumber, maxGroupNumber);
+        if(groupNumber == maxGroupNumber) {
+            _element.innerHTML = `<div class="learning__last-card">
+                                   <div class="text h6 mb-2">잘했어요! 단어세트를 모두 학습하셨습니다!</div>
+                                   <div class="text h4 text-weight-black mb-2">다음 단계</div>     
+                                   <div class="text">
+                                       <button type="button" class="btn btn-primary" data-status="sentence">문장 학습하기</button>                                    
+                                   </div>
+                                </div>`;
+        } else {
+            const nextGroup = Number(groupNumber)+1;
+            _element.innerHTML = `<div class="learning__last-card">
+                                   <div class="text h6 mb-2">잘했어요! <span class="text text-color-green">${groupNumber}번째</span> 세트를 모두 학습하셨습니다!</div>
+                                   <div class="text h4 text-weight-black mb-2">다음 단계</div>     
+                                   <div class="text">
+                                       <button type="button" class="btn btn-primary" data-status="${nextGroup}">다음 단어 학습하기</button>                                    
+                                   </div>
+                                </div>`;
+        }
+
+        return _element;
+    }
+
     getElements(_data, className) {
         const _element = document.createElement('li');
 
@@ -86,16 +113,11 @@ class WordContent {
                                     </div>`;
         } else {
             _element.classList.add('act');
-            _element.innerHTML = ` <div class="leaning-contents-card-front leaning-card">
-                                        <div class="text leaning-contents-card-word display-4 text-weight-black front">
-                                           등록 된 단어가 없습니다.
+            _element.innerHTML = `<div class="learning__none-word">
+                                       <div class="text display-4 text-weight-black">
+                                            단어를 추가해주세요
                                         </div>
-                                    </div>
-                                    <div class="leaning-contents-card-back leaning-card">
-                                        <div class="text leaning-contents-card-word display-4 text-weight-black back">
-                                            단어를 추가해 주세요
-                                        </div>
-                                    </div>`;
+                                </div>`;
         }
         return _element;
     }

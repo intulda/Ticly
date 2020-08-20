@@ -1,5 +1,6 @@
 package io.ticly.mint.learn;
 
+import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import io.ticly.mint.learn.model.service.LearnService;
@@ -34,8 +35,9 @@ public class LearnController {
      */
     @GetMapping(value="workBook")
     public String view(Model model, int seq) throws SQLException {
+        MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
         UserLearnDTO userLearnDTO = UserLearnDTO.builder()
-                .email("test4@naver.com")
+                .email(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail())
                 .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
@@ -93,9 +95,21 @@ public class LearnController {
         return learnService.deleteUserVoca(vocaDTOS);
     }
 
+    /**
+     * 유저 단어 수정 메소드
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
     @PostMapping(value="updateUserWord")
     @ResponseBody
     public boolean updateUserWord(@RequestBody VocaDTO vocaDTO) throws SQLException {
         return learnService.updateUserWord(vocaDTO);
+    }
+
+    @PostMapping(value="updateLastVoca")
+    @ResponseBody
+    private boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
+        return learnService.updateLastVoca(vocaDTO);
     }
 }
