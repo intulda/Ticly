@@ -91,7 +91,7 @@
                             <div id="header-profile" class="text leaning-header-profile"><%=nickname%></div>
                             <i for="header-profile" class="icon_caret-down profile-drop-button"></i>
                         </div>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#">마이페이지</a>
                             <a class="dropdown-item" href="/member/logout">로그아웃</a>
                         </div>
