@@ -32,7 +32,7 @@ public class MemberService {
     }
 
     /**
-     * 회원가입 시, 세션에 있던 카테고리 정보를 user_categories에 저장
+     * 세션에 있던 카테고리 정보를 user_categories에 저장
      * @param email
      * @param categories
      */
@@ -45,14 +45,12 @@ public class MemberService {
 
             category_seq.add(seq);
         }
-        /*
-        //List에 저장된 값 확인
-        for(Integer i : category_seq){
-            System.out.println(i);
-        }
-        */
 
-        //2.email과 seq를 테이블에 저장한다.
+        //2.기존에 있던 카데고리 데이터를 삭제한다.
+        int deleteCheck = memberDAO.deleteUserCategory(email);
+        System.out.println("deleteCheck : " + deleteCheck);
+
+        //3.email과 seq를 테이블에 저장한다.
         for(Integer i: category_seq){
             int count = memberDAO.saveUserCategories(email, i);
 
@@ -73,7 +71,9 @@ public class MemberService {
         //중복된 이메일인 경우
         if(userDTO!=null){
             return 1;
-        }else { //중복되지 않은 이메일인 경우
+        }
+        //중복되지 않은 이메일인 경우
+        else {
             return 0;
         }
     }
@@ -98,7 +98,7 @@ public class MemberService {
     }
 
     /**
-     * OAuth 가입시, 기존 가입정보가 있는지 확
+     * OAuth 가입시, 기존 가입정보가 있는지 확인
      * @param authEmail
      * @return
      */
