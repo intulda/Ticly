@@ -1,12 +1,14 @@
 package io.ticly.mint.admin.model.dao;
 
-import io.ticly.mint.admin.model.dto.ArticleVocabookDTO;
+import io.ticly.mint.learn.model.dto.VocaDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class ArticleVocabookDAOImpl implements ArticleVocabookDAO{
     // sqlSessionTemplate DI
     @Autowired
@@ -16,7 +18,7 @@ public class ArticleVocabookDAOImpl implements ArticleVocabookDAO{
     private static String namespace = "ArticleVocabookDAO";
 
     @Override
-    public List<ArticleVocabookDTO> ArticleVocabookListDao() {
+    public List<VocaDTO> ArticleVocabookListDao() {
         return sqlSessionTemplate.selectList(namespace+".ArticleVocabookListDao");
     }
 
@@ -29,4 +31,5 @@ public class ArticleVocabookDAOImpl implements ArticleVocabookDAO{
     public int deleteArticleVocabookDao(int article_vocabook_seq) {
         return sqlSessionTemplate.update(namespace+".deleteArticleVocabookDao");
     }
+
 }

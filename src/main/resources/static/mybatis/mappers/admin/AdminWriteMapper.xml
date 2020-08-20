@@ -2,6 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Article :: 아티클 정보 input -->
 <mapper namespace="ArticleDAO">
     <sql id="ArticleColumns">
 		  article_seq
@@ -75,6 +78,8 @@
 			del = '0'
 	</select>
 
+
+
 <!--
     <update id="readCount" resultType="int">
         UPDATE ARTICLE
@@ -86,3 +91,95 @@
 -->
 
 </mapper>
+
+
+<!-- Article_Vocabook :: 아티클 소속 단어들 input -->
+<mapper namespace="ArticleVocabookDAO">
+
+        <sql id="ArticleVocabookColumns">
+		  article_vocabook_seq
+		, article_seq
+		, voca
+		, meaning_num
+		, voca_order
+		, voca_group
+	    </sql>
+
+
+
+        <select id="ArticleVocabookListDao" resultType="VocaDTO">
+            SELECT
+            <include refid="ArticleVocabookColumns" />
+            FROM
+            ARTICLE_VOCABOOK
+        </select>
+
+
+        <insert id="saveArticleVocabookDao" parameterType="java.util.HashMap">
+        INSERT INTO ARTICLE_VOCABOOK (
+                            ARTICLE_VOCABOOK_SEQ
+                            , ARTICLE_SEQ
+                            , VOCA
+                            , MEANING_NUM
+                            , VOCA_ORDER
+                            , VOCA_GROUP
+        )
+        VALUES ( ARTICLE_VOCABOOK_SEQ.NEXTVAL
+                , #{ARTICLE_SEQ}
+                , #{VOCA}
+                , #{MEANING_NUM}
+                , #{VOCA_ORDER}
+                , #{VOCA_GROUP}
+                )
+        </insert>
+
+        <delete id="deleteArticleVocabookDao">
+		DELETE FROM ARTICLE_VOCABOOK
+		WHERE ARTICLE_VOCABOOK_SEQ = #{ARTICLE_VOCABOOK_SEQ}
+	    </delete>
+
+
+<!-- Vocabook 테이블에 중복 없는 단어 input -->
+<mapper namespace="VocabookDAO">
+
+    <sql id="VocabookColumns">
+		  vocabook_seq
+		, voca
+		, meaning_num
+		, meaning
+	    </sql>
+
+
+    <select id="VocabookListDao" resultType="VocaDTO">
+        SELECT
+        <include refid="VocabookColumns" />
+        FROM
+        VOCABOOK
+    </select>
+
+
+    <insert id="saveVocabookDao" parameterType="java.util.HashMap">
+        INSERT INTO VOCABOOK (
+                    VOCABOOK_SEQ
+                    , VOCA
+                    , MEANING_NUM
+                    , MEANING
+        )
+        VALUES (
+                VOCABOOK_SEQ.NEXTVAL
+                , #{ARTICLE_SEQ}
+                , #{VOCA}
+                , #{MEANING_NUM}
+                , #{MEANING}
+        )
+    </insert>
+
+
+    <delete id="deleteVocabookDao">
+		DELETE FROM VOCABOOK
+		WHERE VOCABOOK_SEQ = #{VOCABOOK_SEQ}
+	    </delete>
+
+    </mapper>
+
+

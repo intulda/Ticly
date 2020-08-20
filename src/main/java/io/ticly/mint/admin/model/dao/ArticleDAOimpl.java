@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 @Repository
-public class ArticleDAOImpl implements ArticleDAO{
+class ArticleDAOImpl implements ArticleDAO{
 
     // sqlSessionTemplate DI
     @Autowired

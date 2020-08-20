@@ -1,6 +1,7 @@
 package io.ticly.mint.admin;
 
 import io.ticly.mint.admin.model.dao.ArticleDAO;
+import io.ticly.mint.admin.model.dao.ArticleVocabookDAO;
 import io.ticly.mint.admin.model.service.AdminFileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class AdminAddController {
     @Autowired
     ArticleDAO dao;
 
+    @Autowired
+    ArticleVocabookDAO artvocabookdao;
+
     /*
     @Autowired
     ArticleDAO dao;
@@ -36,6 +40,8 @@ public class AdminAddController {
         public String ArticleList(Model model) {
 
            model.addAttribute("list", dao.ArticleListDao());
+
+           model.addAttribute("list", artvocabookdao.ArticleVocabookListDao());
 
            int nTotalCount = dao.ArticleCount();
            System.out.println("총 아티클 갯수: " + nTotalCount);
@@ -70,13 +76,20 @@ public class AdminAddController {
             String content = request.getParameter("content");
 
 
-            // Map : 아티클 기본 정보
+            // Map 선언
             Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> vocaWordMap = new HashMap<String, String>();
+            Map<String, String> vocaMeanMap = new HashMap<String, String>();
+
+
             map.put("title", title);
             map.put("url", url);
             map.put("summary", summary);
             map.put("hashtag", hashtag);
             map.put("content", content);
+
+            System.out.println("title: " + title + " " + "url: " + url + " " +
+                    "\n" + "summary: " + summary + "hashtag: " + hashtag + "content: " + content );
 
 
             /* 단어, 뜻 insert => ArticleVocabook */
@@ -86,17 +99,16 @@ public class AdminAddController {
             System.out.println("단어: " + Arrays.toString(insert_word) + "\n" + "뜻: " + Arrays.toString(insert_mean));
 
 
-            /* List에 Voca Map 데이터들을 넣어준다 */
-            List<Map<String, Object>> ArticleListMap = new ArrayList<Map<String, Object>>();
+
+            // List에 Voca Map 데이터들을 넣어준다
+            // List<Map<String, String>> ArticleMapList = new ArrayList<Map<String, String>>();
             if(insert_word != null && insert_mean != null) {
                 // vocaWordMap : 단어
-                Map<String, Object> vocaWordMap = new HashMap<>();
                 for (int i = 0; i < insert_word.length; i++) {
                     vocaWordMap.put("insert_word[i]", insert_word[i]);
                 }
 
                 // vocaMeanMap : 뜻
-                Map<String, Object> vocaMeanMap = new HashMap<>();
                 for (int i = 0; i < insert_mean.length; i++) {
                     vocaWordMap.put("insert_mean[i]", insert_mean[i]);
                 }
@@ -105,12 +117,19 @@ public class AdminAddController {
                 System.out.println("단어, 뜻이 제대로 입력되지 않았습니다.");
             }
 
-
-            for(Map<String, Object> strMap : ArticleListMap) {
+            /*
+            for(Map<String, String> strMap : ArticleMapList) {
                 System.out.println(strMap.get("insert_word[i]" + " "));
                 System.out.println(strMap.get("insert_mean[i]" + " "));
             }
+            */
 
+            /* 단어/뜻 정보 받기 */
+
+            int wordResult = 0;
+            int meanResult = 0;
+            wordResult = artvocabookdao.saveArticleVocabookDao(vocaWordMap);
+            meanResult = artvocabookdao.saveArticleVocabookDao(vocaMeanMap);
 
 
             /* 아티클 정보 받기 */

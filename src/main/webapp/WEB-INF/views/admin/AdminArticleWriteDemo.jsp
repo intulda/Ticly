@@ -115,12 +115,12 @@
             <div class="main-logo">
                 <img src="./images/logo_color.svg" align="left">
 
-                        <a href="ArticleFindTab.jsp" style="text-decoration:none" align="center" class="article-find-tab" > 아티클 찾기 </a>
-                        <a href="IntroService.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 서비스 소개 </a>
-                        <a href="AdminArticleWrite.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 관리자 페이지 </a>
+                <a href="ArticleFindTab.jsp" style="text-decoration:none" align="center" class="article-find-tab" > 아티클 찾기 </a>
+                <a href="IntroService.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 서비스 소개 </a>
+                <a href="AdminArticleWrite.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 관리자 페이지 </a>
 
-                        <input type="image" src="./css/Admin/images/츄.png" border="0" style="float: right;">
-                        <input type="button" class="btn btn-success" value="내 학습 보드" style="float: right;">
+                <input type="image" src="./css/Admin/images/츄.png" border="0" style="float: right;">
+                <input type="button" class="btn btn-success" value="내 학습 보드" style="float: right;">
             </div>
         </div>
 
@@ -208,7 +208,7 @@
                             <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
                         </td>
                         <td>
-						<textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                            <textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
                         </td>
                     </tr>
 
@@ -237,52 +237,52 @@
                         <td>
                             <div id="divTest" class="table">
 
-                            <table>
-                                <col width="260px"><col width="568px"><col width="100px">
-                                <tr>
-                                    <td>
-                                        <p class="ext body1 text-weight-medium text-color-gray100"> 단어 </p>
-                                    </td>
-                                    <td>
-                                        <p class="ext body1 text-weight-medium text-color-gray100"> 뜻 </p>
-                                    </td>
-                                    <td>  </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" value="account for" size="10" readonly="readonly">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="설명하다" size="40" readonly="readonly"><br>
-                                    </td>
-                                    <td>
-                                        <%--<button type="button" class="btn"> 삭제 </button>--%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" value="Null Pointer Exception" size="10" readonly="readonly">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="눌 포인트 익셉션" size="40" readonly="readonly"><br>
-                                    </td>
-                                    <td>
-                                        <%--<button type="button" class="btn"> 삭제 </button>--%>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
-                                    </td>
-                                    <td>
-                                       <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
-                                           <button type="button" class="btn" > 삭제 </button>
-                                </tr>
+                                <table>
+                                    <col width="260px"><col width="568px"><col width="100px">
+                                    <tr>
+                                        <td>
+                                            <p class="ext body1 text-weight-medium text-color-gray100"> 단어 </p>
+                                        </td>
+                                        <td>
+                                            <p class="ext body1 text-weight-medium text-color-gray100"> 뜻 </p>
+                                        </td>
+                                        <td>  </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" value="account for" size="10" readonly="readonly">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" value="설명하다" size="40" readonly="readonly"><br>
+                                        </td>
+                                        <td>
+                                            <%--<button type="button" class="btn"> 삭제 </button>--%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" value="Null Pointer Exception" size="10" readonly="readonly">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" value="눌 포인트 익셉션" size="40" readonly="readonly"><br>
+                                        </td>
+                                        <td>
+                                            <%--<button type="button" class="btn"> 삭제 </button>--%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
+                                        </td>
+                                        <td>
+                                            <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
+                                            <button type="button" class="btn" > 삭제 </button>
+                                    </tr>
 
-                            </table>
+                                </table>
                             </div>
                         </td>
                     </tr>
@@ -296,7 +296,7 @@
                 </table>
 
             </div>
-        <!-- 가장 바깥 div -->
+            <!-- 가장 바깥 div -->
         </div>
 
     </div>
@@ -341,7 +341,7 @@
 
     /* 단어 입력 삭제 */
     $(document).on('click', "button.btn", function (){
-    //    alert('click');
+        //    alert('click');
         $(this).parent().parent().remove();
     });
 
@@ -369,61 +369,6 @@
 
 
 </script>
-
-<script>
-
-    /*
-    const category = document.querySelector("input[category=category]"),
-             title = document.querySelector("input[title=title]"),
-             summary = document.querySelector("input[summary=summary]"),
-             url = document.querySelector("input[url=url]"),
-             hashtag = document.querySelector("input[hashtag=hashtag]")
-             saveBtn = document.querySelector(".saveBtn")
-    */
-
-    /* 2. 데이터 로드 */
-    function loadTestArticle(axios) {
-        axios.get('http://localhost:8090/WriteTest?category=' + category + 'title=' + title).then(response => {
-            const category = document.getElementsByName('Category');
-            const title = document.getElementsByName('ArticleTitle');
-            const url = document.getElementsByName('ArticleUrl');
-            const summary = document.getElementsByName('summary')
-            const hashtag = document.getElementsByName('hashtag');
-            const content = document.getElementsByName('content');
-            const word = document.getElementsByName('word-insert');
-            const meaning = document.getElementsByName('mean-insert');
-
-        });
-    }
-
-    /* 3. 데이터 받아오기 */
-    function getJson() {
-        // get 방식으로 데이터 받아오기
-        axios.get('WriteTest?category=send?title=send')
-
-            .then(function(json) {
-                console.log("Receive Success!");
-
-                for (let key of json.data) {
-
-                    let text = document.createElement("span");
-
-                    // JSON을 문자열로 변환해 text에 대입한다.
-                    text.innerHTML = JSON.stringify(key.title) + " ";
-                    pTag.append(text);
-                }
-            })
-            .catch(function(error) {
-                console.log(error);
-            })
-            .finally(function() {
-                // always executed
-                console.log("always executed");
-            });
-    }
-
-</script>
-
 
 </body>
 </html>
