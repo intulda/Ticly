@@ -28,8 +28,6 @@ public class DashboardController {
     // 내 학습 보드로 단순 이동
     @GetMapping(value ="my")
     public String goToCategoryPage(Model model){
-//        List<String> titleList = dashboardService.getTitle();
-//        model.addAttribute("titleList", titleList);
 
         // 테스트용으로 사용자 정보 세션에 저장
         int auth = 3;
@@ -43,17 +41,21 @@ public class DashboardController {
         return "dashboard/my";
     }
 
+     // 마지막으로 학습한 아티클 정보 가져오는 비동기 처리
     @GetMapping(value = "getLastLearningArticleInfo")
     @ResponseBody
     public UserArticleInfoDTO getLastLearningArticleInfo(Model model, HttpServletRequest req){
         String email = req.getParameter("email");
         UserArticleInfoDTO lastLearningArticleInfo = dashboardService.getLastLearningArticleInfo(email);
-        System.out.println(lastLearningArticleInfo.getArticle_seq() + "\n" +
-                        lastLearningArticleInfo.getLast_learning_content() + "\n" +
-                        lastLearningArticleInfo.getUrl() + "\n" +
-                        lastLearningArticleInfo.getTitle() + "\n" +
-                        lastLearningArticleInfo.getLast_learning_date()
-                );
         return lastLearningArticleInfo;
+    }
+
+    // 학습중인 아티클 정보 가져오는 비동기 처리
+    @GetMapping(value = "getLearningListInfo")
+    @ResponseBody
+    public List<UserArticleInfoDTO> getLearningListInfo(Model model, HttpServletRequest req){
+        String email = req.getParameter("email");
+        List<UserArticleInfoDTO> getLearningListInfo = dashboardService.getLearningListInfo(email);
+        return getLearningListInfo;
     }
 }

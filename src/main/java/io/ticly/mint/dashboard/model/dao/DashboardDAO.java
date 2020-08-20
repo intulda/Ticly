@@ -4,6 +4,8 @@ import io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class DashboardDAO {
 
@@ -12,6 +14,14 @@ public class DashboardDAO {
         this.sqlSessionTemplate = sqlSessionTemplate;
     }
 
+    /**
+     * 사용자가 학습중인 아티클 정보 가져오기
+     * @param email
+     * @return
+     */
+    public List<UserArticleInfoDTO> getLearningListInfo(String email){
+        return sqlSessionTemplate.selectList("dashboardDAO.getLearningListInfo", email);
+    }
 
     /**
      * 사용자가 마지막으로 학습한 아티클 정보 가져오기
@@ -30,8 +40,6 @@ public class DashboardDAO {
         else if (info.getLast_learning_type() == 1){
             info.setLast_learning_content(sqlSessionTemplate.selectOne("dashboardDAO.getLastSentence", info.getUser_learning_seq()));
         }
-
-        System.out.println(info.getLast_learning_date());
 
         return info;
     }

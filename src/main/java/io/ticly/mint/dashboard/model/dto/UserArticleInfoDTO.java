@@ -15,4 +15,11 @@ public class UserArticleInfoDTO {
     private String url;
     private String title;
     private String last_learning_content;
+
+    // learning List Info에 필요한 변수
+    private String category_title;
+    private String hashtag;
+    private String summary;
+    private int achievement_rate;
+
 }

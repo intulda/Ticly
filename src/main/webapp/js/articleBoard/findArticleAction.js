@@ -98,16 +98,16 @@ import SkeletonCard from './skeletonCard.js';
     function paintSkeletonCard() {
         for (let i = 0; i < 3; i++){
             newSectionCardOuter.appendChild(new SkeletonCard().getElements());
-        }
+        };
 
         for (let i = 0; i < 3; i++){
             popularSectionCardOuter.appendChild(new SkeletonCard().getElements());
-        }
+        };
     }
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        paintSkeletonCard();
+        // paintSkeletonCard();
 
         let pathToNewArticle = NEW_ARTICLE_CARD_PATH;
         let pathToPopularArticle = POPULAR_ARTICLE_CARD_PATH;

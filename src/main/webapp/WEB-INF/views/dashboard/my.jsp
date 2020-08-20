@@ -44,9 +44,9 @@
                 <button class="learningList__done-btn btn btn-tab">학습 완료<span>(3)</span></button>
             </div>
             <select class="learningList__selectBox custom-select" name="sorting">
-                <option selected value="">최신순</option>
-                <option value="">오래된순</option>
-                <option value="">가나다순</option>
+                <option selected value="">최근학습순</option>
+                <option value="">최신발행순</option>
+                <option value="">제목순</option>
             </select>
         </div>
 

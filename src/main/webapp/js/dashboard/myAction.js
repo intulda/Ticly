@@ -18,33 +18,35 @@ import LastLearningCard from './lastLearningCard.js';
     }
 
     // json 파일을 입력받아 마지막으로 학습한 아티클 카드 그려주는 모듈
-    function lastLearningCardModule(key) {
+    function lastLearningCardModule(json) {
         lastLearningSection.appendChild(new LastLearningCard(
-            JSON.stringify(key.data.article_seq)
-            , JSON.stringify(key.data.url)
-            , JSON.stringify(key.data.title)
-            , JSON.stringify(key.data.last_learning_type)
-            , JSON.stringify(key.data.last_learning_content)
-            , JSON.stringify(key.data.last_learning_date)
+            JSON.stringify(json.data.article_seq)
+            , JSON.stringify(json.data.url)
+            , JSON.stringify(json.data.title)
+            , JSON.stringify(json.data.last_learning_type)
+            , JSON.stringify(json.data.last_learning_content)
+            , JSON.stringify(json.data.last_learning_date)
         ).getElements());
     }
 
     // json 파일을 입력받아 학습중인 아티클 카드를 그려주는 모듈
-    function learningListCardModule(key) {
+    function learningListCardModule(json) {
+        for (let key of json.data){
             learningListSection.appendChild(new LearningListCard(
                 JSON.stringify(key.article_seq)
                 , JSON.stringify(key.url)
-                , JSON.stringify(key.categoryTitle)
+                , JSON.stringify(key.category_title)
                 , JSON.stringify(key.hashtag)
                 , JSON.stringify(key.title)
                 , JSON.stringify(key.summary)
                 , JSON.stringify(key.last_learning_date)
                 , JSON.stringify(key.achievement_rate)
             ).getElements());
+        }
     }
 
     // 카드 그려주는 비동기 틀
-    function paintCard(path, section){
+    function paintCard(path, section, module){
         axios({
             method: 'get',
             url   : path
@@ -57,25 +59,31 @@ import LastLearningCard from './lastLearningCard.js';
                 while (section.hasChildNodes()) {
                     section.removeChild(section.firstChild);
                 }
-                lastLearningCardModule(json);
+                module(json);
 
             });
     }
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        const path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
-        const section = lastLearningSection;
-        // const module = lastLearningCardModule;
-        paintCard(path, section);
+        // 마지막 학습 카드 그려주기
+        let path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
+        let section = lastLearningSection;
+        let module = lastLearningCardModule;
+        paintCard(path, section, module);
+
+        // 학습중인 카드 목록 그려주기
+        path = createPath(LEARNING_ARTICLE_LIST_PATH);
+        section = learningListSection;
+        module = learningListCardModule;
+        paintCard(path, section, module);
     }
 
     function init(){
         window.onload = () => {
             pageLoadEvent();
         };
-
-    };
+    }
 
     init();
 })();

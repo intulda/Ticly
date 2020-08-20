@@ -40,9 +40,9 @@
             <c:choose>
                 <%-- 선택한 관심분야가 1개 이상일 경우--%>
                 <c:when test="${fn:length(userInfo.categories) > 1}">
-                    <button class="category__tab btn active js-category-tab">ALL</button>
+                    <button class="category__tab btn btn-tab active js-category-tab">ALL</button>
                     <c:forEach items="${userInfo.categories}" var="category">
-                        <button class="category__tab btn inactive js-category-tab"
+                        <button class="category__tab btn btn-tab js-category-tab"
                                 value="${category}">${category}</button>
                     </c:forEach>
                 </c:when>
@@ -53,7 +53,7 @@
                 </c:otherwise>
 
             </c:choose>
-            <button class="category__tab btn inactive" onclick="location.href ='category'"><i
+            <button class="category__tab btn btn-tab" onclick="location.href ='category'"><i
                     class="icons icon_setting md"></i></button>
         </div>
 
@@ -75,7 +75,7 @@
     <!-- search article section -->
     <div class="findArticle__section">
         <div class="search__header">
-            <div class="findArticle__section-title text h4 text-color-gray300 text-weight-light">
+            <div class="findArticle__section-title text h4 text-color-gray300 text-weight-regular">
                 <b class="text text-color-gray100 text-weight-bold">'${searchKeyword}'</b>에 대한
                 <b class="js-category-value text text-color-gray100 text-weight-bold">모든</b> 검색 결과
                 <b class="js-searchResult-count text text-color-green text-weight-bold">0개</b>

@@ -4,13 +4,54 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dashboardDAO">
 
+
+    <!--DB에서 사용자가 학습중인 아티클 정보와 성취도를 연산 결과 불러오기
+    @param String 이메일-->
+    <select id="getLearningListInfo" parameterType="String" resultType="UserArticleInfoDTO">
+        SELECT
+            ABS.R_NUM,
+            ABS.USER_LEARNING_SEQ,
+            ABS.LAST_LEARNING_DATE,
+            ABS.LAST_LEARNING_TYPE,
+            ABS.ARTICLE_SEQ,
+            ABS.URL,
+            ABS.CATEGORY_TITLE,
+            ABS.HASHTAG,
+            ABS.TITLE,
+            ABS.SUMMARY,
+            ROUND(((VOCA_COUNT_READING/VOCA_COUNT)*50) +
+                  (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
+                       DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT), 0)*50)) AS ACHIEVEMENT_RATE
+        FROM
+            (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)     AS R_NUM,
+                    U_LEN.USER_LEARNING_SEQ                                  AS USER_LEARNING_SEQ,
+                    TO_CHAR(TO_DATE(U_LEN.LAST_LEARNING_DATE), 'YYYY.MM.DD') AS LAST_LEARNING_DATE,
+                    U_LEN.LAST_LEARNING_TYPE                                 AS LAST_LEARNING_TYPE,
+                    U_LEN.ARTICLE_SEQ                                        AS ARTICLE_SEQ,
+                    A_.URL                                                   AS URL,
+                    C_.CATEGORY                                              AS CATEGORY_TITLE,
+                    A_.HASHTAG                                               AS HASHTAG,
+                    A_.TITLE                                                 AS TITLE,
+                    A_.SUMMARY                                               AS SUMMARY,
+                    (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS VOCA_COUNT,
+                    (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND CHECK_READING != 0) AS VOCA_COUNT_READING,
+                    (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS SENTENCE_COUNT,
+                    (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND KOR_SENTENCE IS NOT NULL) SENTENCE_COUNT_READING
+             FROM USER_LEARNING U_LEN,
+                  ARTICLE A_,
+                  CATEGORY C_
+             WHERE U_LEN.ARTICLE_SEQ = A_.ARTICLE_SEQ
+               AND A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+               AND U_LEN.EMAIL = #{email}) ABS
+    </select>
+
     <!--DB에서 사용자가 마지막으로 학습한 아티클 정보 불러오기
         @param String 이메일-->
     <select id="getLastLearningArticleInfo" parameterType="String" resultType="UserArticleInfoDTO">
         SELECT *
         FROM (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)       AS R_NUM,
                      U_LEN.USER_LEARNING_SEQ                                    AS USER_LEARNING_SEQ,
-                     TO_CHAR(TO_DATE(U_LEN.LAST_LEARNING_DATE),'YYYY.MM.DD')   AS LAST_LEARNING_DATE,
+                     TO_CHAR(TO_DATE(U_LEN.LAST_LEARNING_DATE),'YYYY.MM.DD')    AS LAST_LEARNING_DATE,
                      U_LEN.LAST_LEARNING_TYPE                                   AS LAST_LEARNING_TYPE,
                      U_LEN.ARTICLE_SEQ                                          AS ARTICLE_SEQ,
                      A_.URL                                                     AS URL,
