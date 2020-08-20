@@ -34,12 +34,17 @@
 		values(#{email}, #{password}, #{nickname}, #{auth}, #{signup_type}, sysdate)
 	</insert>
 
-    <!-- 카테고리 string에 해당하는 seq반 -->
+    <!-- 카테고리 string에 해당하는 seq반환 -->
     <select id="getCategorySeq" resultType="int">
 		SELECT CATEGORY_SEQ
 		FROM CATEGORY
 		WHERE CATEGORY = #{category_name}
 	</select>
+
+    <!-- 기존 회원에 저장되었 카테고리 정보를 delete -->
+    <delete id="deleteUserCategory">
+        DELETE FROM MEMBER_CATEGORIES WHERE EMAIL = #{email}
+    </delete>
 
     <!-- 세션에 저장된 관심 카테고리를 DB에 insert -->
     <insert id="saveUserCategories" parameterType="Map">

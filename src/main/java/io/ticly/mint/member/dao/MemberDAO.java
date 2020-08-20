@@ -48,36 +48,36 @@ public class MemberDAO {
      * @return
      */
     public int insertNewMember(UserDTO userDTO){
-        int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.signup", userDTO);
-        System.out.println("MemberDAO checkNum : " + checkNum);
-        return checkNum;
+        return sqlSessionTemplate.insert("memberMapper.signup", userDTO);
     }
 
 
     /**
-     * 카케고리 sequence값 받
+     * 카테고리 sequence값 받기
      * @param category_name
      * @return
      */
     public int getCategorySeq(String category_name){
-        int seqResult = sqlSessionTemplate.selectOne("memberMapper.getCategorySeq", category_name);
-        System.out.println("[Dao]getCategorySeq의 seqResult : " + seqResult);
-        return seqResult;
+        return sqlSessionTemplate.selectOne("memberMapper.getCategorySeq", category_name);
     }
 
-    public int saveUserCategories(String email, int category_seq){
+    public int deleteUserCategory(String email){
+        return sqlSessionTemplate.delete("deleteUserCategory", email);
+    }
 
+
+    /**
+     * 카테고리 값 저장
+     * @param email
+     * @param category_seq
+     * @return
+     */
+    public int saveUserCategories(String email, int category_seq){
         Map<String, Object> map = new HashMap<String, Object>();
         map.put( "email", email );
         map.put( "category_seq", category_seq );
 
-        int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.saveUserCategories", map);
-
-        System.out.println("[Dao]saveUserCategories checkNum : " + checkNum);
-
-        return checkNum;
+        return sqlSessionTemplate.insert("memberMapper.saveUserCategories", map);
     }
 
 

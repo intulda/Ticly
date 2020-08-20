@@ -4,11 +4,13 @@ import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
 import io.ticly.mint.articleBoard.model.dto.HashtagDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.articleBoard.model.service.ArticleBoardService;
+import io.ticly.mint.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -17,9 +19,11 @@ import java.util.List;
 public class ArticleBoardController {
 
     private ArticleBoardService articleBoardService;
+    private MemberService memberService;
 
-    public ArticleBoardController(ArticleBoardService articleBoardService) {
+    public ArticleBoardController(ArticleBoardService articleBoardService, MemberService memberService) {
         this.articleBoardService = articleBoardService;
+        this.memberService = memberService;
     }
 
     // TODO 관심 분야 페이지로 단순 이동
@@ -39,12 +43,34 @@ public class ArticleBoardController {
 
     // 관심 분야 선택 완료 후 세션 처리 및 이동
     @GetMapping("choiceDone")
-    public String choiceDone(Model model, HttpServletRequest req){
+    public String choiceDone(Model model, HttpServletRequest req) throws SQLException {
         // 사용자의 권한과 관심 분야 세션에 등록하기
-        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
-        int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();
-        MemberDTO dto = new MemberDTO(auth, categories);
+        MemberDTO dto = new MemberDTO();
 
+        //로그인 하지 않은 회원인 경우
+        if(((MemberDTO)model.getAttribute("userInfo")).getEmail()==null){
+            List<String> categories = articleBoardService.getCategoriesAtParameter(model, req); //관심분야 카테고리
+            int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth();//권한
+
+            //dto에 저장
+            dto = new MemberDTO(auth, categories);
+        }
+
+        //로그인한 회원인 경우
+        else{
+            String email = ((MemberDTO)model.getAttribute("userInfo")).getEmail(); //이메일
+            String nickname = ((MemberDTO)model.getAttribute("userInfo")).getNickname();//닉네임
+            List<String> categories = articleBoardService.getCategoriesAtParameter(model, req); //관심분야 카테고리
+            int auth = ((MemberDTO)model.getAttribute("userInfo")).getAuth(); //권한
+
+            //dto에 저장
+            dto = new MemberDTO(email, nickname, auth, categories);
+
+            //로그인한 사용자가 선택한 카테고리 정보를 DB에 저장
+            memberService.saveUserCategories(email,categories);
+        }
+
+        //세션 정보 등록
         model.addAttribute("userInfo", dto);
         return "articleBoard/findArticle";
     }
