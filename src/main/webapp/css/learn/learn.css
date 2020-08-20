@@ -675,12 +675,12 @@ div[class*='leaning-contents-card-front']::before {
     position: absolute;
 }
 .leaning-current-progress-bar-success {
-    width: 32%;
+    width: 0%;
     height: 100%;
     background-color: #257FF9;
     border-radius: 8px;
     position: absolute;
-    transition: 1s;
+    transition: 2s;
 }
 .leaning-current-article {
     min-width: 960px;
