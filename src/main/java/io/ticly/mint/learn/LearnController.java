@@ -1,8 +1,10 @@
 package io.ticly.mint.learn;
 
+import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import io.ticly.mint.learn.model.service.LearnService;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +35,10 @@ public class LearnController {
      */
     @GetMapping(value="workBook")
     public String view(Model model, int seq) throws SQLException {
+        MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
         UserLearnDTO userLearnDTO = UserLearnDTO.builder()
-                .email("test4@naver.com")
-                .articleSeq(seq)
+                .email(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail())
+                .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
         if(learnService.getUserVocaCheck(userLearnDTO)) {
@@ -56,4 +59,57 @@ public class LearnController {
         return learnService.getVocaList(userLearnDTO);
     }
 
+    /**
+     * 단어 진행사항 업데이트 메소드
+     * @param vocaDTO
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value="saveWordReading")
+    @ResponseBody
+    private boolean saveWordReading(@RequestBody VocaDTO vocaDTO) throws Exception {
+        return learnService.saveWordReading(vocaDTO);
+    }
+
+    /**
+     * 유저 단어 추가 메소드
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping(value="saveUserVoca")
+    @ResponseBody
+    public boolean saveUserVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
+        return learnService.saveUserVoca(vocaDTO);
+    }
+
+    /**
+     * 유저 단어 삭제 메소드
+     * @param vocaDTOS
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping(value="deleteUserVoca")
+    @ResponseBody
+    public boolean deleteUserVoca(@RequestBody List<VocaDTO> vocaDTOS) throws SQLException {
+        return learnService.deleteUserVoca(vocaDTOS);
+    }
+
+    /**
+     * 유저 단어 수정 메소드
+     * @param vocaDTO
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping(value="updateUserWord")
+    @ResponseBody
+    public boolean updateUserWord(@RequestBody VocaDTO vocaDTO) throws SQLException {
+        return learnService.updateUserWord(vocaDTO);
+    }
+
+    @PostMapping(value="updateLastVoca")
+    @ResponseBody
+    private boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
+        return learnService.updateLastVoca(vocaDTO);
+    }
 }
