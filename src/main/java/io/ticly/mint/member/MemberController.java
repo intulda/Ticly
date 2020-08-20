@@ -1,13 +1,19 @@
 package io.ticly.mint.member;
 
-import io.ticly.mint.member.dto.MemberDTO;
+import io.ticly.mint.admin.model.dto.CategoryDTO;
+import io.ticly.mint.articleBoard.model.dto.MemberDTO;
+import io.ticly.mint.member.dto.ResponseDto;
+import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-;
+import org.springframework.web.bind.support.SessionStatus;
+;import javax.servlet.http.HttpSession;
+import java.util.List;
 
+@SessionAttributes("userInfo")
 @Controller
 public class MemberController {
 
@@ -32,6 +38,11 @@ public class MemberController {
         return "login/modalTest";
     }
 
+    @GetMapping("/header")
+    public String showHeader() {
+        return "layout/globalNav";
+    }
+
     /**
      * 모달 페이지로 이동
      * @return
@@ -43,16 +54,32 @@ public class MemberController {
 
     /**
      * 로그인시 가입여부 확인
-     * @param memberDTO
-     * @return 1이면 로그인 가능, 0이면 로그인 불가
+     * @param userDTO
+     * @return String : 로그인 성공시 '로그인 성공' Stirng 반환
      */
     @PostMapping("/member/signin")
     @ResponseBody
-    public int memberSignin(@RequestBody MemberDTO memberDTO) {
-        int checkNum = 0;
-        checkNum = memberService.findMemberSignin(memberDTO);
+    public String memberSignin(@RequestBody UserDTO userDTO, Model model) {
+        System.out.println(userDTO.getEmail() + userDTO.getPassword());
+        UserDTO principal = memberService.findMemberSignin(userDTO); //principal(접근주체)
 
-        return checkNum;
+        //가져온 회원정보가 null이 아닐때, 로그인이 가능할 때
+        if(principal != null){
+            //DB에서 회원 카테고리 정보 가져오기
+            List<String> categories = memberService.getUserCategories(principal.getEmail());
+
+            //session에 로그인한 회원정보 저장
+            MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
+            model.addAttribute("userInfo", memberDTO);
+
+            /*확인
+            MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+            System.out.println("테스트 : "+user.getAuth());
+            */
+            return "success";
+        }else{ //가져온 회원정보가 없으면, 로그인 불가
+            return "fail";
+        }
     }
 
     /**
@@ -69,16 +96,33 @@ public class MemberController {
     }
 
     /**
-     * 이메일로 회원가입시, 멤버 데이터 저장
-     * @param memberDTO
-     * @return 1이면 데이터 입력 성공
+     * 이메일로 회원가입시, 멤버 데이터 저장과 관심분야 카테고리를 세션에 저장
+     * @param userDTO
+     * @return
      */
     @PostMapping("/member/signup")
     @ResponseBody
-    public int memberSignup(@RequestBody MemberDTO memberDTO) {
+    public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) {
         int checkNum = 0;
-        checkNum = memberService.insertNewMember(memberDTO);
+        checkNum = memberService.insertNewMember(userDTO);
 
-        return checkNum;
+        /*
+        if(checkNum==1){
+            //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
+            List<CategoryDTO> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
+            //세션 정보를 User_Categories테이블에 저장한다.
+            memberService.saveUserCategories(userDTO.getEmail(), categories);
+        }
+        */
+
+        return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
+    }
+
+    @RequestMapping("/member/logout")
+    public String logout(@ModelAttribute("userInfo") MemberDTO memberDTO, SessionStatus sessionStatus){
+     //   session.invalidate();
+
+        sessionStatus.setComplete();
+        return "redirect:/header";
     }
 }

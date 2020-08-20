@@ -78,12 +78,12 @@
     width: 330px;
 }
 
-.password_PresentType {
+#password_PresentType {
     margin-top: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
 }
 
-.password_NewType {
+#password_NewType {
     margin-top: 4px;
     margin-bottom: 4px;
 }
@@ -93,8 +93,6 @@
     align-items: center;
     margin-bottom: 16px;
 }
-
-
 
 .password_ReType {
     margin-top: 4px;
