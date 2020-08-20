@@ -62,7 +62,7 @@ import SkeletonCard from './skeletonCard.js';
     }
 
     // 검색 결과가 0개일 경우, 선택한 관심분야에 맞게 해시태그를 가져와 화면에 그려주는 함수
-    function getAndPaintHashTag() {
+    function paintHashTag() {
         const pathToGetHashtag = createPathOfToGetHashTag();
 
         // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
@@ -140,11 +140,11 @@ import SkeletonCard from './skeletonCard.js';
 
         // url에 검색 키워드 붙여서 전송하기
         pathToSearchResult += "&searchKeyword=" + searchKeyword;
-        getAndPaintSearchResultArticleInfo(pathToSearchResult);
+        paintSearchResultArticleInfo(pathToSearchResult);
     }
 
     // 검색한 키워드를 만족하는 아티클 정보를 받아와서 화면에 그려주는 함수
-    function getAndPaintSearchResultArticleInfo(pathToSearchResult) {
+    function paintSearchResultArticleInfo(pathToSearchResult) {
         paintSkeletonCard();
 
         // searchResultTitle에 검색 결과가 몇 개인지 카운트하기 위한 변수
@@ -184,7 +184,7 @@ import SkeletonCard from './skeletonCard.js';
                     // 받아온 데이터가 없다면,
                 else
                     {
-                        getAndPaintHashTag();
+                        paintHashTag();
                     }
 
                     // searchResultTitle에 검색 결과가 몇 개인지 카운트하기
@@ -232,7 +232,7 @@ import SkeletonCard from './skeletonCard.js';
 
         // url에 검색 키워드 붙여서 전송하기
         pathToSearchResult += "&searchKeyword=" + searchKeyword;
-        getAndPaintSearchResultArticleInfo(pathToSearchResult);
+        paintSearchResultArticleInfo(pathToSearchResult);
     }
 
     function init() {

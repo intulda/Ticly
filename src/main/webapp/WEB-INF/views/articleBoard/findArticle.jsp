@@ -26,8 +26,8 @@
 
     <!-- script -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
-    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
+    <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
+    <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 </head>
 <body>
 

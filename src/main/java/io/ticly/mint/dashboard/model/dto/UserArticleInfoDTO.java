@@ -21,5 +21,6 @@ public class UserArticleInfoDTO {
     private String hashtag;
     private String summary;
     private int achievement_rate;
+    private int learning_done;
 
 }

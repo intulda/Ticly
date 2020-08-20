@@ -7,7 +7,7 @@
 
     <!--DB에서 사용자가 학습중인 아티클 정보와 성취도를 연산 결과 불러오기
     @param String 이메일-->
-    <select id="getLearningListInfo" parameterType="String" resultType="UserArticleInfoDTO">
+    <select id="getLearningListInfo" parameterType="hashmap" resultType="UserArticleInfoDTO">
         SELECT
             ABS.R_NUM,
             ABS.USER_LEARNING_SEQ,
@@ -19,9 +19,11 @@
             ABS.HASHTAG,
             ABS.TITLE,
             ABS.SUMMARY,
-            ROUND(((VOCA_COUNT_READING/VOCA_COUNT)*50) +
-                  (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
-                       DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT), 0)*50)) AS ACHIEVEMENT_RATE
+            ROUND(((NVL(DECODE(VOCA_COUNT_READING, 0, null,VOCA_COUNT_READING)/
+                DECODE(VOCA_COUNT, 0, null, VOCA_COUNT),0))*50) +
+          (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
+               DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT), 0)*50)) AS ACHIEVEMENT_RATE,
+            ABS.LEARNING_DONE
         FROM
             (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)     AS R_NUM,
                     U_LEN.USER_LEARNING_SEQ                                  AS USER_LEARNING_SEQ,
@@ -36,7 +38,8 @@
                     (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS VOCA_COUNT,
                     (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND CHECK_READING != 0) AS VOCA_COUNT_READING,
                     (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS SENTENCE_COUNT,
-                    (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND KOR_SENTENCE IS NOT NULL) SENTENCE_COUNT_READING
+                    (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND KOR_SENTENCE IS NOT NULL) SENTENCE_COUNT_READING,
+                    U_LEN.LEARNING_DONE                                      AS LEARNING_DONE
              FROM USER_LEARNING U_LEN,
                   ARTICLE A_,
                   CATEGORY C_

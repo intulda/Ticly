@@ -2,7 +2,7 @@
 내 학습보드에 사용자가 학습중인 아티클 정보를 카드에 담아 화면에 그려주기 위한 모듈
 */
 class LearningListCard {
-    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, latestDate, achievementRate) {
+    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, latestDate, achievementRate, learningDone) {
         //this.imgFilePath = imgFilePath;
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
@@ -12,6 +12,7 @@ class LearningListCard {
         this.summary = summary.replace(/\"/g, "");
         this.lastLearningDate = latestDate.replace(/\"/g, "");
         this.achievementRate = achievementRate.replace(/\"/g, "");
+        this.learningDone = learningDone.replace(/\"/g, "");
         this.element = document.createElement('div');
     }
 
@@ -20,6 +21,7 @@ class LearningListCard {
         this.element.innerHTML =
             `
             <div class="my__card-content-wrapper">
+                <div class="learningList__card-${(this.learningDone == 1)? "done" : "" }-badge"></div>
                 <img class="learningList__card-img" src="../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
                 <div class="my__card-body learningList__card-body">
                     <div class="my__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">

@@ -55,6 +55,7 @@ public class DashboardController {
     @ResponseBody
     public List<UserArticleInfoDTO> getLearningListInfo(Model model, HttpServletRequest req){
         String email = req.getParameter("email");
+        System.out.println("email : " + email);
         List<UserArticleInfoDTO> getLearningListInfo = dashboardService.getLearningListInfo(email);
         return getLearningListInfo;
     }

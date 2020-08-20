@@ -19,7 +19,8 @@
 
 <!-- script -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script buffer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
+<%--<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>--%>
+<script bufer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
 
 <html>
 <head>
@@ -41,12 +42,12 @@
         <div class="learningList__header">
            <h3 class="text text-color-gray100 text-weight-bold">아티클 목록</h3>
             <div>
-                <button class="learningList__doing-btn btn btn-tab active">학습중<span>(6)</span></button>
-                <button class="learningList__done-btn btn btn-tab">학습 완료<span>(3)</span></button>
+                <button class="learningList__doing-btn btn btn-tab active js-list-tab-btn" value="0">학습중<span></span></button>
+                <button class="learningList__done-btn btn btn-tab js-list-tab-btn" value="1">학습 완료<span></span></button>
             </div>
             <select class="learningList__selectBox custom-select" name="sorting">
-                <option selected value="">최근학습순</option>
-                <option value="">최신발행순</option>
+                <option selected value="">최근 학습순</option>
+                <option value="">최신 발행순</option>
                 <option value="">제목순</option>
             </select>
         </div>

@@ -4,6 +4,7 @@ import io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,9 @@ public class DashboardDAO {
      * @return
      */
     public List<UserArticleInfoDTO> getLearningListInfo(String email){
-        return sqlSessionTemplate.selectList("dashboardDAO.getLearningListInfo", email);
+        HashMap<String, String> setting = new HashMap<String, String>();
+        setting.put("email", email);
+        return sqlSessionTemplate.selectList("dashboardDAO.getLearningListInfo", setting);
     }
 
     /**

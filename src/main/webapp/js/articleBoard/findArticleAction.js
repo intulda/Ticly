@@ -17,11 +17,9 @@ import SkeletonCard from './skeletonCard.js';
         let target = ev.target;
 
         categoryTabBtn.forEach(el => {
-            // el.classList.add("inactive");
             el.classList.remove("active");
         });
         target.classList.add("active");
-        // target.classList.remove("inactive");
     }
 
     // 관심 분야 버튼을 눌렀을 때 이벤트

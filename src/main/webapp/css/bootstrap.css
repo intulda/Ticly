@@ -7504,6 +7504,7 @@ button.bg-dark:focus {
     box-shadow: none !important;
 }
 
+
 .w-25 {
     width: 25% !important;
 }
@@ -9776,7 +9777,7 @@ h3,
 h4,
 .h4 {
     font-size: 1.25rem; /*20px*/
-    line-height : 1.4;
+    line-height : 1.5;
     letter-spacing : -0.1px;
     font-weight: 500;
 }
