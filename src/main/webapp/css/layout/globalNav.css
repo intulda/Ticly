@@ -1,12 +1,13 @@
 /* globalNav */
 .globalHeader-wrap{
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
     height: 80px;
     z-index: 11;
     box-shadow: 0 1px 0 0 #E1E1E8;
+    background-color: white;
 }
 
 .globalHeader{
@@ -107,4 +108,11 @@
 /*드롭다운*/
 .dropdown-menu{
     min-width: 0 !important;
+}
+
+/* For small screen */
+@media screen and (max-width: 670px) {
+    .globalHeader-center{
+        display: none;
+    }
 }

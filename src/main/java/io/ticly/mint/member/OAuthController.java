@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -120,11 +121,26 @@ public class OAuthController {
             //3. 데이터 파싱
             System.out.println("profile message" + profileJson.get("message"));
             String naverUserEmail = (String)((Map<String, Object>)profileJson.get("response")).get("email");
-            String naverUserNickname = (String)((Map<String, Object>)profileJson.get("response")).get("name");
-            //4. DTO에 저장
+            String naverUserNickname = (String)((Map<String, Object>)profileJson.get("response")).get("nickname");
+            System.out.println("////////////이메일 : " + naverUserEmail);
+            System.out.println("////////////닉네임 : " + naverUserNickname);
+
+            //이메일을 받아오지 못했다면, 다시 로그인 페이지로 이동.
+
+            //닉네임을 받아오지 못했다면, 이메일에서 아이디만 추출해서 담아준다.
+            if(naverUserNickname==null || naverUserNickname.equals("")){
+                int nicknamePoint = naverUserEmail.indexOf("@");
+                String setNickname = naverUserEmail.substring(0,nicknamePoint);
+                naverUserNickname = setNickname;
+            }
+
+            //4. DTO에 저장(로그인 전용)
             UserDTO userDTO = new UserDTO();
             userDTO.setEmail(naverUserEmail);
             userDTO.setNickname(naverUserNickname);
+
+            //5. MemberDTO생성(세션 저장용)
+            MemberDTO memberDTO = new MemberDTO();
 
             //이메일로 가입자 혹은 비가입자 체크
                 //가입자의 경우
@@ -132,13 +148,6 @@ public class OAuthController {
                     //네이버로 초기에 접속해서 DB에 회원이 경우 > 바로 로그인으로 이동
                 //비가입자인 경우
                     //DB에 데이터 저장
-
-                //[로직]
-                //이메일이 같은 경우를 찾는다. > DTO로 값 전달 받음
-                    //null일 때 > DB에 저장
-                    //DTO.login_Type == "EMAIL" 인경우, 로그인 이동 페이지로 전달 > return
-
-                    //로그인 처리
 
             //이메일이 같은 경우를 찾는다. > DTO로 값 전달 받음
             UserDTO originUser = memberService.findMember(naverUserEmail);
@@ -148,11 +157,18 @@ public class OAuthController {
                 System.out.println("새로운 회원입니다.");
                 //DB에 가입정보 저장(서비스에서 password와 nickname처리)
                 memberService.insertOAuthMember(userDTO);
-            }else if(originUser.getSignup_type()=="EMAIL"){
-                //로그인 페이지로 이동
-                return;
+            }else{
+                //사전에 이미 가입한 적이 있는 경우.
+                //DB에 있는 카테고리 정보를 가져온다.
+                List<String> categories = memberService.getUserCategories(originUser.getEmail());
+                memberDTO.setCategories(categories); //세션에 저장한다.
             }
-            //해당하지 않는 경우 바로 로그인 처리
+
+            //세션에 멤버데이터 저장
+            memberDTO.setEmail(naverUserEmail);
+            memberDTO.setNickname(naverUserNickname);
+            session.setAttribute("userInfo", memberDTO);
+
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>window.close(); opener.parent.location="+"'"+"/"+"'"+";</script>");

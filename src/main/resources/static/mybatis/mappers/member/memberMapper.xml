@@ -34,9 +34,16 @@
 		values(#{email}, #{password}, #{nickname}, #{auth}, #{signup_type}, sysdate)
 	</insert>
 
+    <!-- 카테고리 string에 해당하는 seq반 -->
+    <select id="getCategorySeq" resultType="int">
+		SELECT CATEGORY_SEQ
+		FROM CATEGORY
+		WHERE CATEGORY = #{category_name}
+	</select>
+
     <!-- 세션에 저장된 관심 카테고리를 DB에 insert -->
-    <insert id="saveUserCategories" parameterType="java.util.List">
-		INSERT INTO MEMBER_CATEGORIES(EMAIL, CATEGORY_SEQ)
-        VALUES(#{email}, 1);
+    <insert id="saveUserCategories" parameterType="Map">
+        INSERT INTO MEMBER_CATEGORIES(EMAIL, CATEGORY_SEQ)
+        VALUES(#{email}, #{category_seq})
 	</insert>
 </mapper>
