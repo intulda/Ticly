@@ -1,4 +1,4 @@
-package io.ticly.mint.member.dto;
+package io.ticly.mint.mypage.model.dto;
 
 import lombok.*;
 
@@ -7,11 +7,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDTO {
+public class MyPageDTO {
     private String email;
     private String password;
     private String nickname;
     private int auth;
-    private String signup_type; //회원가입 경로
-    private String reg_date; //회원가입 날짜
 }

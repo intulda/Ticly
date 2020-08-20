@@ -16,44 +16,69 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/findArticleStyle.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchBarStyle.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
 
+    <!-- script -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
+    <script buffer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 </head>
 <body>
 
 <div class="container container-xxl">
-    <!-- category tab -->
-    <div class="category__tab-wrapper">
-        <c:choose>
-            <%-- 선택한 관심분야가 1개 이상일 경우--%>
-            <c:when test="${fn:length(userInfo.categories) > 1}">
-                <button class="category__tab btn active js-category-tab">ALL</button>
-                <c:forEach items="${userInfo.categories}" var="category">
-                    <button class="category__tab btn inactive js-category-tab" value="${category}">${category}</button>
-                </c:forEach>
-            </c:when>
 
-            <%-- 관심분야를 1개만 선택한 경우--%>
-            <c:otherwise>
-                <div class="btn category__tab active">${userInfo.categories[0]}</div>
-            </c:otherwise>
+    <div class="findArticle__header">
+        <!-- category tab -->
+        <div class="category__tab-wrapper">
+            <c:choose>
+                <%-- 선택한 관심분야가 1개 이상일 경우--%>
+                <c:when test="${fn:length(userInfo.categories) > 1}">
+                    <button class="category__tab btn active js-category-tab">ALL</button>
+                    <c:forEach items="${userInfo.categories}" var="category">
+                        <button class="category__tab btn inactive js-category-tab" value="${category}">${category}</button>
+                    </c:forEach>
+                </c:when>
 
-        </c:choose>
-        <button class="category__tab btn inactive" onclick="location.href ='category'"><i class="icon_setting"></i> </button>
+                <%-- 관심분야를 1개만 선택한 경우--%>
+                <c:otherwise>
+                    <button class="category__tab btn active">${userInfo.categories[0]}</button>
+                </c:otherwise>
+
+            </c:choose>
+            <button class="category__tab btn inactive" onclick="location.href ='category'"><i class="icons icon_setting md"></i></button>
+        </div>
+
+        <!-- search bar -->
+        <form class="searchBar js-search-bar" action="goToSearchPage">
+            <input type="text" class="form-control" name="searchKeyword" placeholder="학습하고 싶은 아티클을 찾으세요!" autocomplete="off">
+            <button class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn" type="button"><i class="icons icon_search sm"></i></button>
+            <!-- 카테고리 전송 -->
+            <c:forEach items="${userInfo.categories}" var="category">
+                <input type="hidden" name="categories" value=${category}>
+            </c:forEach>
+            <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn"  type="button"><i class="icons icon_error_circle sm"></i></button>
+        </form>
     </div>
 
-    <!-- search bar -->
-    <input type="text" class="form-control" placeholder="학습하고 싶은 아티클을 찾으세요!">
-    <i class="icons icon_search"></i>
-
     <!-- new article section -->
-    <p>아티클 배달 왔습니다!</p>
-    <h1 class="text text-color-gray300">새로운 아티클<i class="icons icon_chevron-right lg"></i></h1>
+    <div class="findArticle__section">
+        <p class="text h6 text-color-green">아티클 배달 왔습니다!</p>
+        <div><a href="#" class="findArticle__section-title text h2 text-color-gray100 text-weight-bold">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+        <div class="card__outer js-new-section-card-outer">
+        </div>
+    </div>
 
-    <div class="card__outer js-card-outer">
+    <!-- popular article section -->
+    <div class="findArticle__section">
+        <p class="text h6 text-color-green">회원님들이 많이 가장 많이 학습한 아티클</p>
+        <div><a href="#" class="findArticle__section-title text h2 text-color-gray100 text-weight-bold">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+        <div class="card__outer js-popular-section-card-outer">
+        </div>
     </div>
 </div>
 
@@ -64,9 +89,5 @@
 <c:forEach items="${userInfo.categories}" var="category">
     <input type="hidden" class="js-categories-str" value=${category}>
 </c:forEach>
-
-<!-- script -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
 </body>
 </html>

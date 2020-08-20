@@ -51,7 +51,7 @@
                 <div class="category__item js-card card-item-basic">
                     <img alt="money" src="${ pageContext.request.contextPath }/images/articleBoard/category_img_economy.png">
                     <h4>경제</h4>
-                    <input type="checkbox" class="hide" name="categories" value="economy">
+                    <input type="checkbox" class="hide" name="categories" value="경제">
                 </div>
             </div>
 

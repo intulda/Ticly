@@ -115,6 +115,12 @@
             <scope>system</scope>
             <systemPath>${webcontent-dir}/commons-io-2.4.jar</systemPath>
         </dependency>
+        <!--Json-Parser-->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

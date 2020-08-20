@@ -11,7 +11,7 @@
 }
 
 .btn > i[class*='icon'], .btn > i[class^='icon']{
- 
+  line-height: inherit;
 }
 
 i[class^="icon"], i[class*="icon"] {
@@ -37,7 +37,7 @@ i[class^="icon"], i[class*="icon"] {
 .icon_setting:before {
   content: "\e904";
 }
-.icon_info_notice:before {
+.icon_notice_circle:before {
   content: "\e91e";
 }
 .icon_translate:before {

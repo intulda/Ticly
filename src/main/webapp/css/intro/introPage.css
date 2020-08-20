@@ -1,17 +1,47 @@
 /* introPage */
 .introPage_Rectangle {
     display: flex;
-    height: 1080px;
-    width: 1920px;
+    height: 100%;
+    width: 100%;
     opacity: 0.98;
     background-color: rgba(0, 0, 0, 0.08);
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(4px);
 }
 
-.introPage_Mask {
-    margin-left: 470px;
-    margin-top: 220px;
+.introPage_Container {
     height: 640px;
     width: 980px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.intro_Button_Oval {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    box-sizing: border-box;
+    border-radius: 100%;
+    height: 70px;
+    width: 70px;
+    border: 4px solid #FFFFFF;
+    background-color: #2B2D36;
+}
+
+.intro_Button_X {
+    font-size: 36px;
+    color: #FFFFFF;
+}
+
+
+.introPage_Mask {
+    height: 100%;
+    width: 100%;
     border-radius: 30px;
     background-color: #257FF9;
     display: flex;
@@ -25,7 +55,7 @@
 }
 
 .introPage_wordI {
-    margin-top: 50px;
+    margin-top: 35px;
     margin-left: 60px;
 }
 

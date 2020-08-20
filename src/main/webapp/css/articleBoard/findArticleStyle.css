@@ -1,11 +1,13 @@
-.category__tab-wrapper{
-    margin-top: 32px;
+.findArticle__header {
+    margin: 2rem 0 2.75rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .card__outer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 2rem;
 }
 
 .card__wrapper {
@@ -16,10 +18,6 @@
     flex: 1 1 30%;
     flex-direction: column;
     margin-right: 2rem;
-}
-
-.card__wrapper:nth-child(3n) {
-    margin-right: 0;
 }
 
 .card__img {
@@ -35,9 +33,61 @@
     padding-top: 1.5rem;
 }
 
+
+.card__body-title {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+}
+
+.card__body > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    height: 3.44em; /*line-height : 1.72 * 2*/
+}
+
 .card__footer {
     position: relative;
     padding-top: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+.card__hover-after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 24%;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    border-radius: 0.625rem;
+    backdrop-filter: blur(3px);
+
+}
+
+.card__hover-after > button {
+    margin: 0.5rem;
+    width: 100%;
+    max-width: 200px;
+}
+
+.card__wrapper:hover .card__hover-after {
+    display: flex;
+}
+
+.card__wrapper:hover .card__body,
+.card__wrapper:hover .card__footer {
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 button.category__tab {
@@ -49,7 +99,7 @@ button.category__tab {
     color: #008e6d;
     font-size: 20px;
     line-height: 1.75rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 button.category__tab:hover {
@@ -61,5 +111,48 @@ button.category__tab:hover {
     color: #858899;
     font-size: 20px;
     line-height: 1.75rem;
-    font-weight: 600;
+    font-weight: 500;
+}
+
+
+.findArticle__section {
+    margin-bottom: 3rem;
+}
+
+.findArticle__section > div {
+    margin: 0.25rem 0 1rem;
+}
+
+.findArticle__section > div > a {
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.findArticle__section-title:hover {
+    filter: opacity(86%);
+}
+
+.findArticle__section-title:hover i {
+    animation-duration: 0.5s;
+    animation-name: hoverLink;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+}
+
+@media (max-width: 1440px) {
+    .card__body-title {
+        width: 100%;
+    }
+}
+
+@keyframes hoverLink {
+    from {
+        margin-left: 0;
+    }
+    30% {
+        margin-left: 12px;
+    }
+    100% {
+        margin-left: 0;
+    }
 }
