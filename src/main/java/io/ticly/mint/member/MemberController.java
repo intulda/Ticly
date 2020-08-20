@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 ;import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SessionAttributes("userInfo")
 @Controller
@@ -60,12 +62,16 @@ public class MemberController {
      */
     @PostMapping("/member/signin")
     @ResponseBody
-    public ResponseDto<String> memberSignin(@RequestBody UserDTO userDTO, Model model) {
+    public Map<String, Object> memberSignin(@RequestBody UserDTO userDTO, Model model) {
         System.out.println(userDTO.getEmail() + userDTO.getPassword());
         UserDTO principal = memberService.findMemberSignin(userDTO); //principal(접근주체)
+        Map<String, Object> loginInfo = new HashMap<String, Object>();
 
         //가져온 회원정보가 null이 아닐때, 로그인이 성공하면 DB에 있는 회원 카테고리 정보를 불러온다.
         if(principal != null){
+            loginInfo.put( "status", HttpStatus.OK.value() );
+            loginInfo.put( "okay", "true" );
+
             //DB에서 회원 카테고리 정보 가져오기
             List<String> categories = memberService.getUserCategories(principal.getEmail());
 
@@ -79,20 +85,19 @@ public class MemberController {
             MemberDTO user = (MemberDTO)model.getAttribute("userInfo");
             System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+user.getCategories());
 
-            String checkCategorieSession = "";
-            if(user.getCategories()!=null){
-
+            if(!(user.getCategories()).isEmpty()){
+                System.out.printf("카테고리 데이터 있음");
+                loginInfo.put( "sessionInfo", "카테고리데이터있음" );
+                return loginInfo;
             }else{
-
+                System.out.printf("카테고리 데이터 없음");
+                loginInfo.put( "sessionInfo", "카테고리데이터없음" );
+                return loginInfo;
             }
-
-
-                //있으면 > '1'
-                //없으면 > '0'
-
-            return new ResponseDto<String>(HttpStatus.OK.value(), "success");
         }else{ //가져온 회원정보가 없으면, 로그인 불가
-            return new ResponseDto<String>(HttpStatus.OK.value(), "fail");
+            loginInfo.put( "status", HttpStatus.OK.value() );
+            loginInfo.put( "okay", "false" );
+            return loginInfo;
         }
     }
 
