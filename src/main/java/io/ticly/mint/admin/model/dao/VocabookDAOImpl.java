@@ -3,10 +3,12 @@ package io.ticly.mint.admin.model.dao;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class VocabookDAOImpl implements VocabookDAO{
 
     // sqlSessionTemplate DI
@@ -17,13 +19,13 @@ public class VocabookDAOImpl implements VocabookDAO{
     private static String namespace = "VocabookDAO";
 
     @Override
-    public List<VocaDTO> VocabookListDao() {
+    public List<Map<String, String>> VocabookListDao() {
         return sqlSessionTemplate.selectList(namespace+".VocabookListDao");
     }
 
     @Override
-    public int saveVocabookDao(Map<String, String> map) {
-        return sqlSessionTemplate.insert(namespace+".saveVocabookDao", map);
+    public int saveVocabookDao(List<Map<String, String>> list) {
+        return sqlSessionTemplate.insert(namespace+".saveVocabookDao", list);
     }
 
     @Override

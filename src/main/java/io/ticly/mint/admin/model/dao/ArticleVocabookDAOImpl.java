@@ -18,13 +18,13 @@ public class ArticleVocabookDAOImpl implements ArticleVocabookDAO{
     private static String namespace = "ArticleVocabookDAO";
 
     @Override
-    public List<VocaDTO> ArticleVocabookListDao() {
+    public List<Map<String, String>> ArticleVocabookListDao() {
         return sqlSessionTemplate.selectList(namespace+".ArticleVocabookListDao");
     }
 
     @Override
-    public int saveArticleVocabookDao(Map<String, String> map) {
-        return sqlSessionTemplate.insert(namespace+".saveArticleVocabookDao", map);
+    public int saveArticleVocabookDao(List<Map<String, String>> list) {
+        return sqlSessionTemplate.insert(namespace+".saveArticleVocabookDao", list);
     }
 
     @Override

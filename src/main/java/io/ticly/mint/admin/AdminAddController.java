@@ -69,6 +69,12 @@ public class AdminAddController {
         public String adminWrite(HttpServletRequest request, HttpServletResponse response,
                                Model model, MultipartFile file) throws IOException {
 
+            String[] category = request.getParameterValues("category");
+                for(int i=0; i< category.length; i++){
+                    System.out.println(category[i]);
+                }
+
+
             String title = request.getParameter("title");
             String url = request.getParameter("url");
             String summary = request.getParameter("summary");
@@ -81,7 +87,7 @@ public class AdminAddController {
             Map<String, String> vocaWordMap = new HashMap<String, String>();
             Map<String, String> vocaMeanMap = new HashMap<String, String>();
 
-
+            // 카테고리 넣어야함
             map.put("title", title);
             map.put("url", url);
             map.put("summary", summary);
@@ -96,26 +102,30 @@ public class AdminAddController {
             String[] insert_word = request.getParameterValues("insertword");
             String[] insert_mean = request.getParameterValues("insertmean");
 
+
+
             System.out.println("단어: " + Arrays.toString(insert_word) + "\n" + "뜻: " + Arrays.toString(insert_mean));
 
 
-
             // List에 Voca Map 데이터들을 넣어준다
-            // List<Map<String, String>> ArticleMapList = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> ArticleMapList = new ArrayList<Map<String, String>>();
             if(insert_word != null && insert_mean != null) {
                 // vocaWordMap : 단어
                 for (int i = 0; i < insert_word.length; i++) {
-                    vocaWordMap.put("insert_word[i]", insert_word[i]);
+                    vocaWordMap.put(insert_word[i], insert_word[i]);
                 }
 
                 // vocaMeanMap : 뜻
                 for (int i = 0; i < insert_mean.length; i++) {
-                    vocaWordMap.put("insert_mean[i]", insert_mean[i]);
+                    vocaMeanMap.put(insert_mean[i], insert_mean[i]);
                 }
             }
             else {
                 System.out.println("단어, 뜻이 제대로 입력되지 않았습니다.");
             }
+
+            ArticleMapList.add(vocaWordMap);
+            ArticleMapList.add(vocaMeanMap);
 
             /*
             for(Map<String, String> strMap : ArticleMapList) {
@@ -128,13 +138,15 @@ public class AdminAddController {
 
             int wordResult = 0;
             int meanResult = 0;
-            wordResult = artvocabookdao.saveArticleVocabookDao(vocaWordMap);
-            meanResult = artvocabookdao.saveArticleVocabookDao(vocaMeanMap);
-
+            wordResult = artvocabookdao.saveArticleVocabookDao(ArticleMapList);
+            meanResult = artvocabookdao.saveArticleVocabookDao(ArticleMapList);
 
             /* 아티클 정보 받기 */
             int nResult = dao.writeArticleDao(map);
-            System.out.print("Write : " +nResult );
+
+            System.out.println("Write : " +nResult );
+            System.out.println("Word : " + wordResult );
+            System.out.println("Mean : " + meanResult );
 
             return "redirect:ArticleList";
     }
