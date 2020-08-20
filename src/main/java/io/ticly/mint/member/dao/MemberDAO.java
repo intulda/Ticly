@@ -1,10 +1,13 @@
 package io.ticly.mint.member.dao;
 
 import io.ticly.mint.member.dto.UserDTO;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MemberDAO {
@@ -29,13 +32,6 @@ public class MemberDAO {
         return sqlSessionTemplate.selectList("memberMapper.getUserCategories", email);
     }
 
-    public int saveUserCategories(String email, int category_num){
-        int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.saveUserCategories", category_num);
-
-        return checkNum;
-    }
-
     /**
      * 회원가입시 이메일 중복 확인
      * @param email
@@ -58,6 +54,36 @@ public class MemberDAO {
         return checkNum;
     }
 
+
+    /**
+     * 카케고리 sequence값 받
+     * @param category_name
+     * @return
+     */
+    public int getCategorySeq(String category_name){
+        int seqResult = sqlSessionTemplate.selectOne("memberMapper.getCategorySeq", category_name);
+        System.out.println("[Dao]getCategorySeq의 seqResult : " + seqResult);
+        return seqResult;
+    }
+
+    public int saveUserCategories(String email, int category_seq){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put( "email", email );
+        map.put( "category_seq", category_seq );
+
+        int checkNum = 0;
+        checkNum = sqlSessionTemplate.insert("memberMapper.saveUserCategories", map);
+
+        System.out.println("[Dao]saveUserCategories checkNum : " + checkNum);
+
+        return checkNum;
+    }
+
+
+    /** OAuth로 새롭게 가입한 멤버 저장
+     *
+     */
     public int insertOAuthMember(UserDTO userDTO){
         return sqlSessionTemplate.insert("memberMapper.signup", userDTO);
     }
