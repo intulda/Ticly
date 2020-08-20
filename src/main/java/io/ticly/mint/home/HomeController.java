@@ -67,4 +67,9 @@ public class HomeController {
         }
         return path;
     }
+
+    @RequestMapping(value = "/service")
+    public String showInfo(Model model) {
+        return "intro/serviceInfo";
+    }
 }

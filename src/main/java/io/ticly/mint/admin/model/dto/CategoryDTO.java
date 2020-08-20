@@ -1,5 +1,11 @@
 package io.ticly.mint.admin.model.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
 public class CategoryDTO {
 
     private Integer category_seq;

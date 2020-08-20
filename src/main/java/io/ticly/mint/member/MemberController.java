@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 ;import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SessionAttributes("userInfo")
 @Controller
@@ -53,18 +56,22 @@ public class MemberController {
     }
 
     /**
-     * 로그인시 가입여부 확인
+     * 로그인 처리
      * @param userDTO
      * @return String : 로그인 성공시 '로그인 성공' Stirng 반환
      */
     @PostMapping("/member/signin")
     @ResponseBody
-    public String memberSignin(@RequestBody UserDTO userDTO, Model model) {
+    public Map<String, Object> memberSignin(@RequestBody UserDTO userDTO, Model model) {
         System.out.println(userDTO.getEmail() + userDTO.getPassword());
         UserDTO principal = memberService.findMemberSignin(userDTO); //principal(접근주체)
+        Map<String, Object> loginInfo = new HashMap<String, Object>();
 
-        //가져온 회원정보가 null이 아닐때, 로그인이 가능할 때
+        //가져온 회원정보가 null이 아닐때, 로그인이 성공하면 DB에 있는 회원 카테고리 정보를 불러온다.
         if(principal != null){
+            loginInfo.put( "status", HttpStatus.OK.value() );
+            loginInfo.put( "okay", "true" );
+
             //DB에서 회원 카테고리 정보 가져오기
             List<String> categories = memberService.getUserCategories(principal.getEmail());
 
@@ -72,13 +79,25 @@ public class MemberController {
             MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
 
-            /*확인
-            MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
-            System.out.println("테스트 : "+user.getAuth());
-            */
-            return "success";
+            //memberDTO -> Object -> MemberDTO
+            //세션체크를 한 뒤
+            // 세션 값 꺼내오기
+            MemberDTO user = (MemberDTO)model.getAttribute("userInfo");
+            System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+user.getCategories());
+
+            if(!(user.getCategories()).isEmpty()){
+                System.out.printf("카테고리 데이터 있음");
+                loginInfo.put( "sessionInfo", "카테고리데이터있음" );
+                return loginInfo;
+            }else{
+                System.out.printf("카테고리 데이터 없음");
+                loginInfo.put( "sessionInfo", "카테고리데이터없음" );
+                return loginInfo;
+            }
         }else{ //가져온 회원정보가 없으면, 로그인 불가
-            return "fail";
+            loginInfo.put( "status", HttpStatus.OK.value() );
+            loginInfo.put( "okay", "false" );
+            return loginInfo;
         }
     }
 
@@ -102,19 +121,18 @@ public class MemberController {
      */
     @PostMapping("/member/signup")
     @ResponseBody
-    public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) {
+    public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
         int checkNum = 0;
         checkNum = memberService.insertNewMember(userDTO);
 
-        /*
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
-            List<CategoryDTO> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
-            //세션 정보를 User_Categories테이블에 저장한다.
-            memberService.saveUserCategories(userDTO.getEmail(), categories);
+            if((MemberDTO)model.getAttribute("userInfo")!=null){
+                List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
+                //세션 정보를 User_Categories테이블에 저장한다.
+                memberService.saveUserCategories(userDTO.getEmail(), categories);
+            }
         }
-        */
-
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
     }
 
@@ -123,6 +141,6 @@ public class MemberController {
      //   session.invalidate();
 
         sessionStatus.setComplete();
-        return "redirect:/header";
+        return "redirect:/articleBoard/findArticle";
     }
 }

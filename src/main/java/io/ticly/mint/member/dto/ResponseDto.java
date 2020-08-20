@@ -13,4 +13,5 @@ import lombok.Builder;
 public class ResponseDto<T> {
     int status;
     T message;
+ //   String sessionInfo;
 }
