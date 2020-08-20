@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mypageMapper">
+
+	<select id="nickChangeInput" parameterType="MyPageDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE
+        	NICKNAME = #{nickname}
+        AND EMAIL = #{email}
+    </select>
+
+    <select id="presentPasswordInput" parameterType="MyPageDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE
+        	PASSWORD = #{password}
+        AND EMAIL = #{email}
+    </select>
+
+    <update id="nickChangeButton" parameterType="MyPageDTO">
+        UPDATE MEMBER
+        SET
+            NICKNAME = #{nickname}
+        WHERE
+            EMAIL = #{email}
+	</update>
+
+    <update id="passwordChangeButton" parameterType="MyPageDTO">
+        UPDATE MEMBER
+        SET
+            PASSWORD = #{password}
+        WHERE
+            EMAIL = #{email}
+	</update>
+
+    <update id="idWithdrawalButton" parameterType="MyPageDTO">
+        UPDATE MEMBER
+        SET
+            DEL = '1'
+        WHERE
+            EMAIL = #{email}
+	</update>
+
+</mapper>

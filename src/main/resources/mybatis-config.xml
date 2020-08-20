@@ -11,6 +11,7 @@
         <typeAlias type="io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO" alias="ArticleInfoDTO"/>
         <typeAlias type="io.ticly.mint.member.dto.UserDTO" alias="UserDTO"/>
         <typeAlias type="io.ticly.mint.articleBoard.model.dto.HashtagDTO" alias="HashtagDTO"/>
+        <typeAlias type="io.ticly.mint.mypage.model.dto.MyPageDTO" alias="MyPageDTO"/>
         <typeAlias type="io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO" alias="UserArticleInfoDTO"/>
     </typeAliases>
 </configuration>

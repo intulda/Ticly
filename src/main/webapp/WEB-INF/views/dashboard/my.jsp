@@ -12,6 +12,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!-- CSS -->
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/dashboard/myStyle.css">
@@ -53,31 +54,6 @@
         <!-- learning Article Card-->
         <div class="learningList__card-section js-learningList-section">
             <div class="my__card-outer card">
-                <div class="my__card-content-wrapper">
-                    <img class="learningList__card-img" src="../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
-                    <div class="my__card-body learningList__card-body">
-                        <div class="my__card-title">
-                            <div class="learningList__card-tag">
-                                <div class="badge badge-neutral">UX/UI</div>
-                                <span class="text body1 text-color-gray300 text-weight-regular">#Netflix #experience #case study</span>
-                            </div>
-                            <h4 class="text text-weight-bold">Have you heard that coding is an exciting skill to learn, but you aren’t sure where to start?</h4>
-                            <p class="learningList__card-desc text body1 text-color-gray200">DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want...</p>
-                        </div>
-                        <div>
-                            <div class="my__card-subInfo">
-                                <p class="my__card-date text body1 text-color-gray300">마지막 학습 날짜 : 2020.08.05</p>
-                                <div class="learningList__card-btns">
-                                    <button class="learningList__card-orignLink-btn btn btn-tab btn-left-icon"><i class="icons icon_link"></i>원문보기</button>
-                                    <button class="learningList__card-continue-btn btn btn-outline-primary btn-right-icon"><p>학습하기</p><i class="icons icon_chevron-right"></i></button>
-                                </div>
-                            </div>
-                            <div class="learningList__card-progress progress">
-                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuelast="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

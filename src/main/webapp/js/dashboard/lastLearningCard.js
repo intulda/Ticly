@@ -21,8 +21,8 @@ class LastLearningCard {
                     <img class="lastLearning__card-img" src="../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
                     <div class="my__card-body lastLearning__card-body">
                         <div class="my__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
-                            <h4 class="text text-weight-bold">${this.title}</h4>
-                            <h6 class="lastLearning__card-position text text-weight-medium">마지막 학습 위치 : <span class="text text-color-blue">${(this.lastLearningType == 0)? "단어" : "문장"} - ${this.lastLearningContent}</span></h6>
+                            <h4 class="text text-weight-medium">${this.title}</h4>
+                            <p class="lastLearning__card-position text body1 text-weight-medium">마지막 학습 위치 : <span class="text body1 text-color-blue text-weight-regular">${(this.lastLearningType == 0)? "단어" : "문장"} - ${this.lastLearningContent}</span></p>
                         </div>
                         <div class="my__card-subInfo">
                             <p class="my__card-date text body1 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>

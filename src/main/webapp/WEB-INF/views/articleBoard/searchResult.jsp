@@ -17,6 +17,7 @@
     <title>Insert title here</title>
 
     <!-- CSS -->
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/findArticleStyle.css">

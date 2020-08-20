@@ -27,7 +27,7 @@ class LearningListCard {
                             <div class="badge badge-neutral">${this.categoryTitle}</div>
                             <span class="text body1 text-color-gray300 text-weight-regular">${this.hashtag}</span>
                         </div>
-                        <h4 class="text text-weight-bold" onclick="location.href='workBook?seq=${this.articleSeq}'">${this.title}</h4>
+                        <h4 class="text text-weight-medium" onclick="location.href='workBook?seq=${this.articleSeq}'">${this.title}</h4>
                         <p class="learningList__card-desc text body1 text-color-gray200">${this.summary}</p>
                     </div>
                     <div>

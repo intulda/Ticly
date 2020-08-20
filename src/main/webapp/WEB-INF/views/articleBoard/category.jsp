@@ -14,6 +14,7 @@
     <title>Insert title here</title>
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryStyle.css">
@@ -30,27 +31,27 @@
             <div class="category__cards">
                 <div class="category__item js-card card-item-basic">
                     <img alt="computer" src="${ pageContext.request.contextPath }/images/articleBoard/category_img_development.png">
-                    <h4>개발</h4>
+                    <h4 class="text text-weight-medium">개발</h4>
                     <input type="checkbox" class="hide" name="categories" value="개발">
                 </div>
                 <div class="category__item js-card card-item-basic">
                     <img alt="palette" src="${ pageContext.request.contextPath }/images/articleBoard/category_img_ux_ui.png">
-                    <h4>디자인</h4>
+                    <h4 class="text text-weight-medium">디자인</h4>
                     <input type="checkbox" class="hide" name="categories" value="디자인">
                 </div>
                 <div class="category__item js-card card-item-basic">
                     <img alt="paperAndPen" src="${ pageContext.request.contextPath }/images/articleBoard/category_img_branding.png">
-                    <h4>브랜딩</h4>
+                    <h4 class="text text-weight-medium">브랜딩</h4>
                     <input type="checkbox" class="hide" name="categories" value="브랜딩">
                 </div>
                 <div class="category__item js-card card-item-basic">
                     <img alt="target" src="${ pageContext.request.contextPath }/images/articleBoard/category_img_marketing.png">
-                    <h4>마케팅</h4>
+                    <h4 class="text text-weight-bold">마케팅</h4>
                     <input type="checkbox" class="hide" name="categories" value="마케팅">
                 </div>
                 <div class="category__item js-card card-item-basic">
                     <img alt="money" src="${ pageContext.request.contextPath }/images/articleBoard/category_img_economy.png">
-                    <h4>경제</h4>
+                    <h4 class="text text-weight-medium">경제</h4>
                     <input type="checkbox" class="hide" name="categories" value="경제">
                 </div>
             </div>
