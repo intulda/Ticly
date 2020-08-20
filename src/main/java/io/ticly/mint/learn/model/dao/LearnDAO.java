@@ -57,4 +57,11 @@ public class LearnDAO {
     public int updateUserWord(VocaDTO vocaDTO) {
         return sqlSessionTemplate.update(NAMESPACE+"updateUserWord", vocaDTO);
     }
+
+    public int updateLastVoca(VocaDTO vocaDTO) {
+        int count = 0;
+        count += sqlSessionTemplate.update(NAMESPACE+"updateLastVoca", vocaDTO);
+        count += sqlSessionTemplate.update(NAMESPACE+"updateLastVocaAll",vocaDTO);
+        return count;
+    }
 }

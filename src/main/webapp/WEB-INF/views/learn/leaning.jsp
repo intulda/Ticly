@@ -16,50 +16,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonticon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/learn/learn.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <style>
-        .container {
-            padding: 0;
-        }
-        .word-list {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform: translate(0%, 0%)
-        }
-        .word-list li {
-            list-style-type: none;
-            width: calc(100% - 387px);
-            height: 100%;
-            opacity: .25;
-            position: absolute;
-            /*left: 50%;*/
-            /*margin-left: -100px;*/
-            border-radius: 2px;
-            transition: transform 0.5s, opacity 0.5s;
-        }
-        .word-list .act {
-            opacity: 1;
-        }
-        .word-list .word-list-hide {
-            opacity : 1;
-        }
-        .word-list-end {
-            transform: translateX(-50%) scale(1);
-        }
-        .word-list-hide {
-            transform: translateX(50%) scale(1);
-        }
-        .word-list .word-list-hide,
-        .word-list .word-list-end {
-            opacity: 0;
-            transition: opacity .2s, transform .2s;
-            z-index: -10;
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
     <div class="container-xg">
@@ -280,35 +236,8 @@
                                 </tr>
                             </thead>
                             <tbody id="articleWordTable">
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-primary">완료</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                    </td>
-                                </tr>
-                                </tbody>
+
+                            </tbody>
                         </table>
                         <div class="leaning-contents-table-down">
                             <button class="btn btn-outline-primary table-word-delet-btn" id="tableWordAdd">
