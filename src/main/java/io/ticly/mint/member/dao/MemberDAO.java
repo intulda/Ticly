@@ -77,15 +77,8 @@ public class MemberDAO {
         map.put( "email", email );
         map.put( "category_seq", category_seq );
 
-        int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.saveUserCategories", map);
-
-        System.out.println("[Dao]saveUserCategories checkNum : " + checkNum);
-
-        return checkNum;
+        return sqlSessionTemplate.insert("memberMapper.saveUserCategories", map);
     }
-
-
 
 
     /** OAuth로 새롭게 가입한 멤버 저장

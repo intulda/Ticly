@@ -94,6 +94,7 @@ public class MemberService {
         userDTO.setAuth(3);
         userDTO.setSignup_type("EMAIL");
         //Dao로 넘기기
+
         return memberDAO.insertNewMember(userDTO);
     }
 
