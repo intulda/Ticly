@@ -51,12 +51,9 @@
             Object ologin = session.getAttribute("userInfo");
 
             String nickname ="";
-            System.out.println("확인1111111111");
             if(ologin != null){
-                System.out.println("확인222222222");
                 MemberDTO memberDTO = (MemberDTO)ologin;
                 nickname = memberDTO.getNickname();
-                System.out.printf("memberDTO.getNickname() : "+memberDTO.getNickname());
                 nickname = subStringBytes(nickname, 2, 2);
                 System.out.println("nickname : " +nickname);
             }else{
@@ -75,15 +72,15 @@
                     <c:choose>
                         <c:when test="${empty sessionScope.userInfo.email}">
                             <ul class="header-index">
-                                <li class="text h6 text-color-gray200 text-weight-medium nav-list-active "><a href="/articleBoard/findArticle">아티클 찾기</a></li>
-                                <li class="text h6 text-color-gray200 text-weight-medium"><a href="#">서비스 소개</a></li>
+                                <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="nav-list-active navTabs" id="">아티클 찾기</a></li>
+                                <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceuIntrdText navTabs">서비스 소개</a></li>
                                 <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li>
                             </ul>
                         </c:when>
                         <c:otherwise>
                             <ul class="header-index">
-                                <li class="text h6 text-color-gray200 text-weight-medium"><a href="/articleBoard/findArticle" class="nav-list-active">아티클 찾기</a></li>
-                                <li class="text h6 text-color-gray200 text-weight-medium"><a href="#">서비스 소개</a></li>
+                                <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="nav-list-active navTabs">아티클 찾기</a></li>
+                                <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceIntrdText navTabs">서비스 소개 </a></li>
                             </ul>
                         </c:otherwise>
                     </c:choose>
@@ -116,12 +113,13 @@
                 </div>
             </div>
         </header>
-        <!--modal-->
+
+        <!--modal import-->
         <c:import url="/WEB-INF/views/login/loginModal.jsp"></c:import>
+
         <script>
             (() => {
             //모달 열기
-
                 if(document.getElementById('modal-open-button') != null) {
                     document.getElementById('modal-open-button').addEventListener("click", function() {
                         modalOpen('Ticly 로그인');
@@ -140,6 +138,44 @@
                     document.getElementById('email-signin-form').classList.add('hidden');
                 }
             })();
+
+            /*네비 클릭 이벤트*/
+            document.addEventListener('DOMContentLoaded', function() {
+                var current_page_URL = location.href;
+                console.log(current_page_URL);
+
+                let navTabs = document.querySelectorAll('.navTabs');
+                console.log(navTabs.length);
+
+                for(var i = 0; i < navTabs.length; i++){
+                    var thisNavTabs = navTabs[i];
+
+                    if(thisNavTabs.href !== "#"){
+                        var target_URL = thisNavTabs.href;
+                        console.log(target_URL);
+
+                        if(current_page_URL === target_URL){
+                            /*
+                            $('nav a').parents('li, ul').removeClass('active');
+                            $(this).parent('li').addClass('active');
+                            */
+                            navTabs.classList.remove('nav-list-active');
+                            thisNavTabs.classList.add('nav-list-active');
+                            return false;
+                        }
+                    }
+                }
+            });
+
+            /*
+            document.querySelector('.moveArticleBoardTab').addEventListener("click", function (){
+                document.querySelector('.moveServiceIntrdText').classList.remove('nav-list-active');
+                document.querySelector('.moveArticleBoardText').classList.add('nav-list-active');
+            });
+            document.querySelector('.moveServiceIntrdTab').addEventListener("click", function (){
+                document.querySelector('.moveServiceIntrdText').classList.add('nav-list-active');
+                document.querySelector('.moveArticleBoardText').classList.remove('nav-list-active');
+            });*/
         </script>
 </body>
 </html>
