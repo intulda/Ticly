@@ -137,16 +137,12 @@
 /*로그인 메인*/
 .main-login-form{
   text-align: center;
-/*  padding: 96px 50px;*/
   padding: 30px 0;
   position: relative;
 }
 
 .main-login-form .scroll-zone{
   padding: 66px 50px;
-  /*  overflow: scroll;*/
-  overflow-x: hidden;
-  overflow-y: auto; /* 스크롤 있는 경우에만 표시*/
   max-height: calc(100% - 60px);
 }
 
@@ -202,7 +198,6 @@
 }
 .scroll-zone {
   padding: 30px 50px;
-/*  overflow: scroll;*/
   overflow-x: hidden;
   overflow-y: auto; /* 스크롤 있는 경우에만 표시*/
   max-height: calc(100% - 60px);

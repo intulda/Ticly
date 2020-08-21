@@ -135,83 +135,11 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<!--메인 로그인-->
+<!--Main Login-->
 <script src="${pageContext.request.contextPath}/js/member/login.js"></script>
 
-<!--이메일로 로그인-->
+<!--Email Login-->
 <script src="${pageContext.request.contextPath}/js/member/signinEmail.js"></script>
 
-<!--이메일로 회원가입-->
+<!--Email Signup-->
 <script src="${pageContext.request.contextPath}/js/member/signupEmail.js"></script>
-
-
-<!-- naver login 라이브러리 -->
-<!--
-<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
--->
-
-<script>
-    (() => {
-        /*
-        var naverLogin = new naver.LoginWithNaverId(
-            {
-                clientId: "zxfzewpOgzueAWu6JhMu",
-                callbackUrl: "http://localhost:8090/naver/callback",
-                isPopup: true /!* 팝업을 통한 연동처리 여부 *!/
-            }
-        );
-
-        /!* (3)설정정보를 초기화하고 연동을 준비 *!/
-        naverLogin.init();
-
-        /!* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) *!/
-        window.addEventListener('load', function () {
-            naverLogin.getLoginStatus(function (status) {
-                if (status) {
-                    /!* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 *!/
-                    var email = naverLogin.user.getEmail();
-                    if( email == undefined || email == null) {
-                        alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
-                        /!* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 *!/
-                        naverLogin.reprompt();
-                        return;
-                    }
-
-                    window.location.replace("http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/sample/main.html");
-                } else {
-                    console.log("callback 처리에 실패하였습니다.");
-                }
-            });
-        });*/
-        /* 모달 내 이동*/
-        //모달 닫기
-        document.getElementById('modal-close').addEventListener("click", function() {
-            document.getElementById('signinup-modal').style.display = "none";
-        });
-
-        //메인 로그인에서 '이메일 로그인'으로 이동
-        document.getElementById('login-to-signin').addEventListener("click", function (){
-            document.getElementById('main-login-form').classList.add('hidden');
-            document.getElementById('email-signin-form').classList.remove('hidden');
-        });
-
-        //메인 로그인에서 '이메일 회원가입'으로 이동
-        document.getElementById('login-footer-login-to-signup').addEventListener("click", function() {
-            document.getElementById('main-login-form').classList.add('hidden');
-            document.getElementById('email-signup-form').classList.remove('hidden');
-        });
-
-        //이메일 회원가입에서 '메인 로그인'으로 이동
-        document.getElementById('login-footer-signup-to-login').addEventListener("click",function (){
-            document.getElementById('email-signup-form').classList.add('hidden');
-            document.getElementById('main-login-form').classList.remove('hidden');
-        });
-
-        //'이메일 로그인'에서 '이메일 회원가입'으로 이동
-        document.getElementById('login-footer-signin-to-signup').addEventListener("click",function (){
-            document.getElementById('email-signin-form').classList.add('hidden');
-            document.getElementById('email-signup-form').classList.remove('hidden');
-        });
-    })();
-</script>

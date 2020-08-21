@@ -8,12 +8,13 @@
 </head>
 <body>
     <div class="ticly__basic-layout">
+        <!-- header -->
         <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
-
+        <!-- content -->
         <div class="container-xg">
             <h5>서비스 소개페이지</h5>
         </div>
-
+        <!-- footer -->
         <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
     </div>
 </body>
