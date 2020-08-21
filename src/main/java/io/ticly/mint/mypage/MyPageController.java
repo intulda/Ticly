@@ -25,7 +25,7 @@ public class MyPageController {
      * 마이페이지로 이동
      * @return
      */
-    @GetMapping("/hello")
+    @GetMapping("/mypage")
     public String showMyPage() {
         return "mypage/myPage";
     }
