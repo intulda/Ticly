@@ -1,17 +1,6 @@
-<%-- Created by IntelliJ IDEA. User: mac Date: 07/08/2020 Time: 11:48 오전 To
-change this template use File | Settings | File Templates. --%> <%@ page
-        contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>globalFooter</title>
-    <link rel="stylesheet" href="../../../css/layout/globalFooter.css" />
-    <link rel="stylesheet" href="/css/default.css" />
-    <link rel="stylesheet" href="/css/bootstrap.css" />
-    <link rel="stylesheet" href="/css/fonticon.css" />
-</head>
-<body>
-<div class="container globalFooter_Container">
-    </div>
+ <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <div class="box_Footer">
     <div class="left_Footer">
         <img src = "../../../images/logo_gray.svg" alt="logoGray" class="footer_Logo_Gray">
@@ -31,5 +20,3 @@ change this template use File | Settings | File Templates. --%> <%@ page
         </a>
     </div>
 </div>
-</body>
-</html>
