@@ -1,10 +1,7 @@
 /* myPage */
-.myPage_Nav {
-    height: 80px;
-}
-
 .myPage_Container {
     margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
