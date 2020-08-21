@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">ㄴ
+    <meta charset="UTF-8">
     <title>Ticly - 최신 아티클로 영어공부를 하세요</title>
 
     <!-- Common -->
@@ -26,7 +26,7 @@
 
 </head>
 <body>
-    <div class="ticly__basic-layout">
+<div class="ticly__basic-layout">
     <!-- header -->
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
@@ -49,7 +49,7 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="category__tab btn btn-tab" onclick="location.href ='category'"><i class="icons icon_setting md"></i></button>
+                <button class="category__tab btn btn-tab" onclick="location.href ='category'"><i class="icons icon_setting"></i></button>
             </div>
 
             <!-- search bar -->
@@ -67,7 +67,7 @@
         <!-- new article section -->
         <div class="findArticle__section">
             <p class="text h6 text-color-green">아티클 배달 왔습니다!</p>
-            <div><a href="#" class="findArticle__section-title text h2 text-color-gray100 text-weight-bold">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-bold">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-new-section-card-outer">
             </div>
         </div>
@@ -75,7 +75,7 @@
         <!-- popular article section -->
         <div class="findArticle__section">
             <p class="text h6 text-color-green">회원님들이 많이 가장 많이 학습한 아티클</p>
-            <div><a href="#" class="findArticle__section-title text h2 text-color-gray100 text-weight-bold">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-bold">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-popular-section-card-outer">
             </div>
         </div>
@@ -85,15 +85,15 @@
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
-    <!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
-    <c:forEach items="${userInfo.categories}" var="category">
-        <input type="hidden" class="js-categories-str" value=${category}>
-    </c:forEach>
+<!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
+<c:forEach items="${userInfo.categories}" var="category">
+    <input type="hidden" class="js-categories-str" value=${category}>
+</c:forEach>
 
-    <!-- script -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
-    <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
+<!-- script -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
+<script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 
 </body>
 </html>

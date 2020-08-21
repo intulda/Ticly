@@ -1,5 +1,5 @@
 .findArticle__header {
-    margin: 2rem 0 2.75rem;
+    margin: 2rem 0 2rem;
     display: flex;
     justify-content: space-between;
 }
@@ -31,12 +31,12 @@
 
 .card__body {
     position: relative;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
 }
 
 
 .card__body-title {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     width: 90%;
     display: -webkit-box;
@@ -45,7 +45,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 3.5rem;
+    max-height: 3.75rem;
 }
 
 .card__body > p {
@@ -98,14 +98,16 @@
     padding-right: 2rem;
 }
 
-button.category__tab {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 500;
+/*icon-btn*/
+.btn > i {
+    font-size: 1.125rem;
+    position: relative;
+    vertical-align: middle;
+    bottom: 1px;
 }
 
 .findArticle__section {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .findArticle__section > div {

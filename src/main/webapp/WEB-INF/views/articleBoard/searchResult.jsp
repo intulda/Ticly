@@ -30,7 +30,7 @@
     <!-- header -->
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
-    <div class="container container-xxl">
+    <div class="container container-xxl" style="height: 100vh">
         <div class="findArticle__header">
             <!-- category tab -->
             <div class="category__tab-wrapper">
