@@ -11,7 +11,7 @@
         <!-- header -->
         <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
         <!-- content -->
-        <div class="container-xg">
+        <div class="container-xg ticly__basic-content-layout">
             <h5>서비스 소개페이지</h5>
         </div>
         <!-- footer -->
