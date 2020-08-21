@@ -28,7 +28,7 @@
         <!-- header -->
         <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
-        <div class="container">
+        <div class="container ticly__basic-content-layout">
             <!-- Recently learned Article Section-->
             <div class="lastLearning__header">
                 <h3 class="text text-color-gray100 text-weight-bold">최근 학습한 아티클</h3>
@@ -36,7 +36,6 @@
 
             <!-- Recently learned Article Card-->
             <div class="lastLearning__card-section js-lastLearning-section">
-
             </div>
 
             <!-- My Article List Section-->
@@ -70,8 +69,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <%--<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>--%>
     <script bufer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
-
-
 
 </body>
 </html>

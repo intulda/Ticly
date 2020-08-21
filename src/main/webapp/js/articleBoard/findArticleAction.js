@@ -130,7 +130,6 @@ import SkeletonCard from './skeletonCard.js';
 
     // 아티클 정보 받아와서 리스트에 담아주는 함수
     function getArticleInfo(path) {
-        paintSkeletonCard();
 
         // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
         axios({
@@ -160,6 +159,7 @@ import SkeletonCard from './skeletonCard.js';
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
+        paintSkeletonCard();
 
         let path = GET_ARTICLE_CARD_PATH;
         let categoriesArr = [];

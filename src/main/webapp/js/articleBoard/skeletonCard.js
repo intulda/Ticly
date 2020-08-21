@@ -13,7 +13,7 @@ class SkeletonCard {
             <div class="skeletonCard__bar">
                 <div class="skeletonCard__indicator"></div>
             </div>
-            <img class="skeletonCard__img card" src="../../images/articleBoard/ticly_thumbnail.png">
+            <div class="skeletonCard__img" ></div>
             <div class="skeletonCard__body"></div>
 			`
         return this.element;
