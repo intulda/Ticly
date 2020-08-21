@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonticon.css">
+
+    <!--Header, Footer 추가시 필요한 요소-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalFooter.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/singInUp.css">
@@ -17,9 +19,11 @@
 </head>
 <body>
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+
     <div class="container-xg">
         <h5>서비스 소개페이지</h5>
     </div>
+
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 
 </body>

@@ -136,13 +136,13 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <!--메인 로그인-->
-<script src="js/member/login.js"></script>
+<script src="${pageContext.request.contextPath}/js/member/login.js"></script>
 
 <!--이메일로 로그인-->
-<script src="js/member/signinEmail.js"></script>
+<script src="${pageContext.request.contextPath}/js/member/signinEmail.js"></script>
 
 <!--이메일로 회원가입-->
-<script src="js/member/signupEmail.js"></script>
+<script src="${pageContext.request.contextPath}/js/member/signupEmail.js"></script>
 
 
 <!-- naver login 라이브러리 -->
