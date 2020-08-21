@@ -11,17 +11,10 @@
 <head>
     <title>myPage</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage/myPage.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonticon.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalFooter.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/singInUp.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
 </head>
 <body>
+<div class="ticly__basic-layout">
 <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 <div class="container myPage_Container">
 <div class="myPage_Div">
@@ -57,6 +50,7 @@
     <div class="password_Div">
         <span class="myPage_Subtitle">비밀번호 변경</span>
         <div class="password_DivContents">
+            <div class="password_Type_Div">
             <span class="div_Contents">현재 비밀번호</span>
             <input
                     type="password"
@@ -64,7 +58,14 @@
                     id="password_PresentType"
                     placeholder="현재 비밀번호를 입력하세요."
             />
+                <!--
+            <div class="eyes_box">
+            <i class="icon_show"></i>
+            </div>
+            -->
             <p class="myPage_Error_Message"></p>
+            </div>
+            <div class="password_Type_Div">
             <span class="div_Contents">새로운 비밀번호</span>
             <input
                     type="password"
@@ -72,7 +73,13 @@
                     id="password_NewType"
                     placeholder="새로운 비밀번호를 입력하세요."
             />
+                <!--
+            <div class="eyes_box">
+            <i class="icon_show"></i>
+            </div>
+            -->
             <p class="myPage_Error_Message"></p>
+            </div>
             <button type="submit"
                     class="btn btn-outline-primary"
                     id="password_Change_Button">
@@ -116,13 +123,9 @@
         const passwordChangeButtonElement = document.getElementById("password_Change_Button");
         const myPageErrorMessageElement = document.getElementsByClassName("myPage_Error_Message");
         const membershipWithdrawalButtonElement = document.getElementById("membership_Withdrawal_Button");
-        // const myPageEmailElement = document.getElementById("basicInformation_Email");
         let myPageNicknameCheckElement = false;
         let myPagePresentPasswordCheckElement = false;
         let myPageNewPasswordCheckElement = false;
-        let myPageWithdrawalCheckElement = false;
-        let myPageEmailShowElement = false;
-        const myPagePasswordCompareElement = false;
 
         const isJobPassword = (asValue) => {
         const checkNumber = asValue.search(/[0-9]/g);
@@ -241,7 +244,7 @@
                     console.log(error);
                 });
             } else {
-                alert("잘못 된 닉네임 입니다.");
+                alert("잘못된 닉네임 입니다.");
             }
         }
 
@@ -309,9 +312,8 @@
 
     })();
 
-
-
 </script>
 <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
+</div>
 </body>
 </html>
