@@ -72,3 +72,10 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+.ticly__basic-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
