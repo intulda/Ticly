@@ -20,6 +20,11 @@ public class VocaDTO {
     private int last_voca;
     private int voca_order;
     private int voca_group;
+
+    private int vocabook_seq;
+    private int meaning_num;
+    private int article_vocabook_seq;
+
 }
 
 
