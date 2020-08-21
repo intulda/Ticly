@@ -38,9 +38,9 @@
         ORDER BY a.REG_DATE DESC
     </select>
 
-    <!--DB에서 내 관심분야 최신순 아티클 찾기
+    <!--DB에서 내 관심분야 아티클 찾기
         @param categoryList -->
-    <select id="findNewMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
+    <select id="findMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
         SELECT
             a.ARTICLE_SEQ,
             a.TITLE,
@@ -57,22 +57,4 @@
         ORDER BY a.REG_DATE DESC
     </select>
 
-    <!--DB에서 내 관심분야 인기순 아티클 찾기
-        @param categoryList -->
-    <select id="findPopularMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
-        SELECT
-            a.ARTICLE_SEQ,
-            a.TITLE,
-            a.SUMMARY,
-            a.URL,
-            a.HASHTAG,
-            c.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
-            a.DEL,
-            a.APPLY_COUNT
-        FROM ARTICLE a, CATEGORY c
-        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
-            AND c.CATEGORY IN (${categoryStr})
-        ORDER BY a.APPLY_COUNT DESC
-    </select>
 </mapper>

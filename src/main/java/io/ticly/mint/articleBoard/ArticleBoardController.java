@@ -76,25 +76,14 @@ public class ArticleBoardController {
     }
 
     // 아티클 찾기 페이지에서 *새로운* 아티클 정보 로드를 위한 동적 데이터 처리
-    @GetMapping("getNewArticleInfo")
+    @GetMapping("findMyTypeArticle")
     @ResponseBody
-    public List<ArticleInfoDTO> getNewArticleInfo(Model model, HttpServletRequest req){
+    public List<ArticleInfoDTO> findMyTypeArticle(Model model, HttpServletRequest req){
         // 관심 분야 데이터를 기반으로 최신 아티클 불러와서 리스트에 담기
         List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
-        List<ArticleInfoDTO> newList = articleBoardService.findNewMyTypeArticle(categories);
+        List<ArticleInfoDTO> list = articleBoardService.findMyTypeArticle(categories);
 
-        return newList;
-    }
-
-    // 아티클 찾기 페이지에서 *인기* 아티클 정보 로드를 위한 동적 데이터 처리
-    @GetMapping("getPopularArticleInfo")
-    @ResponseBody
-    public List<ArticleInfoDTO> getPopularArticleInfo(Model model, HttpServletRequest req){
-        // 관심 분야 데이터를 기반으로 인기 아티클 불러와서 리스트에 담기
-        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
-        List<ArticleInfoDTO> popularList = articleBoardService.findPopularMyTypeArticle(categories);
-
-        return popularList;
+        return list;
     }
 
     // 검색시 search 페이지로 단순 이동

@@ -26,9 +26,11 @@
 
 </head>
 <body>
+
+<!-- header -->
+<c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+
 <div class="ticly__basic-layout">
-    <!-- header -->
-    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
     <div class="container container-xxl">
         <div class="findArticle__header">

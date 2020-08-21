@@ -18,7 +18,6 @@ import LastLearningCard from './lastLearningCard.js';
 
     // 정렬 옵션에 변동사항이 있을 때 마다 카드의 정렬을 바꾸는 함수
     function changeSortOption() {
-
         let selectedValue = selectBox.options[selectBox.selectedIndex].value;
         let state = null;
 
@@ -60,13 +59,17 @@ import LastLearningCard from './lastLearningCard.js';
 
     // 리스트 탭 버튼 클릭시 이벤트
     function handleListTabBtnEvent(ev) {
-        if (!ev.target.classList.contains("active")) {
+        let targetElem = ev.target;
+        if(ev.target.nodeName  === 'SPAN') {
+            targetElem = targetElem.parentElement;
+        }
+        if (!targetElem.classList.contains("active")) {
             // 눌려진 아티클 목록 탭의 버튼의 value 받아오기
             // 0 : 학습중 / 1 : 학습 완료
-            let state = ev.target.value;
+            let state = targetElem.value;
 
             // 탭 활상화 상태 바꿔주기
-            ev.target.classList.add("active");
+            targetElem.classList.add("active");
             let inactiveNum = (state == 0 ) ? 1 : 0;
             listTabBtn[inactiveNum].classList.remove("active")
 

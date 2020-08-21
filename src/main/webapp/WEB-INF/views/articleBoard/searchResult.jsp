@@ -26,11 +26,11 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
 </head>
 <body>
-    <div class="ticly__basic-layout">
-    <!-- header -->
-    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+<!-- header -->
+<c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
-    <div class="container container-xxl" style="height: 100vh">
+<div class="ticly__basic-layout">
+    <div class="container container-xxl">
         <div class="findArticle__header">
             <!-- category tab -->
             <div class="category__tab-wrapper">
@@ -56,13 +56,16 @@
 
             <!-- search bar -->
             <form class="searchBar js-search-bar" action="goToSearchPage">
-                <input type="text" class="form-control" name="searchKeyword" placeholder="학습하고 싶은 아티클을 찾으세요!" autocomplete="off" value="${searchKeyword}">
-                <button type="button" class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn"><i class="icons icon_search sm"></i></button>
+                <input type="text" class="form-control" name="searchKeyword" placeholder="학습하고 싶은 아티클을 찾으세요!"
+                       autocomplete="off" value="${searchKeyword}">
+                <button type="button" class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn">
+                    <i class="icons icon_search sm"></i></button>
                 <!-- 카테고리 전송 -->
                 <c:forEach items="${userInfo.categories}" var="category">
                     <input type="hidden" name="categories" value=${category}>
                 </c:forEach>
-                <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn"  type="button"><i class="icons icon_error_circle sm"></i></button>
+                <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn" type="button">
+                    <i class="icons icon_error_circle sm"></i></button>
             </form>
         </div>
         <form class="js-submit-hashtag-form" action="goToSearchPage">
@@ -91,18 +94,18 @@
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
-    <!-- 검색 키워드-->
-    <input type="hidden" class="js-search-keyword" value=${searchKeyword}>
+<!-- 검색 키워드-->
+<input type="hidden" class="js-search-keyword" value=${searchKeyword}>
 
-    <!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
-    <c:forEach items="${userInfo.categories}" var="category">
-        <input type="hidden" class="js-categories-str" value=${category}>
-    </c:forEach>
+<!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
+<c:forEach items="${userInfo.categories}" var="category">
+    <input type="hidden" class="js-categories-str" value=${category}>
+</c:forEach>
 
-    <!-- script -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchResultAction.js"></script>
-    <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
+<!-- script -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchResultAction.js"></script>
+<script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 
 
 </body>

@@ -93,19 +93,11 @@ public class ArticleBoardService {
     }
 
     /**
-     * 선택한 관심 분야와 동일한 최신 아티클 찾기
+     * 선택한 관심 분야와 동일한 아티클 찾기
      * @param  'list' : 'categoryArr'   사용자가 선택한 관심 분야
      */
-    public List<ArticleInfoDTO> findNewMyTypeArticle(List<String> categories) {
-        return articleBoardDAO.findNewMyTypeArticle(categories);
-    }
-
-    /**
-     * 선택한 관심 분야와 동일한 인기 아티클 찾기
-     * @param  'list' : 'categoryArr'	사용자가 선택한 관심 분야
-     */
-    public List<ArticleInfoDTO> findPopularMyTypeArticle(List<String> categories) {
-        return articleBoardDAO.findPopularMyTypeArticle(categories);
+    public List<ArticleInfoDTO> findMyTypeArticle(List<String> categories) {
+        return articleBoardDAO.findMyTypeArticle(categories);
     }
 
     /**

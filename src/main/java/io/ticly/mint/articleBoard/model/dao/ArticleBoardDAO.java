@@ -45,24 +45,15 @@ public class ArticleBoardDAO {
     }
 
     /**
-     * DB에서 내 관심분야 최신순 아티클 찾기
+     * DB에서 내 관심분야 아티클 찾기
      * @param categoryList
      * @return
      */
-    public List<ArticleInfoDTO> findNewMyTypeArticle(List<String> categoryList){
+    public List<ArticleInfoDTO> findMyTypeArticle(List<String> categoryList){
         String categoryStr = getCategoryStr(categoryList);
-        return sqlSessionTemplate.selectList("articleBoardDAO.findNewMyTypeArticle", categoryStr);
+        return sqlSessionTemplate.selectList("articleBoardDAO.findMyTypeArticle", categoryStr);
     }
 
-    /**
-     * DB에서 내 관심분야 인기순 아티클 찾기
-     * @param categoryList
-     * @return
-     */
-    public List<ArticleInfoDTO> findPopularMyTypeArticle(List<String> categoryList){
-        String categoryStr = getCategoryStr(categoryList);
-        return sqlSessionTemplate.selectList("articleBoardDAO.findPopularMyTypeArticle", categoryStr);
-    }
 
     /**
      * 쿼리문에 넣어주기 위해 관심분야 배열을 ',' 단위로 이어주기

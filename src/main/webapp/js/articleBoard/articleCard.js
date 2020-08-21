@@ -20,7 +20,7 @@ class ArticleCard {
             `
             <img class="card__img card" src="../../images/articleBoard/ticly_thumbnail.png">
             <div class="card__hover-after">
-                <button class="btn btn-primary btn-lg" onclick="location.href='learn/workBook?seq=${this.articleSeq}'">학습하기</button>
+                <button class="btn btn-primary btn-lg" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">학습하기</button>
                 <button class="btn btn-outline-white btn-lg" onclick="location.href='${this.url}'">원문보기</button>
             </div>
             <div class="card__body">

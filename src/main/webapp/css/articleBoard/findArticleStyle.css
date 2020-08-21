@@ -1,3 +1,7 @@
+.category__tab-wrapper > button{
+    margin-right: 0.188rem;
+}
+
 .findArticle__header {
     margin: 2rem 0 2rem;
     display: flex;
@@ -146,4 +150,14 @@
     100% {
         margin-left: 0;
     }
+}
+
+.default__null{
+    position: relative;
+    text-align: center;
+    line-height: 1.6;
+    min-height: 100px;
+    padding: 3rem;
+    background-color: #F7F7FA;
+    border-radius: 0.938rem;
 }
