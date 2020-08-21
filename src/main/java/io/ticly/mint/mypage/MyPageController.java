@@ -3,11 +3,14 @@ package io.ticly.mint.mypage;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.mypage.model.dto.MyPageDTO;
+import io.ticly.mint.mypage.model.service.MyPageService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
+@SessionAttributes("userInfo")
 @Controller
 public class MyPageController {
 
@@ -82,6 +85,9 @@ public class MyPageController {
         MyPageDTO myPageDTO = new MyPageDTO();
         myPageDTO.setEmail(memberDTO.getEmail());
         myPageDTO.setNickname(nickname);
+        memberDTO.setNickname(nickname);
+
+        session.setAttribute("userInfo", memberDTO);
 
         return mypageService.changeButtonNickname(myPageDTO);
     }

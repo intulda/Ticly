@@ -9,10 +9,10 @@
 <html>
 <head>
     <title>myPage</title>
-    <link rel="stylesheet" href="/css/mypage/myPage.css" />
-    <link rel="stylesheet" href="/css/default.css" />
-    <link rel="stylesheet" href="/css/bootstrap.css" />
-    <link rel="stylesheet" href="/css/fonticon.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage/myPage.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonticon.css" />
 </head>
 <body>
 <div class="container myPage_Nav"></div>
@@ -28,6 +28,7 @@
                         type="text"
                         class="form-control nickname_Input"
                         placeholder="변경할 닉네임을 입력하세요."
+                        value="${sessionScope.userInfo.nickname}"
                         id="nickname_Change_Input"
                 />
                 <button type="submit"
@@ -38,7 +39,11 @@
             </div>
             <p class="myPage_Error_Message"></p>
             <span class="div_Contents">이메일</span><br>
-            <span class="text h5 text-color-gray100 basicInfo_Email">kkh@ticly.com</span>
+            <span class="text h5 text-color-gray100 basicInfo_Email"
+                  id="basicInformation_Email"
+            >
+            ${sessionScope.userInfo.email}
+                </span>
         </div>
     </div>
     <div class="rectangle myPage_Rectangle"></div>
@@ -75,7 +80,7 @@
             <div class="withdraw_Warning">
             <span class="text text-color-gray100">탈퇴하기를 누르시면 </span
             ><span class="text text-weight-bold withdraw_Nickname"
-            >코드짜개님</span
+            >${sessionScope.userInfo.nickname}</span
             ><span>의 </span
             ><span class="text text-weight-bold text-color-red"
             >계정이 영구적으로 삭제</span
@@ -104,7 +109,7 @@
         const passwordChangeButtonElement = document.getElementById("password_Change_Button");
         const myPageErrorMessageElement = document.getElementsByClassName("myPage_Error_Message");
         const membershipWithdrawalButtonElement = document.getElementById("membership_Withdrawal_Button");
-        const myPageEmailElement = document.getElementById("myPage_Email");
+        // const myPageEmailElement = document.getElementById("basicInformation_Email");
         let myPageNicknameCheckElement = false;
         let myPagePresentPasswordCheckElement = false;
         let myPageNewPasswordCheckElement = false;
@@ -222,6 +227,7 @@
                     if(result.data == "1"){
                         alert("닉네임 변경이 완료되었습니다.");
                         myPageNicknameCheckElement = true;
+                        location.reload();
                     }
                 })
                 .catch(function (error) {
@@ -248,6 +254,9 @@
                     .then(function (result){
                         if(result.data == "1"){
                             alert("비밀번호 변경이 완료되었습니다.");
+                            passwordPresentTypeElement.value = "";
+                            passwordNewTypeElement.value = "";
+                            // location.reload();
                         } else {
                             alert("잘못된 비밀번호입니다. 다시 입력해주세요.");
                         }
@@ -259,7 +268,6 @@
         }
 
         /* 탈퇴하기 버튼 클릭 후 출력 */
-
         const myPageWithdrawalCheckButton  = () => {
             let withdrawal_Message;
             withdrawal_Message = confirm("정말로 탈퇴하시겠습니까?");
@@ -271,7 +279,7 @@
                 })
                     .then(function (result){
                         if(result.data == "1"){
-                        alert("회원탈퇴 되었습니다.");
+                        alert("회원탈퇴 완료되었습니다.");
                         } else {
                             alert("취소되었습니다.");
                         }
@@ -285,40 +293,13 @@
             }
         }
 
-
-            /*
-            if(membershipWithdrawalButtonElement){
-                alert("잘못된 비밀번호입니다. 다시 입력해주세요");
-            }else {
-                const password = passwordNewTypeElement.value;
-                axios({
-                    method: 'post',
-                    url: '/passwordChangeButton',
-                    params: {
-                        password: password
-                    }
-                })
-                    .then(function (result){
-                        if(result.data == "1"){
-                            alert("비밀번호 변경이 완료되었습니다.");
-                        } else {
-                            alert("잘못된 비밀번호입니다. 다시 입력해주세요.");
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            }
-
-             */
-
-
         nicknameChangeInputElement.addEventListener('blur', myPageNicknameCheck);
         passwordPresentTypeElement.addEventListener('blur', myPageLoginPasswordCheck);
         passwordNewTypeElement.addEventListener('blur', myPageNewPasswordCheck);
         nicknameChangeButtonElement.addEventListener("click", myPageNicknameCheckButton);
         passwordChangeButtonElement.addEventListener("click", myPagePasswordCheckButton);
         membershipWithdrawalButtonElement.addEventListener("click", myPageWithdrawalCheckButton);
+
     })();
 
 
