@@ -71,7 +71,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 3.5rem;
+    max-height: 3.75rem;
 }
 
 .lastLearning__card-position {
@@ -205,4 +205,12 @@
     padding: 3rem;
     background-color: #F7F7FA;
     border-radius: 0.938rem;
+}
+
+.default__null > button {
+    margin: 0.75rem auto 0
+}
+
+.learningList__btn {
+    margin: 0.25rem;
 }

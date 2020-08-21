@@ -7,7 +7,7 @@
 
     <!--DB에서 사용자가 학습중인 아티클 정보와 성취도를 연산 결과 불러오기
     @param String 이메일-->
-    <select id="getLearningListInfo" parameterType="hashmap" resultType="UserArticleInfoDTO">
+    <select id="getLearningListInfo" parameterType="String" resultType="UserArticleInfoDTO">
         SELECT
             ABS.R_NUM,
             ABS.USER_LEARNING_SEQ,
@@ -19,6 +19,7 @@
             ABS.HASHTAG,
             ABS.TITLE,
             ABS.SUMMARY,
+            ABS.REG_DATE,
             ROUND(((NVL(DECODE(VOCA_COUNT_READING, 0, null,VOCA_COUNT_READING)/
                 DECODE(VOCA_COUNT, 0, null, VOCA_COUNT),0))*50) +
           (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
@@ -35,6 +36,7 @@
                     A_.HASHTAG                                               AS HASHTAG,
                     A_.TITLE                                                 AS TITLE,
                     A_.SUMMARY                                               AS SUMMARY,
+                    A_.REG_DATE                                              AS REG_DATE,
                     (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS VOCA_COUNT,
                     (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND CHECK_READING != 0) AS VOCA_COUNT_READING,
                     (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS SENTENCE_COUNT,

@@ -21,9 +21,7 @@ public class DashboardDAO {
      * @return
      */
     public List<UserArticleInfoDTO> getLearningListInfo(String email){
-        HashMap<String, String> setting = new HashMap<String, String>();
-        setting.put("email", email);
-        return sqlSessionTemplate.selectList("dashboardDAO.getLearningListInfo", setting);
+        return sqlSessionTemplate.selectList("dashboardDAO.getLearningListInfo", email);
     }
 
     /**

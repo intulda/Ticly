@@ -2,7 +2,7 @@
 내 학습보드에 사용자가 학습중인 아티클 정보를 카드에 담아 화면에 그려주기 위한 모듈
 */
 class LearningListCard {
-    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, latestDate, achievementRate, learningDone) {
+    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, regDate, latestDate, achievementRate, learningDone) {
         //this.imgFilePath = imgFilePath;
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
@@ -10,6 +10,7 @@ class LearningListCard {
         this.hashtag = hashtag.replace(/\"/g, "");
         this.title = title.replace(/\"/g, "");
         this.summary = summary.replace(/\"/g, "");
+        this.regDate = regDate.replace(/\"/g, "");
         this.lastLearningDate = latestDate.replace(/\"/g, "");
         this.achievementRate = achievementRate.replace(/\"/g, "");
         this.learningDone = learningDone.replace(/\"/g, "");
