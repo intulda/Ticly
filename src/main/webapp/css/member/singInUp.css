@@ -143,7 +143,7 @@
 
 .main-login-form .scroll-zone{
   padding: 66px 50px;
-  max-height: calc(100% - 60px);
+  max-height: calc(100vh - 192px);
 }
 
 .main-login-form .login-modal-header{
@@ -168,6 +168,9 @@
   border: 1px solid #5AC452;
   margin-bottom: 16px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .email-login-button{
@@ -200,7 +203,7 @@
   padding: 30px 50px;
   overflow-x: hidden;
   overflow-y: auto; /* 스크롤 있는 경우에만 표시*/
-  max-height: calc(100% - 60px);
+  max-height: calc(100vh - 132px);
 }
 .signin-check{
   display: flex;
