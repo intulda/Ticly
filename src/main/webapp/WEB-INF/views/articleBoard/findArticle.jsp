@@ -13,21 +13,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">ㄴ
     <title>Ticly - 최신 아티클로 영어공부를 하세요</title>
 
-    <!-- Common CSS -->
-    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
-    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
-    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalFooter.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/singInUp.css">
-
-    <!-- Common script -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- Common -->
+    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
 
     <!-- CSS -->
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/findArticleStyle.css">
@@ -36,6 +26,7 @@
 
 </head>
 <body>
+    <div class="ticly__basic-layout">
     <!-- header -->
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
@@ -90,10 +81,11 @@
         </div>
     </div>
 
-    <!-- 관심 분야 탭에서 ALL 버튼을 누를 때
-         리스트에 담겨있는 전체 '사용자가 선택한 관심 분야'를 수집하기 위해
-         categories 리스트의 사이즈 만큼,input 태그를 생성해 value 안에 값을 담아준다.
-    -->
+    <!-- footer -->
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
+</div>
+
+    <!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
     <c:forEach items="${userInfo.categories}" var="category">
         <input type="hidden" class="js-categories-str" value=${category}>
     </c:forEach>
@@ -103,7 +95,5 @@
     <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
     <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
 
-    <!-- footer -->
-    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </body>
 </html>

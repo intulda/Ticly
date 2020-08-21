@@ -16,57 +16,52 @@
     <meta charset="UTF-8">
     <title>내 학습 보드</title>
 
-    <!-- Common CSS -->
-    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
-    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
-    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalFooter.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/singInUp.css">
-
-    <!-- Common script -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- Common -->
+    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
 
     <!-- CSS -->
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/dashboard/myStyle.css">
 
 </head>
 <body>
-    <!-- header -->
-    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+    <div class="ticly__basic-layout">
+        <!-- header -->
+        <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
-    <div class="container">
-        <!-- Recently learned Article Section-->
-        <div class="lastLearning__header">
-            <h3 class="text text-color-gray100 text-weight-bold">최근 학습한 아티클</h3>
-        </div>
-
-        <!-- Recently learned Article Card-->
-        <div class="lastLearning__card-section js-lastLearning-section">
-
-        </div>
-
-        <!-- My Article List Section-->
-        <div class="learningList__header">
-           <h3 class="text text-color-gray100 text-weight-bold">아티클 목록</h3>
-            <div>
-                <button class="learningList__btn btn btn-tab active js-list-tab-btn" value="0">학습중<span></span></button>
-                <button class="learningList__btn btn btn-tab js-list-tab-btn" value="1">학습 완료<span></span></button>
+        <div class="container">
+            <!-- Recently learned Article Section-->
+            <div class="lastLearning__header">
+                <h3 class="text text-color-gray100 text-weight-bold">최근 학습한 아티클</h3>
             </div>
-            <select class="learningList__selectBox custom-select js-my-select-box" name="sorting">
-                <option selected value="1">최근 학습순</option>
-                <option value="2">최신 발행순</option>
-                <option value="3">제목순</option>
-            </select>
-        </div>
 
-        <!-- learning Article Card-->
-        <div class="learningList__card-section js-learningList-section">
-            <div class="my__card-outer card">
+            <!-- Recently learned Article Card-->
+            <div class="lastLearning__card-section js-lastLearning-section">
+
+            </div>
+
+            <!-- My Article List Section-->
+            <div class="learningList__header">
+               <h3 class="text text-color-gray100 text-weight-bold">아티클 목록</h3>
+                <div>
+                    <button class="learningList__btn btn btn-tab active js-list-tab-btn" value="0">학습중<span></span></button>
+                    <button class="learningList__btn btn btn-tab js-list-tab-btn" value="1">학습 완료<span></span></button>
+                </div>
+                <select class="learningList__selectBox custom-select js-my-select-box" name="sorting">
+                    <option selected value="1">최근 학습순</option>
+                    <option value="2">최신 발행순</option>
+                    <option value="3">제목순</option>
+                </select>
+            </div>
+
+            <!-- learning Article Card-->
+            <div class="learningList__card-section js-learningList-section">
+                <div class="my__card-outer card">
+                </div>
             </div>
         </div>
+
+        <!-- footer -->
+        <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
     </div>
 
     <input type="hidden" name="userEmail" value="${userInfo.email}">
@@ -76,7 +71,7 @@
     <%--<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>--%>
     <script bufer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
 
-    <!-- footer -->
-    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
+
+
 </body>
 </html>
