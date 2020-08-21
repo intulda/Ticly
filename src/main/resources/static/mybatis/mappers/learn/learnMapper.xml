@@ -58,6 +58,10 @@
         WHERE ARTICLE_SEQ = #{article_seq}
     </select>
 
+    <select id="getGroupDataCheck" parameterType="UserLearnDTO" resultType="int">
+        SELECT COUNT(*) FROM USER_VOCA_GROUP WHERE ARTICLE_SEQ = #{article_seq} AND EMAIL = #{email}
+    </select>
+
     <insert id="saveArticleVocaToUser" parameterType="UserLearnDTO">
         INSERT INTO USER_VOCA(
             USER_VOCA_SEQ,
@@ -86,6 +90,32 @@
             AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
             ORDER BY ARTI_VOCA.VOCA_ORDER ASC
         )
+    </insert>
+
+    <insert id="saveArticleGroupToUser" parameterType="UserLearnDTO">
+        INSERT INTO USER_VOCA_GROUP (
+                USER_VOCA_GROUP_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA_GROUP,
+                EMAIL
+            ) SELECT
+                USER_VOCA_GROUP_PK_SEQ.nextval AS USER_VOCA_GROUP_PK_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA_GROUP,
+                EMAIL
+            FROM (
+                  SELECT DISTINCT
+                UL.USER_LEARNING_SEQ,
+                ARTI_VOCA.ARTICLE_SEQ,
+                VOCA_GROUP,
+                UL.EMAIL
+            FROM ARTICLE_VOCABOOK ARTI_VOCA,
+                 USER_LEARNING UL
+            WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
+            AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            ORDER BY ARTI_VOCA.VOCA_GROUP ASC)
     </insert>
 
     <select id="getVocaList" parameterType="UserLearnDTO" resultType="VocaDTO">
@@ -177,4 +207,56 @@
            SET LAST_VOCA = 0
          WHERE USER_VOCA_SEQ != #{user_voca_seq}
     </update>
+
+    <select id="getProgressPercent" parameterType="VocaDTO" resultType="int">
+        SELECT
+            PERCENT
+            FROM (SELECT
+                         ROUND(NVL(DECODE(VOCA_COUNT_READING, 0, null, VOCA_COUNT_READING)/DECODE(VOCA_COUNT, 0, null, VOCA_COUNT)*50,0)
+                            +
+                         NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT)*50, 0)) AS PERCENT
+                  FROM (
+                           SELECT (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = #{user_learning_seq}) AS VOCA_COUNT,
+                                  (SELECT COUNT(VOCA)
+                                   FROM USER_VOCA
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+                                     AND CHECK_READING != 0) AS VOCA_COUNT_READING,
+                                  (SELECT COUNT(NVL(KOR_SENTENCE, 0))
+                                   FROM USER_SENTENCE
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}) AS SENTENCE_COUNT,
+                                  (SELECT COUNT(KOR_SENTENCE)
+                                   FROM USER_SENTENCE
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+                                     AND KOR_SENTENCE IS NOT NULL) AS SENTENCE_COUNT_READING
+                           FROM DUAL
+                       )
+                 )
+    </select>
+
+    <select id="getVocaGroupList" parameterType="UserLearnDTO" resultType="VocaGroupDTO">
+        SELECT
+            USER_VOCA_GROUP_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA_GROUP
+        FROM USER_VOCA_GROUP
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+          AND EMAIL = #{email}
+    </select>
+
+    <insert id="saveVocaGroup" parameterType="VocaGroupDTO">
+        INSERT INTO USER_VOCA_GROUP (
+            USER_VOCA_GROUP_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA_GROUP,
+            EMAIL
+        ) VALUES (
+            USER_VOCA_GROUP_PK_SEQ.nextval,
+            #{user_learning_seq},
+            #{article_seq},
+            #{voca_group},
+            #{email}
+        )
+    </insert>
 </mapper>
