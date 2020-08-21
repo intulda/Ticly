@@ -11,22 +11,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!-- CSS -->
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/dashboard/myStyle.css">
-
-<!-- script -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<%--<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>--%>
-<script bufer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
-
 <html>
 <head>
-    <title>MY LEARNING BOARD</title>
+    <meta charset="UTF-8">
+    <title>내 학습 보드</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/default.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/bootstrap.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/fonticon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalFooter.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/singInUp.css">
+
+    <!-- Common script -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/dashboard/myStyle.css">
+
 </head>
 <body>
+    <!-- header -->
+    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+
     <div class="container">
         <!-- Recently learned Article Section-->
         <div class="lastLearning__header">
@@ -60,5 +70,13 @@
     </div>
 
     <input type="hidden" name="userEmail" value="${userInfo.email}">
+
+    <!-- script -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <%--<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>--%>
+    <script bufer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
+
+    <!-- footer -->
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </body>
 </html>
