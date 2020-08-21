@@ -111,22 +111,20 @@
 }
 
 .myPage_Error_Message {
-    margin: 16px 0 16px 0;
+    margin: 8px 0 16px 0;
 }
 
-/*
+/*비밀번호 보이기*/
 .password_Type_Div{
     position: relative;
-    margin-bottom: 16px;
 }
 
-.eyes-box{
+.password_DivContents .eyes-box{
     color: #858899;
     position: absolute;
-    top: 42px;
+    top: 36px;
     right: 16px;
     height: 30px;
     font-size: 18px;
     cursor: pointer;
 }
-*/
