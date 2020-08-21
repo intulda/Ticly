@@ -75,7 +75,7 @@ table {
 
 .ticly__basic-layout {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
 }
 
 .ticly__basic-content-layout{
