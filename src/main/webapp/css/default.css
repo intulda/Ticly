@@ -74,8 +74,11 @@ table {
 }
 
 .ticly__basic-layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
+    position: relative;
+    min-height: 100vh;
+}
+
+.ticly__basic-content-layout{
+    margin-top: 80px;
+    padding-bottom: 150px;
 }
