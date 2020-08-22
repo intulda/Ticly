@@ -68,8 +68,22 @@ public class HomeController {
         return path;
     }
 
+    /**
+     * 서비스 소개로 이동
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/service")
     public String showInfo(Model model) {
         return "intro/serviceInfo";
+    }
+
+    /**
+     * 학습완료 뷰이동(테스트)
+     * @return
+     */
+    @RequestMapping(value = "/complete")
+    public String showlearningComplete(){
+        return "learn/learningComplete";
     }
 }

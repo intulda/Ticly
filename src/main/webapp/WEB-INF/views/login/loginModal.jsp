@@ -4,8 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!--signinup Modal-->
-<div class="signinup-modal" id="signinup-modal">
-    <div class="signinup-modal-contents">
+<div class="ticly-modal" id="signinup-modal">
+    <div class="ticly-modal-contents">
         <!--login-->
         <!--닫기 버튼-->
         <div class="intro_Button_Oval" id="modal-close">
