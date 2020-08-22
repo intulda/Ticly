@@ -1,13 +1,10 @@
 /*learning-header*/
 .leaning-header-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     height: 80px;
-    z-index: 11;
     box-shadow: 0 1px 0 0 #E1E1E8;
-    background-color: white;
+    position: relative;
+    z-index: 11;
 }
 .leaning-header {
     display: flex;
