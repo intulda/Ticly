@@ -1,12 +1,11 @@
 package io.ticly.mint.learn;
 
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
+import io.ticly.mint.learn.model.dto.LearnArticleDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import io.ticly.mint.learn.model.dto.VocaGroupDTO;
 import io.ticly.mint.learn.model.service.LearnService;
-import oracle.jdbc.proxy.annotation.Post;
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,18 +39,33 @@ public class LearnController {
     @GetMapping(value="workBook")
     public String view(Model model, int seq) throws SQLException {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
+
+        if(memberDTO == null) {
+            return "redirect:/";
+        }
+
+        if(memberDTO != null) {
+            if(memberDTO.getEmail() == null) {
+                return "redirect:/";
+            }
+        }
+
         UserLearnDTO userLearnDTO = UserLearnDTO.builder()
-                .email(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail())
+                .email(memberDTO.getEmail())
                 .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
+        int userLearningSeq = learnService.getUserLearning(userLearnDTO);
+        userLearnDTO.setUser_learning_seq(userLearningSeq);
         if(learnService.getGroupDataCheck(userLearnDTO)) {
             learnService.saveArticleGroupToUser(userLearnDTO);
         }
         if(learnService.getUserVocaCheck(userLearnDTO)) {
             learnService.saveArticleVocaToUser(userLearnDTO);
         }
-        model.addAttribute("currentArticle", learnService.getArticle(userLearnDTO));
+        LearnArticleDTO learnArticleDTO = learnService.getArticle(userLearnDTO);
+        learnArticleDTO.setUser_learning_seq(userLearningSeq);
+        model.addAttribute("currentArticle", learnArticleDTO);
         return "learn/leaning";
     }
 
@@ -75,7 +89,7 @@ public class LearnController {
     @ResponseBody
     private List<VocaGroupDTO> getVocaGroupList(@RequestBody UserLearnDTO userLearnDTO, Model model) {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
-        userLearnDTO.setEmail(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail());
+        userLearnDTO.setEmail(memberDTO.getEmail());
         return learnService.getVocaGroupList(userLearnDTO);
     }
 
@@ -88,7 +102,7 @@ public class LearnController {
     @ResponseBody
     public Map<String, Integer> getProgressPercent(@RequestBody UserLearnDTO userLearnDTO, Model model) {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
-        userLearnDTO.setEmail(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail());
+        userLearnDTO.setEmail(memberDTO.getEmail());
         Map<String, Integer> resultMap = new HashMap<>();
         resultMap.put("percent", learnService.getProgressPercent(userLearnDTO));
         return resultMap;
@@ -164,7 +178,13 @@ public class LearnController {
     @ResponseBody
     private boolean saveVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO, Model model) throws SQLException {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
-        vocaGroupDTO.setEmail(memberDTO == null ? "test4@naver.com" : memberDTO.getEmail());
+        vocaGroupDTO.setEmail(memberDTO.getEmail());
         return learnService.saveVocaGroup(vocaGroupDTO);
+    }
+
+    @PostMapping(value="deleteVocaGroup")
+    @ResponseBody
+    private boolean deleteVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO) throws SQLException {
+        return learnService.deleteVocaGroup(vocaGroupDTO);
     }
 }

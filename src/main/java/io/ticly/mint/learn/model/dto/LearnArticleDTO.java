@@ -10,6 +10,7 @@ import lombok.*;
 public class LearnArticleDTO {
 
     private int article_seq;
+    private int user_learning_seq;
     private String title;
     private String summary;
     private String url;

@@ -12,8 +12,37 @@ import WordContent from './WordContent.js';
         SAVE_USER_VOCA: '/learn/saveUserVoca',
         DELETE_USER_VOCA: '/learn/deleteUserVoca',
         UPDATE_USER_VOCA: '/learn/updateUserWord',
-        SAVE_VOCA_GROUP: '/learn/saveVocaGroup'
+        SAVE_VOCA_GROUP: '/learn/saveVocaGroup',
+        DELETE_VOCA_GROUP: '/learn/deleteVocaGroup'
     }
+
+    //단어셋 추가
+    const wordSetElem = document.querySelector('#wordSet');
+    const wordSetBtnAddElem = document.querySelector('#wordSetAdd');
+    const wordListElem = document.querySelector('#wordList');
+    let wordSetAddedCheck = false;
+
+    //Circle Progress bar
+    const percentElem = document.querySelector('.leaning-progress-percent span:first-child');
+    let restart = null;
+    let currentCount = 0;
+    let pie = 0;
+    let vocaData = [];
+
+    //tab event
+    const tabClickElem = document.querySelector('#learnTab');
+    //카드회전
+    const wordCardElem = document.querySelector('.leaning-contents-card-wrap');
+    //테이블 th클릭
+    const tableElem = document.querySelector('.leaning-table');
+
+    //테이블 엘리먼트
+    const allDel = document.querySelector('#tableAllCheck');
+    const delBox = document.querySelector('#articleWordTable');
+
+    //단어추가, 삭제
+    const tableWordAddElem = document.querySelector('#tableWordAdd');
+    const tableWordRemoveElem = document.querySelector('#tableWordRemove');
 
     //단어 데이터
     function getVocaList() {
@@ -21,6 +50,7 @@ import WordContent from './WordContent.js';
             method: 'POST',
             data: JSON.stringify({
                 article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq"),
+                user_learning_seq: document.querySelector('#currentArticle').getAttribute("data-user-learning-seq"),
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -69,6 +99,7 @@ import WordContent from './WordContent.js';
             }
         }).then(response => {
             if(response.data) {
+                wordSetAddedCheck = false;
                 learn.setData(false, 'update');
             } else {
                 alert("오류났어용");
@@ -76,6 +107,15 @@ import WordContent from './WordContent.js';
         }).catch(error => {
             console.log(error);
         })
+    }
+
+    function groupAdd() {
+        const _obj = {
+            user_learning_seq: learn.userLearningSeq,
+            article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq"),
+            voca_group: Number(learn.groupMaxCount)+1
+        }
+        saveVocaGroup(_obj);
     }
 
     /**
@@ -92,6 +132,9 @@ import WordContent from './WordContent.js';
         }).then(response => {
             if(response.data) {
                 learn.setData(false, 'update');
+                if(learn.groupDataFilter(learn.groupMaxCount).length === 1) {
+                    wordSetAddedCheck = true;
+                }
             } else {
                 alert("오류났어용");
             }
@@ -185,31 +228,6 @@ import WordContent from './WordContent.js';
             }).catch(error => console.log(error));
     }
 
-    //단어셋 추가
-    const wordSetElem = document.querySelector('#wordSet');
-    const wordSetBtnAddElem = document.querySelector('#wordSetAdd');
-
-    //Circle Progress bar
-    const percentElem = document.querySelector('.leaning-progress-percent span:first-child');
-    let restart = null;
-    let currentCount = 0;
-    let pie = 0;
-    let vocaData = [];
-
-    //tab event
-    const tabClickElem = document.querySelector('#learnTab');
-    //카드회전
-    const wordCardElem = document.querySelector('.leaning-contents-card-wrap');
-    //테이블 th클릭
-    const tableElem = document.querySelector('.leaning-table');
-
-    //테이블 엘리먼트
-    const allDel = document.querySelector('#tableAllCheck');
-    const delBox = document.querySelector('#articleWordTable');
-
-    //단어추가, 삭제
-    const tableWordAddElem = document.querySelector('#tableWordAdd');
-    const tableWordRemoveElem = document.querySelector('#tableWordRemove');
     //학습하기 페이지 class
     class Learn {
         constructor() {
@@ -217,6 +235,7 @@ import WordContent from './WordContent.js';
             this.groupMaxCount = 1;
             this.wordSetElem = wordSetElem;
             this.group = 1;
+            this.currentGroup = 1;
             this.currentCount = 0;
             this.triggerNumber = 0;
             this.allProgressPercent = 0;
@@ -283,21 +302,27 @@ import WordContent from './WordContent.js';
             this.wordSetElem.innerHTML = "";
             const lastVoca = this.data.filter((obj) => {
                 return obj.last_voca == 1;
-            })
+            });
             if(lastVoca.length > 0) {
                 this.triggerNumber = lastVoca[0].voca_group-1
             } else {
                 this.triggerNumber = 0;
             }
 
+
             for(let i=1; i<=this.groupMaxCount; i++) {
+                let dataCount = 0;
                 this.group = i;
                 for(let j=0; j<this.data.length; j++) {
                     if(i == this.data[j].voca_group) {
                         if(this.data[j].check_reading === 1) {
                             this.currentCount++;
                         }
+                        dataCount++;
                     }
+                }
+                if(dataCount == 0) {
+                    this.triggerNumber = i-1;
                 }
                 this.wordSetAdd(this.groupDataFilter(i).length);
                 this.group = this.groupMaxCount+1;
@@ -307,6 +332,11 @@ import WordContent from './WordContent.js';
 
         wordSetAdd(maxCount) {
             this.wordSetElem.appendChild(new WordSetCard(this.currentCount, maxCount, this.group).getElements());
+        }
+
+        currentCountCalc() {
+           this.group = this.groupMaxCount;
+           this.group++;
         }
 
         wordCountUpdate(groupNumber) {
@@ -357,26 +387,27 @@ import WordContent from './WordContent.js';
             }
             tableInformationElem.innerHTML = _elements.getTableInformation(groupNum);
             resetTableEvent();
-
             tableElem.dataset.group = groupNum;
-
+            learn.currentGroup = groupNum;
+            if(_data.length == 0) {
+                wordSetAddedCheck = true;
+            }
         }
 
         wordContentFilter(groupNum) {
             const _title = document.querySelector("#contentTitle");
             const _information = document.querySelector("#contentInformation");
-
             const _data = this.groupDataFilter(groupNum);
+            const _maxData = this.groupDataFilter(this.groupMaxCount);
             this.wordContentsElem.innerHTML = '';
             const _elements = new WordContent(_data);
             _title.innerHTML = `단어 세트 ${groupNum}`;
             _information.innerHTML = _elements.getContentInformation();
-
             if(_elements.process().length > 0) {
                 for(let obj of _elements.process()) {
                     this.wordContentsElem.appendChild(obj);
                 }
-                this.wordContentsElem.appendChild(_elements.getLastCardElement(groupNum, this.groupMaxCount));
+                this.wordContentsElem.appendChild(_elements.getLastCardElement(groupNum, this.groupMaxCount, _maxData.length));
             } else {
                 this.wordContentsElem.appendChild(_elements.getElements(null, 'act'));
             }
@@ -438,13 +469,11 @@ import WordContent from './WordContent.js';
     }
 
     function onWordSetBtnHandler(e) {
-        const _obj = {
-            user_learning_seq: learn.userLearningSeq,
-            article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq"),
-            voca_group: Number(learn.groupMaxCount)+1
-        }
-        saveVocaGroup(_obj);
+        learn.currentCountCalc();
         learn.wordSetAdd(0);
+        learn.wordSetElem.children[learn.group-1].click();
+        groupAdd();
+        wordSetAddedCheck = true;
     }
 
     function onWordSetClickHandler(e) {
@@ -466,7 +495,6 @@ import WordContent from './WordContent.js';
             const groupNumber = targetElem.getAttribute("data-group");
             learn.tableDataFilter(groupNumber);
             learn.wordContentFilter(groupNumber);
-
             const actElem = document.querySelector(".act");
             if(actElem != null) {
                 if(actElem.getAttribute("data-user_voca_seq") != null) {
@@ -592,11 +620,6 @@ import WordContent from './WordContent.js';
         };
     }
 
-
-
-
-
-
     /**
      * 테이블 전체 삭제 체크박스 선택/해제
      */
@@ -653,7 +676,8 @@ import WordContent from './WordContent.js';
      */
     function onAddElementHandler(e) {
         let _targetElem = e.target;
-        _targetElem.dataset.state = 'read';
+        console.log(_targetElem);
+        _targetElem.closest('table').dataset.state = 'read';
 
         if(_targetElem.nodeName !== 'I' && _targetElem.nodeName !== 'BUTTON') {
             return;
@@ -780,9 +804,88 @@ import WordContent from './WordContent.js';
         }
     }
 
-    const wordListElem = document.querySelector('#wordList');
-    wordListElem.addEventListener('click', nextLevel);
+    window.addEventListener("click", function (event) {
+        if(wordSetAddedCheck) {
+            if(event.target.id === 'tableWordAdd'
+                || event.target.nodeName === 'DIV'
+                || event.target.nodeName === 'BODY'
+                || event.target.closest('table')
+            ) {
+                return;
+            }
+            const check = confirm(event);
+            if(check) {
+                removeGroup(learn.currentGroup);
+                learn.wordSetElem.children[0].click();
+                event.target.click();
+            } else {
+                event.stopImmediatePropagation();
+            }
+        }
+    }, true);
+    const popupElem = document.querySelector('.cd-popup');
 
+    function confirm(event) {
+        popupElem.classList.add('is-visible');
+        if(event.target.classList.contains('cd-popup-close') || event.target.id === 'answerFalse') {
+            popupElem.classList.remove('is-visible');
+            return false;
+        } else if(event.target.id === 'answerTrue') {
+            popupElem.classList.remove('is-visible');
+            wordSetAddedCheck = false;
+            return true;
+        }
+
+    }
+
+    // window.onbeforeunload = function(event){
+    //     for(let i=0; i<learn.groupMaxCount; i++) {
+    //         if(learn.groupDataFilter(i).length === 0) {
+    //             removeGroup(i);
+    //         };
+    //     }
+    // }
+    //
+    // document.onkeydown = function(event){
+    //     /* F5, Ctrl+r, Ctrl+F5 */
+    //     if(event.code == 116 || event.ctrlKey == true && (event.code == 82)){
+    //         event.cancelBubble = true;
+    //         event.returnValue = false;
+    //         for(let i=0; i<learn.groupMaxCount; i++) {
+    //             if(learn.groupDataFilter(i).length === 0) {
+    //                 removeGroup(i);
+    //             };
+    //         }
+    //         setTimeout(function(){
+    //             window.location.reload();
+    //         }, 1000);
+    //         return false;
+    //     }
+    // }
+
+    function removeGroup(groupNumber) {
+            const options = {
+                method: 'POST',
+                data: JSON.stringify({
+                    user_learning_seq: learn.userLearningSeq,
+                    article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq"),
+                    voca_group: groupNumber
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            axios(URL.DELETE_VOCA_GROUP, options)
+                .then(response => {
+                    if(response.data) {
+                        learn.setData(true);
+                    }
+                }).catch(error => console.log(error));
+    }
+
+
+    wordListElem.addEventListener('click', nextLevel);
     tabClickElem.addEventListener('click', onTabMoveHandler);
     wordCardElem.addEventListener('click', onCardToggleHandler);
     // tableElem.addEventListener('click', onTableSortHandler);
