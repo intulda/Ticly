@@ -1,3 +1,5 @@
+'use static';
+
 (() => {
     const searchBar = document.querySelector(".js-search-bar"),
         searchBtn = document.querySelector(".js-searchBar-search-btn"),

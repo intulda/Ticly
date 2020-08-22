@@ -18,7 +18,7 @@ class LastLearningCard {
         this.element.innerHTML =
             `
                 <div class="lastLearning__card-content-wrapper">
-                    <img class="lastLearning__card-img" src="../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
+                    <img class="lastLearning__card-img" src="../../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
                     <div class="lastLearning__card-body lastLearning__card-body">
                         <div class="lastLearning__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                             <h6 class="text text-weight-medium">${this.title}</h6>

@@ -23,14 +23,9 @@ public class HomeController {
 
         // 세션이 비어있다면, Guest 등록
         if(model.getAttribute("userInfo") == null) {
-            //test code
-            System.out.println("세션이 비었다!");
-
             int auth = 1;
             List<String> categories = null;
             MemberDTO user = new MemberDTO(auth, categories);
-            System.out.println(user.getAuth());
-            System.out.println(user.getCategories());
             model.addAttribute("userInfo", user);
 
             path = "redirect:/articleBoard/category";
@@ -47,20 +42,13 @@ public class HomeController {
 
             // 한 번 이상 방문한 Guest일 경우
             else {
-                //test code
-                System.out.println("이미 등록된 Guest다!");
-
                 // 카테고리를 선택하지 않았다면,
                 if(user.getCategories() == null) {
-                    //test code
-                    System.out.println("카테고리를 선택하지 않았다.");
                     path = "redirect:/articleBoard/category";
                 }
 
                 // 카테고리를 선택했다면,
                 else {
-                    //test code
-                    System.out.println("카테고리를 이미 선택했다.");
                     path = "redirect:/articleBoard/findArticle";
                 }
             }

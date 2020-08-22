@@ -1,4 +1,5 @@
 'use static';
+
 (() => {
     const card = document.querySelectorAll(".js-card"),
         doneBtn = document.querySelector(".js-done-btn"),

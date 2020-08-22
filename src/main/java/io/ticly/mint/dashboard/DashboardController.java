@@ -28,16 +28,8 @@ public class DashboardController {
     // 내 학습 보드로 단순 이동
     @GetMapping(value ="my")
     public String goToCategoryPage(Model model){
-
-        // 테스트용으로 사용자 정보 세션에 저장
-        int auth = 3;
-        List<String> categories = new ArrayList<>();
-        categories.add("디자인");
-        categories.add("개발");
-        String email = "test4@naver.com";
-        MemberDTO dto = new MemberDTO(auth, categories, email);
-        model.addAttribute("userInfo", dto);
-
+        MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+        model.addAttribute("userInfo", user);
         return "dashboard/my";
     }
 

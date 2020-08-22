@@ -3,7 +3,7 @@
 }
 
 .findArticle__header {
-    padding: 2rem 0 2rem;
+    padding: 2rem 0 2.5rem;
     display: flex;
     justify-content: space-between;
 }
@@ -155,6 +155,7 @@
 }
 
 .findArticle__section-title:hover i {
+    margin-left: 0;
     animation-duration: 0.5s;
     animation-name: hoverLink;
     animation-iteration-count: infinite;
@@ -193,7 +194,7 @@
 }
 
 .lastLearning__Section-title {
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem;
 }
 
 /*마지막 학습한 카드 */
@@ -211,7 +212,7 @@
 .lastLearning__card-outer:hover {
     box-shadow: 0 -10px 12px 0 rgba(225,225,232,0.20), 0 8px 12px 0 rgba(0,0,0,0.20);
 }
-.lastLearning__card-outer:hover .lastLearning__card-title:hover > h4   {
+.lastLearning__card-outer:hover .lastLearning__card-title:hover > h6   {
     text-decoration: underline;
 }
 
@@ -245,16 +246,16 @@
     cursor: pointer;
 }
 
-.lastLearning__card-title > h4 {
+.lastLearning__card-title > h6 {
     width: 80%;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     display: -webkit-box;
     word-wrap: break-word;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 3.75rem;
+    max-height: 1.75em;
 }
 
 .lastLearning__card-position {

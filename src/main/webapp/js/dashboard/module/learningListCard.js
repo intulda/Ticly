@@ -22,8 +22,8 @@ class LearningListCard {
         this.element.innerHTML =
             `
             <div class="learningList__card-content-wrapper">
-                <div class="learningList__card-${(this.learningDone == 1)? "done" : "" }-badge"></div>
-                <img class="learningList__card-img" src="../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
+                <div class="learningList__card-${(this.learningDone == 1) ? "done" : ""}-badge"></div>
+                <img class="learningList__card-img" src="../../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
                 <div class="learningList__card-body learningList__card-body">
                     <div class="learningList__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                         <div class="learningList__card-tag">

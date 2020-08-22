@@ -1,6 +1,4 @@
-<%@ page import="java.util.List" %>
-<%@ page import="io.ticly.mint.articleBoard.model.dto.MemberDTO" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: kkh
   Date: 2020/08/17
@@ -32,16 +30,18 @@
 
         <!-- My Article List Section-->
         <div class="learningList__header">
-            <h3 class="text text-color-gray100 text-weight-bold">아티클 목록</h3>
+            <h3 class="text text-color-gray100 text-weight-medium">아티클 목록</h3>
             <div>
-                <button class="learningList__btn btn btn-tab active js-list-tab-btn" value="0">학습중<span></span></button>
-                <button class="learningList__btn btn btn-tab js-list-tab-btn" value="1">학습 완료<span></span></button>
+                <button class="learningList__btn btn active js-list-tab-btn" value="0">학습중<span
+                        class="badge badge-neutral ml-1"></span></button>
+                <button class="learningList__btn btn js-list-tab-btn" value="1">학습 완료<span
+                        class="badge badge-neutral ml-1"></span></button>
+                <select class="learningList__selectBox custom-select js-my-select-box" name="sorting">
+                    <option selected value="1">최근 학습순</option>
+                    <option value="2">최신 발행순</option>
+                    <option value="3">제목순</option>
+                </select>
             </div>
-            <select class="learningList__selectBox custom-select js-my-select-box" name="sorting">
-                <option selected value="1">최근 학습순</option>
-                <option value="2">최신 발행순</option>
-                <option value="3">제목순</option>
-            </select>
         </div>
 
         <!-- learning Article Card-->
@@ -57,6 +57,7 @@
 
 <!-- Get User Email-->
 <input type="hidden" name="userEmail" value="${userInfo.email}">
+<input type="hidden" name="userAuth" value="${userInfo.auth}">
 
 
 <!-- script -->

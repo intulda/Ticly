@@ -92,4 +92,12 @@ public class ArticleBoardDAO {
         }
         return info;
     }
+
+    /**
+     * 전체 카테고리 가져오기
+     * @return
+     */
+    public List<String> getCategoryKind() {
+        return sqlSessionTemplate.selectList("articleBoardDAO.getCategoryKind");
+    }
 }

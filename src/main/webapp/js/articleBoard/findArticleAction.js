@@ -1,6 +1,8 @@
-import ArticleCard from './articleCard.js';
-import SkeletonCard from './skeletonCard.js';
-import LastLearningCard from "./lastLearningCard.js";
+'use static';
+
+import ArticleCard from './module/articleCard.js';
+import SkeletonCard from './module/skeletonCard.js';
+import LastLearningCard from "./module/lastLearningCard.js";
 
 (() => {
     const categoryTabBtn = document.querySelectorAll(".js-category-tab"),
@@ -10,7 +12,7 @@ import LastLearningCard from "./lastLearningCard.js";
         newSectionCardOuter = document.querySelector(".js-new-section-card-outer"),
         popularSectionCardOuter = document.querySelector(".js-popular-section-card-outer"),
         userEmail = document.querySelector("input[name=userEmail]").value,
-        userAuth = document.querySelector("input[name=auth]").value;
+        userAuth = document.querySelector("input[name=userAuth]").value;
 
     const GET_ARTICLE_CARD_PATH = "findMyTypeArticle?",
         LAST_LEARNING_ARTICLE_CARD_PATH = "getLastLearningArticleInfo?";
@@ -205,8 +207,11 @@ import LastLearningCard from "./lastLearningCard.js";
         // 스켈레톤 UI 그려주기
         paintSkeletonCard();
 
+        console.log(userAuth != 1);
+        console.log(userAuth == "");
+
         // Guest가 아니면, 마지막 학습 카드 그려주기
-        if (userAuth != 1){
+        if (userAuth != 1 && userAuth != "" ){
         console.log("userAuth : " + userAuth);
             lastLearningSection.classList.remove("hide");
             path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);

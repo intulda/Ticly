@@ -1,5 +1,7 @@
-import ArticleCard from './articleCard.js';
-import SkeletonCard from './skeletonCard.js';
+'use static';
+
+import ArticleCard from './module/articleCard.js';
+import SkeletonCard from './module/skeletonCard.js';
 
 (() => {
     const categoryTabBtn = document.querySelectorAll(".js-category-tab"),

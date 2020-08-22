@@ -31,17 +31,29 @@ public class ArticleBoardController {
 
     // 관심 분야 페이지로 단순 이동
     @GetMapping(value ="category")
-    public String goToCategoryPage(){
+    public String goToCategoryPage(Model model){
+        MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+
+        // 등록되어 있지 않은 유저라면, 임시 데이터를 등록해준다.
+        if (user == null) {
+            user = articleBoardService.setMember(user);
+        }
+
         return "articleBoard/category";
     }
 
-    // 이미 관심 분야를 선택했다면, 아티클 찾기 페이지로 이동.
+    // 아티클 찾기 페이지로 이동
     @GetMapping(value ="findArticle")
     public String goToFindArticlePage(Model model){
 
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
-        model.addAttribute("userInfo", user);
 
+        // 등록되어 있지 않은 유저라면, 임시 데이터를 등록해준다.
+        if (user == null) {
+            user = articleBoardService.setMember(user);
+        }
+
+        model.addAttribute("userInfo", user);
         return "articleBoard/findArticle";
     }
 
@@ -96,6 +108,12 @@ public class ArticleBoardController {
 
         // 키워드 및 사용자 정보 내보내기
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+
+        // 등록되어 있지 않은 유저라면, 임시 데이터를 등록해준다.
+        if (user == null) {
+            user = articleBoardService.setMember(user);
+        }
+
         model.addAttribute("userInfo", user);
 
         String searchKeyword = req.getParameter("searchKeyword");
@@ -134,4 +152,5 @@ public class ArticleBoardController {
         UserArticleInfoDTO lastLearningArticleInfo = articleBoardService.getLastLearningArticleInfo(email);
         return lastLearningArticleInfo;
     }
+
 }
