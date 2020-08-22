@@ -18,14 +18,14 @@ class LearningListCard {
     }
 
     getElements() {
-        this.element.className = "my__card-outer card";
+        this.element.className = "learningList__card-outer card";
         this.element.innerHTML =
             `
-            <div class="my__card-content-wrapper">
+            <div class="learningList__card-content-wrapper">
                 <div class="learningList__card-${(this.learningDone == 1)? "done" : "" }-badge"></div>
                 <img class="learningList__card-img" src="../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
-                <div class="my__card-body learningList__card-body">
-                    <div class="my__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
+                <div class="learningList__card-body learningList__card-body">
+                    <div class="learningList__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                         <div class="learningList__card-tag">
                             <div class="badge badge-neutral">${this.categoryTitle}</div>
                             <span class="text body1 text-color-gray300 text-weight-regular">${this.hashtag}</span>
@@ -34,8 +34,8 @@ class LearningListCard {
                         <p class="learningList__card-desc text body1 text-color-gray200">${this.summary}</p>
                     </div>
                     <div>
-                        <div class="my__card-subInfo">
-                            <p class="my__card-date text body1 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>
+                        <div class="learningList__card-subInfo">
+                            <p class="learningList__card-date text body1 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>
                             <div class="learningList__card-btns">
                                 <button class="learningList__card-orignLink-btn btn btn-tab btn-left-icon" onclick="location.href='${this.url}'"><i class="icons icon_link"></i>원문보기</button>
                                 <button class="learningList__card-continue-btn btn btn-outline-primary btn-right-icon" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">

@@ -1,16 +1,50 @@
 import ArticleCard from './articleCard.js';
 import SkeletonCard from './skeletonCard.js';
+import LastLearningCard from "./lastLearningCard.js";
 
 (() => {
     const categoryTabBtn = document.querySelectorAll(".js-category-tab"),
+        categoriesStr = document.querySelectorAll(".js-categories-str"),
+        lastLearningCardSection = document.querySelector(".js-lastLearning-card-section"),
+        lastLearningSection = document.querySelector(".js-lastLearning-section"),
         newSectionCardOuter = document.querySelector(".js-new-section-card-outer"),
         popularSectionCardOuter = document.querySelector(".js-popular-section-card-outer"),
-        categoriesStr = document.querySelectorAll(".js-categories-str");
+        userEmail = document.querySelector("input[name=userEmail]").value,
+        userAuth = document.querySelector("input[name=auth]").value;
 
-    const GET_ARTICLE_CARD_PATH = "findMyTypeArticle?";
+    const GET_ARTICLE_CARD_PATH = "findMyTypeArticle?",
+        LAST_LEARNING_ARTICLE_CARD_PATH = "getLastLearningArticleInfo?";
 
     let articleList = [];
     //----------------------------------------------------------------------------------------------------
+
+    // json 파일을 입력받아 마지막으로 학습한 아티클 카드 그려주는 비동기 처리
+    function getAndPaintLastLearningCard(path) {
+        axios({
+            method: 'get',
+            url   : path
+        })
+            .then(function (json) {
+                console.log("Receive Success!");
+                console.log(json.data);
+
+                // sectionr의 모든 자식 요소 삭제
+                while (lastLearningCardSection.hasChildNodes()) {
+                    lastLearningCardSection.removeChild(lastLearningCardSection.firstChild);
+                }
+
+                if (json.data.length != 0) {
+                    lastLearningCardSection.appendChild(new LastLearningCard(
+                        JSON.stringify(json.data.article_seq)
+                        , JSON.stringify(json.data.url)
+                        , JSON.stringify(json.data.title)
+                        , JSON.stringify(json.data.last_learning_type)
+                        , JSON.stringify(json.data.last_learning_content)
+                        , JSON.stringify(json.data.last_learning_date)
+                    ).getElements());
+                }
+            });
+    }
 
     // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
     function handleCategoryTabClickEvent(ev) {
@@ -157,11 +191,31 @@ import SkeletonCard from './skeletonCard.js';
         }
     }
 
+    // axios를 통해 담아 보낼 수 있도록 email을 movePath에 담기
+    function createPath(startSpot) {
+        let path = startSpot;
+        path += "email=" + userEmail;
+        return path;
+    }
+
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
+        let path = "";
+
+        // 스켈레톤 UI 그려주기
         paintSkeletonCard();
 
-        let path = GET_ARTICLE_CARD_PATH;
+        // Guest가 아니면, 마지막 학습 카드 그려주기
+        if (userAuth != 1){
+        console.log("userAuth : " + userAuth);
+            lastLearningSection.classList.remove("hide");
+            path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
+            let section = lastLearningCardSection;
+            getAndPaintLastLearningCard(path, section);
+        }
+
+        // 최신 / 인기 아티클 그려주기
+        path = GET_ARTICLE_CARD_PATH;
         let categoriesArr = [];
 
         categoriesStr.forEach(el => {

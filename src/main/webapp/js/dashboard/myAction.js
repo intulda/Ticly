@@ -1,15 +1,12 @@
 import LearningListCard from './learningListCard.js';
-import LastLearningCard from './lastLearningCard.js';
 
 (() => {
-    const lastLearningSection = document.querySelector(".js-lastLearning-section"),
-        learningListSection = document.querySelector(".js-learningList-section"),
-        userEmail = document.querySelector("input[name=userEmail]").value,
+    const learningListSection = document.querySelector(".js-learningList-section"),
         listTabBtn = document.querySelectorAll(".js-list-tab-btn"),
-        selectBox = document.querySelector(".js-my-select-box");
+        selectBox = document.querySelector(".js-my-select-box"),
+        userEmail = document.querySelector("input[name=userEmail]").value;
 
-    const LAST_LEARNING_ARTICLE_CARD_PATH = "getLastLearningArticleInfo?",
-        LEARNING_ARTICLE_LIST_PATH = "getLearningListInfo?";
+    const LEARNING_ARTICLE_LIST_PATH = "getLearningListInfo?";
 
     let count = 0;
     let learningList = [];
@@ -143,7 +140,7 @@ import LastLearningCard from './lastLearningCard.js';
         learningListSection.style.display = "block";
     }
 
-    // json 파일을 입력받아 마지막으로 학습한 아티클 카드 그려주는 비동기 처리
+/*    // json 파일을 입력받아 마지막으로 학습한 아티클 카드 그려주는 비동기 처리
     function getAndPaintLastLearningCard(path, section) {
         axios({
             method: 'get',
@@ -169,7 +166,7 @@ import LastLearningCard from './lastLearningCard.js';
                     ).getElements());
                 }
             });
-    }
+    }*/
 
     // json 객체를 리스트에 담아주는 비동기 처리
     function getArticleList(path, section) {
@@ -195,20 +192,13 @@ import LastLearningCard from './lastLearningCard.js';
     function createPath(startSpot) {
         let path = startSpot;
         path += "email=" + userEmail;
-
         return path;
     }
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        // 마지막 학습 카드 그려주기
-        let path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
-        let section = lastLearningSection;
-        getAndPaintLastLearningCard(path, section);
-
-        // 학습중인 카드 목록 그려주기
-        path = createPath(LEARNING_ARTICLE_LIST_PATH);
-        section = learningListSection;
+        const path = createPath(LEARNING_ARTICLE_LIST_PATH);
+        const section = learningListSection;
         getArticleList(path, section);
     }
 

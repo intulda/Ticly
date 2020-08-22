@@ -4,6 +4,7 @@ import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
 import io.ticly.mint.articleBoard.model.dto.HashtagDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.articleBoard.model.service.ArticleBoardService;
+import io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO;
 import io.ticly.mint.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,6 +28,7 @@ public class ArticleBoardController {
         this.memberService = memberService;
     }
 
+
     // 관심 분야 페이지로 단순 이동
     @GetMapping(value ="category")
     public String goToCategoryPage(){
@@ -35,6 +38,7 @@ public class ArticleBoardController {
     // 이미 관심 분야를 선택했다면, 아티클 찾기 페이지로 이동.
     @GetMapping(value ="findArticle")
     public String goToFindArticlePage(Model model){
+
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
         model.addAttribute("userInfo", user);
 
@@ -120,5 +124,14 @@ public class ArticleBoardController {
         List<HashtagDTO> hashTagList = articleBoardService.getHashtagInfo(categories);
 
         return hashTagList;
+    }
+
+    // 마지막으로 학습한 아티클 정보 가져오는 비동기 처리
+    @GetMapping(value = "getLastLearningArticleInfo")
+    @ResponseBody
+    public UserArticleInfoDTO getLastLearningArticleInfo(Model model, HttpServletRequest req){
+        String email = req.getParameter("email");
+        UserArticleInfoDTO lastLearningArticleInfo = articleBoardService.getLastLearningArticleInfo(email);
+        return lastLearningArticleInfo;
     }
 }

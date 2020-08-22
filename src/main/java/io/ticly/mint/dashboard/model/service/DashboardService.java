@@ -16,15 +16,6 @@ public class DashboardService {
     }
 
     /**
-     * 마지막으로 학습한 아티클 정보 가져오기
-     * @param email
-     * @return
-     */
-    public UserArticleInfoDTO getLastLearningArticleInfo(String email) {
-        return dashboardDAO.getLastLearningArticleInfo(email);
-    }
-
-    /**
      * 학습중인 아티클 정보 가져오기
      * @param email
      * @return

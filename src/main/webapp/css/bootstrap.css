@@ -2801,6 +2801,26 @@ fieldset:disabled a.btn {
     background-color: rgba(0, 168, 129, 0);
 }
 
+.btn-left-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.125rem 0.75rem 0.125rem 0.375rem;
+}
+
+.btn-right-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.375rem 0.375rem 0.375rem 0.75rem;
+}
+
+.btn-right-icon > i,
+.btn-left-icon > i{
+    font-size: 1.125rem;
+    margin: 0.25rem;
+}
+
 /*btn-outline-primary-------------------------------------------*/
 .btn-outline-primary {
     color: #008E6D;
@@ -9853,4 +9873,8 @@ h6,
 
 .text.text-weight-black {
     font-weight: 700 !important;
+}
+
+.hide {
+    display: none;
 }

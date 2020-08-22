@@ -33,6 +33,8 @@
 <div class="ticly__basic-layout">
 
     <div class="container container-xxl ticly__basic-content-layout">
+
+        <!-- Choice Category Section-->
         <div class="findArticle__header">
             <!-- category tab -->
             <div class="category__tab-wrapper">
@@ -66,18 +68,26 @@
             </form>
         </div>
 
+            <!-- Last learning Article Section-->
+            <input type="hidden" name="auth" value="${userInfo.auth}">
+            <div class="lastLearning__Section hide js-lastLearning-section">
+                <div class="lastLearning__Section-title text h3 text-weight-medium">${userInfo.nickname}님, 학습을 계속 진행해볼까요?📚</div>
+                <div class="lastLearning__card-section js-lastLearning-card-section">
+                </div>
+            </div>
+
         <!-- new article section -->
         <div class="findArticle__section">
-            <p class="text h6 text-color-green">아티클 배달 왔습니다!</p>
-            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-bold">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+            <p class="text text-color-green" style="font-size: 14px">아티클 배달 왔습니다!</p>
+            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-new-section-card-outer">
             </div>
         </div>
 
         <!-- popular article section -->
         <div class="findArticle__section">
-            <p class="text h6 text-color-green">회원님들이 많이 가장 많이 학습한 아티클</p>
-            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-bold">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+            <p class="text text-color-green" style="font-size: 14px">꼭 읽어보세요!</p>
+            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-popular-section-card-outer">
             </div>
         </div>
@@ -91,6 +101,9 @@
 <c:forEach items="${userInfo.categories}" var="category">
     <input type="hidden" class="js-categories-str" value=${category}>
 </c:forEach>
+
+<!-- Get User Email-->
+<input type="hidden" name="userEmail" value="${userInfo.email}">
 
 <!-- script -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

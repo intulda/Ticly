@@ -41,15 +41,6 @@ public class DashboardController {
         return "dashboard/my";
     }
 
-     // 마지막으로 학습한 아티클 정보 가져오는 비동기 처리
-    @GetMapping(value = "getLastLearningArticleInfo")
-    @ResponseBody
-    public UserArticleInfoDTO getLastLearningArticleInfo(Model model, HttpServletRequest req){
-        String email = req.getParameter("email");
-        UserArticleInfoDTO lastLearningArticleInfo = dashboardService.getLastLearningArticleInfo(email);
-        return lastLearningArticleInfo;
-    }
-
     // 학습중인 아티클 정보 가져오는 비동기 처리
     @GetMapping(value = "getLearningListInfo")
     @ResponseBody

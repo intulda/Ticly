@@ -3,18 +3,14 @@ package io.ticly.mint.articleBoard.model.service;
 import io.ticly.mint.articleBoard.model.dao.ArticleBoardDAO;
 import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
 import io.ticly.mint.articleBoard.model.dto.HashtagDTO;
-import io.ticly.mint.articleBoard.model.dto.MemberDTO;
+import io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 
 @Service
 public class ArticleBoardService {
@@ -112,5 +108,14 @@ public class ArticleBoardService {
             categories.add(key);
         }
         return categories;
+    }
+
+    /**
+     * 마지막으로 학습한 아티클 정보 가져오기
+     * @param email
+     * @return
+     */
+    public UserArticleInfoDTO getLastLearningArticleInfo(String email) {
+        return articleBoardDAO.getLastLearningArticleInfo(email);
     }
 }
