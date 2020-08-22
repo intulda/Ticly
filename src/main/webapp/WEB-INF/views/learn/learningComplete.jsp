@@ -12,6 +12,7 @@
     <title>학습완료</title>
     <!-- Common -->
     <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/learn/learn.css">
 </head>
 <body>
 <!--클릭 테스트용-->

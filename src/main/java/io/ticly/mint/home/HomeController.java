@@ -86,4 +86,13 @@ public class HomeController {
     public String showlearningComplete(){
         return "learn/learningComplete";
     }
+
+    /**
+     * 학습하기 네이동(테스트)
+     * @return
+     */
+    @RequestMapping(value = "/learningNav")
+    public String showNav(){
+        return "learn/learningNav";
+    }
 }
