@@ -79,7 +79,7 @@
         <!-- new article section -->
         <div class="findArticle__section">
             <p class="text text-color-green" style="font-size: 14px">아티클 배달 왔습니다!</p>
-            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+            <div><a href="clickArticleSection?state=new" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-new-section-card-outer">
             </div>
         </div>
@@ -87,7 +87,7 @@
         <!-- popular article section -->
         <div class="findArticle__section">
             <p class="text text-color-green" style="font-size: 14px">꼭 읽어보세요!</p>
-            <div><a href="#" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
+            <div><a href="clickArticleSection?state=popular" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-popular-section-card-outer">
             </div>
         </div>

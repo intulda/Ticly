@@ -73,21 +73,35 @@
         </form>
 
         <!-- search article section -->
-        <div class="findArticle__section">
-            <div class="search__header">
-                <div class="findArticle__section-title text h4 text-color-gray300 text-weight-regular">
-                    <b class="text text-color-gray100 text-weight-bold">'${searchKeyword}'</b>에 대한
-                    <b class="js-category-value text text-color-gray100 text-weight-bold">모든</b> 검색 결과
-                    <b class="js-searchResult-count text text-color-green text-weight-bold">0개</b>
+            <div class="findArticle__section">
+                <div class="search__header">
+                    <div class="findArticle__section-title text h4 text-color-gray300 text-weight-regular">
+                        <c:choose>
+                            <c:when test="${searchKeyword != null}">
+                                 <b class="text text-color-gray100 text-weight-bold">'${searchKeyword}'</b>에 대한
+                            </c:when>
+                            <c:when test="${sectionInfo != null}">
+                                <b class="text text-color-gray100 text-weight-bold">'${sectionInfo.sectionName}'</b>에 대한
+                            </c:when>
+                        </c:choose>
+                        <b class="js-category-value text text-color-gray100 text-weight-bold">모든</b> 검색 결과
+                        <b class="js-searchResult-count text text-color-green text-weight-bold">0개</b>
+                    </div>
+                    <ol class="search__breadcrumb breadcrumb">
+                        <li class="breadcrumb-item"><a href="findArticle">아티클 찾기</a></li>
+                        <c:choose>
+                            <c:when test="${searchKeyword != null}">
+                                <li class="breadcrumb-item active">검색 결과</li>
+                            </c:when>
+                            <c:when test="${sectionInfo != null}">
+                                <li class="breadcrumb-item active">${sectionInfo.sectionName}</li>
+                            </c:when>
+                        </c:choose>
+                    </ol>
                 </div>
-                <ol class="search__breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="findArticle">아티클 찾기</a></li>
-                    <li class="breadcrumb-item active">검색 결과</li>
-                </ol>
+                <div class="card__outer js-searchResult-section-card-outer">
+                </div>
             </div>
-            <div class="card__outer js-searchResult-section-card-outer">
-            </div>
-        </div>
     </div>
 
     <!-- footer -->
@@ -96,6 +110,9 @@
 
 <!-- 검색 키워드-->
 <input type="hidden" class="js-search-keyword" value=${searchKeyword}>
+
+<!-- 최신/인기 섹션 분류-->
+<input type="hidden" class="js-section-number" value=${sectionInfo.sectionNum}>
 
 <!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
 <c:forEach items="${userInfo.categories}" var="category">

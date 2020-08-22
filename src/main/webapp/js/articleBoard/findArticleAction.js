@@ -104,6 +104,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
 
                 // 인기순
                 case "popularity" :
+                    newSortedList = newSortedList.filter(it => it.apply_count > 100);
                     newSortedList.sort((a, b) => {
                         return a.apply_count > b.apply_count ? -1 : a.apply_count < b.apply_count ? 1 : 0;
                     });
@@ -206,9 +207,6 @@ import LastLearningCard from "./module/lastLearningCard.js";
 
         // 스켈레톤 UI 그려주기
         paintSkeletonCard();
-
-        console.log(userAuth != 1);
-        console.log(userAuth == "");
 
         // Guest가 아니면, 마지막 학습 카드 그려주기
         if (userAuth != 1 && userAuth != "" ){
