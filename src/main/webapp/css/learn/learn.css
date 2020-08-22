@@ -1,13 +1,17 @@
 /*learning-header*/
+ul {
+    padding: 0;
+    margin: 0;
+}
+ul li {
+    margin: 0;
+}
 .leaning-header-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     height: 80px;
-    z-index: 11;
     box-shadow: 0 1px 0 0 #E1E1E8;
-    background-color: white;
+    position: relative;
+    z-index: 11;
 }
 .leaning-header {
     display: flex;
@@ -34,30 +38,30 @@
     align-items: center;
 }
 
-.header-index {
+.learning__header-index {
     display: inherit;
     width: 100%;
     margin: 23px;
     padding: 0;
 }
 
-.header-index li {
+.learning__header-index li {
     color: #858899;
 }
 
-.header-index li:after {
+.learning__header-index li:after {
     content: '/';
     color: #858899;
     margin: 0 6px;
 }
-.header-index li:first-child {
+.learning__header-index li:first-child {
     min-width: 100px;
 }
-.header-index li:last-child:after {
+.learning__header-index li:last-child:after {
     content: '';
 }
 
-.header-index li:last-child {
+.learning__header-index li:last-child {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -223,7 +227,17 @@ progress-contents-left {
     letter-spacing: -0.1px;
     line-height: 24px;
     cursor: pointer;
+    position: relative;
 }
+
+.leaning-contents-word-set li:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
 .leaning-contents-word-set li:hover {
     border-radius: 3px;
     background-color: rgba(0, 168, 129,0.24);
@@ -391,7 +405,7 @@ div[class*='leaning-contents-card-front']::before {
 }
 .leaning-contents-card-prev {
     position: absolute;
-    z-index: 5;
+    /*z-index: 5;*/
     left: 12%;
 }
 .leaning-contents-card-next {
@@ -573,7 +587,7 @@ div[class*='leaning-contents-card-front']::before {
 }
 .leaning-table tr td {
     height: 50px;
-    padding: 8px;
+    /*padding: 8px;*/
     background-color: #fff;
     font-size: 14px;
     letter-spacing: -0.1px;
@@ -626,9 +640,11 @@ div[class*='leaning-contents-card-front']::before {
 .leaning-table td:nth-child(5) i:first-child {
     margin-right: 20px;
 }
-
+.learning__current-container {
+    min-width: 768px;
+}
 .leaning-current-article-wrap {
-    height: 368px;
+    /*height: 368px;*/
     padding: 50px 24px;
     position: relative;
     z-index: 11;
@@ -674,11 +690,11 @@ div[class*='leaning-contents-card-front']::before {
     transition: 2s;
 }
 .leaning-current-article {
-    min-width: 960px;
+    /*min-width: 960px;*/
 }
 .leaning-contents-table-down {
     height: 32px;
-    margin: 16px 0 80px 0;
+    margin-top: 16px;
 }
 
 .leaning-contents-table-down button {

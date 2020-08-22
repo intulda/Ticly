@@ -205,4 +205,27 @@ public class LearnService {
         return true;
     }
 
+    /**
+     * UserLearningSeq 가져오는 메소드
+     * @param userLearnDTO
+     * @return
+     */
+    public int getUserLearning(UserLearnDTO userLearnDTO) {
+        return learnDAO.getUserLearning(userLearnDTO);
+    }
+
+    /**
+     * 단어 그룹 삭제 메소드
+     * @param vocaGroupDTO
+     * @return
+     */
+    public boolean deleteVocaGroup(VocaGroupDTO vocaGroupDTO) throws SQLException {
+        int count = learnDAO.deleteVocaGroup(vocaGroupDTO);
+        if(count < 0) {
+            throw new SQLException("단어그룹 삭제 오류");
+        }
+        learnDAO.updateVocaGroupDown(vocaGroupDTO);
+        learnDAO.updateUserVocaGroupDown(vocaGroupDTO);
+        return true;
+    }
 }
