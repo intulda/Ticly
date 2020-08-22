@@ -1,10 +1,13 @@
 /*learning-header*/
 .leaning-header-wrap {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 80px;
-    box-shadow: 0 1px 0 0 #E1E1E8;
-    position: relative;
     z-index: 11;
+    box-shadow: 0 1px 0 0 #E1E1E8;
+    background-color: white;
 }
 .leaning-header {
     display: flex;
@@ -35,6 +38,7 @@
     display: inherit;
     width: 100%;
     margin: 23px;
+    padding: 0;
 }
 
 .header-index li {
@@ -103,20 +107,7 @@
     fill: #fff;
 }
 
-.leaning-header-profile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: orange;
-    border-radius: 5px;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
+/*
 .drop-down {
     display: inline-block;
     margin-left: 12px;
@@ -127,7 +118,7 @@
     border-right: 6px solid transparent;
     cursor: pointer;
 }
-
+*/
 progress-contents-left {
 
 }
