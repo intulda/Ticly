@@ -23,6 +23,14 @@
         AND ARTICLE.DEL != 1
     </select>
 
+    <select id="getUserLearning" parameterType="UserLearnDTO" resultType="int">
+        SELECT
+            USER_LEARNING_SEQ
+        FROM USER_LEARNING
+        WHERE EMAIL = #{email}
+        AND ARTICLE_SEQ = #{article_seq}
+    </select>
+
     <update id="saveUserLearning" parameterType="UserLearnDTO">
         MERGE INTO USER_LEARNING UL
             USING DUAL
@@ -56,6 +64,7 @@
             COUNT(DISTINCT ARTICLE_SEQ)
         FROM USER_VOCA
         WHERE ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
     </select>
 
     <select id="getGroupDataCheck" parameterType="UserLearnDTO" resultType="int">
@@ -88,6 +97,7 @@
                  USER_LEARNING UL
             WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
             AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            AND UL.USER_LEARNING_SEQ = #{user_learning_seq}
             ORDER BY ARTI_VOCA.VOCA_ORDER ASC
         )
     </insert>
@@ -115,6 +125,7 @@
                  USER_LEARNING UL
             WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
             AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            AND UL.EMAIL = #{email}
             ORDER BY ARTI_VOCA.VOCA_GROUP ASC)
     </insert>
 
@@ -135,6 +146,7 @@
         WHERE UV.VOCA = VB.VOCA(+)
           AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ(+)
           AND AV.MEANING_NUM = VB.MEANING_NUM
+          AND UV.USER_LEARNING_SEQ = #{user_learning_seq}
           AND UV.MEANING IS NULL
           AND UV.ARTICLE_SEQ = #{article_seq})
         UNION ALL
@@ -150,6 +162,7 @@
            VOCA_GROUP
         FROM USER_VOCA
         WHERE ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
         AND MEANING IS NOT NULL)
         ORDER BY VOCA_GROUP, VOCA_ORDER ASC
     </select>
@@ -259,4 +272,27 @@
             #{email}
         )
     </insert>
+
+    <delete id="deleteVocaGroup" parameterType="VocaGroupDTO">
+        DELETE FROM USER_VOCA_GROUP
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+        AND VOCA_GROUP = #{voca_group}
+    </delete>
+
+    <update id="updateVocaGroupDown" parameterType="VocaGroupDTO">
+        UPDATE USER_VOCA_GROUP
+        SET VOCA_GROUP = VOCA_GROUP-1
+        WHERE VOCA_GROUP > #{voca_group}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateUserVocaGroupDown" parameterType="VocaGroupDTO">
+        UPDATE USER_VOCA
+        SET VOCA_GROUP = VOCA_GROUP-1
+        WHERE VOCA_GROUP > #{voca_group}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
 </mapper>
