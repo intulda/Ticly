@@ -237,20 +237,22 @@ import SkeletonCard from './module/skeletonCard.js';
                     console.log(json);
 
                     articleList = json.data;
-                    countingSearchResult(articleList);
 
                     if (sectionNum != "") {
                         if (sectionNum == 0) {
                             console.log("새로운 아티클");
                             sorting(articleList, "reg_date");
+                            countingSearchResult(articleList);
                             return;
                         } else {
                             console.log("필독 아티클");
-                            let newSortedList = articleList.filter(it => it.apply_count > 100);
-                            sorting(newSortedList, "apply_count");
+                            articleList = articleList.filter(it => it.apply_count > 100);
+                            sorting(articleList, "apply_count");
+                            countingSearchResult(articleList);
                             return;
                         }
                     } else {
+                        countingSearchResult(articleList);
                         paintCard(articleList);
                     }
                 }
