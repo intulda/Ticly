@@ -83,7 +83,7 @@ import LearningListCard from './module/learningListCard.js';
         return (v === undefined || v === null) ? true : false;
     }
 
-    // json 파일을 입력받아 학습중인 아티클 카드를 그려주는 모듈
+    // list의 정보를 가져와 학습중인 아티클 카드를 그려주기
     function paintLearningListCardModule(list, state) {
         // section의 모든 자식 요소 삭제
         while (learningListSection.hasChildNodes()) {
@@ -146,7 +146,6 @@ import LearningListCard from './module/learningListCard.js';
     // 아티클 목록에서 완료 유무를 파악해 각각 몇개의 목록을 가지고 있는지 연산하는 함수
     function counting(list) {
         let result = list.filter(it => JSON.stringify(it.learning_done).includes(0));
-
         listTabBtn[0].firstElementChild.innerHTML = result.length;
 
         result = list.filter(it => JSON.stringify(it.learning_done).includes(1));
@@ -213,3 +212,4 @@ import LearningListCard from './module/learningListCard.js';
 
     init();
 })();
+
