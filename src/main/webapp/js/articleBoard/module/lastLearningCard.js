@@ -9,7 +9,7 @@ class LastLearningCard {
         this.title = title.replace(/\"/g, "");
         this.lastLearningType = lastLearningType.replace(/\"/g, "");
         this.lastLearningContent = lastLearningContent.replace(/\"/g, "");
-        this.lastLearningDate = lastLearningDate.replace(/\"/g, "");
+        this.lastLearningDate = ((lastLearningDate.replace(/\"/g, "")).substr(0,10)).replace(/-/g, ".");
         this.element = document.createElement('div');
     }
 

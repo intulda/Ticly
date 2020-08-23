@@ -28,7 +28,7 @@
             A_.URL,
             A_.HASHTAG,
             C_.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(A_.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
+            A_.REG_DATE,
             A_.DEL,
             A_.APPLY_COUNT
         FROM ARTICLE A_, CATEGORY C_
@@ -48,7 +48,7 @@
             A_.URL,
             A_.HASHTAG,
             C_.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(A_.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
+            A_.REG_DATE,
             A_.DEL,
             A_.APPLY_COUNT
         FROM ARTICLE A_, CATEGORY C_

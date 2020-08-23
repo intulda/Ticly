@@ -34,12 +34,11 @@ public class DashboardController {
     }
 
     // 학습중인 아티클 정보 가져오는 비동기 처리
-    @GetMapping(value = "getLearningListInfo")
+    @GetMapping(value = "getMyArticleListInfo")
     @ResponseBody
-    public List<UserArticleInfoDTO> getLearningListInfo(Model model, HttpServletRequest req){
+    public List<UserArticleInfoDTO> getMyArticleListInfo(Model model, HttpServletRequest req){
         String email = req.getParameter("email");
-        System.out.println("email : " + email);
-        List<UserArticleInfoDTO> getLearningListInfo = dashboardService.getLearningListInfo(email);
-        return getLearningListInfo;
+        List<UserArticleInfoDTO> getMyArticleListInfo = dashboardService.getMyArticleListInfo(email);
+        return getMyArticleListInfo;
     }
 }

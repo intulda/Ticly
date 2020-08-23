@@ -14,17 +14,13 @@ import SkeletonCard from './module/skeletonCard.js';
         searchBarForm = document.querySelector(".js-submit-hashtag-form"),
         sectionNum = document.querySelector(".js-section-number").value;
 
+    const SEARCH_RESULT_ARTICLE_CARD_PATH = "findArticleBySearch?", // 검색 결과를 얻기위한 컨트롤러 경로
+        GET_HASH_TAG_PATH = "getHashTag?", // 해시태그를 얻기 위한 경로
+        MAXIMUM_NUMBER_OF_CARDS = 12; // 한 번에 보여주는 카드 개수
 
-    // 검색 결과를 얻기위한 컨트롤러 경로
-    const SEARCH_RESULT_ARTICLE_CARD_PATH = "findArticleBySearch?",
-        GET_HASH_TAG_PATH = "getHashTag?";
-
-    const MAXIMUM_NUMBER_OF_CARDS = 12;
-
-    // 현재 위치에서 관심분야 탭에서 활성화된 관심 분야의 값을 저장하는 변수
-    let activeCategoryTabBtn = "";
-    let articleList = [];
-    let scrollCount = 0;
+    let activeCategoryTabBtn = ""; // 현재 관심분야 탭에서 활성화된 관심 분야를 저장하는 변수
+    let articleList = []; // axios로 받아온 데이터를 담는 배열
+    let scrollCount = 0; // 무한 스크롤용 스크롤 횟수
 
     //----------------------------------------------------------------------------------------------------
 
@@ -34,13 +30,12 @@ import SkeletonCard from './module/skeletonCard.js';
             // window height + window scrollY 값이 document height보다 클 경우,
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 
-                // 스크롤할 때 마다 (한 번에 보여주는 카드 갯수 * 스크롤 횟수)번째 카드 부터
-                // (한 번에 보여주는 카드 갯수만큼)  카드 그려주기
+                // 스크롤할 때 마다 (한 번에 보여주는 카드 개수 * 스크롤 횟수)번째 카드 부터
+                // (한 번에 보여주는 카드 개수만큼)  카드 그려주기
                 let startCount = MAXIMUM_NUMBER_OF_CARDS * scrollCount;
-
-                if (startCount <= articleList.length) {
-                    articleCardModule(articleList, scrollCount);
-                    scrollCount++;
+                console.log("startCount : " + startCount);
+                if (startCount < articleList.length) {
+                    articleCardModule(articleList, startCount);
                 }
             }
         }
@@ -169,8 +164,15 @@ import SkeletonCard from './module/skeletonCard.js';
 
     // 아티클 카드 모듈
     function articleCardModule(list, startCount) {
-        let cardCount = 0;
+        let count = 0;
+        scrollCount++;
+        console.log("scrollCount : " + scrollCount);
+
         for (let i = startCount; i < list.length; i++) {
+            if (count == MAXIMUM_NUMBER_OF_CARDS) {
+                return;
+            }
+
             searchResultCardOuter.appendChild(new ArticleCard(
                 JSON.stringify(list[i].article_seq)
                 , JSON.stringify(list[i].url)
@@ -180,13 +182,8 @@ import SkeletonCard from './module/skeletonCard.js';
                 , JSON.stringify(list[i].summary)
                 , JSON.stringify(list[i].reg_date)
             ).getElements());
-            cardCount++;
-
-            if (cardCount >= MAXIMUM_NUMBER_OF_CARDS) {
-                break;
-            }
+            count++;
         }
-        scrollCount++;
     }
 
     // 리스트 정보를 가져와 그려주는 함수
@@ -199,7 +196,7 @@ import SkeletonCard from './module/skeletonCard.js';
         // 화면에 새롭게 요소 그려주기
         if (list.length != 0) {
             searchResultCardOuter.style.display = "grid";
-            articleCardModule(list, 0);
+            articleCardModule(list, scrollCount);
         }
         // 받아온 데이터가 없다면,
         else {

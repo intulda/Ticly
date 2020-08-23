@@ -7,7 +7,7 @@
 
     <!--DB에서 사용자가 학습중인 아티클 정보와 성취도를 연산 결과 불러오기
     @param String 이메일-->
-    <select id="getLearningListInfo" parameterType="String" resultType="UserArticleInfoDTO">
+    <select id="getMyArticleListInfo" parameterType="String" resultType="UserArticleInfoDTO">
         SELECT
             ABS.R_NUM,
             ABS.USER_LEARNING_SEQ,
@@ -28,7 +28,7 @@
         FROM
             (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)     AS R_NUM,
                     U_LEN.USER_LEARNING_SEQ                                  AS USER_LEARNING_SEQ,
-                    TO_CHAR(TO_DATE(U_LEN.LAST_LEARNING_DATE), 'YYYY.MM.DD') AS LAST_LEARNING_DATE,
+                    U_LEN.LAST_LEARNING_DATE                                 AS LAST_LEARNING_DATE,
                     U_LEN.LAST_LEARNING_TYPE                                 AS LAST_LEARNING_TYPE,
                     U_LEN.ARTICLE_SEQ                                        AS ARTICLE_SEQ,
                     A_.URL                                                   AS URL,

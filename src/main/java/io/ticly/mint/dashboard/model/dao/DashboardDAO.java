@@ -20,8 +20,8 @@ public class DashboardDAO {
      * @param email
      * @return
      */
-    public List<UserArticleInfoDTO> getLearningListInfo(String email){
-        return sqlSessionTemplate.selectList("dashboardDAO.getLearningListInfo", email);
+    public List<UserArticleInfoDTO> getMyArticleListInfo(String email){
+        return sqlSessionTemplate.selectList("dashboardDAO.getMyArticleListInfo", email);
     }
 
 }

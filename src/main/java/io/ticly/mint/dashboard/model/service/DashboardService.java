@@ -20,8 +20,8 @@ public class DashboardService {
      * @param email
      * @return
      */
-    public List<UserArticleInfoDTO> getLearningListInfo(String email)  {
-        return dashboardDAO.getLearningListInfo(email);
+    public List<UserArticleInfoDTO> getMyArticleListInfo(String email)  {
+        return dashboardDAO.getMyArticleListInfo(email);
     }
 
 }
