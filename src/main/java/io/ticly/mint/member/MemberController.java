@@ -1,16 +1,16 @@
 package io.ticly.mint.member;
 
-import io.ticly.mint.admin.model.dto.CategoryDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.member.dto.ResponseDto;
 import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-;import javax.servlet.http.HttpSession;
+;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +22,7 @@ public class MemberController {
 
     private MemberService memberService;
 
-    public MemberController(MemberService memberService) {
-
+    public MemberController(MemberService memberService, BCryptPasswordEncoder encoder) {
         this.memberService = memberService;
     }
 
@@ -114,11 +113,10 @@ public class MemberController {
      * @param userDTO
      * @return
      */
-    @PostMapping("/member/signup")
+    @PostMapping("/auth/joinProc")
     @ResponseBody
     public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
-        int checkNum = 0;
-        checkNum = memberService.insertNewMember(userDTO);
+        int checkNum = memberService.insertNewMember(userDTO);
 
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.

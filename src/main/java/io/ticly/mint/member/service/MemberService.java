@@ -2,6 +2,7 @@ package io.ticly.mint.member.service;
 
 import io.ticly.mint.member.dao.MemberDAO;
 import io.ticly.mint.member.dto.UserDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -13,9 +14,11 @@ import java.util.UUID;
 public class MemberService {
 
     private MemberDAO memberDAO;
+    private BCryptPasswordEncoder encoder;
 
-    public MemberService(MemberDAO memberDAO) {
+    public MemberService(MemberDAO memberDAO, BCryptPasswordEncoder encoder) {
         this.memberDAO = memberDAO;
+        this.encoder = encoder;
     }
 
     /**
@@ -84,6 +87,10 @@ public class MemberService {
      * @return
      */
     public int insertNewMember(UserDTO userDTO){
+        //비밀번호 암호화
+        String rawPassword = userDTO.getPassword();
+        String encPassword = encoder.encode(rawPassword);
+        userDTO.setPassword(encPassword);
 
         //닉네임 가져오기
         String email = userDTO.getEmail();
