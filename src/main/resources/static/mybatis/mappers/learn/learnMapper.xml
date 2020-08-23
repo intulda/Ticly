@@ -295,4 +295,47 @@
         AND USER_LEARNING_SEQ = #{user_learning_seq}
         AND ARTICLE_SEQ = #{article_seq}
     </update>
+
+    <update id="updateLastLearningType" parameterType="UserLearnDTO">
+        UPDATE USER_LEARNING
+        SET LAST_LEARNING_TYPE = #{last_learning_type}
+        WHERE EMAIL = #{email}
+        AND ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+    </update>
+
+    <select id="getSentenceSaveCheck" parameterType="UserLearnDTO" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM USER_SENTENCE
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </select>
+
+    <insert id="saveArticleSentenceToUser" parameterType="UserLearnDTO">
+        INSERT INTO USER_SENTENCE (
+            USER_SENTENCE_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            LAST_SENTENCE,
+            ARTICLE_SENTENCE_SEQ
+        ) SELECT
+            USER_SENTENCE_PK_SEQ.nextval AS USER_SENTENCE_PK_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            LAST_SENTENCE,
+            ARTICLE_SENTENCE_SEQ
+        FROM (
+            SELECT
+                UL.USER_LEARNING_SEQ,
+                ARTI_SENTENCE.ARTICLE_SEQ,
+                0 AS LAST_SENTENCE,
+                ARTI_SENTENCE.ARTICLE_SENTENCE_SEQ
+            FROM ARTICLE_SENTENCE ARTI_SENTENCE,
+                 USER_LEARNING UL
+            WHERE ARTI_SENTENCE.ARTICLE_SEQ = UL.ARTICLE_SEQ
+            AND ARTI_SENTENCE.ARTICLE_SEQ = #{article_seq}
+            AND UL.USER_LEARNING_SEQ = #{user_learning_seq}
+            ORDER BY ARTICLE_SENTENCE_SEQ ASC)
+    </insert>
 </mapper>

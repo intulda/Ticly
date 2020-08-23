@@ -228,4 +228,42 @@ public class LearnService {
         learnDAO.updateUserVocaGroupDown(vocaGroupDTO);
         return true;
     }
+
+    /**
+     * 마지막 문장 or 단어 타입 수정 메소드
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean updateLastLearningType(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.updateLastLearningType(userLearnDTO);
+        if(count < 0) {
+            throw new SQLException("마지막 단어 문장 타입 업데이트");
+        }
+        return true;
+    }
+
+    /**
+     * 유저 문장 테이블에 저장되어있는지 확인하는 메소드
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean getSentenceSaveCheck(UserLearnDTO userLearnDTO) {
+        return learnDAO.getSentenceSaveCheck(userLearnDTO) > 0 ? false : true;
+    }
+
+    /**
+     * 아티클 문장 유저문장으로 넣는 메소드
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean saveArticleSentenceToUser(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.saveArticleSentenceToUser(userLearnDTO);
+        if(count < 0) {
+            throw new SQLException("아티클 문장 유저 문장테이블로 저장 실패");
+        }
+        return true;
+    }
 }

@@ -63,10 +63,14 @@ public class LearnController {
         if(learnService.getUserVocaCheck(userLearnDTO)) {
             learnService.saveArticleVocaToUser(userLearnDTO);
         }
+        if(learnService.getSentenceSaveCheck(userLearnDTO)) {
+            learnService.saveArticleSentenceToUser(userLearnDTO);
+        }
+
         LearnArticleDTO learnArticleDTO = learnService.getArticle(userLearnDTO);
         learnArticleDTO.setUser_learning_seq(userLearningSeq);
         model.addAttribute("currentArticle", learnArticleDTO);
-        return "learn/leaning";
+        return "learn/learning";
     }
 
     /**
@@ -164,7 +168,7 @@ public class LearnController {
      */
     @PostMapping(value="updateLastVoca")
     @ResponseBody
-    private boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
+    public boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
         return learnService.updateLastVoca(vocaDTO);
     }
 
@@ -176,15 +180,36 @@ public class LearnController {
      */
     @PostMapping(value="saveVocaGroup")
     @ResponseBody
-    private boolean saveVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO, Model model) throws SQLException {
+    public boolean saveVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO, Model model) throws SQLException {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
         vocaGroupDTO.setEmail(memberDTO.getEmail());
         return learnService.saveVocaGroup(vocaGroupDTO);
     }
 
+    /**
+     * 단어그룹 삭제 메소드
+     * @param vocaGroupDTO
+     * @return
+     * @throws SQLException
+     */
     @PostMapping(value="deleteVocaGroup")
     @ResponseBody
-    private boolean deleteVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO) throws SQLException {
+    public boolean deleteVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO) throws SQLException {
         return learnService.deleteVocaGroup(vocaGroupDTO);
     }
+
+    /**
+     *
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping(value="updateLastLearningType")
+    @ResponseBody
+    public boolean updateLastLearningType(@RequestBody UserLearnDTO userLearnDTO, Model model) throws SQLException {
+        MemberDTO memberDTO = (MemberDTO) model.getAttribute("userInfo");
+        userLearnDTO.setEmail(memberDTO.getEmail());
+        return learnService.updateLastLearningType(userLearnDTO);
+    }
+
 }

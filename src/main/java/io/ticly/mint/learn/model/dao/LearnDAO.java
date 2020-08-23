@@ -101,4 +101,16 @@ public class LearnDAO {
     public int updateUserVocaGroupDown(VocaGroupDTO vocaGroupDTO) {
         return sqlSessionTemplate.update(NAMESPACE+"updateUserVocaGroupDown", vocaGroupDTO);
     }
+
+    public int updateLastLearningType(UserLearnDTO userLearnDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateLastLearningType", userLearnDTO);
+    }
+
+    public int getSentenceSaveCheck(UserLearnDTO userLearnDTO) {
+        return sqlSessionTemplate.selectOne(NAMESPACE+"getSentenceSaveCheck", userLearnDTO);
+    }
+
+    public int saveArticleSentenceToUser(UserLearnDTO userLearnDTO) {
+        return sqlSessionTemplate.insert(NAMESPACE+"saveArticleSentenceToUser", userLearnDTO);
+    }
 }
