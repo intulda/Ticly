@@ -60,7 +60,7 @@ import LearningListCard from './module/learningListCard.js';
     // 리스트 탭 버튼 클릭시 이벤트
     function handleListTabBtnEvent(ev) {
         let targetElem = ev.target;
-        if(ev.target.nodeName  === 'SPAN') {
+        if (ev.target.nodeName === 'SPAN') {
             targetElem = targetElem.parentElement;
         }
         if (!targetElem.classList.contains("active")) {
@@ -70,7 +70,7 @@ import LearningListCard from './module/learningListCard.js';
 
             // 탭 활상화 상태 바꿔주기
             targetElem.classList.add("active");
-            let inactiveNum = (state == 0 ) ? 1 : 0;
+            let inactiveNum = (state == 0) ? 1 : 0;
             listTabBtn[inactiveNum].classList.remove("active")
 
             // 상태에 따라 아티클 목록에 학습 카드 그려주기
@@ -143,6 +143,16 @@ import LearningListCard from './module/learningListCard.js';
         learningListSection.style.display = "block";
     }
 
+    // 아티클 목록에서 완료 유무를 파악해 각각 몇개의 목록을 가지고 있는지 연산하는 함수
+    function counting(list) {
+        let result = list.filter(it => JSON.stringify(it.learning_done).includes(0));
+
+        listTabBtn[0].firstElementChild.innerHTML = result.length;
+
+        result = list.filter(it => JSON.stringify(it.learning_done).includes(1));
+        listTabBtn[1].firstElementChild.innerHTML = result.length;
+    }
+
     // json 객체를 리스트에 담아주는 비동기 처리
     function getArticleList(path, section) {
         axios({
@@ -172,7 +182,7 @@ import LearningListCard from './module/learningListCard.js';
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        if (userAuth == 1 || userAuth == ""){
+        if (userAuth == 1 || userAuth == "") {
             paintDefault(0);
             document.getElementById('signinup-modal').style.display = "flex";
             document.getElementById('main-login-form').classList.remove('hidden');
@@ -186,18 +196,8 @@ import LearningListCard from './module/learningListCard.js';
         getArticleList(path, section);
     }
 
-    // 아티클 목록에서 완료 유무를 파악해 각각 몇개의 목록을 가지고 있는지 연산하는 함수
-    function counting(list) {
-        let result = list.filter(it => JSON.stringify(it.learning_done).includes(0));
-
-        listTabBtn[0].firstElementChild.innerHTML = result.length;
-
-        result = list.filter(it => JSON.stringify(it.learning_done).includes(1));
-        listTabBtn[1].firstElementChild.innerHTML = result.length;
-    }
-
     function init() {
-        window.onload = () => {
+        window.onpageshow = () => {
             pageLoadEvent();
         };
 
@@ -207,7 +207,7 @@ import LearningListCard from './module/learningListCard.js';
         selectBox.addEventListener("change", changeSortOption);
 
         document.querySelector("#modal-close").addEventListener("click", () => {
-           location.href = "../articleBoard/findArticle";
+            location.href = "../articleBoard/findArticle";
         });
     }
 

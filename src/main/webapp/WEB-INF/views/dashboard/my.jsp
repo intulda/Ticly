@@ -62,7 +62,6 @@
 
 <!-- script -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<%--<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>--%>
 <script bufer type="module" src="${ pageContext.request.contextPath }/js/dashboard/myAction.js"></script>
 
 </body>

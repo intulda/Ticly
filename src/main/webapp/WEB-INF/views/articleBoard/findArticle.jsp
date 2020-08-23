@@ -71,7 +71,7 @@
             <!-- Last learning Article Section-->
             <input type="hidden" name="userAuth" value="${userInfo.auth}">
             <div class="lastLearning__Section hide js-lastLearning-section">
-                <div class="lastLearning__Section-title text h4 text-weight-medium">${userInfo.nickname}님, 학습을 계속 진행해볼까요?📚</div>
+                <div class="lastLearning__Section-title text h3 text-weight-medium">${userInfo.nickname}님, 학습을 계속 진행해볼까요?📚</div>
                 <div class="lastLearning__card-section js-lastLearning-card-section">
                 </div>
             </div>

@@ -19,6 +19,13 @@
 
 .learningList__card-outer {
     transition: all 0.2s;
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
 }
 
 .learningList__card-outer:hover {
@@ -28,33 +35,43 @@
     text-decoration: underline;
 }
 
-.learningList__card-outer {
-    width: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-}
-
 .learningList__card-content-wrapper {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
 }
 
+.learningList__card-img {
+    position: relative;
+    flex-basis: 16rem;
+    height: 9rem;
+    min-width: 16rem;
+    border-radius: 0.625rem;
+    margin-right: 2rem;
+}
+
+.learningList__card-done-badge{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../images/articleBoard/check_badge.svg");
+    background-size: 2.5rem 2.5rem;
+    background-repeat: no-repeat;
+}
+
 .learningList__card-body {
     position: relative;
+    flex-direction: column;
     display: flex;
-    flex-direction: row;
     flex-grow: 1;
     justify-content: space-between;
 }
 
 .learningList__card-title {
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     cursor: pointer;
 }
 
@@ -70,36 +87,6 @@
     max-height: 3.75rem;
 }
 
-.learningList__card-subInfo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-/* learningList__card */
-.learningList__card-done-badge{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 56px;
-    height: 56px;
-    background-image: url("../../images/articleBoard/check_badge.svg");
-}
-.learningList__card-img {
-    position: relative;
-    flex-basis: 16rem;
-    height: 9rem;
-    min-width: 16rem;
-    border-radius: 0.625rem;
-    margin-right: 2rem;
-}
-
-.learningList__card-body {
-    min-height: 12.625rem;
-    display: flex;
-    flex-direction: column;
-}
-
 .learningList__card-tag {
     margin-bottom: 0.5rem;
 }
@@ -112,23 +99,6 @@
     line-height: 20px;
 }
 
-.learningList__card-btns > button:nth-child(1) {
-    margin-right: 0.5rem;
-}
-
-.learningList__card-progress {
-    margin-top: 1rem;
-    height: 0.5rem;
-}
-
-.learningList__card-progress > div {
-    background-color: #257FF9;
-}
-
-.learningList__card-btns {
-    display: flex;
-}
-
 .learningList__card-desc {
     width: 90%;
     display: -webkit-box;
@@ -138,6 +108,35 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-height: 3rem;
+}
+
+.learningList__card-footer {
+    display: flex;
+}
+
+.learningList__card-subInfo{
+    width: 100%;
+    margin-right: 1rem;
+}
+
+.learningList__card-progress {
+    width: 100%;
+    margin-top: 0.5rem;
+    height: 0.5rem;
+    flex-grow: 1;
+}
+
+.learningList__card-progress > div {
+    background-color: #257FF9;
+}
+
+.learningList__card-btns {
+    flex-shrink: 0;
+    display: flex;
+}
+
+.learningList__card-btns > button:nth-child(1) {
+    margin-right: 0.5rem;
 }
 
 .default__null{

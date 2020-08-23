@@ -34,17 +34,19 @@ class LearningListCard {
                         <p class="learningList__card-desc text body1 text-color-gray200">${this.summary}</p>
                     </div>
                     <div>
-                        <div class="learningList__card-subInfo">
-                            <p class="learningList__card-date text body1 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>
-                            <div class="learningList__card-btns">
+                        <div class="learningList__card-footer">
+                            <div class="learningList__card-subInfo">
+                                <p class="text body1 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>
+                                <div class="learningList__card-progress progress">
+                                    <div class="progress-bar" role="progressbar" style="width: ${this.achievementRate}%" aria-valuenow="${this.achievementRate}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                             <div class="learningList__card-btns">
                                 <button class="learningList__card-orignLink-btn btn btn-tab btn-left-icon" onclick="location.href='${this.url}'"><i class="icons icon_link"></i>원문보기</button>
                                 <button class="learningList__card-continue-btn btn btn-outline-primary btn-right-icon" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                                     <p>학습하기</p><i class="icons icon_chevron-right"></i>
                                 </button>
-                            </div>
-                        </div>
-                        <div class="learningList__card-progress progress">
-                            <div class="progress-bar" role="progressbar" style="width: ${this.achievementRate}%" aria-valuenow="${this.achievementRate}" aria-valuemin="0" aria-valuemax="100"></div>
+                             </div>
                         </div>
                     </div>
                 </div>
