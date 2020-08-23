@@ -46,7 +46,7 @@
 
                     <%-- 관심분야를 1개만 선택한 경우--%>
                     <c:otherwise>
-                        <button class="category__tab btn active">${userInfo.categories[0]}</button>
+                        <button class="category__tab btn btn-tab active">${userInfo.categories[0]}</button>
                     </c:otherwise>
 
                 </c:choose>
