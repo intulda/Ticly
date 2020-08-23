@@ -53,7 +53,7 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="category__tab btn btn-tab" onclick="location.href ='category'"><i class="icons icon_setting"></i></button>
+                <button class="btn btn-tab" onclick="location.href ='category'"><i class="icon_setting"></i></button>
             </div>
 
             <!-- search bar -->

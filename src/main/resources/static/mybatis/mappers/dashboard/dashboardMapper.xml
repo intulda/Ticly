@@ -49,4 +49,9 @@
                AND A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
                AND U_LEN.EMAIL = #{email}) ABS
     </select>
+
+    <!-- [삭제하기]버튼 클릭시 사용자의 [학습하기] 내역 삭제하기 -->
+    <delete id="deleteUserLearningInfo" parameterType="int">
+        DELETE FROM USER_LEARNING WHERE ARTICLE_SEQ = #{article_seq}
+    </delete>
 </mapper>

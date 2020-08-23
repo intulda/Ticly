@@ -42,6 +42,7 @@ class LearningListCard {
                                 </div>
                             </div>
                              <div class="learningList__card-btns">
+                             <button class="btn btn-tab" onclick="location.href ='deleteUserLearningInfo?seq=${this.articleSeq}'"><i class="icon_trash"></i></button>
                                 <button class="learningList__card-orignLink-btn btn btn-tab btn-left-icon" onclick="location.href='${this.url}'"><i class="icons icon_link"></i>원문보기</button>
                                 <button class="learningList__card-continue-btn btn btn-outline-primary btn-right-icon" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                                     <p>학습하기</p><i class="icons icon_chevron-right"></i>

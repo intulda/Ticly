@@ -24,4 +24,11 @@ public class DashboardService {
         return dashboardDAO.getMyArticleListInfo(email);
     }
 
+    /**
+     * [삭제하기]버튼 클릭시 사용자의 [학습하기] 내역 삭제하기
+     * @param seq
+     */
+    public int deleteUserLearningInfo(int seq)  {
+        return dashboardDAO.deleteUserLearningInfo(seq);
+    }
 }
