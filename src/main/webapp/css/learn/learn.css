@@ -520,7 +520,6 @@ div[class*='leaning-contents-card-front']::before {
     perspective: 1000px;
     width: 100%;
     height: 100%;
-    z-index: -1;
 }
 
 .leaning-contents-card-wrap li {
