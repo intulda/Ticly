@@ -39,12 +39,10 @@
         <div class="email-signin-form hidden" id="email-signin-form">
             <div class="scroll-zone">
                 <hearder class="login-modal-header">
-                    <h1 class="text text-color-gray100 text-weight-medium">이메일로 로그인</h1>
+                    <h1 class="text text-color-gray100 text-weight-medium"></h1>
                 </hearder>
                 <div class="login-content-wrapper">
-                    <div class="bs-component" id="login-fail-alert">
-
-                    </div>
+                    <div class="bs-component" id="login-fail-alert"></div>
 
                     <div class="login-input-group">
                         <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
@@ -132,14 +130,16 @@
     </div>
 </div>
 
+<!--modal script-->
+<div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--Main Login-->
+    <script src="${pageContext.request.contextPath}/js/member/login.js"></script>
 
-<!--Main Login-->
-<script src="${pageContext.request.contextPath}/js/member/login.js"></script>
+    <!--Email Login-->
+    <script src="${pageContext.request.contextPath}/js/member/signinEmail.js"></script>
 
-<!--Email Login-->
-<script src="${pageContext.request.contextPath}/js/member/signinEmail.js"></script>
-
-<!--Email Signup-->
-<script src="${pageContext.request.contextPath}/js/member/signupEmail.js"></script>
+    <!--Email Signup-->
+    <script src="${pageContext.request.contextPath}/js/member/signupEmail.js"></script>
+</div>

@@ -1,6 +1,5 @@
 package io.ticly.mint.member;
 
-import io.ticly.mint.admin.model.dto.CategoryDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.member.dto.ResponseDto;
 import io.ticly.mint.member.dto.UserDTO;
@@ -32,7 +31,7 @@ public class MemberController {
      * '로그인(메인)' 페이지로 이동
      * @return
      */
-    @GetMapping("login")
+    @RequestMapping("login")
     public String showLogin() {
         return "login/login";
     }
@@ -43,8 +42,14 @@ public class MemberController {
      */
     @RequestMapping("emailSignup")
     public String showSignup(){
-        return "login/emailSignup";
+        return "emailSignin";
     }
+
+    @RequestMapping("emailSignin")
+    public String showSignin(){
+        return "emailSign";
+    }
+
 
     /**
      * 로그인 처리

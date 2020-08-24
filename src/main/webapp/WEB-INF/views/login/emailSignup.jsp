@@ -2,14 +2,14 @@
   Created by IntelliJ IDEA.
   User: mac
   Date: 2020/08/24
-  Time: 12:24 오후
+  Time: 2:33 오후
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Ticly - 최신 아티클로 영어공부를 하세요</title>
     <!-- Common -->
     <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
     <style>
@@ -40,7 +40,7 @@
             line-height: 28px;
         }
 
-        .login-footer-gosignup{
+        .login-footer-moving{
             padding-left: 8px;
             text-decoration: underline;
             cursor: pointer;
@@ -63,38 +63,39 @@
                         <h1 class="text text-color-gray100 text-weight-medium">이메일로 회원가입</h1>
                     </hearder>
                     <div class="login-content-wrapper">
-                        <div class="bs-component" id="login-fail-alert"></div>
+                        <div class="login-input-group">
+                            <label for="signup-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
+                            <input type="text" class="form-control form-control-lg" id="signup-email" name="email" placeholder="ticly@ticly.io" />
+                            <div class="signup-validation-message"></div>
+                        </div>
+                        <div class="login-input-group">
+                            <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
+                            <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
+                            <div class="eyes-box" id="signup-eyes-box">
+                                <i class="icon_show" id="signup-eyes-icon"></i>
+                            </div>
 
-                        <div class="login-input-group">
-                            <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                            <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" />
-                            <div class="signin-validation-message"></div>
+                            <p class="signup-validation-message"></p>
                         </div>
-                        <div class="login-input-group">
-                            <label for="signin-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                            <input type="password" class="form-control form-control-lg" id="signin-password" name="password" placeholder="비밀번호를 입력하세요." />
-                            <div class="eyes-box" id="signin-eyes-box">
-                                <i class="icon_show" id="signin-eyes-icon"></i>
+
+                        <!--회원가입 약관 동의-->
+                        <div class="agreements">
+                            <div class="agreement-list custom-control custom-checkbox">
+                                <input type="checkbox" id="AcceptTerm" class="custom-control-input">
+                                <label for="AcceptTerm" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 <a href="#" class="text text-color-gray200 text-weight-bold">서비스 약관</a>과 <a href="#" class="text text-color-gray200 text-weight-bold">개인정보 취급방침</a>에 대해 동의합니다.(필수)</label>
                             </div>
-                            <div class="signin-v alidation-message"></div>
-                        </div>
-                        <div class="signin-validation-message"></div>
-                        <div class="signin-check">
-                            <div class="signin-check-box custom-control custom-checkbox">
-                                <input type="checkbox" id="signin-check" class="custom-control-input">
-                                <label for="signin-check" class="custom-control-label text text-color-gray100 text-weight-regular body1 label-signin-check" id="stay-logined">로그인 상태 유지</label>
-                            </div>
-                            <div class="password-inquiry">
-                                <a href="#" class="text body1 text-color-gray100 text-weight-regular">비밀번호 찾기</a>
+                            <div class="agreement-list custom-control custom-checkbox">
+                                <input type="checkbox" id="promotion" class="custom-control-input custom-control">
+                                <label for="promotion" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 이벤트, 프로모션, 알림 메일 및 SMS수신에 대해 동의합니다.(선택)</label>
                             </div>
                         </div>
                         <div class="login-modal-button">
-                            <button id="signinSubmitBtn" class="btn btn-primary">로그인</button>
+                            <button id="signupSubmitBtn" class="btn btn-primary disabled">회원가입</button>
                         </div>
                     </div>
-                    <footer class="login-modal-footer">
-                        <h6 class="text text-color-gray300 text-weight-regular">아직 회원이 아니신가요?</h6>
-                        <h6 class="text text-color-gray200 text-weight-regular login-modal-footer-gosignup" id="login-footer-signin-to-signup">회원가입</h6>
+                    <footer class="login-footer">
+                        <h6 class="text text-color-gray300 text-weight-regular">이미 티클리 계정이 있나요?</h6>
+                        <a href="/member/login" class="text text-color-gray200 text-weight-regular login-footer-moving h6">로그인</a>
                     </footer>
                 </div>
             </div>
