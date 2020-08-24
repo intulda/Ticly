@@ -1,28 +1,28 @@
 (() => {
-        let signupEmailElem = document.querySelector('#signup-email');  //이메일
-        let signupPasswordElem1 = document.querySelector('#signup-password');   //비밀번호
+        let modalSignupEmailElem = document.querySelector('#modal-signup-email');  //이메일
+        let modalSignupPasswordElem = document.querySelector('#modal-signup-password');   //비밀번호
         //let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
 
-        let errorLabelElem = document.querySelectorAll('.signup-validation-message');   //유효성 메세지
+        let modalErrorLabelElem = document.querySelectorAll('.modal-signup-validation-message');   //유효성 메세지
 
-        let acceptTermCheckBox  = document.querySelector('#AcceptTerm'); //서비스 약관 동의 체크버튼
+        let modalAcceptTermCheckBox  = document.querySelector('#modal-AcceptTerm'); //서비스 약관 동의 체크버튼
 
-        let signupSubmitBtn = document.querySelector('#signupSubmitBtn'); //회원가입 버튼
+        let modalSignupSubmitBtn = document.querySelector('#modal-signupSubmitBtn'); //회원가입 버튼
 
-        let signupEmailCheck = false;   //회원가입시, 이메일 유효성을 체크한다.
-        let signupPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
+        let modalSignupEmailCheck = false;   //회원가입시, 이메일 유효성을 체크한다.
+        let modalSignupPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
         //let signupPasswordCompare = false;  //회원가입시, 패스워드 확인의 유효성을 체크한다.
-        let acceptTermCheck = false; //회원가입시, 약관 동의 여부를 체크한다.
+        let modalAcceptTermCheck = false; //회원가입시, 약관 동의 여부를 체크한다.
 
         //눈표시 클릭 시 패스워드 보이기
         document.getElementById('signup-eyes-box').addEventListener("click",function (){
-          //  signupPasswordElem1.classList.toggle('active');
-            if(signupPasswordElem1.type=='password'){
+          //  modalSignupPasswordElem.classList.toggle('active');
+            if(modalSignupPasswordElem.type=='password'){
                 document.querySelector('#signup-eyes-icon').className="icon_hide";
-                signupPasswordElem1.type='text'
-            }else if(signupPasswordElem1.type=='text'){
+                modalSignupPasswordElem.type='text'
+            }else if(modalSignupPasswordElem.type=='text'){
                 document.querySelector('#signup-eyes-icon').className="icon_show";
-                signupPasswordElem1.type='password'
+                modalSignupPasswordElem.type='password'
             }
         });
 
@@ -45,38 +45,38 @@
         };
 
         //모든 유효성이 성립되면 버튼이 활성화된다.
-        const signupButtonEvent = () => {
-        /*    console.log(signupEmailCheck)
-            console.log(signupPasswordCheck)
+        const onModalSignupButtonEvent = () => {
+        /*    console.log(modalSignupEmailCheck)
+            console.log(modalSignupPasswordCheck)
             console.log(signupPasswordCompare) */
-            if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
-                signupSubmitBtn.classList.remove('disabled');
+            if(modalSignupEmailCheck && modalSignupPasswordCheck && modalAcceptTermCheckBox){
+                modalSignupSubmitBtn.classList.remove('disabled');
             }else{
-                signupSubmitBtn.classList.add('disabled');
+                modalSignupSubmitBtn.classList.add('disabled');
             }
         };
 
-        const onSignupEmailCheck = () => {
-            if(signupEmailElem.value.trim()==""){
-                errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일을 입력해주세요.</p>';
-            } else if(!isEmail(signupEmailElem.value)) {
-                errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일 형식에 맞게 입력해주세요.</p>';
+        const onModalSignupEmailCheck = () => {
+            if(modalSignupEmailElem.value.trim()==""){
+                modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일을 입력해주세요.</p>';
+            } else if(!isEmail(modalSignupEmailElem.value)) {
+                modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일 형식에 맞게 입력해주세요.</p>';
             } else {
                 axios({
                     method: 'post',
                     url: '/member/emailCheck',
                     params: {
-                        email: signupEmailElem.value.trim()
+                        email: modalSignupEmailElem.value.trim()
                     }
                 })
                     .then(function (response){
                         // alert("전송 성공"+response.data);
                         if(response.data==0){
-                            errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">사용 가능한 이메일입니다.</p>'
-                            signupEmailCheck = true;
+                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">사용 가능한 이메일입니다.</p>'
+                            modalSignupEmailCheck = true;
                         } else if(response.data==1){
-                            errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이미 사용 중인 이메일입니다.</p>'
-                            signupEmailCheck = false;
+                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이미 사용 중인 이메일입니다.</p>'
+                            modalSignupEmailCheck = false;
                         }
                     })
                     .catch(function (error) {
@@ -84,56 +84,56 @@
                     });
             }
 
-            signupButtonEvent();
+            onModalSignupButtonEvent();
         }
-        const onSignupPasswordCheck = () => {
-            if(signupPasswordElem1.value.trim()==""){
-                errorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호를 입력해주세요.</p>';
-                signupPasswordCheck = false;
+        const onModalSignupPasswordCheck = () => {
+            if(modalSignupPasswordElem.value.trim()==""){
+                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호를 입력해주세요.</p>';
+                modalSignupPasswordCheck = false;
 
-            } else if(signupPasswordElem1.value.length<8) {
-                errorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">8자 이상의 비밀번호를 입력하세요.</p>';
-                signupPasswordCheck = false;
+            } else if(modalSignupPasswordElem.value.length<8) {
+                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">8자 이상의 비밀번호를 입력하세요.</p>';
+                modalSignupPasswordCheck = false;
 
-            } else if(!isJobPassword(signupPasswordElem1.value)) {
-                errorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">숫자와 영문자를 혼용하여야 합니다.</p>';
-                signupPasswordCheck = false;
+            } else if(!isJobPassword(modalSignupPasswordElem.value)) {
+                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">숫자와 영문자를 혼용하여야 합니다.</p>';
+                modalSignupPasswordCheck = false;
 
             } else {
-                errorLabelElem[1].innerHTML = '';
-                signupPasswordCheck = true;
+                modalErrorLabelElem[1].innerHTML = '';
+                modalSignupPasswordCheck = true;
             }
 
-            signupButtonEvent();
+            onModalSignupButtonEvent();
         }
 
 
         /*
         const onSignupPasswordCompare = () => {
             if(signupPasswordElem2.value.trim()===""){
-                errorLabelElem[2].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">필수 정보입니다.</p>';
+                modalErrorLabelElem[2].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">필수 정보입니다.</p>';
                 signupPasswordCompare = false;
 
-            } else if(signupPasswordElem2.value.trim() !== signupPasswordElem1.value.trim()) {
-                errorLabelElem[2].innerHTML= '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호가 일치하지 않습니다.</p>';
+            } else if(signupPasswordElem2.value.trim() !== modalSignupPasswordElem.value.trim()) {
+                modalErrorLabelElem[2].innerHTML= '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호가 일치하지 않습니다.</p>';
                 signupPasswordCompare = false;
 
-            } else if(signupPasswordElem2.value.trim() === signupPasswordElem1.value.trim()) {
-                errorLabelElem[2].innerHTML = '';
+            } else if(signupPasswordElem2.value.trim() === modalSignupPasswordElem.value.trim()) {
+                modalErrorLabelElem[2].innerHTML = '';
                 signupPasswordCompare = true;
             }
 
-            signupButtonEvent();
+            onModalSignupButtonEvent();
         }
         */
 
-        acceptTermCheckBox.addEventListener("click", function (){
-            if(acceptTermCheckBox.checked == true){
-                acceptTermCheck = true;
-                signupButtonEvent();
+        modalAcceptTermCheckBox.addEventListener("click", function (){
+            if(modalAcceptTermCheckBox.checked == true){
+                modalAcceptTermCheck = true;
+                onModalSignupButtonEvent();
             }else{
-                acceptTermCheck = false;
-                signupButtonEvent();
+                modalAcceptTermCheck = false;
+                onModalSignupButtonEvent();
             }
         });
 
@@ -144,10 +144,10 @@
         }
 
         //회원가입 버튼 클릭 시 이벤트 핸들러
-        const onSignupHandler  = () => {
-            if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
-                const email = signupEmailElem.value;
-                const password = signupPasswordElem1.value;
+        const onModalSignupHandler  = () => {
+            if(modalSignupEmailCheck && modalSignupPasswordCheck && modalAcceptTermCheck){
+                const email = modalSignupEmailElem.value;
+                const password = modalSignupPasswordElem.value;
 
                 //json객체에 담기
                 const member={
@@ -182,9 +182,9 @@
             }
         }
 
-        signupEmailElem.addEventListener('blur', onSignupEmailCheck);
-        signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
+        modalSignupEmailElem.addEventListener('blur', onModalSignupEmailCheck);
+        modalSignupPasswordElem.addEventListener('blur', onModalSignupPasswordCheck);
         //signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
-        acceptTermCheckBox.addEventListener("click", signupButtonEvent);
-        signupSubmitBtn.addEventListener("click", onSignupHandler);
+        modalAcceptTermCheckBox.addEventListener("click", onModalSignupButtonEvent);
+        modalSignupSubmitBtn.addEventListener("click", onModalSignupHandler);
 })();

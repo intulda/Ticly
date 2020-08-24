@@ -85,7 +85,7 @@
 .login-input-group .eyes-box{
   color: #858899;
   position: absolute;
-  top: 40px;
+  top: 43px;
   right: 16px;
   height: 30px;
   font-size: 18px;
@@ -100,7 +100,7 @@
   align-items: center;
 }
 
-.signup-validation-message{
+.modal-signup-validation-message{
   margin-top: 4px;
   display: flex;
   align-items: center;
