@@ -30,8 +30,8 @@
 
     <!-- 회원 등록 SQL -->
     <insert id="signup">
-		insert into MEMBER(EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE, REG_DATE)
-		values(#{email}, #{password}, #{nickname}, #{auth}, #{signup_type}, sysdate)
+		insert into MEMBER(EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE, REG_DATE, MARKETING_AGREE)
+		values(#{email}, #{password}, #{nickname}, #{auth}, #{signup_type}, sysdate, #{marketing_agree})
 	</insert>
 
     <!-- 카테고리 string에 해당하는 seq반환 -->
