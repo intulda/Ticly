@@ -1,10 +1,7 @@
 package io.ticly.mint.learn.model.service;
 
 import io.ticly.mint.learn.model.dao.LearnDAO;
-import io.ticly.mint.learn.model.dto.LearnArticleDTO;
-import io.ticly.mint.learn.model.dto.UserLearnDTO;
-import io.ticly.mint.learn.model.dto.VocaDTO;
-import io.ticly.mint.learn.model.dto.VocaGroupDTO;
+import io.ticly.mint.learn.model.dto.*;
 import io.ticly.mint.util.CommonUtil;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +62,7 @@ public class LearnService {
     public void saveArticleVocaToUser(UserLearnDTO userLearnDTO) throws SQLException {
         int count = learnDAO.saveArticleVocaToUser(userLearnDTO);
 
-        if(count <= 0) {
+        if(count < 0) {
             throw new SQLException("아티클 보카 -> 유저 보카로 insert 실패");
         }
     }
@@ -78,7 +75,7 @@ public class LearnService {
     public void saveArticleGroupToUser(UserLearnDTO userLearnDTO) throws SQLException {
         int count = learnDAO.saveArticleGroupToUser(userLearnDTO);
 
-        if(count <= 0) {
+        if(count < 0) {
             throw new SQLException("아티클 보카 그룹 -> 유저 보카 그룹 insert 실패");
         }
     }
@@ -210,7 +207,7 @@ public class LearnService {
      * @param userLearnDTO
      * @return
      */
-    public int getUserLearning(UserLearnDTO userLearnDTO) {
+    public UserLearnDTO getUserLearning(UserLearnDTO userLearnDTO) {
         return learnDAO.getUserLearning(userLearnDTO);
     }
 
@@ -263,6 +260,26 @@ public class LearnService {
         int count = learnDAO.saveArticleSentenceToUser(userLearnDTO);
         if(count < 0) {
             throw new SQLException("아티클 문장 유저 문장테이블로 저장 실패");
+        }
+        return true;
+    }
+
+    public List<UserSentenceDTO> getArticleSentence(UserSentenceDTO userSentenceDTO) {
+        return learnDAO.getArticleSentence(userSentenceDTO);
+    }
+
+    public boolean updateUserSentence(UserSentenceDTO userSentenceDTO) throws SQLException {
+        int count = learnDAO.updateUserSentence(userSentenceDTO);
+        if(count < 0) {
+            throw new SQLException("유저 문장 저장 실패");
+        }
+        return true;
+    }
+
+    public boolean updateLastUserSentence(UserSentenceDTO userSentenceDTO) throws SQLException {
+        int count = learnDAO.updateLastUserSentence(userSentenceDTO);
+        if(count < 0) {
+            throw new SQLException("유저 문장 저장 실패");
         }
         return true;
     }

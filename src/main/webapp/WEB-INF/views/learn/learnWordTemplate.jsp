@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="leaning-contents-left">
     <div class="leaning-contents-left-top">
         <div class="leaning-progress">

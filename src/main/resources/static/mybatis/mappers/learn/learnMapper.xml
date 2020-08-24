@@ -23,9 +23,10 @@
         AND ARTICLE.DEL != 1
     </select>
 
-    <select id="getUserLearning" parameterType="UserLearnDTO" resultType="int">
+    <select id="getUserLearning" parameterType="UserLearnDTO" resultType="UserLearnDTO">
         SELECT
-            USER_LEARNING_SEQ
+            USER_LEARNING_SEQ,
+            LAST_LEARNING_TYPE
         FROM USER_LEARNING
         WHERE EMAIL = #{email}
         AND ARTICLE_SEQ = #{article_seq}
@@ -338,4 +339,37 @@
             AND UL.USER_LEARNING_SEQ = #{user_learning_seq}
             ORDER BY ARTICLE_SENTENCE_SEQ ASC)
     </insert>
+
+    <select id="getArticleSentence" parameterType="UserSentenceDTO" resultType="UserSentenceDTO">
+        SELECT DISTINCT
+            US.USER_SENTENCE_SEQ,
+            US.USER_LEARNING_SEQ,
+            ARTI.ARTICLE_SEQ,
+            ARTI.ENG_SENTENCE,
+            US.KOR_SENTENCE,
+            US.LAST_SENTENCE
+        FROM ARTICLE_SENTENCE ARTI,
+             USER_SENTENCE US
+        WHERE ARTI.ARTICLE_SENTENCE_SEQ = US.ARTICLE_SENTENCE_SEQ(+)
+        AND ARTI.ARTICLE_SEQ = #{article_seq}
+        AND US.USER_LEARNING_SEQ = #{user_learning_seq}
+        ORDER BY USER_SENTENCE_SEQ ASC
+    </select>
+
+    <update id="updateUserSentence" parameterType="UserSentenceDTO">
+        UPDATE USER_SENTENCE
+        SET KOR_SENTENCE = #{kor_sentence},
+            LAST_SENTENCE = 1
+        WHERE USER_SENTENCE_SEQ = #{user_sentence_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateLastUserSentence" parameterType="UserSentenceDTO">
+        UPDATE USER_SENTENCE
+        SET LAST_SENTENCE = 0
+        WHERE USER_SENTENCE_SEQ != #{user_sentence_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
 </mapper>

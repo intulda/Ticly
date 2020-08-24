@@ -1,8 +1,7 @@
 import WordSetCard from './WordSet.js';
 import ArticleTable from "./ArticleTable.js";
 import WordContent from './WordContent.js';
-
-(() => {
+export function init() {
     const URL = {
         GET_VOCA_LIST: '/learn/getVocaList',
         GET_VOCA_GROUP: '/learn/getVocaGroupList',
@@ -431,7 +430,7 @@ import WordContent from './WordContent.js';
         }
 
         circleProgressInit() {
-            setTimeout(circleProgress, 300);
+            circleProgress();
         }
 
         getInputElement() {
@@ -891,4 +890,4 @@ import WordContent from './WordContent.js';
     delBox.addEventListener('click', selectCheck);
     tableWordAddElem.addEventListener('click', onTableWordAddHandler)
     tableWordRemoveElem.addEventListener('click', onTableWordRemoveHandler)
-})()
+}

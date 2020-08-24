@@ -1,9 +1,6 @@
 package io.ticly.mint.learn.model.dao;
 
-import io.ticly.mint.learn.model.dto.LearnArticleDTO;
-import io.ticly.mint.learn.model.dto.UserLearnDTO;
-import io.ticly.mint.learn.model.dto.VocaDTO;
-import io.ticly.mint.learn.model.dto.VocaGroupDTO;
+import io.ticly.mint.learn.model.dto.*;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -86,7 +83,7 @@ public class LearnDAO {
         return sqlSessionTemplate.insert(NAMESPACE+"saveVocaGroup", vocaGroupDTO);
     }
 
-    public int getUserLearning(UserLearnDTO userLearnDTO) {
+    public UserLearnDTO getUserLearning(UserLearnDTO userLearnDTO) {
         return sqlSessionTemplate.selectOne(NAMESPACE+"getUserLearning", userLearnDTO);
     }
 
@@ -112,5 +109,16 @@ public class LearnDAO {
 
     public int saveArticleSentenceToUser(UserLearnDTO userLearnDTO) {
         return sqlSessionTemplate.insert(NAMESPACE+"saveArticleSentenceToUser", userLearnDTO);
+    }
+
+    public List<UserSentenceDTO> getArticleSentence(UserSentenceDTO userSentenceDTO) {
+        return sqlSessionTemplate.selectList(NAMESPACE+"getArticleSentence", userSentenceDTO);
+    }
+    public int updateUserSentence(UserSentenceDTO userSentenceDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateUserSentence", userSentenceDTO);
+    }
+
+    public int updateLastUserSentence(UserSentenceDTO userSentenceDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateLastUserSentence", userSentenceDTO);
     }
 }

@@ -1,11 +1,9 @@
 package io.ticly.mint.learn;
 
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
-import io.ticly.mint.learn.model.dto.LearnArticleDTO;
-import io.ticly.mint.learn.model.dto.UserLearnDTO;
-import io.ticly.mint.learn.model.dto.VocaDTO;
-import io.ticly.mint.learn.model.dto.VocaGroupDTO;
+import io.ticly.mint.learn.model.dto.*;
 import io.ticly.mint.learn.model.service.LearnService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,8 +53,8 @@ public class LearnController {
                 .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
-        int userLearningSeq = learnService.getUserLearning(userLearnDTO);
-        userLearnDTO.setUser_learning_seq(userLearningSeq);
+        UserLearnDTO userLearnInfo = learnService.getUserLearning(userLearnDTO);
+        userLearnDTO.setUser_learning_seq(userLearnInfo.getUser_learning_seq());
         if(learnService.getGroupDataCheck(userLearnDTO)) {
             learnService.saveArticleGroupToUser(userLearnDTO);
         }
@@ -68,9 +66,20 @@ public class LearnController {
         }
 
         LearnArticleDTO learnArticleDTO = learnService.getArticle(userLearnDTO);
-        learnArticleDTO.setUser_learning_seq(userLearningSeq);
+        learnArticleDTO.setUser_learning_seq(userLearnInfo.getUser_learning_seq());
+        learnArticleDTO.setLast_learning_type(userLearnInfo.getLast_learning_type());
         model.addAttribute("currentArticle", learnArticleDTO);
         return "learn/learning";
+    }
+
+    @PostMapping(value="learnWordTemplate")
+    public String learnWordTemplate() {
+        return "/learn/learnWordTemplate";
+    }
+
+    @PostMapping(value="learnSentenceTemplate")
+    public String learnSentenceTemplate() {
+        return "/learn/learnSentenceTemplate";
     }
 
     /**
@@ -212,4 +221,17 @@ public class LearnController {
         return learnService.updateLastLearningType(userLearnDTO);
     }
 
+    @PostMapping(value="getArticleSentence")
+    @ResponseBody
+    public List<UserSentenceDTO> getArticleSentence(@RequestBody UserSentenceDTO userSentenceDTO) throws SQLException {
+        return learnService.getArticleSentence(userSentenceDTO);
+    }
+
+    @PostMapping(value="updateUserSentence")
+    @ResponseBody
+    public boolean updateUserSentence(@RequestBody UserSentenceDTO userSentenceDTO) throws SQLException {
+        learnService.updateUserSentence(userSentenceDTO);
+        learnService.updateLastUserSentence(userSentenceDTO);
+        return true;
+    }
 }

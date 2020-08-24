@@ -17,25 +17,30 @@
 </head>
 <body>
     <div class="container-xg">
-        <header class="leaning-header-wrap">
-            <div class="leaning-header">
-                <div class="leaning-header-left">
-                    <button class="text btn btn-secondary btn-custom-option text-weight-medium header-btn-back">
-                        <i class="icon_chevron-left"></i>
-                        학습 끝내기
-                    </button>
-                    <ul class="learning__header-index">
-                        <li class="text">내 학습보드</li>
-                        <li class="text">${currentArticle.title}</li>
-                    </ul>
-                </div>
-                <div class="leaning-header-right">
-                    <div id="header-profile" class="text leaning-header-profile">코</div>
-                    <i for="header-profile" class="drop-down"></i>
-                </div>
-            </div>
-        </header>
-        <article class="leaning-current-article-wrap" id="currentArticle" data-article-seq="${currentArticle.article_seq}" data-user-learning-seq="${currentArticle.user_learning_seq}">
+<%--        <header class="leaning-header-wrap">--%>
+<%--            <div class="leaning-header">--%>
+<%--                <div class="leaning-header-left">--%>
+<%--                    <button class="text btn btn-secondary btn-custom-option text-weight-medium header-btn-back">--%>
+<%--                        <i class="icon_chevron-left"></i>--%>
+<%--                        학습 끝내기--%>
+<%--                    </button>--%>
+<%--                    <ul class="learning__header-index">--%>
+<%--                        <li class="text">내 학습보드</li>--%>
+<%--                        <li class="text">${currentArticle.title}</li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
+<%--                <div class="leaning-header-right">--%>
+<%--                    <div id="header-profile" class="text leaning-header-profile">코</div>--%>
+<%--                    <i for="header-profile" class="drop-down"></i>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </header>--%>
+        <c:import url="learningNav.jsp"/>
+        <article class="leaning-current-article-wrap" id="currentArticle"
+                 data-article-seq="${currentArticle.article_seq}"
+                 data-user-learning-seq="${currentArticle.user_learning_seq}"
+                 data-last-learning-type="${currentArticle.last_learning_type}"
+            >
             <div class="container learning__current-container">
                 <div class="leaning-current-article leaning-current-article-tags mb-2">
                     <span class="leaning-current-article-category text text-weight-light badge badge-neutral">${currentArticle.category}</span>
@@ -86,14 +91,14 @@
                     <span class="text h6">${currentArticle.title}</span>
                 </div>
                 <div class="leaning-sub-header-original">
-                    <button class="btn btn-outline-secondary btn-custom-option btn-link-button">
+                    <a href="${currentArticle.url}" class="btn btn-outline-secondary btn-custom-option btn-link-button" target="_blank">
                         <i class="icon_link"></i>
                         원문보기
-                    </button>
+                    </a>
                 </div>
             </div>
         </header>
-        <section class="leaning-contents-wrap container">
+        <section class="leaning-contents-wrap container" id="learnContents">
 
         </section>
     </div>
@@ -101,13 +106,13 @@
         <div class="cd-popup-container">
             <p class="text h6">단어가 없는 세트는 자동으로 삭제됩니다.<br/>계속 진행 하시겠습니까?</p>
             <ul class="cd-buttons">
-                <li><a href="#0" class="btn-primary" id="answerTrue">확인</a></li>
                 <li><a href="#0" class="btn-secondary" id="answerFalse">취소</a></li>
+                <li><a href="#0" class="btn-primary" id="answerTrue">삭제하기</a></li>
             </ul>
             <a href="#0" class="cd-popup-close img-replace"></a>
         </div> <!-- cd-popup-container -->
     </div> <!-- cd-popup -->
-<%--    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"/>--%>
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"/>
     <script type="module" src="${pageContext.request.contextPath}/js/learn/Learn.js"></script>
 <%--    <script type="module" src="${pageContext.request.contextPath}/js/learn/LearnWord.js"/>--%>
 </body>
