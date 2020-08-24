@@ -41,7 +41,7 @@ public class MemberController {
      * '이메일로 회원가입' 페이지 이동
      * @return
      */
-    @RequestMapping("signup")
+    @RequestMapping("emailSignup")
     public String showSignup(){
         return "login/emailSignup";
     }

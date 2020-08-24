@@ -77,7 +77,7 @@
                 </div>
                 <footer class="login-footer">
                     <h6 class="text text-color-gray300 text-weight-regular">아직 회원이 아니신가요?</h6>
-                    <a href="/member/signup" class="text text-color-gray200 text-weight-regular login-footer-gosignup h6" id="login-footer-login-to-signup">회원가입</a>
+                    <a href="/member/emailSignup" class="text text-color-gray200 text-weight-regular login-footer-gosignup h6" id="login-footer-login-to-signup">회원가입</a>
                 </footer>
             </div>
         </div>
