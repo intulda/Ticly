@@ -18,4 +18,5 @@ public class UserDTO {
     private List<CategoryDTO> categories;
     private String signup_type; //회원가입 경로
     private String reg_date; //회원가입 날짜
+    private int marketing_agree;
 }

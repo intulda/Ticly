@@ -1,13 +1,15 @@
 (() => {
-        let modalSignupEmailElem = document.querySelector('#modal-signup-email');  //이메일
-        let modalSignupPasswordElem = document.querySelector('#modal-signup-password');   //비밀번호
+        let modalSignupEmailElem = document.getElementById('modal-signup-email');  //이메일
+        let modalSignupPasswordElem = document.getElementById('modal-signup-password');   //비밀번호
         //let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
 
         let modalErrorLabelElem = document.querySelectorAll('.modal-signup-validation-message');   //유효성 메세지
 
-        let modalAcceptTermCheckBox  = document.querySelector('#modal-AcceptTerm'); //서비스 약관 동의 체크버튼
+        let modalAcceptTermCheckBox  = document.getElementById('modal-AcceptTerm'); //서비스 약관 동의 체크버튼
+        let modalPromotionCheckBox = document.getElementById('modal-promotion');  //마케팅 정보 수신 동의 체크버
 
-        let modalSignupSubmitBtn = document.querySelector('#modal-signupSubmitBtn'); //회원가입 버튼
+
+    let modalSignupSubmitBtn = document.querySelector('#modal-signupSubmitBtn'); //회원가입 버튼
 
         let modalSignupEmailCheck = false;   //회원가입시, 이메일 유효성을 체크한다.
         let modalSignupPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
@@ -72,7 +74,8 @@
                     .then(function (response){
                         // alert("전송 성공"+response.data);
                         if(response.data==0){
-                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">사용 가능한 이메일입니다.</p>'
+                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon" id="modalAvailableEmail"></i><p class="text text-color-green body2">사용 가능한 이메일입니다.</p>'
+                            document.getElementById('modalAvailableEmail').style.color= '#008E6D';
                             modalSignupEmailCheck = true;
                         } else if(response.data==1){
                             modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이미 사용 중인 이메일입니다.</p>'
@@ -155,15 +158,20 @@
         }
 
         //회원가입 버튼 클릭 시 이벤트 핸들러
-        const onModalSignupHandler  = () => {
+        function onModalSignupHandler() {
             if(modalSignupEmailCheck && modalSignupPasswordCheck && modalAcceptTermCheck){
                 const email = modalSignupEmailElem.value;
                 const password = modalSignupPasswordElem.value;
+                let marketing_agree = 0;
+                if(modalPromotionCheckBox.checked){
+                    marketing_agree=1;
+                }
 
                 //json객체에 담기
                 const member={
                     email : email,
-                    password : password
+                    password : password,
+                    marketing_agree : marketing_agree
                 };
                 axios({
                     method: 'post',
@@ -193,9 +201,16 @@
             }
         }
 
-        modalSignupEmailElem.addEventListener('blur', onModalSignupEmailCheck);
+        function handleModalSignupByKeyPress(ev){
+            if(ev.keyCode == 13){
+                onModalSignupHandler();
+            }
+        }
+
+        modalSignupEmailElem.addEventListener('blur', onModalSignupEmailCheck);// blur시, 이메일 중복 확안
         modalSignupPasswordElem.addEventListener('focus', showModalPasswordValidation); //input에 focus하면 비밀번호 유효성 조건을 보여줌
-        modalSignupPasswordElem.addEventListener('input', onModalSignupPasswordCheck); //비밀번호의 유효성 여부를 실시간으로 보여
+        modalSignupPasswordElem.addEventListener('input', onModalSignupPasswordCheck); //비밀번호의 유효성 여부를 실시간으로 보여줌
+        modalSignupPasswordElem.addEventListener("keypress", handleModalSignupByKeyPress);
       //  modalSignupPasswordElem.addEventListener('blur', onModalSignupPasswordCheck);
         //signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
         modalAcceptTermCheckBox.addEventListener("click", onModalSignupButtonEvent);

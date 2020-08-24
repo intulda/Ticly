@@ -1,13 +1,14 @@
 (() => {
-    let signupEmailElem = document.querySelector('#signup-email');  //이메일
-    let signupPasswordElem = document.querySelector('#signup-password');   //비밀번호
+    let signupEmailElem = document.getElementById('signup-email');  //이메일
+    let signupPasswordElem = document.getElementById('signup-password');   //비밀번호
     //let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
 
     let errorLabelElem = document.querySelectorAll('.signup-validation-message');   //유효성 메세지
 
-    let acceptTermCheckBox  = document.querySelector('#AcceptTerm'); //서비스 약관 동의 체크버튼
+    let acceptTermCheckBox  = document.getElementById('acceptTerm'); //서비스 약관 동의 체크버튼
+    let promotionCheckBox = document.getElementById('promotion');  //마케팅 정보 수신 동의 체크버
 
-    let signupSubmitBtn = document.querySelector('#signupSubmitBtn'); //회원가입 버튼
+    let signupSubmitBtn = document.getElementById('signupSubmitBtn'); //회원가입 버튼
 
     let signupEmailCheck = false;   //회원가입시, 이메일 유효성을 체크한다.
     let signupPasswordCheck = false;    //회원가입시, 패스워드의 유효성을 체크한다.
@@ -182,11 +183,16 @@
         if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
             const email = signupEmailElem.value;
             const password = signupPasswordElem.value;
+            let marketing_agree = 0;
+            if(promotionCheckBox.checked) {
+                marketing_agree = 1;
+            }
 
             //json객체에 담기
             const member={
                 email : email,
-                password : password
+                password : password,
+                marketing_agree : marketing_agree
             };
             axios({
                 method: 'post',
@@ -200,8 +206,6 @@
                 }*/
             })
                 .then(function (result){
-                    console.log(result);
-
                     if(result.data.message == "success"){
                         alert("회원가입이 완료되었습니다.");
                         window.location.href="/member/emailSignin";
@@ -216,10 +220,20 @@
         }
     }
 
+    function handleSignupByKeyPress(ev){
+        if(ev.keyCode == 13){
+            onSignupHandler();
+        }
+    }
+
     signupEmailElem.addEventListener('blur', onSignupEmailCheck);   //blur시 이메일의 유효 여부를 체크하기 위한 함수
     signupPasswordElem.addEventListener('focus', showPasswordValidation); //input에 focus하면 비밀번호 유효성 조건을 보여줌
-    signupPasswordElem.addEventListener('input', onSignupPasswordCheck); //비밀번호의 유효성 여부를 실시간으로 보여
+    signupPasswordElem.addEventListener('input', onSignupPasswordCheck); //비밀번호의 유효성 여부를 실시간으로 보여줌
+    signupPasswordElem.addEventListener('keypress', handleSignupByKeyPress); //비밀번호의 유효성 여부를 실시간으로 보여줌
+
     //signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
     acceptTermCheckBox.addEventListener("click", signupButtonEvent);
-    signupSubmitBtn.addEventListener("click", onSignupHandler);
+    signupSubmitBtn.addEventListener("click", onSignupHandler); //회원가입 버튼 클릭 시 이벤트 핸들러
+
+
 })();

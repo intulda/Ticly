@@ -41,7 +41,7 @@
             '                        </div>';
     }
 
-    modalSigninSubmitBtn.addEventListener("click", function () {
+    const onModalSigninHandler = () => {
         if(modalSigninEmailElem.value.trim()==""){
             modalSigninErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이메일을 입력해주세요</p>';
             modalSigninEmailCheck = false;
@@ -95,5 +95,14 @@
                     alert("로그인에 실패했습니다.");
                 });
         }
-    });
+    }
+
+    function handleModalSigninByKeyPress(ev){
+        if(ev.keyCode == 13){
+            onModalSigninHandler();
+        }
+    }
+
+    modalSigninPasswordElem.addEventListener("keypress", handleModalSigninByKeyPress)
+    modalSigninSubmitBtn.addEventListener("click", onModalSigninHandler)
 })();

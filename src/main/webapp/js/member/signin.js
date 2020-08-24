@@ -40,7 +40,7 @@
             '                        </div>';
     }
 
-    signinSubmitBtn.addEventListener("click", function () {
+    const onSigninHandler = () => {
         if(signinEmailElem.value.trim()==""){
             signinErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이메일을 입력해주세요</p>';
             signinEmailCheck = false;
@@ -94,5 +94,14 @@
                     alert("로그인에 실패했습니다.");
                 });
         }
-    });
+    }
+
+    function handleSigninByKeyPress(ev){
+        if(ev.keyCode == 13){
+            onSigninHandler();
+        }
+    }
+
+    signinPasswordElem.addEventListener('keypress', handleSigninByKeyPress); //비밀번호의 유효성 여부를 실시간으로 보여줌
+    signinSubmitBtn.addEventListener("click", onSigninHandler);
 })();

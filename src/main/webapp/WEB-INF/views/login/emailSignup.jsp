@@ -36,7 +36,7 @@
                     </div>
                     <div class="login-input-group">
                         <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                        <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="비밀번호를 입력해주세요" style="ime-mode:inactive;" />
+                        <input type="password" class="form-control form-control-lg" id="signup-password" name="password" placeholder="비밀번호를 입력해주세요" style="ime-mode:inactive;"/>
                         <div class="eyes-box" id="signup-eyes-box">
                             <i class="icon_show" id="signup-eyes-icon"></i>
                         </div>
@@ -50,8 +50,8 @@
                     <!--회원가입 약관 동의-->
                     <div class="agreements">
                         <div class="agreement-list custom-control custom-checkbox">
-                            <input type="checkbox" id="AcceptTerm" class="custom-control-input">
-                            <label for="AcceptTerm" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 <a href="#" class="text text-color-gray200 text-weight-bold">서비스 약관</a>과 <a href="#" class="text text-color-gray200 text-weight-bold">개인정보 취급방침</a>에 대해 동의합니다.(필수)</label>
+                            <input type="checkbox" id="acceptTerm" class="custom-control-input">
+                            <label for="acceptTerm" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 <a href="#" class="text text-color-gray200 text-weight-bold">서비스 약관</a>과 <a href="#" class="text text-color-gray200 text-weight-bold">개인정보 취급방침</a>에 대해 동의합니다.(필수)</label>
                         </div>
                         <div class="agreement-list custom-control custom-checkbox">
                             <input type="checkbox" id="promotion" class="custom-control-input custom-control">
