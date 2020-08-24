@@ -68,5 +68,6 @@
     <!-- footer -->
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
+<script src="${pageContext.request.contextPath}/js/member/signup.js"></script>
 </body>
 </html>

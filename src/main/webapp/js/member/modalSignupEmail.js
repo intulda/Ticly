@@ -15,13 +15,13 @@
         let modalAcceptTermCheck = false; //회원가입시, 약관 동의 여부를 체크한다.
 
         //눈표시 클릭 시 패스워드 보이기
-        document.getElementById('signup-eyes-box').addEventListener("click",function (){
+        document.getElementById('modal-signup-eyes-box').addEventListener("click",function (){
           //  modalSignupPasswordElem.classList.toggle('active');
             if(modalSignupPasswordElem.type=='password'){
-                document.querySelector('#signup-eyes-icon').className="icon_hide";
+                document.getElementById('modal-signup-eyes-icon').className="icon_hide";
                 modalSignupPasswordElem.type='text'
             }else if(modalSignupPasswordElem.type=='text'){
-                document.querySelector('#signup-eyes-icon').className="icon_show";
+                document.getElementById('modal-signup-eyes-icon').className="icon_show";
                 modalSignupPasswordElem.type='password'
             }
         });
