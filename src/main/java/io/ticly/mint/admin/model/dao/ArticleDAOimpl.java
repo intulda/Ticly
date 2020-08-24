@@ -24,8 +24,8 @@ class ArticleDAOImpl implements ArticleDAO{
     }
 
     @Override
-    public ArticleDTO ArticleDetailDao(String title) {
-        return sqlSessionTemplate.selectOne(namespace+".ArticleDetailDao");
+    public ArticleDTO ArticleDetailDao(String article_seq) {
+        return sqlSessionTemplate.selectOne(namespace+".ArticleDetailDao",article_seq);
     }
 
     @Override

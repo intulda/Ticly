@@ -15,10 +15,10 @@
 아티클 내용보기 <br>
 <hr>
 <%--작성자 : 작성자1 <br>--%>
-제목 : ${dto.title} <br>
-기사 요약 : ${param.summary} <br>
-내용 :
-원문 주소 : ${dto.url}  <br>
+제목 :  ${article.title } <br>
+기사 요약 : ${article.summary} <br>
+내용 : ${article.contents} <br>
+원문 주소 : ${article.url}  <br>
 <hr>
 
 <br><p>

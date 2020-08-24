@@ -28,7 +28,7 @@
         del = '0'
     </select>
 
-    <select id="ArticleDetailDao" resultType="ArticleDTO">
+    <select id="ArticleDetailDao" resultType="ArticleDTO"  parameterType="java.lang.String" >
         SELECT
         <include refid="ArticleColumns" />
         FROM
@@ -79,18 +79,6 @@
 			del = '0'
 	</select>
 
-
-    <insert id="saveWordDao">
-    INSERT INTO VOCABOOK(VOCABOOK_SEQ, VOCA, MEANING_NUM, MEANING)
-    SELECT #{VOCA}, MAX(MEANING_NUM)+1, MEANING
-    FROM VOCABOOK
-    WHERE
-    NOT EXISTS (
-    SELECT VOCA
-    FROM VOCABOOK
-    WHERE VOCA = #{VOCA} AND MEANING = #{MEANING}
-    );
-    </insert>
 
 
 <!--

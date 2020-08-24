@@ -1,12 +1,19 @@
 package io.ticly.mint.admin;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
+import io.ticly.mint.admin.model.dao.VocabookDAO;
+import io.ticly.mint.admin.model.dto.ArticleDTO;
 import io.ticly.mint.admin.model.service.AdminFileUploadService;
+import io.ticly.mint.learn.model.dto.VocaDTO;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,10 +29,9 @@ public class AdminAddController {
     @Autowired
     ArticleDAO dao;
 
-    /*
     @Autowired
-    ArticleDAO dao;
-    */
+    VocabookDAO vocabookDAO;
+
 
     private static final String SAVE_PATH = "/fileimages";
     private static final String PREFIX_URL = "/fileimages/";
@@ -47,8 +53,9 @@ public class AdminAddController {
     /* 아티클 등록시 Detail을 확인할 수 있는 메소드 OK */
     @RequestMapping(value="/AdminWriteDetail", method=RequestMethod.GET)
     public String articleDetail(HttpServletRequest request, Model model) {
-        String title = request.getParameter("title");
-
+        String title = request.getParameter("articleseq");
+        ArticleDTO article = dao.ArticleDetailDao(title);
+        model.addAttribute("article", article);
         return "/admin/AdminWriteDetail";
     }
 
@@ -60,18 +67,61 @@ public class AdminAddController {
 
     /* 아티클 정보 hashmap에 넣어주는 부분 */
     @RequestMapping(value="/write", method=RequestMethod.POST)
-    public String adminWrite(HttpServletRequest request, HttpServletResponse response,
-                             Model model, MultipartFile file) throws IOException {
+    @ResponseBody
+    public String adminWrite(ArticleDTO data, MultipartHttpServletRequest mpRequest,  HttpServletResponse response,
+                             Model model) throws IOException {
 
-        String title = request.getParameter("title");
+        // Json 파싱
+        ObjectMapper mapper = new ObjectMapper();
+
+        String param = mpRequest.getParameter("data");
+        ArticleDTO dto = mapper.readValue(param, ArticleDTO.class);
+
+        MultipartHttpServletRequest file = mpRequest;
+
+
+       /* String title = request.getParameter("title");
         String url = request.getParameter("url");
         String summary = request.getParameter("summary");
         String hashtag = request.getParameter("hashtag");
         String content = request.getParameter("content");
+        String category = request.getParameter("category");*//*
+        // 받아온 request 객체의 category값 저장
+
+        int categoryNum = 0;
+
+        // category 문자열 값에 따라 category seq에 int형으로 저장
+        if(category == "개발"){
+            categoryNum = 1;
+        }
+        else if(category == "UI/UX"){
+            categoryNum = 2;
+        }
+        else if(category == "브랜딩"){
+            categoryNum = 3;
+        }
+        else if(category == "마케팅"){
+            categoryNum = 4;
+        }
+        else if(category == "경제"){
+            categoryNum = 5;
+        }
+        else {
+            System.out.println("Category error");
+        }
+
+        // request 객체에 지정된 카테고리 seq 저장
+        request.setAttribute("category_seq", categoryNum);
+*//*
+        System.out.println("title");
+        System.out.println("url");
+        System.out.println("summary");
+        System.out.println("hashtag");
+        System.out.println("content");*/
 
 
         // Map : 아티클 기본 정보
-        Map<String, String> map = new HashMap<String, String>();
+     /*   Map<String, String> map = new HashMap<String, String>();
         map.put("title", title);
         map.put("url", url);
         map.put("summary", summary);
@@ -79,38 +129,12 @@ public class AdminAddController {
         map.put("content", content);
 
 
-        /* 단어, 뜻 sysout 출력 */
-        String[] insert_word = request.getParameterValues("insertword");
-        String[] insert_mean = request.getParameterValues("insertmean");
-
-        System.out.println("단어: " + Arrays.toString(insert_word) + "\n" + "뜻: " + Arrays.toString(insert_mean));
-
-
-        /* Voca 데이터들을 넣어준다 */
-/*
-        Map<String[], String[]> vocaMap = new HashMap<>();
-        for(int i=0; i < insert_word.length < i++){
-            vocaMap.put(insert_word[], insert_mean[]);
-        }*/
-
-
-        /* 등록된 모든 단어 출력 */
-        /*
-        Set<String[]> keys = vocamap.keySet(); // key 문자열을 가진 Set 리턴
-        Iterator<String[]> it = keys.iterator();
-        while(it.hasNext()) {
-            String[] key = it.next();
-            String[] value = vocamap.get(key);
-            System.out.println("(" + key + "," + value + ")");
-        }
-
-        */
-
-        /* 아티클 정보 받기 */
+        *//* 아티클 정보 받기 *//*
         int nResult = dao.writeArticleDao(map);
         System.out.print("Write : " +nResult );
-
+*/
         return "redirect:ArticleList";
+//        return articleDTO;
     }
 
     /* 아티클 목록에서 삭제 */

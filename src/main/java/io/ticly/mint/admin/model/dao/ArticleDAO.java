@@ -9,7 +9,7 @@ import java.util.Map;
 public interface ArticleDAO {
 
     public List<ArticleDTO> ArticleListDao();
-    public ArticleDTO ArticleDetailDao(String title);
+    public ArticleDTO ArticleDetailDao(String article_seq);
     public int writeArticleDao(Map<String, String> map);
     public int deleteArticleDao(@Param("title") String title);
     public int ArticleCount();

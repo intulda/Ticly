@@ -136,6 +136,7 @@
 
 
             <!-- 관리자 페이지 내 Tab + 저장하기 -->
+            <form action="/write" id="admin-add-frm" method="post">
             <div class="item admin-header">
                 <div class="Admin-header-menu-tab" align="left">
                     <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
@@ -145,12 +146,12 @@
                 </div>
 
                 <div>
-                    <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="/AdminDataCheck">
+                    <input type="button" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" >
                     <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
                 </div>
             </div>
 
-            <form action="/write" id="admin-add-frm" method="post" enctype="multipart/form-data">
+
             <!--  아티클 기본 정보 Section -->
             <div class="item">
                 <div class="ArticleInfo" align="center">
@@ -163,7 +164,7 @@
                             </td>
                             <td>
                                 <p class="text body1 text-weight-medium text-color-gray100"> 카테고리 </p>
-                                <select class="form-control" name="category">
+                                <select id="cb_category" class="form-control" name="category">
                                     <option value="카테고리X"> 카테고리를 선택하세요 </option>
                                     <option value="개발"> 개발 </option>
                                     <option value="UI/UX"> UI/UX </option>
@@ -177,20 +178,20 @@
                         <tr>
                             <td>
                                 <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
-                                <input type="text" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
+                                <input type="text" id="title" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
-                                <input type="text" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
+                                <input type="text" id="url" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
                             </td>
                         </tr>
 
                         <tr>
                             <td>
                                 <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
-                                <input type="file" id="file" name="file">
+                                <input type="file" id="file1" name="file1">
                                 <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
                             </td>
                         </tr>
@@ -198,7 +199,7 @@
                         <tr>
                             <td>
                                 <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
-                                <textarea name="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
+                                <textarea name="summary" id="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
                             </td>
                         </tr>
                     </table>
@@ -215,7 +216,7 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
                             </td>
                             <td>
-                                <textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                                <textarea id="contents" name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
                             </td>
                         </tr>
 
@@ -224,7 +225,7 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
                             </td>
                             <td>
-                                <input type="text" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                                <input type="text" id="tag" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control"  aria-describedby="basic-addon3">
                             </td>
                         </tr>
 
@@ -242,55 +243,57 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 단어 정보 </p>
                             </td>
                             <td>
-                                <div id="divTest" class="table">
+                                <table>
+                                    <col width="260px"><col width="568px"><col width="100px">
+                                    <tr>
+                                        <td>
+                                            <p class="ext body1 text-weight-medium text-color-gray100"> 단어 </p>
+                                        </td>
+                                        <td>
+                                            <p class="ext body1 text-weight-medium text-color-gray100"> 뜻 </p>
+                                        </td>
+                                        <td>  </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" value="account for" size="10" readonly="readonly">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" value="설명하다" size="40" readonly="readonly"><br>
+                                        </td>
+                                        <td>
+                                            <%--<button type="button" class="btn"> 삭제 </button>--%>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" value="Null Pointer Exception" size="10" readonly="readonly">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" value="눌 포인트 익셉션" size="40" readonly="readonly"><br>
+                                        </td>
+                                        <td>
+                                            <%--<button type="button" class="btn"> 삭제 </button>--%>
+                                        </td>
+                                    </tr>
 
-                                    <table>
-                                        <col width="260px"><col width="568px"><col width="100px">
-                                        <tr>
-                                            <td>
-                                                <p class="ext body1 text-weight-medium text-color-gray100"> 단어 </p>
-                                            </td>
-                                            <td>
-                                                <p class="ext body1 text-weight-medium text-color-gray100"> 뜻 </p>
-                                            </td>
-                                            <td>  </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="text" class="form-control" value="account for" size="10" readonly="readonly">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" value="설명하다" size="40" readonly="readonly"><br>
-                                            </td>
-                                            <td>
-                                                <%--<button type="button" class="btn"> 삭제 </button>--%>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="text" class="form-control" value="Null Pointer Exception" size="10" readonly="readonly">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" value="눌 포인트 익셉션" size="40" readonly="readonly"><br>
-                                            </td>
-                                            <td>
-                                                <%--<button type="button" class="btn"> 삭제 </button>--%>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
-                                            </td>
-                                            <td>
-                                                <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
-                                            </td>
-                                            <td>
-                                                <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
-                                                <button type="button" class="btn" > 삭제 </button>
-                                        </tr>
 
-                                    </table>
-                                </div>
+                                </table>
+                                <table id="word_rows">
+                                    <col width="260px"><col width="568px"><col width="100px">
+                                    <tr class="word-row">
+                                        <td>
+                                            <input type="text"  class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
+                                        </td>
+                                        <td>
+                                            <input type="text"  class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
+                                        </td>
+                                        <td>
+                                            <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
+                                            <button type="button" class="btn" > 삭제 </button>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
 
@@ -315,12 +318,132 @@
 
 
 <script type="text/javascript">
+    $(function(){
+        $('#saveBtn').click(function(){
+            var formData = new FormData();
+            var data = new Object();
+            data.category = $("#cb_category").val();
+            data.title = $("#title").val();
+            data.url = $("#url").val();
+            data.file = $("#file").val();
+            data.summary = $("#summary").val();
+            data.contents = $("#contents").val();
+            data.hashtag = $("#tag").val();
+            data.vocaDTOS = [];
+
+            $.each($("tr[class='word-row']"), function(index, item){
+                var row = $(item).find("td");
+                console.log(row);
+                var word = new Object();
+                word.voca = $($(row[0]).find("input[type='text']")).val();
+                word.meaning = $($(row[1]).find("input[type='text']")).val();
+                data.vocaDTOS.push(word);
+            });
+
+
+            formData.append('file', $('input[type=file]')[0].files[0]);
+            formData.append('data',JSON.stringify(data));
+
+            console.log(formData);
+
+
+            axios("/write", {
+                method: 'POST',
+                data: formData,
+                header: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+        });
+    });
     var count = 1;
+    /*const saveBtn = document.querySelector('#saveBtn');
+    saveBtn.addEventListener('click', () => {
+      /!*  const insertwordElmes = document.querySelectorAll('input[name="insertword"]');
+        const insertmeanElems = document.querySelectorAll('input[name="insertmean"]');
+        const data = {
+            category: document.querySelector('select[name="category"]').value,
+            title: document.querySelector('input[name="title"]').value,
+            url: document.querySelector('input[name="url"]').value,
+            summary: document.querySelector('textarea[name="summary"]').value,
+            content: document.querySelector('textarea[name="content"]').value,
+            hashtag: document.querySelector('input[name="hashtag"]').value,
+            vocaDTOS: []
+        };
+        const size = insertwordElmes.length;
+        for(let i=0; i<size; i++) {
+            let obj = {
+                voca: insertwordElmes[i].value,
+                meaning: insertmeanElems[i].value
+            }
+            data.vocaDTOS.push(obj);
+        }
+*!/
+        var formData = new FormData();
+        var data = new Object();
+        data.category = $("#cb_category").val();
+        data.title = $("#title").val();
+        data.url = $("#url").val();
+        data.file = $("#file").val();
+        data.summary = $("#summary").val();
+        data.contents = $("#contents").val();
+        data.tag = $("#tag").val();
+        data.vocaDTOS = [];
+
+        $.each($("tr[class='word-row']"), function(index, item){
+            var row = $(item).find("td");
+            console.log(row);
+            var word = new Object();
+            word.voca = $($(row[0]).find("input[type='text']")).val();
+            word.meaning = $($(row[1]).find("input[type='text']")).val();
+            data.vocaDTOS.push(word);
+        });
+
+
+        formData.append('file', $('input[type=file]')[0].files[0]);
+        formData.append('articleDTO',JSON.stringify(data));
+
+        console.log(formData);
+
+        axios("/write", {
+            method: 'POST',
+            data: formData,
+            header: {
+                'Content-Type': 'application/json',
+            },
+        }).then(response => console.log(response));
+
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/write',
+        //     data: JSON.stringify(data),
+        //     contentType : 'application/json',
+        //     success: function (res) {
+        //         console.log(res);
+        //     }
+        // })
+
+      /!*  axios("/write", {
+            method: 'POST',
+            data: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => console.log(response));*!/
+    });*/
 
     function Add_WordBox() {
 
-        var obj = document.getElementById("divTest");
-        var WordDiv = document.createElement('div');
+       /* var obj = $("#divTest");*/
+        var html = '<tr class="word-row">';
+        html += '<td><input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요"></td>'
+        html += '<td> <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"></td>'
+        html += ' <td><button type="button" class="btn" > 삭제 </button></td>'
+        html += '</tr>'
+        $("#word_rows").append(html);
+
+
+        /*var WordDiv = document.createElement('div');
 
         WordDiv.innerHTML = "<table>\n" +
             "                  <col width=\"260px\"><col width=\"568px\"><col width=\"100px\">\n" +
@@ -344,7 +467,7 @@
             var p = this.parentElement;
             //    p.removeChild(this);
         };
-        obj.appendChild(WordDiv);
+        obj.appendChild(WordDiv);*/
 
     }
 
