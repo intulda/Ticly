@@ -1,5 +1,7 @@
 <%@ page import="java.io.BufferedReader" %>
-<%@ page import="java.io.InputStreamReader" %><%--
+<%@ page import="java.io.InputStreamReader" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
   Created by IntelliJ IDEA.
   User: Hyeseung Jang
   Date: 2020-08-12
@@ -15,6 +17,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"/>
+
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <style>
 
@@ -102,205 +105,213 @@
 
     <link rel="stylesheet" href="./css/bootstrap.css">
 </head>
+
 <body>
 
 
+<div class='tickly__basic-layout'>
 
+    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 <form action="/write" id="admin-add-frm" method="post" enctype="multipart/form-data">
 
-    <div class="flex_container">
 
-        <!--  Ticly 로고 라인 탭 -->
-        <div class="item">
-            <div class="main-logo">
-                <img src="./images/logo_color.svg" align="left">
 
-                <a href="ArticleFindTab.jsp" style="text-decoration:none" align="center" class="article-find-tab" > 아티클 찾기 </a>
-                <a href="IntroService.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 서비스 소개 </a>
-                <a href="AdminArticleWrite.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 관리자 페이지 </a>
+        <div class="flex_container ticly__basic-content-layout">
 
-                <input type="image" src="./css/Admin/images/츄.png" border="0" style="float: right;">
-                <input type="button" class="btn btn-success" value="내 학습 보드" style="float: right;">
+
+            <!--  Ticly 로고 라인 탭 -->
+            <%--
+            <div class="item">
+                <div class="main-logo">
+                    <img src="./images/logo_color.svg" align="left">
+
+                    <a href="ArticleFindTab.jsp" style="text-decoration:none" align="center" class="article-find-tab" > 아티클 찾기 </a>
+                    <a href="IntroService.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 서비스 소개 </a>
+                    <a href="AdminArticleWrite.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 관리자 페이지 </a>
+
+                    <input type="image" src="./css/Admin/images/츄.png" border="0" style="float: right;">
+                    <input type="button" class="btn btn-success" value="내 학습 보드" style="float: right;">
+                </div>
             </div>
-        </div>
+    --%>
 
 
+            <!-- 관리자 페이지 내 Tab + 저장하기 -->
+            <div class="item">
+                <hr>
+                <div class="Admin-header-menu-tab" align="left">
+                    <a class="text text-color-green text-weight-medium" style="text-decoration:none" href="/writeForm"> <h6> 아티클 등록하기 </h6> </a>
+                    <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="/ArticleList"> <h6> 아티클 목록 </h6> </a>
+                    <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminMemberList.jsp" > <h6> 회원 관리 </h6> </a>
+                    <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminAnalysis.jsp" > <h6> 통계 </h6> </a>
 
-        <!-- 관리자 페이지 내 Tab + 저장하기 -->
-        <div class="item">
+                    <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="/AdminDataCheck">
+                    <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
+
+                </div>
+                <hr>
+            </div>
+
             <hr>
-            <div class="Admin-header-menu-tab" align="left">
-                <a class="text text-color-green text-weight-medium" style="text-decoration:none" href="/writeForm"> <h6> 아티클 등록하기 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="/ArticleList"> <h6> 아티클 목록 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminMemberList.jsp" > <h6> 회원 관리 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminAnalysis.jsp" > <h6> 통계 </h6> </a>
 
-                <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="/AdminDataCheck">
-                <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
+            <!--  아티클 기본 정보 Section -->
+            <div class="item">
+                <div class="ArticleInfo" align="center">
+                    <table>
+                        <col width="200px"><col width="908px">
+                        <tr>
+                            <td rowspan="5" valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 아티클 기본 정보 </p>
 
+                            </td>
+                            <td>
+                                <p class="text body1 text-weight-medium text-color-gray100"> 카테고리 </p>
+                                <select class="form-control" name="category">
+                                    <option value="카테고리X"> 카테고리를 선택하세요 </option>
+                                    <option value="개발"> 개발 </option>
+                                    <option value="UI/UX"> UI/UX </option>
+                                    <option value="브랜딩"> 브랜딩 </option>
+                                    <option value="마케팅"> 마케팅 </option>
+                                    <option value="경제"> 경제 </option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
+                                <input type="text" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
+                                <input type="text" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
+                                <input type="file" id="file" name="file">
+                                <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
+                                <textarea name="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <hr width="65%">
+
+                <!--  아티클 내용 Section -->
+                <div class="content" align="center">
+                    <table>
+                        <col width="200px"><col width="908px">
+                        <tr>
+                            <td valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
+                            </td>
+                            <td>
+                                <textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
+                            </td>
+                            <td>
+                                <input type="text" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <br><br>
+
+                <!--  단어 정보 Section  -->
+                <div class="word-info" align="center">
+                    <table class="table">
+                        <col width="200px"><col width="908px">
+                        <tr>
+                            <td rowspan="5" valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 단어 정보 </p>
+                            </td>
+                            <td>
+                                <div id="divTest" class="table">
+
+                                    <table>
+                                        <col width="260px"><col width="568px"><col width="100px">
+                                        <tr>
+                                            <td>
+                                                <p class="ext body1 text-weight-medium text-color-gray100"> 단어 </p>
+                                            </td>
+                                            <td>
+                                                <p class="ext body1 text-weight-medium text-color-gray100"> 뜻 </p>
+                                            </td>
+                                            <td>  </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" value="account for" size="10" readonly="readonly">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" value="설명하다" size="40" readonly="readonly"><br>
+                                            </td>
+                                            <td>
+                                                <%--<button type="button" class="btn"> 삭제 </button>--%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" value="Null Pointer Exception" size="10" readonly="readonly">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" value="눌 포인트 익셉션" size="40" readonly="readonly"><br>
+                                            </td>
+                                            <td>
+                                                <%--<button type="button" class="btn"> 삭제 </button>--%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
+                                            </td>
+                                            <td>
+                                                <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
+                                                <button type="button" class="btn" > 삭제 </button>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <input type="button" class="btn" onclick="Add_WordBox()" value=" + 단어 추가하기">
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </div>
+                <!-- 가장 바깥 div -->
             </div>
-            <hr>
+
         </div>
-
-        <hr>
-
-        <!--  아티클 기본 정보 Section -->
-        <div class="item">
-            <div class="ArticleInfo" align="center">
-                <table>
-                    <col width="200px"><col width="908px">
-                    <tr>
-                        <td rowspan="5" valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 아티클 기본 정보 </p>
-
-                        </td>
-                        <td>
-                            <p class="text body1 text-weight-medium text-color-gray100"> 카테고리 </p>
-                            <select class="form-control" name="category">
-                                <option value="카테고리X"> 카테고리를 선택하세요 </option>
-                                <option value="개발"> 개발 </option>
-                                <option value="UI/UX"> UI/UX </option>
-                                <option value="브랜딩"> 브랜딩 </option>
-                                <option value="마케팅"> 마케팅 </option>
-                                <option value="경제"> 경제 </option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
-                            <input type="text" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
-                            <input type="text" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
-                            <input type="file" id="file" name="file">
-                            <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
-                            <textarea name="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <hr width="65%">
-
-            <!--  아티클 내용 Section -->
-            <div class="content" align="center">
-                <table>
-                    <col width="200px"><col width="908px">
-                    <tr>
-                        <td valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
-                        </td>
-                        <td>
-                            <textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
-                        </td>
-                        <td>
-                            <input type="text" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                        </td>
-                    </tr>
-
-                </table>
-            </div>
-
-            <br><br>
-
-            <!--  단어 정보 Section  -->
-            <div class="word-info" align="center">
-                <table class="table">
-                    <col width="200px"><col width="908px">
-                    <tr>
-                        <td rowspan="5" valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 단어 정보 </p>
-                        </td>
-                        <td>
-                            <div id="divTest" class="table">
-
-                                <table>
-                                    <col width="260px"><col width="568px"><col width="100px">
-                                    <tr>
-                                        <td>
-                                            <p class="ext body1 text-weight-medium text-color-gray100"> 단어 </p>
-                                        </td>
-                                        <td>
-                                            <p class="ext body1 text-weight-medium text-color-gray100"> 뜻 </p>
-                                        </td>
-                                        <td>  </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" class="form-control" value="account for" size="10" readonly="readonly">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" value="설명하다" size="40" readonly="readonly"><br>
-                                        </td>
-                                        <td>
-                                            <%--<button type="button" class="btn"> 삭제 </button>--%>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" class="form-control" value="Null Pointer Exception" size="10" readonly="readonly">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" value="눌 포인트 익셉션" size="40" readonly="readonly"><br>
-                                        </td>
-                                        <td>
-                                            <%--<button type="button" class="btn"> 삭제 </button>--%>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
-                                        </td>
-                                        <td>
-                                            <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
-                                            <button type="button" class="btn" > 삭제 </button>
-                                    </tr>
-
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2">
-                            <input type="button" class="btn" onclick="Add_WordBox()" value=" + 단어 추가하기">
-                        </td>
-                    </tr>
-
-                </table>
-
-            </div>
-            <!-- 가장 바깥 div -->
-        </div>
-
-    </div>
-</form>
+    </form>
+</div>
 
 
 
@@ -369,6 +380,7 @@
 
 
 </script>
+
 
 </body>
 </html>
