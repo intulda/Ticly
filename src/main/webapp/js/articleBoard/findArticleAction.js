@@ -12,8 +12,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
         newSectionCardOuter = document.querySelector(".js-new-section-card-outer"),
         popularSectionCardOuter = document.querySelector(".js-popular-section-card-outer"),
         userEmail = document.querySelector("input[name=userEmail]").value,
-        userAuth = document.querySelector("input[name=userAuth]").value,
-        categorySettingBtn = document.querySelector(".js-category-setting-btn");
+        userAuth = document.querySelector("input[name=userAuth]").value;
 
     const GET_ARTICLE_CARD_PATH = "findMyTypeArticle?",
         LAST_LEARNING_ARTICLE_CARD_PATH = "getLastLearningArticleInfo?";
@@ -209,14 +208,12 @@ import LastLearningCard from "./module/lastLearningCard.js";
         // 스켈레톤 UI 그려주기
         paintSkeletonCard();
 
-        // Guest가 아니면, 관심분야 세팅 버튼과, 마지막 학습 카드 그려주기
+        // Guest가 아니면 마지막 학습 카드 그려주기
         if (userAuth != 1 && userAuth != "" ){
-            categorySettingBtn.classList.remove("hide");
             lastLearningSection.classList.remove("hide");
             path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
             let section = lastLearningCardSection;
             getAndPaintLastLearningCard(path, section);
-
         }
 
         // 최신 / 인기 아티클 그려주기

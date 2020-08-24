@@ -3,13 +3,31 @@
 (() => {
     const card = document.querySelectorAll(".js-card"),
         doneBtn = document.querySelector(".js-done-btn"),
-        categoriesInput = document.querySelectorAll("input[name=categories]"),
-        categoryAllBtn = document.querySelector(".js-category__all-btn");
+        categoriesInput = document.querySelectorAll(".js-categories-item"),
+        categoryAllBtn = document.querySelector(".js-category__all-btn"),
+        categoryList = document.querySelectorAll(".js-category-list"),
+        userAuth = document.querySelector("input[name=userAuth]").value,
+        categorySettingBtn = document.querySelector(".js-category-setting-btn");
 
     const CARD_ACTIVE = "card-item-active",
         DISABLE = "disabled";
 
     //----------------------------------------------------------------------------------------------------
+
+    // 사용자가 이미 선택한 카테고리가 있으면, 데이터를 탐색해 checked true 해주기
+    function alreadyCheckedTrue(){
+        categoryList.forEach(listElem => {
+            categoriesInput.forEach(inputElem => {
+                if (listElem.value === inputElem.value){
+                    inputElem.parentNode.classList.add(CARD_ACTIVE);
+                    console.log(inputElem.checked);
+                    inputElem.checked = true;
+                    console.log(inputElem.checked);
+                }
+            });
+        });
+    }
+
 
     // 모든 분야 버튼 이벤트
     function handleCategoryAllBtn() {
@@ -78,15 +96,17 @@
         for (var i = 0; i < categoriesInput.length; i++) {
             categoriesInput[i].checked = false;
         }
+
+        // Guest가 아니면, 관심분야 세팅 버튼 그려주기
+        if (userAuth != 1 && userAuth != "" ){
+            categorySettingBtn.classList.remove("hide");
+        }
     }
 
     function init() {
         window.onpageshow = () => {
             pageLoadEvent();
         };
-
-        //버튼 활성화 Event
-        buttonActiveEvent();
 
         // 모든 분야 Click Event
         categoryAllBtn.addEventListener("click", handleCategoryAllBtn);
@@ -99,7 +119,15 @@
         // Modal Show Event
         document.querySelector('.js-category-modal-trigger').addEventListener("click", () => {
             document.getElementById('category-modal').style.display = "flex";
+
+            // 이미 선택한 관심 분야 표시하기
+            alreadyCheckedTrue();
+
+            // Done 버튼 활성화 Event
+            buttonActiveEvent();
         });
+
+
     }
 
     init();

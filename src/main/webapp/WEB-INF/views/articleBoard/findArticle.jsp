@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/findArticleStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchBarStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryModalStyle.css">
 
 </head>
 <body>
@@ -53,7 +54,7 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="btn btn-tab hide js-category-setting-btn" onclick="location.href ='category'" name="tooltip" data-placement="bottom" title="관심분야 설정"><i class="icon_setting"></i></button>
+                <button class="btn btn-tab hide js-category-setting-btn js-category-modal-trigger" name="tooltip" data-placement="bottom" title="관심분야 설정"><i class="icon_setting"></i></button>
             </div>
 
             <!-- search bar -->
@@ -69,7 +70,6 @@
         </div>
 
             <!-- Last learning Article Section-->
-            <input type="hidden" name="userAuth" value="${userInfo.auth}">
             <div class="lastLearning__Section hide js-lastLearning-section">
 <%--                <p class="text body1 text-color-green" style="margin-bottom: 0.4rem">반갑습니다 ${userInfo.nickname}님! </p>--%>
                 <h3 class="lastLearning__Section-title text h3 text-weight-medium mt-2">${userInfo.nickname}님, 학습을 계속 진행해볼까요?📚</h3>
@@ -98,18 +98,23 @@
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
+<!-- Category Setting Modal -->
+<c:import url="/WEB-INF/views/articleBoard/categoryModal.jsp"></c:import>
+
 <!-- '사용자가 선택한 전체 관심 분야'를 수집하기 위한 처리-->
 <c:forEach items="${userInfo.categories}" var="category">
     <input type="hidden" class="js-categories-str" value=${category}>
 </c:forEach>
 
-<!-- Get User Email-->
+<!-- Get User info-->
 <input type="hidden" name="userEmail" value="${userInfo.email}">
+<input type="hidden" name="userAuth" value="${userInfo.auth}">
 
 <!-- script -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/findArticleAction.js"></script>
 <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
+<script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/categoryModalAction.js"></script>
 
 </body>
 </html>
