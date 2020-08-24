@@ -1,6 +1,7 @@
 package io.ticly.mint.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.admin.model.dao.VocabookDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
@@ -9,6 +10,8 @@ import io.ticly.mint.learn.model.dto.VocaDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +68,7 @@ public class AdminAddController {
         return "/admin/AdminArticleWriteDemo";
     }
 
-    /* 아티클 정보 hashmap에 넣어주는 부분 */
+    /* 아티클 정보 Json에 넣어주는 부분 */
     @RequestMapping(value="/write", method=RequestMethod.POST)
     @ResponseBody
     public String adminWrite(ArticleDTO data, MultipartHttpServletRequest mpRequest,  HttpServletResponse response,
@@ -78,6 +81,18 @@ public class AdminAddController {
 
         MultipartHttpServletRequest file = mpRequest;
 
+
+        String jsonStr = mapper.writeValueAsString(param);
+        System.out.println("param : " + param);
+        System.out.println("jsonStr : " + jsonStr);
+
+
+
+        /*
+        System.out.println(dto.getSummary());
+        System.out.println(dto.getUrl());
+        System.out.println(dto.getContents());
+        */
         return "redirect:ArticleList";
     }
 
