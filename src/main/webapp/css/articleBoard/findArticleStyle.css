@@ -9,13 +9,13 @@
 }
 
 .card__outer {
-    cursor: pointer;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem 2rem;
 }
 
 .card__wrapper {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 100%;

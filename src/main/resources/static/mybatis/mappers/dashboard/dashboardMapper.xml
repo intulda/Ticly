@@ -20,6 +20,7 @@
             ABS.TITLE,
             ABS.SUMMARY,
             ABS.REG_DATE,
+            ABS.USER_ARTICLE_SHOW,
             ROUND(((NVL(DECODE(VOCA_COUNT_READING, 0, null,VOCA_COUNT_READING)/
                 DECODE(VOCA_COUNT, 0, null, VOCA_COUNT),0))*50) +
           (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
@@ -31,6 +32,7 @@
                     U_LEN.LAST_LEARNING_DATE                                 AS LAST_LEARNING_DATE,
                     U_LEN.LAST_LEARNING_TYPE                                 AS LAST_LEARNING_TYPE,
                     U_LEN.ARTICLE_SEQ                                        AS ARTICLE_SEQ,
+                    U_LEN.USER_ARTICLE_SHOW                                  AS USER_ARTICLE_SHOW,
                     A_.URL                                                   AS URL,
                     C_.CATEGORY                                              AS CATEGORY_TITLE,
                     A_.HASHTAG                                               AS HASHTAG,
@@ -50,8 +52,11 @@
                AND U_LEN.EMAIL = #{email}) ABS
     </select>
 
-    <!-- [삭제하기]버튼 클릭시 사용자의 [학습하기] 내역 삭제하기 -->
-    <delete id="deleteUserLearningInfo" parameterType="int">
-        DELETE FROM USER_LEARNING WHERE ARTICLE_SEQ = #{article_seq}
+    <!-- [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기 -->
+    <delete id="updateUserArticleShow" parameterType="hashMap">
+        UPDATE USER_LEARNING
+        SET USER_ARTICLE_SHOW = UPPER(#{showState})
+        WHERE EMAIL = #{email}
+          AND ARTICLE_SEQ = ${seq}
     </delete>
 </mapper>

@@ -6,8 +6,7 @@ import LearningListCard from './module/learningListCard.js';
     const learningListSection = document.querySelector(".js-learningList-section"),
         listTabBtn = document.querySelectorAll(".js-list-tab-btn"),
         selectBox = document.querySelector(".js-my-select-box"),
-        userEmail = document.querySelector("input[name=userEmail]").value,
-        userAuth = document.querySelector("input[name=userAuth]").value;
+        userEmail = document.querySelector("input[name=userEmail]").value;
 
     const MY_ARTICLE_LIST_PATH = "getMyArticleListInfo?", // 내가 [학습하기]로 선택한 아티클 정보를 구하는 경로
         MAXIMUM_NUMBER_OF_CARDS = 5; // 한 번에 보여주는 카드 개수
@@ -42,13 +41,13 @@ import LearningListCard from './module/learningListCard.js';
         let selectedValue = selectBox.options[selectBox.selectedIndex].value;
         let state = null;
 
-        console.log(selectedValue);
-
         listTabBtn.forEach(el => {
             if (el.classList.contains("active")) {
                 state = el.value;
             }
         });
+
+        let showState = checkShowState(state);
 
         // 선택한 옵션에 따라 배열 정렬하기
         let newSortedList = myArticleList;
@@ -75,9 +74,8 @@ import LearningListCard from './module/learningListCard.js';
                     });
                     break;
             }
-            console.log("after");
-            console.log(newSortedList);
-            paintCard(newSortedList, state)
+            let showState = checkShowState(state);
+            paintCard(newSortedList, state, showState)
         }
     }
 
@@ -93,16 +91,25 @@ import LearningListCard from './module/learningListCard.js';
             state = targetElem.value;
 
             // 탭 활상화 상태 바꿔주기
+            listTabBtn.forEach(el => {
+                el.classList.remove("active");
+            });
             targetElem.classList.add("active");
-            let inactiveNum = (state == 0) ? 1 : 0;
-            listTabBtn[inactiveNum].classList.remove("active")
 
             // scrollCount 초기화
             scrollCount = 0;
 
+            let showState = checkShowState(state);
+
             // 상태에 따라 아티클 목록에 학습 카드 그려주기
-            paintCard(myArticleList, state);
+            paintCard(myArticleList, state, showState);
         }
+    }
+
+    function checkShowState(tabState) {
+        if (tabState == 0) return "TRUE";
+        else if (tabState == 1) return "TRUE";
+        else if (tabState == 2) return "FALSE";
     }
 
     // null인지 확인하는 함수
@@ -132,13 +139,14 @@ import LearningListCard from './module/learningListCard.js';
                 , JSON.stringify(list[i].last_learning_date)
                 , JSON.stringify(list[i].achievement_rate)
                 , JSON.stringify(list[i].learning_done)
+                , JSON.stringify(list[i].user_article_show)
             ).getElements());
             count++;
         }
     }
 
     // list의 정보를 가져와 학습중인 아티클 카드를 그려주기
-    function paintCard(list, state) {
+    function paintCard(list, state, showState) {
         // section의 모든 자식 요소 삭제
         while (learningListSection.hasChildNodes()) {
             learningListSection.removeChild(learningListSection.firstChild);
@@ -147,10 +155,14 @@ import LearningListCard from './module/learningListCard.js';
         learningListSection.style.display = "grid";
 
         if (!isNull(list)) {
-            let result = list.filter(it => JSON.stringify(it.learning_done).includes(state));
+            let result = list.filter(it => JSON.stringify(it.user_article_show).includes(showState));
+            if (state != 2) {
+                result = result.filter(it => JSON.stringify(it.learning_done).includes(state));
+            }
+
             if (result.length > 0) {
                 articleCardModule(result, scrollCount);
-
+                $('[name="tooltip"]').tooltip();
             } else {
                 paintDefault(state);
             }
@@ -176,8 +188,11 @@ import LearningListCard from './module/learningListCard.js';
             goToFindArticleBtn.setAttribute("onclick", "location.href='../articleBoard/findArticle'");
             defaultStateWrapper.appendChild(defaultText);
             defaultStateWrapper.appendChild(goToFindArticleBtn);
-        } else {
+        } else if (state == 1) {
             defaultText.innerHTML = `아직 완료한 아티클이 없네요🙈<br> 열심히 공부해서 이곳을 꽉 채워주세요!`;
+            defaultStateWrapper.appendChild(defaultText);
+        } else if (state == 2) {
+            defaultText.innerHTML = `<span class="text text-color-green">학습중</span>인 아티클을 숨길 수 있어요🙈<br> 숨기길 원하시면 카드 우측 상단의 '<i class="icon_show"></i>' 버튼을 클릭해주세요!`;
             defaultStateWrapper.appendChild(defaultText);
         }
         learningListSection.appendChild(defaultStateWrapper);
@@ -186,11 +201,19 @@ import LearningListCard from './module/learningListCard.js';
 
     // 아티클 목록에서 완료 유무를 파악해 각각 몇개의 목록을 가지고 있는지 연산하는 함수
     function counting(list) {
-        let result = list.filter(it => JSON.stringify(it.learning_done).includes(0));
+        // 학습중
+        let result = list.filter(it => JSON.stringify(it.user_article_show).includes("TRUE"));
+        result = result.filter(it => JSON.stringify(it.learning_done).includes(0));
         listTabBtn[0].firstElementChild.innerHTML = result.length;
 
+        // 학습 완료
         result = list.filter(it => JSON.stringify(it.learning_done).includes(1));
         listTabBtn[1].firstElementChild.innerHTML = result.length;
+
+        // 숨긴 아티클
+        result = list.filter(it => JSON.stringify(it.user_article_show).includes("FALSE"));
+        result = result.filter(it => JSON.stringify(it.learning_done).includes(0));
+        listTabBtn[2].firstElementChild.innerHTML = result.length;
     }
 
     // json 객체를 리스트에 담아주는 비동기 처리
@@ -205,8 +228,9 @@ import LearningListCard from './module/learningListCard.js';
 
                 if (json.data.length != 0) {
                     myArticleList = json.data;
-                    paintCard(myArticleList, 0);
+                    paintCard(myArticleList, 0, "TRUE");
                     counting(myArticleList);
+
                 } else {
                     paintDefault(0);
                 }
@@ -222,15 +246,6 @@ import LearningListCard from './module/learningListCard.js';
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        if (userAuth == 1 || userAuth == "") {
-            paintDefault(0);
-            document.getElementById('signinup-modal').style.display = "flex";
-            document.getElementById('main-login-form').classList.remove('hidden');
-            document.getElementById('email-signup-form').classList.add('hidden');
-            document.getElementById('email-signin-form').classList.add('hidden');
-            return;
-        }
-
         const path = createPath(MY_ARTICLE_LIST_PATH);
         const section = learningListSection;
         getArticleList(path, section);
@@ -256,6 +271,7 @@ import LearningListCard from './module/learningListCard.js';
         document.querySelector("#modal-close").addEventListener("click", () => {
             location.href = "../articleBoard/findArticle";
         });
+
     }
 
     init();

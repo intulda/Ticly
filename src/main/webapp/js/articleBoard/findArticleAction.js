@@ -242,6 +242,9 @@ import LastLearningCard from "./module/lastLearningCard.js";
             pageLoadEvent();
         };
 
+        // tooltip
+        $('[name="tooltip"]').tooltip();
+
         categoryTabBtn.forEach(el => {
             el.addEventListener("click", handleCategoryTabClickEvent);
             el.addEventListener("click", categoryTabBtnEvent);

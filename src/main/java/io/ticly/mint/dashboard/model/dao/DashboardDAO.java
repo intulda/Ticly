@@ -25,12 +25,17 @@ public class DashboardDAO {
     }
 
     /**
-     * [삭제하기]버튼 클릭시 사용자의 [학습하기] 내역 삭제하기
+     * [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기
      * @param seq
      * @return
      */
-    public int deleteUserLearningInfo(int seq){
-        return sqlSessionTemplate.delete("dashboardDAO.deleteUserLearningInfo", seq);
+    public int updateUserArticleShow(String seq, String showState, String email){
+        HashMap<String, String> userInfo = new HashMap<>();
+        userInfo.put("seq", seq);
+        userInfo.put("showState", showState);
+        userInfo.put("email", email);
+
+        return sqlSessionTemplate.update("dashboardDAO.updateUserArticleShow", userInfo);
     }
 
 }

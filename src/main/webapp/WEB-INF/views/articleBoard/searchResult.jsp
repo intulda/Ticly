@@ -50,7 +50,7 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="category__tab btn btn-tab" onclick="location.href ='category'"><i
+                <button class="category__tab btn btn-tab" onclick="location.href ='category'" name="tooltip" data-placement="bottom" title="관심분야 설정"><i
                         class="icons icon_setting md"></i></button>
             </div>
 
@@ -64,7 +64,7 @@
                 <c:forEach items="${userInfo.categories}" var="category">
                     <input type="hidden" name="categories" value=${category}>
                 </c:forEach>
-                <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn" type="button">
+                <button type="button" class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn" name="tooltip" data-placement="bottom" title="입력 취소">
                     <i class="icons icon_error_circle sm"></i></button>
             </form>
         </div>

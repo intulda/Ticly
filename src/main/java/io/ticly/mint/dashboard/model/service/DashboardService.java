@@ -25,10 +25,10 @@ public class DashboardService {
     }
 
     /**
-     * [삭제하기]버튼 클릭시 사용자의 [학습하기] 내역 삭제하기
+     * [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기
      * @param seq
      */
-    public int deleteUserLearningInfo(int seq)  {
-        return dashboardDAO.deleteUserLearningInfo(seq);
+    public int updateUserArticleShow(String seq, String showState, String email)  {
+        return dashboardDAO.updateUserArticleShow(seq, showState, email);
     }
 }

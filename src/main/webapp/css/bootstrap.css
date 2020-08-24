@@ -2801,6 +2801,46 @@ fieldset:disabled a.btn {
     background-color: rgba(0, 168, 129, 0);
 }
 
+/*btn-neutral*/
+.btn-neutral {
+    color: #858899;
+    background: rgba(205,206,214,0.16);
+}
+
+.btn-neutral:hover {
+    color: #525463;
+    background: rgba(205,206,214,0.20);
+}
+
+.btn-neutral:focus,
+.btn-neutral.focus {
+    color: #525463;
+    background: rgba(205,206,214,0.24);
+    box-shadow: 0 0 0 0.2rem rgba(205,206,214,0.08);
+}
+
+.btn-neutral.disabled,
+.btn-neutral:disabled {
+    color: #525463;
+    background: rgba(205,206,214,0.16);
+    opacity: 32%;
+}
+
+.btn-neutral:not(:disabled):not(.disabled):active,
+.btn-neutral:not(:disabled):not(.disabled).active,
+.show>.btn-neutral.dropdown-toggle {
+    color: #525463;
+    background: rgba(205,206,214,0.24);
+
+}
+
+.btn-neutral:not(:disabled):not(.disabled):active:focus,
+.btn-neutral:not(:disabled):not(.disabled).active:focus,
+.show>.btn-neutral.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(205,206,214, 0.16);
+}
+
+/* 오른쪽 왼쪽 아이콘 */
 .btn-left-icon {
     display: flex;
     flex-direction: row;

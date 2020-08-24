@@ -42,11 +42,13 @@ public class DashboardController {
         return getMyArticleListInfo;
     }
 
-    // [삭제하기]버튼 클릭시 사용자의 [학습하기] 내역 삭제하기
-    @GetMapping(value = "deleteUserLearningInfo")
-    public String deleteUserLearningInfo(Model model, HttpServletRequest req){
-        int seq = Integer.parseInt(req.getParameter("seq"));
-        dashboardService.deleteUserLearningInfo(seq);
+    // [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기
+    @GetMapping(value = "updateUserArticleShow")
+    public String updateUserArticleShow(Model model, HttpServletRequest req){
+        String seq = req.getParameter("seq");
+        String showState = req.getParameter("showState");
+        String email = ((MemberDTO)model.getAttribute("userInfo")).getEmail();
+        dashboardService.updateUserArticleShow(seq, showState, email);
         return "dashboard/my";
     }
 }

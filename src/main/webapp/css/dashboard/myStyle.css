@@ -190,6 +190,17 @@
     background: rgba(0, 168, 129, 0.16);
 }
 
+.learningList__card-delete-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.learningList__card-delete-btn > i{
+    font-size: 1rem;
+    line-height: 28px;
+}
+
 
 @keyframes tabSlider {
     0%{

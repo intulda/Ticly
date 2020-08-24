@@ -53,32 +53,33 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="btn btn-tab" onclick="location.href ='category'"><i class="icon_setting"></i></button>
+                <button class="btn btn-tab" onclick="location.href ='category'" name="tooltip" data-placement="bottom" title="관심분야 설정"><i class="icon_setting"></i></button>
             </div>
 
             <!-- search bar -->
             <form class="searchBar js-search-bar" action="goToSearchPage">
                 <input type="text" class="form-control" name="searchKeyword" placeholder="학습하고 싶은 아티클을 찾으세요!" autocomplete="off">
-                <button class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn" type="button"><i class="icons icon_search sm"></i></button>
+                <button type="button" class="searchBar__search-btn btn text text-color-gray200 js-searchBar-search-btn"><i class="icons icon_search sm"></i></button>
                 <!-- 카테고리 전송 -->
                 <c:forEach items="${userInfo.categories}" var="category">
                     <input type="hidden" name="categories" value=${category}>
                 </c:forEach>
-                <button class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn" type="button"><i class="icons icon_error_circle sm"></i></button>
+                <button type="button" class="searchBar-cancel-btn btn text text-color-gray300 js-searchBar-cancel-btn" name="tooltip" data-placement="bottom" title="입력 취소"><i class="icons icon_error_circle sm"></i></button>
             </form>
         </div>
 
             <!-- Last learning Article Section-->
             <input type="hidden" name="userAuth" value="${userInfo.auth}">
             <div class="lastLearning__Section hide js-lastLearning-section">
-                <div class="lastLearning__Section-title text h3 text-weight-medium">${userInfo.nickname}님, 학습을 계속 진행해볼까요?📚</div>
+<%--                <p class="text body1 text-color-green" style="margin-bottom: 0.4rem">반갑습니다 ${userInfo.nickname}님! </p>--%>
+                <h3 class="lastLearning__Section-title text h3 text-weight-medium mt-2">${userInfo.nickname}님, 학습을 계속 진행해볼까요?📚</h3>
                 <div class="lastLearning__card-section js-lastLearning-card-section">
                 </div>
             </div>
 
         <!-- new article section -->
         <div class="findArticle__section">
-            <p class="text text-color-green" style="font-size: 14px">아티클 배달 왔습니다!</p>
+            <p class="text body1 text-color-green">아티클 배달 왔습니다!</p>
             <div><a href="clickArticleSection?state=new" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">새로운 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-new-section-card-outer">
             </div>
@@ -86,7 +87,7 @@
 
         <!-- popular article section -->
         <div class="findArticle__section">
-            <p class="text text-color-green" style="font-size: 14px">꼭 읽어보세요!</p>
+            <p class="text body1 text-color-green" style="font-size: 14px">꼭 읽어보세요!</p>
             <div><a href="clickArticleSection?state=popular" class="findArticle__section-title text h3 text-color-gray100 text-weight-medium">필독 아티클<i class="text text-color-green icons icon_chevron-right lg"></i></a></div>
             <div class="card__outer js-popular-section-card-outer">
             </div>

@@ -32,10 +32,15 @@
         <div class="learningList__header">
             <h3 class="text text-color-gray100 text-weight-medium">아티클 목록</h3>
             <div>
-                <button class="learningList__btn btn active js-list-tab-btn" value="0">학습중<span
-                        class="badge badge-neutral ml-1"></span></button>
-                <button class="learningList__btn btn js-list-tab-btn" value="1">학습 완료<span
-                        class="badge badge-neutral ml-1"></span></button>
+                <button class="learningList__btn btn active js-list-tab-btn" value="0">학습중
+                    <span class="badge badge-neutral ml-1"></span>
+                </button>
+                <button class="learningList__btn btn js-list-tab-btn" value="1">학습 완료
+                    <span class="badge badge-neutral ml-1"></span>
+                </button>
+                <button class="learningList__btn btn js-list-tab-btn" value="2">숨긴 아티클
+                    <span class="badge badge-neutral ml-1"></span>
+                </button>
                 <select class="learningList__selectBox custom-select js-my-select-box" name="sorting">
                     <option selected value="1">최근 학습순</option>
                     <option value="2">최신 발행순</option>
@@ -57,7 +62,6 @@
 
 <!-- Get User Email-->
 <input type="hidden" name="userEmail" value="${userInfo.email}">
-<input type="hidden" name="userAuth" value="${userInfo.auth}">
 
 
 <!-- script -->

@@ -302,7 +302,11 @@ import SkeletonCard from './module/skeletonCard.js';
             pageLoadEvent();
         };
 
+        // 무한 스크롤
         infinityScroll();
+
+        // tooltip
+        $('[name="tooltip"]').tooltip();
 
         categoryTabBtn.forEach(el => {
             el.addEventListener("click", handleCategoryTabClickEvent);

@@ -2,7 +2,7 @@
 내 학습보드에 사용자가 학습중인 아티클 정보를 카드에 담아 화면에 그려주기 위한 모듈
 */
 class LearningListCard {
-    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, regDate, lastLearningDate, achievementRate, learningDone) {
+    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, regDate, lastLearningDate, achievementRate, learningDone, userArticleShow) {
         //this.imgFilePath = imgFilePath;
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
@@ -14,6 +14,7 @@ class LearningListCard {
         this.lastLearningDate = ((lastLearningDate.replace(/\"/g, "")).substr(0,10)).replace(/-/g, ".");
         this.achievementRate = achievementRate.replace(/\"/g, "");
         this.learningDone = learningDone.replace(/\"/g, "");
+        this.userArticleShow = userArticleShow.replace(/\"/g, "");
         this.element = document.createElement('div');
     }
 
@@ -22,8 +23,11 @@ class LearningListCard {
         this.element.innerHTML =
             `
             <div class="learningList__card-content-wrapper">
+                <!-- Done Badge & Thumbnail -->
                 <div class="learningList__card-${(this.learningDone == 1) ? "done" : ""}-badge"></div>
                 <img class="learningList__card-img" src="../../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
+                
+                <!-- Card Title & Description -->
                 <div class="learningList__card-body learningList__card-body">
                     <div class="learningList__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                         <div class="learningList__card-tag">
@@ -33,6 +37,37 @@ class LearningListCard {
                         <h4 class="text text-weight-medium" onclick="location.href='workBook?seq=${this.articleSeq}'">${this.title}</h4>
                         <p class="learningList__card-desc text body1 text-color-gray200">${this.summary}</p>
                     </div>
+                    
+                    <!-- Button trigger modal -->
+                    ${(this.learningDone == '1')? "" : `
+                     <button class="learningList__card-delete-btn btn btn-neutral btn-sm" 
+                        ${(this.userArticleShow == 'TRUE')? `data-toggle="modal" data-target="#hideUserArticleCard" name="tooltip" data-placement="left" title="숨기기"` : `name="tooltip" data-toggle="tooltip" data-placement="left" title="보이기" onclick="location.href ='updateUserArticleShow?seq=${this.articleSeq}&showState=TRUE'"` }> 
+                        <i class="${(this.userArticleShow == 'TRUE')? 'icon_show' : 'icon_hide' }"></i>
+                     </button>`}
+                     
+                     <!-- Modal -->
+                     <div class="modal fade" id="hideUserArticleCard" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitle">아티클 숨기기</h5>
+                            <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true"><i class="icon_close"></i></span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            해당 아티클을 숨김 처리하시겠습니까?<br>
+                            숨겨진 아티클은 <span class="text text-color-green text-weight-medium">'숨긴 아티클'</span> 탭에서 언제든지 활성화 시킬 수 있습니다.
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href ='updateUserArticleShow?seq=${this.articleSeq}&showState=FALSE'">숨기기</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                     
+                    <!-- Card Footer -->
                     <div>
                         <div class="learningList__card-footer">
                             <div class="learningList__card-subInfo">
@@ -42,7 +77,7 @@ class LearningListCard {
                                 </div>
                             </div>
                              <div class="learningList__card-btns">
-                             <button class="btn btn-tab" onclick="location.href ='deleteUserLearningInfo?seq=${this.articleSeq}'"><i class="icon_trash"></i></button>
+                           
                                 <button class="learningList__card-orignLink-btn btn btn-tab btn-left-icon" onclick="location.href='${this.url}'"><i class="icons icon_link"></i>원문보기</button>
                                 <button class="learningList__card-continue-btn btn btn-outline-primary btn-right-icon" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                                     <p>학습하기</p><i class="icons icon_chevron-right"></i>
