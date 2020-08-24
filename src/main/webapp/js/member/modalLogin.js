@@ -7,7 +7,7 @@
     });
 
     //메인 로그인에서 '이메일 로그인'으로 이동
-    document.getElementById('login-to-signin').addEventListener("click", function (){
+    document.getElementById('modal-login-to-signin').addEventListener("click", function (){
         document.getElementById('main-login-form').classList.add('hidden');
         document.getElementById('email-signin-form').classList.remove('hidden');
     });
@@ -31,9 +31,9 @@
     });
 
     /*Naver OAuth Login*/
-    let naver_login_btn = document.querySelector('.naver-login-button');
+    let modalNaverLoginBtn = document.getElementById('modal-naver-login-button');
 
-    naver_login_btn.addEventListener("click", function (){
+    modalNaverLoginBtn.addEventListener("click", function (){
         axios({
             method: 'post',
             url: '/naver',

@@ -94,13 +94,7 @@
 
 
 /*유효성 검사 텍스트*/
-.modal-signin-validation-message{
-  margin-top: 4px;
-  display: flex;
-  align-items: center;
-}
-
-.modal-signup-validation-message{
+.validation-message{
   margin-top: 4px;
   display: flex;
   align-items: center;

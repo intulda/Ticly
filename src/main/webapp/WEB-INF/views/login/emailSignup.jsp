@@ -12,42 +12,8 @@
     <title>Ticly - 최신 아티클로 영어공부를 하세요</title>
     <!-- Common -->
     <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
-    <style>
-        .login-container{
-            padding-top: 140px;
-        }
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/login.css">
 
-        .email-login-container{
-            width: 500px;
-            margin: 0 auto;
-            padding: 60px 50px;
-            position: relative;
-            border: 1px solid #e9ecef;
-        }
-
-        /*로그인 페이지 header*/
-        .login-header{
-            display: block;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-
-        /*로그인 페이지 footer*/
-        .login-footer{
-            display: flex;
-            justify-content: center;
-            line-height: 28px;
-        }
-
-        .login-footer-moving{
-            padding-left: 8px;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-
-    </style>
 </head>
 <body>
 <div class="ticly__basic-layout">
@@ -57,8 +23,7 @@
     <!-- content -->
     <div class="container-sm ticly__basic-content-layout">
         <div class="login-container">
-            <div class="email-login-container">
-                <div class="main-login-container" id="main-login-form">
+                <div class="email-signinup-container" id="main-login-form">
                     <hearder class="login-header">
                         <h1 class="text text-color-gray100 text-weight-medium">이메일로 회원가입</h1>
                     </hearder>
@@ -66,7 +31,7 @@
                         <div class="login-input-group">
                             <label for="signup-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
                             <input type="text" class="form-control form-control-lg" id="signup-email" name="email" placeholder="ticly@ticly.io" />
-                            <div class="signup-validation-message"></div>
+                            <div class="signup-validation-message validation-message"></div>
                         </div>
                         <div class="login-input-group">
                             <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
@@ -74,8 +39,7 @@
                             <div class="eyes-box" id="signup-eyes-box">
                                 <i class="icon_show" id="signup-eyes-icon"></i>
                             </div>
-
-                            <p class="signup-validation-message"></p>
+                            <div class="signup-validation-message validation-message"></div>
                         </div>
 
                         <!--회원가입 약관 동의-->
@@ -98,7 +62,6 @@
                         <a href="/member/login" class="text text-color-gray200 text-weight-regular login-footer-moving h6">로그인</a>
                     </footer>
                 </div>
-            </div>
         </div>
     </div>
 
