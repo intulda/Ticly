@@ -18,6 +18,7 @@ import java.util.Map;
 
 @SessionAttributes("userInfo")
 @Controller
+@RequestMapping(value="/member/*")
 public class MemberController {
 
     private MemberService memberService;
@@ -31,12 +32,12 @@ public class MemberController {
      * 페이지 이동
      * @return
      */
-    @GetMapping("/signup")
+    @GetMapping("signup")
     public String showSignup() {
         return "member/loginModal";
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String showLogin() {
         return "login/modalTest";
     }
@@ -45,7 +46,7 @@ public class MemberController {
      * 모달 페이지로 이동
      * @return
      */
-    @GetMapping("/modal")
+    @GetMapping("modal")
     public String showModal() {
         return "member/signInUp";
     }
@@ -55,9 +56,9 @@ public class MemberController {
      * @param userDTO
      * @return String : 로그인 성공시 '로그인 성공' Stirng 반환
      */
-    @PostMapping("/member/signin")
+    @PostMapping("signin")
     @ResponseBody
-    public Map<String, Object> memberSignin(@RequestBody UserDTO userDTO, Model model) {
+    public Map<String, Object> memberSignin(@RequestBody UserDTO userDTO, Model model, HttpSession httpSession) {
         System.out.println(userDTO.getEmail() + userDTO.getPassword());
         UserDTO principal = memberService.findMemberSignin(userDTO); //principal(접근주체)
         Map<String, Object> loginInfo = new HashMap<String, Object>();
@@ -74,26 +75,28 @@ public class MemberController {
             MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
 
-            //memberDTO -> Object -> MemberDTO
-            //세션체크를 한 뒤
             // 세션 값 꺼내오기
             MemberDTO user = (MemberDTO)model.getAttribute("userInfo");
             System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+user.getCategories());
 
+            //이전페이지 불러오기
+            String prev_url = (String)httpSession.getAttribute("prev_url");
+            System.out.println("prev_url : " + prev_url);
+            loginInfo.put("prev_url", prev_url);
+
             if(!(user.getCategories()).isEmpty()){
-                System.out.printf("카테고리 데이터 있음");
+                System.out.println("카테고리 데이터 있음");
                 loginInfo.put( "sessionInfo", "카테고리데이터있음" );
-                return loginInfo;
             }else{
-                System.out.printf("카테고리 데이터 없음");
+                System.out.println("카테고리 데이터 없음");
                 loginInfo.put( "sessionInfo", "카테고리데이터없음" );
-                return loginInfo;
             }
         }else{ //가져온 회원정보가 없으면, 로그인 불가
             loginInfo.put( "status", HttpStatus.OK.value() );
             loginInfo.put( "okay", "false" );
-            return loginInfo;
         }
+
+        return loginInfo;
     }
 
     /**
@@ -101,7 +104,7 @@ public class MemberController {
      * @param userEmail
      * @return 1이면 중복, 0이면 중복 아님
      */
-    @PostMapping("/emailCheck")
+    @PostMapping("emailCheck")
     @ResponseBody
     public int checkEmail(@RequestParam(value = "email") String userEmail) {
         int result = memberService.findDuplicateEmail(userEmail);
@@ -114,7 +117,7 @@ public class MemberController {
      * @param userDTO
      * @return
      */
-    @PostMapping("/member/signup")
+    @PostMapping("signup")
     @ResponseBody
     public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
         int checkNum = 0;
@@ -122,7 +125,7 @@ public class MemberController {
 
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
-            if((MemberDTO)model.getAttribute("userInfo")!=null){
+            if((MemberDTO)model.getAttribute("userInfo")!=null && (MemberDTO)((MemberDTO) model.getAttribute("userInfo")).getCategories()!=null){
                 List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
                 //세션 정보를 User_Categories테이블에 저장한다.
                 memberService.saveUserCategories(userDTO.getEmail(), categories);
@@ -131,11 +134,11 @@ public class MemberController {
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
     }
 
-    @RequestMapping("/member/logout")
-    public String logout(@ModelAttribute("userInfo") MemberDTO memberDTO, SessionStatus sessionStatus){
+    @RequestMapping("logout")
+    public String logout(@ModelAttribute("userInfo") MemberDTO memberDTO, SessionStatus sessionStatus, HttpSession httpSession){
      //   session.invalidate();
 
         sessionStatus.setComplete();
-        return "redirect:/articleBoard/findArticle";
+        return "redirect:"+(String)httpSession.getAttribute("prev_url");
     }
 }

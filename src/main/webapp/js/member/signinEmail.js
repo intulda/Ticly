@@ -80,10 +80,10 @@ signinSubmitBtn.addEventListener("click", function () {
             .then(function (result){
                 console.log(result)
                 if(result.data.okay == "true"){
-                    alert("로그인을 완료했습니다.");
                     if(result.data.sessionInfo==="카테고리데이터있음"){
-                        window.location.href = "/articleBoard/findArticle";
+                        window.location.href = result.data.prev_url;
                     }else if(result.data.sessionInfo==="카테고리데이터없음"){
+                        alert("카테고리를 먼저 선택해보세요!");
                         window.location.href = "/articleBoard/category";
                     }
                 } else {
