@@ -83,9 +83,9 @@
                     <c:if test="${sessionScope.userInfo.auth eq 0}">
                         <a href="/writeTest" class="text text-weight-medium" style="margin-right: 12px">관리자페이지</a>
                     </c:if>
-                    <div class="header-learing-board" id="move-learning-board">
-                        <h6 class="text text-color-green text-weight-medium">내 학습 보드</h6>
-                    </div>
+                    <button class="globalHeader__move-learing-board btn btn-outline-primary btn-right-icon" id="move-learning-board">
+                        내 학습 보드
+                    </button>
                     <div class="dropdown">
                         <div class="header-profile-wrap" data-toggle="dropdown">
                             <div id="header-profile" class="text leaning-header-profile"><%=nickname%></div>
