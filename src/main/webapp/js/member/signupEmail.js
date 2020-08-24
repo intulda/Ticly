@@ -5,7 +5,6 @@
 
         let errorLabelElem = document.querySelectorAll('.signup-validation-message');   //유효성 메세지
 
-        /*약관동의*/
         let acceptTermCheckBox  = document.querySelector('#AcceptTerm'); //서비스 약관 동의 체크버튼
 
         let signupSubmitBtn = document.querySelector('#signupSubmitBtn'); //회원가입 버튼
@@ -26,6 +25,7 @@
                 signupPasswordElem1.type='password'
             }
         });
+
 
         //이메일 정규식 확인 함수
         function isEmail (asValue){
@@ -64,7 +64,7 @@
             } else {
                 axios({
                     method: 'post',
-                    url: '/emailCheck',
+                    url: '/member/emailCheck',
                     params: {
                         email: signupEmailElem.value.trim()
                     }
@@ -107,6 +107,7 @@
             signupButtonEvent();
         }
 
+
         /*
         const onSignupPasswordCompare = () => {
             if(signupPasswordElem2.value.trim()===""){
@@ -136,7 +137,13 @@
             }
         });
 
-        //
+        //회원가입페이지에서 '이메일로 로그인' 페이지로 이동하는 함수
+        function goSignup(){
+            document.getElementById('email-signup-form').classList.add('hidden');
+            document.getElementById('email-signin-form').classList.remove('hidden');
+        }
+
+        //회원가입 버튼 클릭 시 이벤트 핸들러
         const onSignupHandler  = () => {
             if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
                 const email = signupEmailElem.value;
@@ -163,8 +170,10 @@
 
                         if(result.data.message == "success"){
                             alert("회원가입이 완료되었습니다.");
+                            goSignup() //로그인페이지로 이동
+
                         } else {
-                            alert("회원가입에 실패했습니다.");
+                            alert("회원가입이 완료되지 않았습니다.");
                         }
                     })
                     .catch(function (error) {
@@ -176,6 +185,6 @@
         signupEmailElem.addEventListener('blur', onSignupEmailCheck);
         signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
         //signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
-        signupSubmitBtn.addEventListener("click", onSignupHandler);
         acceptTermCheckBox.addEventListener("click", signupButtonEvent);
+        signupSubmitBtn.addEventListener("click", onSignupHandler);
 })();

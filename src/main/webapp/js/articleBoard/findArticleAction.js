@@ -17,11 +17,9 @@ import SkeletonCard from './skeletonCard.js';
         let target = ev.target;
 
         categoryTabBtn.forEach(el => {
-            el.classList.add("inactive");
             el.classList.remove("active");
         });
         target.classList.add("active");
-        target.classList.remove("inactive");
     }
 
     // 관심 분야 버튼을 눌렀을 때 이벤트
@@ -94,19 +92,20 @@ import SkeletonCard from './skeletonCard.js';
             });
     }
 
+    // 스켈레톤 UI 그려주는 함수
     function paintSkeletonCard() {
         for (let i = 0; i < 3; i++){
             newSectionCardOuter.appendChild(new SkeletonCard().getElements());
-        }
+        };
 
         for (let i = 0; i < 3; i++){
             popularSectionCardOuter.appendChild(new SkeletonCard().getElements());
-        }
+        };
     }
 
-    // 화면 로드시 아티클 카드를 그려주 함수
+    // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        paintSkeletonCard();
+        // paintSkeletonCard();
 
         let pathToNewArticle = NEW_ARTICLE_CARD_PATH;
         let pathToPopularArticle = POPULAR_ARTICLE_CARD_PATH;

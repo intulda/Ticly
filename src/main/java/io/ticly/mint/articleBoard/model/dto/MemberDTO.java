@@ -1,14 +1,12 @@
 package io.ticly.mint.articleBoard.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO {
@@ -22,6 +20,12 @@ public class MemberDTO {
     public MemberDTO(int auth, List<String> categories){
         this.auth = auth;
         this.categories = categories;
+    }
+
+    public MemberDTO(int auth, List<String> categories, String email) {
+        this.auth = auth;
+        this.categories = categories;
+        this.email = email;
     }
 
     public MemberDTO(String email, String nickname, int auth, List<String> categories) {

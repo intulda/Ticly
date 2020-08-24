@@ -11,53 +11,131 @@
 <head>
     <title>학습하기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonticon.css">
+    <c:import url="/WEB-INF/views/layout/globalImport.jsp"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/learn/learn.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
-        .container {
-            padding: 0;
-        }
-        .word-list {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .cd-popup {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
             width: 100%;
-            height: 100%;
-            position: absolute;
-            transform: translate(0%, 0%)
-        }
-        .word-list li {
-            list-style-type: none;
-            width: calc(100% - 387px);
-            height: 100%;
-            opacity: .25;
-            position: absolute;
-            /*left: 50%;*/
-            /*margin-left: -100px;*/
-            border-radius: 2px;
-            transition: transform 0.5s, opacity 0.5s;
-        }
-        .word-list .act {
-            opacity: 1;
-        }
-        .word-list .word-list-hide {
-            opacity : 1;
-        }
-        .word-list-end {
-            transform: translateX(-50%) scale(1);
-        }
-        .word-list-hide {
-            transform: translateX(50%) scale(1);
-        }
-        .word-list .word-list-hide,
-        .word-list .word-list-end {
+            background-color: rgba(94, 110, 141, 0.9);
             opacity: 0;
-            transition: opacity .2s, transform .2s;
-            z-index: -10;
-            pointer-events: none;
+            visibility: hidden;
+            -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+            transition: opacity 0.3s 0s, visibility 0s 0.3s;
+        }
+        .cd-popup.is-visible {
+            opacity: 1;
+            visibility: visible;
+            -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+            -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+            transition: opacity 0.3s 0s, visibility 0s 0s;
+            z-index: 20;
+        }
+
+        .cd-popup-container {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            margin: 4em auto;
+            background: #FFF;
+            border-radius: .25em .25em .4em .4em;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            -webkit-transform: translateY(-40px);
+            -moz-transform: translateY(-40px);
+            -ms-transform: translateY(-40px);
+            -o-transform: translateY(-40px);
+            transform: translateY(-40px);
+            /* Force Hardware Acceleration in WebKit */
+            -webkit-backface-visibility: hidden;
+            -webkit-transition-property: -webkit-transform;
+            -moz-transition-property: -moz-transform;
+            transition-property: transform;
+            -webkit-transition-duration: 0.3s;
+            -moz-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+        }
+        .cd-popup-container p {
+            padding: 3em 1em;
+        }
+        .cd-popup-container .cd-buttons:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .cd-popup-container .cd-buttons li {
+            float: left;
+            width: 50%;
+            list-style: none;
+        }
+        .cd-popup-container .cd-buttons a {
+            display: block;
+            height: 60px;
+            line-height: 60px;
+            text-transform: uppercase;
+            -webkit-transition: background-color 0.2s;
+            -moz-transition: background-color 0.2s;
+            transition: background-color 0.2s;
+        }
+        .cd-popup-container .cd-buttons li:first-child a {
+            border-radius: 0 0 0 .25em;
+        }
+        .no-touch .cd-popup-container .cd-buttons li:first-child a:hover {
+            background-color: #fc8982;
+        }
+        .cd-popup-container .cd-buttons li:last-child a {
+            border-radius: 0 0 .25em 0;
+        }
+        .no-touch .cd-popup-container .cd-buttons li:last-child a:hover {
+            background-color: #c5ccd8;
+        }
+        .cd-popup-container .cd-popup-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+        }
+        .cd-popup-container .cd-popup-close::before, .cd-popup-container .cd-popup-close::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            width: 14px;
+            height: 3px;
+            background-color: #8f9cb5;
+        }
+        .cd-popup-container .cd-popup-close::before {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+            left: 8px;
+        }
+        .cd-popup-container .cd-popup-close::after {
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            right: 8px;
+        }
+        .is-visible .cd-popup-container {
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -ms-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+        }
+        @media only screen and (min-width: 1170px) {
+            .cd-popup-container {
+                margin: 8em auto;
+            }
         }
     </style>
 </head>
@@ -70,7 +148,7 @@
                         <i class="icon_chevron-left"></i>
                         학습 끝내기
                     </button>
-                    <ul class="header-index">
+                    <ul class="learning__header-index">
                         <li class="text">내 학습보드</li>
                         <li class="text">${currentArticle.title}</li>
                     </ul>
@@ -81,8 +159,8 @@
                 </div>
             </div>
         </header>
-        <article class="leaning-current-article-wrap">
-            <div class="container">
+        <article class="leaning-current-article-wrap" id="currentArticle" data-article-seq="${currentArticle.article_seq}" data-user-learning-seq="${currentArticle.user_learning_seq}">
+            <div class="container learning__current-container">
                 <div class="leaning-current-article leaning-current-article-tags mb-2">
                     <span class="leaning-current-article-category text text-weight-light badge badge-neutral">${currentArticle.category}</span>
                     <span class="leaning-current-article-hashtag text body1 text-color-gray300">${currentArticle.hashtag}</span>
@@ -111,7 +189,7 @@
                 <div class="leaning-current-progress-wrap mb-4">
                     <div class="leaning-current-progress-status mb-2">
                         <div class="leaning-current-progress-status-title text h6 text-weight-medium">전체 학습 진도</div>
-                        <div class="leaning-current-progress-status-percent text h3 text-weight-bold">32%</div>
+                        <div class="leaning-current-progress-status-percent text h3 text-weight-bold" id="progressInfo">0%</div>
                     </div>
                     <div class="leaning-current-progress-bar">
                         <div class="leaning-current-progress-bar"></div>
@@ -280,35 +358,8 @@
                                 </tr>
                             </thead>
                             <tbody id="articleWordTable">
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-primary">완료</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text">Null Pointer Exception</td>
-                                    <td class="text">눌 포인터 익셉션</td>
-                                    <td class="text">
-                                        <span class="text text-weight-light badge badge-neutral">미완료</span>
-                                    </td>
-                                </tr>
-                                </tbody>
+
+                            </tbody>
                         </table>
                         <div class="leaning-contents-table-down">
                             <button class="btn btn-outline-primary table-word-delet-btn" id="tableWordAdd">
@@ -320,6 +371,17 @@
             </div>
         </section>
     </div>
+    <div class="cd-popup" role="alert">
+        <div class="cd-popup-container">
+            <p>단어가 없는 세트는 자동으로 삭제됩니다.<br/>계속 진행 하시겠습니까?</p>
+            <ul class="cd-buttons">
+                <li><a href="#0" class="btn-primary" id="answerTrue">확인</a></li>
+                <li><a href="#0" class="btn-secondary" id="answerFalse">취소</a></li>
+            </ul>
+            <a href="#0" class="cd-popup-close img-replace"></a>
+        </div> <!-- cd-popup-container -->
+    </div> <!-- cd-popup -->
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"/>
     <script type="module" src="${pageContext.request.contextPath}/js/learn/Learn.js"></script>
 </body>
 </html>

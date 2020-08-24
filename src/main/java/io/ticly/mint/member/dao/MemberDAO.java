@@ -1,10 +1,13 @@
 package io.ticly.mint.member.dao;
 
 import io.ticly.mint.member.dto.UserDTO;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MemberDAO {
@@ -29,13 +32,6 @@ public class MemberDAO {
         return sqlSessionTemplate.selectList("memberMapper.getUserCategories", email);
     }
 
-    public int saveUserCategories(String email, int category_num){
-        int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.saveUserCategories", category_num);
-
-        return checkNum;
-    }
-
     /**
      * 회원가입시 이메일 중복 확인
      * @param email
@@ -52,12 +48,42 @@ public class MemberDAO {
      * @return
      */
     public int insertNewMember(UserDTO userDTO){
-        int checkNum = 0;
-        checkNum = sqlSessionTemplate.insert("memberMapper.signup", userDTO);
-        System.out.println("MemberDAO checkNum : " + checkNum);
-        return checkNum;
+        return sqlSessionTemplate.insert("memberMapper.signup", userDTO);
     }
 
+
+    /**
+     * 카테고리 sequence값 받기
+     * @param category_name
+     * @return
+     */
+    public int getCategorySeq(String category_name){
+        return sqlSessionTemplate.selectOne("memberMapper.getCategorySeq", category_name);
+    }
+
+    public int deleteUserCategory(String email){
+        return sqlSessionTemplate.delete("deleteUserCategory", email);
+    }
+
+
+    /**
+     * 카테고리 값 저장
+     * @param email
+     * @param category_seq
+     * @return
+     */
+    public int saveUserCategories(String email, int category_seq){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put( "email", email );
+        map.put( "category_seq", category_seq );
+
+        return sqlSessionTemplate.insert("memberMapper.saveUserCategories", map);
+    }
+
+
+    /** OAuth로 새롭게 가입한 멤버 저장
+     *
+     */
     public int insertOAuthMember(UserDTO userDTO){
         return sqlSessionTemplate.insert("memberMapper.signup", userDTO);
     }

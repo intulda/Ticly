@@ -53,7 +53,7 @@ public class HomeController {
                 // 카테고리를 선택하지 않았다면,
                 if(user.getCategories() == null) {
                     //test code
-                    System.out.println("카테고리를 이미 선택했다.");
+                    System.out.println("카테고리를 선택하지 않았다.");
                     path = "redirect:/articleBoard/category";
                 }
 
@@ -66,5 +66,33 @@ public class HomeController {
             }
         }
         return path;
+    }
+
+    /**
+     * 서비스 소개로 이동
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/service")
+    public String showInfo(Model model) {
+        return "intro/serviceInfo";
+    }
+
+    /**
+     * 학습완료 뷰이동(테스트)
+     * @return
+     */
+    @RequestMapping(value = "/complete")
+    public String showlearningComplete(){
+        return "learn/learningComplete";
+    }
+
+    /**
+     * 학습하기 네이동(테스트)
+     * @return
+     */
+    @RequestMapping(value = "/learningNav")
+    public String showNav(){
+        return "learn/learningNav";
     }
 }

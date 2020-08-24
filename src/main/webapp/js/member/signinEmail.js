@@ -64,7 +64,7 @@ signinSubmitBtn.addEventListener("click", function () {
     if(signinEmailCheck && signinPasswordCheck){
         const email = signinEmailElem.value;
         const password = signinPasswordElem.value;
-        console.log(email + password)
+
         //json객체에 담기
         const signinData={
             email : email,
@@ -78,8 +78,14 @@ signinSubmitBtn.addEventListener("click", function () {
             data : JSON.stringify(signinData)
         })
             .then(function (result){
-                if(result.data == "success"){
-                    alert("로그인을 완료했습니다.");
+                console.log(result)
+                if(result.data.okay == "true"){
+                    if(result.data.sessionInfo==="카테고리데이터있음"){
+                        window.location.href = result.data.prev_url;
+                    }else if(result.data.sessionInfo==="카테고리데이터없음"){
+                        alert("카테고리를 먼저 선택해보세요!");
+                        window.location.href = "/articleBoard/category";
+                    }
                 } else {
                     failEmailLogin(); //로그인 실패시 경고 alert
                 }

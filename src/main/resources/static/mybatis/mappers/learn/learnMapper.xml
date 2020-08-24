@@ -23,6 +23,14 @@
         AND ARTICLE.DEL != 1
     </select>
 
+    <select id="getUserLearning" parameterType="UserLearnDTO" resultType="int">
+        SELECT
+            USER_LEARNING_SEQ
+        FROM USER_LEARNING
+        WHERE EMAIL = #{email}
+        AND ARTICLE_SEQ = #{article_seq}
+    </select>
+
     <update id="saveUserLearning" parameterType="UserLearnDTO">
         MERGE INTO USER_LEARNING UL
             USING DUAL
@@ -40,12 +48,14 @@
                         UL.USER_LEARNING_SEQ,
                         UL.EMAIL,
                         UL.ARTICLE_SEQ,
-                        UL.LAST_LEARNING_DATE
+                        UL.LAST_LEARNING_DATE,
+                        UL.LAST_LEARNING_TYPE
                     ) VALUES (
                         USER_LEARNING_PK_SEQ.NEXTVAL,
                         #{email},
                         #{article_seq},
-                        SYSDATE
+                        SYSDATE,
+                        0
                     )
     </update>
 
@@ -54,6 +64,11 @@
             COUNT(DISTINCT ARTICLE_SEQ)
         FROM USER_VOCA
         WHERE ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+    </select>
+
+    <select id="getGroupDataCheck" parameterType="UserLearnDTO" resultType="int">
+        SELECT COUNT(*) FROM USER_VOCA_GROUP WHERE ARTICLE_SEQ = #{article_seq} AND EMAIL = #{email}
     </select>
 
     <insert id="saveArticleVocaToUser" parameterType="UserLearnDTO">
@@ -82,8 +97,36 @@
                  USER_LEARNING UL
             WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
             AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            AND UL.USER_LEARNING_SEQ = #{user_learning_seq}
             ORDER BY ARTI_VOCA.VOCA_ORDER ASC
         )
+    </insert>
+
+    <insert id="saveArticleGroupToUser" parameterType="UserLearnDTO">
+        INSERT INTO USER_VOCA_GROUP (
+                USER_VOCA_GROUP_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA_GROUP,
+                EMAIL
+            ) SELECT
+                USER_VOCA_GROUP_PK_SEQ.nextval AS USER_VOCA_GROUP_PK_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA_GROUP,
+                EMAIL
+            FROM (
+                  SELECT DISTINCT
+                UL.USER_LEARNING_SEQ,
+                ARTI_VOCA.ARTICLE_SEQ,
+                VOCA_GROUP,
+                UL.EMAIL
+            FROM ARTICLE_VOCABOOK ARTI_VOCA,
+                 USER_LEARNING UL
+            WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
+            AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            AND UL.EMAIL = #{email}
+            ORDER BY ARTI_VOCA.VOCA_GROUP ASC)
     </insert>
 
     <select id="getVocaList" parameterType="UserLearnDTO" resultType="VocaDTO">
@@ -103,6 +146,7 @@
         WHERE UV.VOCA = VB.VOCA(+)
           AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ(+)
           AND AV.MEANING_NUM = VB.MEANING_NUM
+          AND UV.USER_LEARNING_SEQ = #{user_learning_seq}
           AND UV.MEANING IS NULL
           AND UV.ARTICLE_SEQ = #{article_seq})
         UNION ALL
@@ -118,6 +162,7 @@
            VOCA_GROUP
         FROM USER_VOCA
         WHERE ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
         AND MEANING IS NOT NULL)
         ORDER BY VOCA_GROUP, VOCA_ORDER ASC
     </select>
@@ -164,4 +209,90 @@
          WHERE USER_VOCA_SEQ = #{user_voca_seq}
     </update>
 
+    <update id="updateLastVoca" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET LAST_VOCA = 1
+         WHERE USER_VOCA_SEQ = #{user_voca_seq}
+    </update>
+
+    <update id="updateLastVocaAll" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET LAST_VOCA = 0
+         WHERE USER_VOCA_SEQ != #{user_voca_seq}
+    </update>
+
+    <select id="getProgressPercent" parameterType="VocaDTO" resultType="int">
+        SELECT
+            PERCENT
+            FROM (SELECT
+                         ROUND(NVL(DECODE(VOCA_COUNT_READING, 0, null, VOCA_COUNT_READING)/DECODE(VOCA_COUNT, 0, null, VOCA_COUNT)*50,0)
+                            +
+                         NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT)*50, 0)) AS PERCENT
+                  FROM (
+                           SELECT (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = #{user_learning_seq}) AS VOCA_COUNT,
+                                  (SELECT COUNT(VOCA)
+                                   FROM USER_VOCA
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+                                     AND CHECK_READING != 0) AS VOCA_COUNT_READING,
+                                  (SELECT COUNT(NVL(KOR_SENTENCE, 0))
+                                   FROM USER_SENTENCE
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}) AS SENTENCE_COUNT,
+                                  (SELECT COUNT(KOR_SENTENCE)
+                                   FROM USER_SENTENCE
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+                                     AND KOR_SENTENCE IS NOT NULL) AS SENTENCE_COUNT_READING
+                           FROM DUAL
+                       )
+                 )
+    </select>
+
+    <select id="getVocaGroupList" parameterType="UserLearnDTO" resultType="VocaGroupDTO">
+        SELECT
+            USER_VOCA_GROUP_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA_GROUP
+        FROM USER_VOCA_GROUP
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+          AND EMAIL = #{email}
+    </select>
+
+    <insert id="saveVocaGroup" parameterType="VocaGroupDTO">
+        INSERT INTO USER_VOCA_GROUP (
+            USER_VOCA_GROUP_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA_GROUP,
+            EMAIL
+        ) VALUES (
+            USER_VOCA_GROUP_PK_SEQ.nextval,
+            #{user_learning_seq},
+            #{article_seq},
+            #{voca_group},
+            #{email}
+        )
+    </insert>
+
+    <delete id="deleteVocaGroup" parameterType="VocaGroupDTO">
+        DELETE FROM USER_VOCA_GROUP
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+        AND VOCA_GROUP = #{voca_group}
+    </delete>
+
+    <update id="updateVocaGroupDown" parameterType="VocaGroupDTO">
+        UPDATE USER_VOCA_GROUP
+        SET VOCA_GROUP = VOCA_GROUP-1
+        WHERE VOCA_GROUP > #{voca_group}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateUserVocaGroupDown" parameterType="VocaGroupDTO">
+        UPDATE USER_VOCA
+        SET VOCA_GROUP = VOCA_GROUP-1
+        WHERE VOCA_GROUP > #{voca_group}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
 </mapper>

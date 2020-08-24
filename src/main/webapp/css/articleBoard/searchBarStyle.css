@@ -19,8 +19,8 @@
     border: none;
 }
 
-.input-add-item > button:focus {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+.searchBar> button:focus {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
 }
 
 .searchBar__search-btn{
@@ -37,13 +37,13 @@
 }
 
 .searchBar-cancel-btn:hover{
-    color: #525463;
+    color: #2B2D36;
 }
 
 .searchBar-cancel-btn > i{
-    transition: all 0.2s;
+    transition: all 0.1s;
 }
 
-.searchBar-cancel-btn:hover.searchBar-cancel-btn > i{
-    font-size: 17px;
-}
+/*.searchBar-cancel-btn:hover.searchBar-cancel-btn > i{*/
+/*    font-size: 17px;*/
+/*}*/

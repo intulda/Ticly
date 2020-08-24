@@ -5,6 +5,7 @@ import io.ticly.mint.member.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,18 +31,34 @@ public class MemberService {
         return memberDAO.getUserCategories(email);
     }
 
-    public void saveUserCategories(String email, List<String> categories){
+    /**
+     * 세션에 있던 카테고리 정보를 user_categories에 저장
+     * @param email
+     * @param categories
+     */
+    public void saveUserCategories(String email, List<String> categories) throws SQLException{
+        //1. String에 맞는 카테고리 seq를 받아오기
+        List<Integer> category_seq  = new ArrayList<>();
+        for(String i : categories){
+            int seq = memberDAO.getCategorySeq(i);
+            System.out.println("[Service]넘어온 seqResult : " + seq);
 
-        /*
-        for (int i=0;)
-
-        int count = memberDAO.saveUserCategories(email, category_);
-
-        if(count <= 0) {
-        //  throw new SQLException("세션 카테고리 -> DB에 insert 실패");
-            System.out.println("세션 카테고리 -> DB에 insert 실패");
+            category_seq.add(seq);
         }
-        */
+
+        //2.기존에 있던 카데고리 데이터를 삭제한다.
+        int deleteCheck = memberDAO.deleteUserCategory(email);
+        System.out.println("deleteCheck : " + deleteCheck);
+
+        //3.email과 seq를 테이블에 저장한다.
+        for(Integer i: category_seq){
+            int count = memberDAO.saveUserCategories(email, i);
+
+            if(count <= 0) {
+               throw new SQLException("세션 카테고리 -> DB에 insert 실패");
+                //System.out.println("세션 카테고리 -> DB에 insert 실패");
+            }
+        }
     }
 
     /**
@@ -54,7 +71,9 @@ public class MemberService {
         //중복된 이메일인 경우
         if(userDTO!=null){
             return 1;
-        }else { //중복되지 않은 이메일인 경우
+        }
+        //중복되지 않은 이메일인 경우
+        else {
             return 0;
         }
     }
@@ -73,13 +92,14 @@ public class MemberService {
         userDTO.setNickname(nickname);
 
         userDTO.setAuth(3);
-        userDTO.setSignup_type("Email");
+        userDTO.setSignup_type("EMAIL");
         //Dao로 넘기기
+
         return memberDAO.insertNewMember(userDTO);
     }
 
     /**
-     * OAuth 가입시, 기존 가입정보가 있는지 확
+     * OAuth 가입시, 기존 가입정보가 있는지 확인
      * @param authEmail
      * @return
      */

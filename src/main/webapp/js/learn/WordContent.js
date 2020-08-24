@@ -5,47 +5,27 @@ class WordContent {
 
     process() {
         const getElementsArray = [];
-        let checkPoint = -1;
-
-        const readingCount = this.data.filter((obj) => {
-            return obj.check_reading == 0
+        let voca_order = 0;
+        const lastVoca = this.data.filter((obj) => {
+            return obj.last_voca == 1;
         })
 
-        if(readingCount.length == 0) {
+        if(this.data.length > 0) {
+            voca_order = lastVoca.length > 0 ? lastVoca[0].voca_order : this.data[0].voca_order;
             for(let i=0; i<this.data.length; i++) {
-                let className = 'word-list-hide';
-                if(i == 0) {
+                let className = 'word-list-end';
+
+                if(this.data[i].voca_order > voca_order) {
+                    className = 'word-list-hide';
+                } else if(this.data[i].voca_order == voca_order) {
                     className = 'act';
+                } else {
+                    className = 'word-list-end';
                 }
                 getElementsArray.push(this.getElements(this.data[i], className));
             }
-        } else {
-            for(let i=0; i<this.data.length; i++) {
-                if(this.data[i].check_reading === 0) {
-                    let className = 'word-list-hide';
-                    if(checkPoint == -1) {
-                        checkPoint = this.data[i].voca_order;
-                        className = 'act';
-                    }
-                    getElementsArray.push(this.getElements(this.data[i], className));
-                } else if(this.data[i].check_reading === 1) {
-                    let className = 'word-list-end'
-                    if(checkPoint != -1) {
-                        if (checkPoint < this.data[i].voca_order) {
-                            className = 'word-list-hide'
-                        } else if (checkPoint > this.data[i].voca_order) {
-                            className = 'word-list-end'
-                        }
-                    }
-
-                    if(this.data[this.data.length-1] === this.data[i]) {
-                        className = 'act';
-                    }
-
-                    getElementsArray.push(this.getElements(this.data[i], className));
-                }
-            }
         }
+
         return getElementsArray;
     }
 
@@ -61,6 +41,30 @@ class WordContent {
                     <span class="font-point">${_count}</span>개
                 </li>
                 <li>전체 단어 ${this.data.length}개</li>`
+    }
+
+    getLastCardElement(groupNumber, maxGroupNumber, maxDataLength) {
+        const _element = document.createElement('li');
+        _element.dataset.group = groupNumber;
+        _element.classList.add("word-list-hide");
+        if(groupNumber == maxGroupNumber) {
+            _element.innerHTML = `<div class="learning__last-card">
+                                   <div class="text h6 learning__content-wrod-mb">잘했어요! 단어세트를 모두 학습하셨습니다!</div>
+                                   <div class="text">
+                                       <button type="button" class="btn btn-primary" data-status="sentence">문장 학습하기</button>                                    
+                                   </div>
+                                </div>`;
+        } else {
+            const nextGroup = Number(groupNumber)+1;
+            _element.innerHTML = `<div class="learning__last-card">
+                                   <div class="text h6 learning__content-wrod-mb">잘했어요! <span class="text text-color-green">${groupNumber}번째</span> 세트를 모두 학습하셨습니다!</div>
+                                   <div class="text">
+                                       <button type="button" class="btn btn-primary" data-status="${nextGroup}">다음 세트 학습하기</button>                                    
+                                   </div>
+                                </div>`;
+        }
+
+        return _element;
     }
 
     getElements(_data, className) {
@@ -86,16 +90,11 @@ class WordContent {
                                     </div>`;
         } else {
             _element.classList.add('act');
-            _element.innerHTML = ` <div class="leaning-contents-card-front leaning-card">
-                                        <div class="text leaning-contents-card-word display-4 text-weight-black front">
-                                           등록 된 단어가 없습니다.
+            _element.innerHTML = `<div class="learning__none-word">
+                                       <div class="text h6 learning__content-wrod-mb">
+                                            단어를 추가해주세요
                                         </div>
-                                    </div>
-                                    <div class="leaning-contents-card-back leaning-card">
-                                        <div class="text leaning-contents-card-word display-4 text-weight-black back">
-                                            단어를 추가해 주세요
-                                        </div>
-                                    </div>`;
+                                </div>`;
         }
         return _element;
     }
