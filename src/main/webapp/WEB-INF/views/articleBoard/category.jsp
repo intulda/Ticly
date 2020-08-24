@@ -16,7 +16,7 @@
     <!-- Common -->
     <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
 
-    <!-- Bootstrap CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryStyle.css">
 
 </head>

@@ -53,7 +53,7 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="btn btn-tab" onclick="location.href ='category'" name="tooltip" data-placement="bottom" title="관심분야 설정"><i class="icon_setting"></i></button>
+                <button class="btn btn-tab hide js-category-setting-btn" onclick="location.href ='category'" name="tooltip" data-placement="bottom" title="관심분야 설정"><i class="icon_setting"></i></button>
             </div>
 
             <!-- search bar -->
