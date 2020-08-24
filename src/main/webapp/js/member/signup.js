@@ -1,6 +1,6 @@
 (() => {
     let signupEmailElem = document.querySelector('#signup-email');  //이메일
-    let signupPasswordElem1 = document.querySelector('#signup-password');   //비밀번호
+    let signupPasswordElem = document.querySelector('#signup-password');   //비밀번호
     //let signupPasswordElem2 = document.querySelector('#signup-password-confirm');   //비밀번호 확인
 
     let errorLabelElem = document.querySelectorAll('.signup-validation-message');   //유효성 메세지
@@ -16,13 +16,13 @@
 
     //눈표시 클릭 시 패스워드 보이기
     document.getElementById('signup-eyes-box').addEventListener("click",function (){
-        //  signupPasswordElem1.classList.toggle('active');
-        if(signupPasswordElem1.type=='password'){
-            document.querySelector('#signup-eyes-icon').className="icon_hide";
-            signupPasswordElem1.type='text'
-        }else if(signupPasswordElem1.type=='text'){
-            document.querySelector('#signup-eyes-icon').className="icon_show";
-            signupPasswordElem1.type='password'
+        //  signupPasswordElem.classList.toggle('active');
+        if(signupPasswordElem.type=='password'){
+            document.getElementById('signup-eyes-icon').className="icon_hide";
+            signupPasswordElem.type='text'
+        }else if(signupPasswordElem.type=='text'){
+            document.getElementById('signup-eyes-icon').className="icon_show";
+            signupPasswordElem.type='password'
         }
     });
 
@@ -70,9 +70,10 @@
                 }
             })
                 .then(function (response){
-                    // alert("전송 성공"+response.data);
+                    //alert("전송 성공"+response.data);
                     if(response.data==0){
-                        errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">사용 가능한 이메일입니다.</p>'
+                        errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon" id="availableEmail"></i><p class="text text-color-green body2">사용 가능한 이메일입니다.</p>'
+                        document.getElementById('availableEmail').style.color= '#008E6D';
                         signupEmailCheck = true;
                     } else if(response.data==1){
                         errorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이미 사용 중인 이메일입니다.</p>'
@@ -86,16 +87,49 @@
 
         signupButtonEvent();
     }
+
+    const showPasswordValidation = () => {
+        document.getElementById('signup-validation-message').classList.remove('hidden');
+    }
+
     const onSignupPasswordCheck = () => {
-        if(signupPasswordElem1.value.trim()==""){
+        //비밀번호 글자수를 실시간으로 체크
+        if(signupPasswordElem.value.trim().length>=8) {
+            document.getElementById('length-validation-info-icon').style.color= '#008E6D';
+            document.getElementById('length-validation-info-message').style.color= '#008E6D';
+        } else{
+            document.getElementById('length-validation-info-icon').style.color= '#525463';
+            document.getElementById('length-validation-info-message').style.color= '#525463';
+        }
+
+        //영문과 숫자를 입력했는지 실시간으로 체크
+        if(isJobPassword(signupPasswordElem.value)) {
+            document.getElementById('number-validation-info-icon').style.color= '#008E6D';
+            document.getElementById('number-validation-info-message').style.color= '#008E6D';
+        } else {
+            document.getElementById('number-validation-info-icon').style.color= '#525463';
+            document.getElementById('number-validation-info-message').style.color= '#525463';
+        }
+
+        if(signupPasswordElem.value.trim().length>=8 && isJobPassword(signupPasswordElem.value)){
+            signupPasswordCheck = true;
+        }else{
+            signupPasswordCheck = false
+        }
+        signupButtonEvent();
+    }
+
+    /*
+    const onSignupPasswordCheck = () => {
+        if(signupPasswordElem.value.trim()==""){
             errorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">비밀번호를 입력해주세요.</p>';
             signupPasswordCheck = false;
 
-        } else if(signupPasswordElem1.value.length<8) {
+        } else if(signupPasswordElem.value.length<8) {
             errorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">8자 이상의 비밀번호를 입력하세요.</p>';
             signupPasswordCheck = false;
 
-        } else if(!isJobPassword(signupPasswordElem1.value)) {
+        } else if(!isJobPassword(signupPasswordElem.value)) {
             errorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">숫자와 영문자를 혼용하여야 합니다.</p>';
             signupPasswordCheck = false;
 
@@ -106,7 +140,7 @@
 
         signupButtonEvent();
     }
-
+    */
 
     /*
     const onSignupPasswordCompare = () => {
@@ -114,11 +148,11 @@
             errorLabelElem[2].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">필수 정보입니다.</p>';
             signupPasswordCompare = false;
 
-        } else if(signupPasswordElem2.value.trim() !== signupPasswordElem1.value.trim()) {
+        } else if(signupPasswordElem2.value.trim() !== signupPasswordElem.value.trim()) {
             errorLabelElem[2].innerHTML= '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호가 일치하지 않습니다.</p>';
             signupPasswordCompare = false;
 
-        } else if(signupPasswordElem2.value.trim() === signupPasswordElem1.value.trim()) {
+        } else if(signupPasswordElem2.value.trim() === signupPasswordElem.value.trim()) {
             errorLabelElem[2].innerHTML = '';
             signupPasswordCompare = true;
         }
@@ -147,7 +181,7 @@
     const onSignupHandler  = () => {
         if(signupEmailCheck && signupPasswordCheck && acceptTermCheck){
             const email = signupEmailElem.value;
-            const password = signupPasswordElem1.value;
+            const password = signupPasswordElem.value;
 
             //json객체에 담기
             const member={
@@ -182,8 +216,9 @@
         }
     }
 
-    signupEmailElem.addEventListener('blur', onSignupEmailCheck);
-    signupPasswordElem1.addEventListener('blur', onSignupPasswordCheck);
+    signupEmailElem.addEventListener('blur', onSignupEmailCheck);   //blur시 이메일의 유효 여부를 체크하기 위한 함수
+    signupPasswordElem.addEventListener('focus', showPasswordValidation); //input에 focus하면 비밀번호 유효성 조건을 보여줌
+    signupPasswordElem.addEventListener('input', onSignupPasswordCheck); //비밀번호의 유효성 여부를 실시간으로 보여
     //signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
     acceptTermCheckBox.addEventListener("click", signupButtonEvent);
     signupSubmitBtn.addEventListener("click", onSignupHandler);

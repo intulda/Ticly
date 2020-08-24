@@ -83,25 +83,36 @@
                         console.log(error);
                     });
             }
-
             onModalSignupButtonEvent();
         }
+
+        const showModalPasswordValidation = () => {
+            document.getElementById('modal-signup-validation-message').classList.remove('hidden');
+        }
+
         const onModalSignupPasswordCheck = () => {
-            if(modalSignupPasswordElem.value.trim()==""){
-                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">비밀번호를 입력해주세요.</p>';
-                modalSignupPasswordCheck = false;
+            //비밀번호 글자수를 실시간으로 체크
+            if(modalSignupPasswordElem.value.trim().length>=8) {
+                document.getElementById('modal-length-validation-info-icon').style.color= '#008E6D';
+                document.getElementById('modal-length-validation-info-message').style.color= '#008E6D';
+            } else{
+                document.getElementById('modal-length-validation-info-icon').style.color= '#525463';
+                document.getElementById('modal-length-validation-info-message').style.color= '#525463';
+            }
 
-            } else if(modalSignupPasswordElem.value.length<8) {
-                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">8자 이상의 비밀번호를 입력하세요.</p>';
-                modalSignupPasswordCheck = false;
-
-            } else if(!isJobPassword(modalSignupPasswordElem.value)) {
-                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">숫자와 영문자를 혼용하여야 합니다.</p>';
-                modalSignupPasswordCheck = false;
-
+            //영문과 숫자를 입력했는지 실시간으로 체크
+            if(isJobPassword(modalSignupPasswordElem.value)) {
+                document.getElementById('modal-number-validation-info-icon').style.color= '#008E6D';
+                document.getElementById('modal-number-validation-info-message').style.color= '#008E6D';
             } else {
-                modalErrorLabelElem[1].innerHTML = '';
+                document.getElementById('modal-number-validation-info-icon').style.color= '#525463';
+                document.getElementById('modal-number-validation-info-message').style.color= '#525463';
+            }
+
+            if(modalSignupPasswordElem.value.trim().length>=8 && isJobPassword(modalSignupPasswordElem.value)){
                 modalSignupPasswordCheck = true;
+            }else{
+                modalSignupPasswordCheck = false
             }
 
             onModalSignupButtonEvent();
@@ -183,7 +194,9 @@
         }
 
         modalSignupEmailElem.addEventListener('blur', onModalSignupEmailCheck);
-        modalSignupPasswordElem.addEventListener('blur', onModalSignupPasswordCheck);
+        modalSignupPasswordElem.addEventListener('focus', showModalPasswordValidation); //input에 focus하면 비밀번호 유효성 조건을 보여줌
+        modalSignupPasswordElem.addEventListener('input', onModalSignupPasswordCheck); //비밀번호의 유효성 여부를 실시간으로 보여
+      //  modalSignupPasswordElem.addEventListener('blur', onModalSignupPasswordCheck);
         //signupPasswordElem2.addEventListener('blur', onSignupPasswordCompare);
         modalAcceptTermCheckBox.addEventListener("click", onModalSignupButtonEvent);
         modalSignupSubmitBtn.addEventListener("click", onModalSignupHandler);

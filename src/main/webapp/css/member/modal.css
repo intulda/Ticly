@@ -107,6 +107,21 @@
   padding-right: 3px;
 }
 
+/*회원가입-비밀번호 유효성 검사 실시간 메세지*/
+#modal-length-validation-info-icon{
+  color: #525463;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-right: 3px;
+}
+
+#modal-number-validation-info-icon {
+  color: #525463;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-right: 3px;
+}
+
 .submitButton {
   background-color: #00A881;
   border: 2px solid white;
@@ -209,8 +224,7 @@
   font-size: 14px;
   letter-spacing: -0.1px;
   line-height: 24px;
-  overflow-x: hidden;
-  overflow-y: auto; // 스크롤 있는 경우에만 표시
+  padding-left : 1px;
 }
 
 .agreement-list{

@@ -46,6 +46,22 @@
     cursor: pointer;
 }
 
+/*회원가입-비밀번호 유효성 검사 실시간 메세지*/
+#length-validation-info-icon{
+    color: #525463;
+    font-size: 14px;
+    padding-top: 2px;
+    padding-right: 3px;
+}
+
+#number-validation-info-icon{
+    color: #525463;
+    font-size: 14px;
+    padding-top: 2px;
+    padding-right: 3px;
+}
+
+
 
 @media (max-height: 750px) {
     .login-container{

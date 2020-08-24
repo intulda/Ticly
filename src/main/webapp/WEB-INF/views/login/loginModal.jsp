@@ -92,11 +92,15 @@
                     </div>
                     <div class="login-input-group">
                         <label for="modal-signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                        <input type="password" class="form-control form-control-lg" id="modal-signup-password" name="password" placeholder="숫자 포함, 8자 이상" />
+                        <input type="password" class="form-control form-control-lg" id="modal-signup-password" name="password" placeholder="숫자 포함, 8자 이상" style="ime-mode:inactive;"/>
                         <div class="eyes-box" id="modal-signup-eyes-box">
                             <i class="icon_show" id="modal-signup-eyes-icon"></i>
                         </div>
-                        <div class="modal-signup-validation-message validation-message"></div>
+                        <!--비밀번호 실시간 유효성 검사-->
+                        <div class="modal-signup-validation-message hidden" id="modal-signup-validation-message">
+                            <div class="validation-message"><i class="icon_info_circle" id="modal-length-validation-info-icon"></i><p class="text text-color-gray200 body2" id="modal-length-validation-info-message">8자 이상의 비밀번호를 입력해주세요.</p></div>
+                            <div class="validation-message"><i class="icon_info_circle" id="modal-number-validation-info-icon"></i><p class="text text-color-gray200 body2" id="modal-number-validation-info-message">영문과 숫자를 포함해주세요.</p></div>
+                        </div>
                     </div>
                     <!--
                     <div class="login-input-group">

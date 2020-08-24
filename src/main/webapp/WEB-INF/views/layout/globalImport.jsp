@@ -6,7 +6,7 @@
 <!--Header, Footer css-->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalNav.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/layout/globalFooter.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/modalLogin.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/modal.css">
 
 <!--부트스트랩 script-->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
