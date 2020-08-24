@@ -17,9 +17,12 @@
 <%--작성자 : 작성자1 <br>--%>
 제목 :  ${article.title } <br>
 기사 요약 : ${article.summary} <br>
-내용 : ${article.contents} <br>
+해시태그 : ${article.hashtag} <br>
 원문 주소 : ${article.url}  <br>
 <hr>
+
+단어 모음
+
 
 <br><p>
     <a href="ArticleList">아티클 목록보기</a>

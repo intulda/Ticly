@@ -34,8 +34,8 @@ class ArticleDAOImpl implements ArticleDAO{
     }
 
     @Override
-    public int deleteArticleDao(String title) {
-        return sqlSessionTemplate.update(namespace+".deleteArticleDao");
+    public int deleteArticleDao(String article_seq) {
+        return sqlSessionTemplate.update(namespace+".deleteArticleDao", article_seq);
     }
 
     @Override

@@ -61,7 +61,7 @@
 -->
 
 
-    <update id="deleteArticleDao">
+    <update id="deleteArticleDao" parameterType="java.lang.String">
 
 		UPDATE ARTICLE
 		SET

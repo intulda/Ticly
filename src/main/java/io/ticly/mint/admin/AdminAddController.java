@@ -37,7 +37,7 @@ public class AdminAddController {
     private static final String PREFIX_URL = "/fileimages/";
 
 
-    /* 아티클 목록 OK */
+    /* 아티클 목록 */
     @RequestMapping("/ArticleList")
     public String ArticleList(Model model) {
 
@@ -71,7 +71,6 @@ public class AdminAddController {
     public String adminWrite(ArticleDTO data, MultipartHttpServletRequest mpRequest,  HttpServletResponse response,
                              Model model) throws IOException {
 
-        // Json 파싱
         ObjectMapper mapper = new ObjectMapper();
 
         String param = mpRequest.getParameter("data");
@@ -79,111 +78,19 @@ public class AdminAddController {
 
         MultipartHttpServletRequest file = mpRequest;
 
-
-       /* String title = request.getParameter("title");
-        String url = request.getParameter("url");
-        String summary = request.getParameter("summary");
-        String hashtag = request.getParameter("hashtag");
-        String content = request.getParameter("content");
-        String category = request.getParameter("category");*//*
-        // 받아온 request 객체의 category값 저장
-
-        int categoryNum = 0;
-
-        // category 문자열 값에 따라 category seq에 int형으로 저장
-        if(category == "개발"){
-            categoryNum = 1;
-        }
-        else if(category == "UI/UX"){
-            categoryNum = 2;
-        }
-        else if(category == "브랜딩"){
-            categoryNum = 3;
-        }
-        else if(category == "마케팅"){
-            categoryNum = 4;
-        }
-        else if(category == "경제"){
-            categoryNum = 5;
-        }
-        else {
-            System.out.println("Category error");
-        }
-
-        // request 객체에 지정된 카테고리 seq 저장
-        request.setAttribute("category_seq", categoryNum);
-*//*
-        System.out.println("title");
-        System.out.println("url");
-        System.out.println("summary");
-        System.out.println("hashtag");
-        System.out.println("content");*/
-
-
-        // Map : 아티클 기본 정보
-     /*   Map<String, String> map = new HashMap<String, String>();
-        map.put("title", title);
-        map.put("url", url);
-        map.put("summary", summary);
-        map.put("hashtag", hashtag);
-        map.put("content", content);
-
-
-        *//* 아티클 정보 받기 *//*
-        int nResult = dao.writeArticleDao(map);
-        System.out.print("Write : " +nResult );
-*/
         return "redirect:ArticleList";
-//        return articleDTO;
     }
 
     /* 아티클 목록에서 삭제 */
-
     @RequestMapping("/delete")
     public String Delete(HttpServletRequest request, Model model) throws Exception {
-        String title = request.getParameter("title");
-        int nResult = dao.deleteArticleDao("title");
-        System.out.println("Delete : " + nResult);
+        String title = request.getParameter("articleseq");
+        int article = dao.deleteArticleDao("article_seq");
+        model.addAttribute("article", article);
 
         return "redirect:ArticleList";
+
     }
 
-    /*
-    // 카테고리 바꾸어 저장
-    @RequestMapping("/categoryseq")
-    public String saveCategory(HttpServletRequest request, Model model){
-
-        String categoryName = request.getParameter("category");
-        // 받아온 request 객체의 category값 저장
-
-        int categoryNum = 0;
-
-        // category 문자열 값에 따라 category seq에 int형으로 저장
-        if(category == "개발"){
-            categoryNum = 1;
-        }
-        else if(category == "UI/UX"){
-            categoryNum = 2;
-        }
-        else if(category == "브랜딩"){
-            categoryNum = 3;
-        }
-        else if(category == "마케팅"){
-            categoryNum = 4;
-        }
-        else if(category == "경제"){
-            categoryNum = 5;
-        }
-        else {
-            out.println("Category is error");
-        }
-
-        // request 객체에 지정된 카테고리 seq 저장
-        request.setAttribute("categoryNum", categoryNum);
-
-        // 포워딩
-        return "/view.jsp";
-    }
-    */
 
 }

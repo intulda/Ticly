@@ -109,6 +109,7 @@
 
     <p><a href="/writeForm">아티클 등록하기</a></p>
 
+
 </div>
 <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </body>
