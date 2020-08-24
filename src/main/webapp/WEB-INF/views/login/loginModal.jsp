@@ -20,11 +20,11 @@
                     <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
                 </hearder>
                 <div class="login-button-wrapper">
-                    <div class="login-button naver-login-button" id="naverIdLogin">
+                    <div class="login-button naver-login-button" id="modal-naver-login-button">
                         <img scr="">
                         <h5 class="text text-color-white text-weight-medium">네이버로 로그인</h5>
                     </div>
-                    <div class="login-button email-login-button" id="login-to-signin">
+                    <div class="login-button email-login-button" id="modal-login-to-signin">
                         <h5 class="text text-color-gray100 text-weight-medium">이메일로 로그인</h5>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <div class="login-input-group">
                         <label for="modal-signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
                         <input type="text" class="form-control form-control-lg" id="modal-signin-email" name="email" placeholder="ticly@ticly.io" />
-                        <div class="modal-signin-validation-message"></div>
+                        <div class="modal-signin-validation-message validation-message"></div>
                     </div>
                     <div class="login-input-group">
                         <label for="modal-signin-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
@@ -55,7 +55,7 @@
                         <div class="eyes-box" id="modal-signin-eyes-box">
                             <i class="icon_show" id="modal-signin-eyes-icon"></i>
                         </div>
-                        <div class="modal-signin-validation-message"></div>
+                        <div class="modal-signin-validation-message validation-message"></div>
                     </div>
                     <div class="modal-signin-validation-message"></div>
                     <div class="signin-check">
@@ -88,7 +88,7 @@
                     <div class="login-input-group">
                         <label for="modal-signup-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
                         <input type="text" class="form-control form-control-lg" id="modal-signup-email" name="email" placeholder="ticly@ticly.io" />
-                        <div class="modal-signup-validation-message"></div>
+                        <div class="modal-signup-validation-message validation-message"></div>
                     </div>
                     <div class="login-input-group">
                         <label for="modal-signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
@@ -96,8 +96,7 @@
                         <div class="eyes-box" id="signup-eyes-box">
                             <i class="icon_show" id="signup-eyes-icon"></i>
                         </div>
-
-                        <p class="modal-signup-validation-message"></p>
+                        <div class="modal-signup-validation-message validation-message"></div>
                     </div>
                     <!--
                     <div class="login-input-group">
@@ -113,8 +112,8 @@
                             <label for="modal-AcceptTerm" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 <a href="#" class="text text-color-gray200 text-weight-bold">서비스 약관</a>과 <a href="#" class="text text-color-gray200 text-weight-bold">개인정보 취급방침</a>에 대해 동의합니다.(필수)</label>
                         </div>
                         <div class="agreement-list custom-control custom-checkbox">
-                            <input type="checkbox" id="promotion" class="custom-control-input custom-control">
-                            <label for="promotion" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 이벤트, 프로모션, 알림 메일 및 SMS수신에 대해 동의합니다.(선택)</label>
+                            <input type="checkbox" id="modal-promotion" class="custom-control-input custom-control">
+                            <label for="modal-promotion" class="custom-control-label text text-color-gray200 text-weight-regular">Ticly의 이벤트, 프로모션, 알림 메일 및 SMS수신에 대해 동의합니다.(선택)</label>
                         </div>
                     </div>
                     <div class="login-modal-button">
@@ -135,11 +134,11 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!--Main Login-->
-    <script src="${pageContext.request.contextPath}/js/member/login.js"></script>
+    <script src="${pageContext.request.contextPath}/js/member/modalLogin.js"></script>
 
     <!--Email Login-->
-    <script src="${pageContext.request.contextPath}/js/member/signinEmail.js"></script>
+    <script src="${pageContext.request.contextPath}/js/member/modalSigninEmail.js"></script>
 
     <!--Email Signup-->
-    <script src="${pageContext.request.contextPath}/js/member/signupEmail.js"></script>
+    <script src="${pageContext.request.contextPath}/js/member/modalSignupEmail.js"></script>
 </div>

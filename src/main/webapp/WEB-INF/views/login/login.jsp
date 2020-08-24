@@ -12,45 +12,8 @@
     <title>Ticly - 최신 아티클로 영어공부를 하세요</title>
     <!-- Common -->
     <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
-    <style>
-        .login-container{
-            padding-top: 140px;
-        }
 
-        .main-login-container{
-            width: 500px;
-            text-align: center;
-            margin: 0 auto;
-            padding: 60px 50px;
-            position: relative;
-            border: 1px solid #e9ecef;
-        }
-
-        /*로그인 페이지 header*/
-        .login-header{
-            display: block;
-            margin-bottom: 24px;
-        }
-
-        .main-login-container .login-header{
-            margin-bottom: 0;
-        }
-
-        /*로그인 페이지 footer*/
-        .login-footer{
-            display: flex;
-            justify-content: center;
-            line-height: 28px;
-        }
-
-        .login-footer-moving{
-            padding-left: 8px;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/member/login.css">
 </head>
 <body>
 <div class="ticly__basic-layout">
@@ -66,7 +29,7 @@
                     <h5 class="text text-color-gray300 text-weight-regular modal-header-content">트렌드 파악과 함께 영어 공부를 시작해볼까요?</h5>
                 </hearder>
                 <div class="login-button-wrapper">
-                    <div class="login-button naver-login-button" id="naverIdLogin">
+                    <div class="login-button naver-login-button" id="naver-login-button">
                         <img scr="">
                         <h5 class="text text-color-white text-weight-medium">네이버로 로그인</h5>
                     </div>
@@ -85,5 +48,32 @@
     <!-- footer -->
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
+<script>
+    (() => {
+        //메인 로그인에서 '이메일 로그인'으로 이동
+        document.getElementById('login-to-signin').addEventListener("click", function (){
+            window.location.href="/member/emailSignin"
+        });
+
+        /*Naver OAuth Login*/
+        let naverLoginBtn = document.getElementById('naver-login-button');
+
+        naverLoginBtn.addEventListener("click", function (){
+            axios({
+                method: 'post',
+                url: '/naver',
+                headers: { 'content-type': 'application/json' }
+            })
+                .then(function (result){
+                    console.log("데이터 가져오기 성공");
+                    window.open(result.data, "네이버 로그인", 'width=500, height=650, status=no, menubar=no, toolbar=no, resizable=no');
+                    /*learn/modal?url=${result.data}*/
+                })
+                .catch(function (error) {
+                    console.log("데이터 가져오기 실패");
+                });
+        });
+    })();
+</script>
 </body>
 </html>
