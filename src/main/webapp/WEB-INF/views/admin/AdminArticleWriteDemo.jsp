@@ -1,6 +1,7 @@
 <%@ page import="java.io.BufferedReader" %>
 <%@ page import="java.io.InputStreamReader" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Hyeseung Jang
@@ -14,11 +15,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-
+    <title>AdminArticleWriteDemo.jsp</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- Common -->
+    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
+
     <style>
 
         .flex_container {
@@ -65,7 +68,7 @@
         }
 
         .Admin-header-menu-tab {
-            margin: 1px 300px;
+            display: flex;
             padding: 12px;
         }
 
@@ -88,35 +91,31 @@
             padding: 0px;
             line-height: 0;
         }
-
-        h1,h2,h3,h4,h5,h6 {
-            display:inline
+        .admin-header{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+
+
 
         a {
             /*margin-left: 1px;*/
             padding: 6px;
         }
-
-
-
     </style>
-    <title>AdminArticleWriteDemo.jsp</title>
 
-    <link rel="stylesheet" href="./css/bootstrap.css">
 </head>
 
 <body>
 
 
-<div class='tickly__basic-layout'>
-
+<div class="ticly__basic-layout">
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
-<form action="/write" id="admin-add-frm" method="post" enctype="multipart/form-data">
 
-
-
-        <div class="flex_container ticly__basic-content-layout">
+    <div class="container-xg ticly__basic-content-layout">
+        <div class="flex_container">
 
 
             <!--  Ticly 로고 라인 탭 -->
@@ -137,23 +136,21 @@
 
 
             <!-- 관리자 페이지 내 Tab + 저장하기 -->
-            <div class="item">
-                <hr>
+            <div class="item admin-header">
                 <div class="Admin-header-menu-tab" align="left">
-                    <a class="text text-color-green text-weight-medium" style="text-decoration:none" href="/writeForm"> <h6> 아티클 등록하기 </h6> </a>
-                    <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="/ArticleList"> <h6> 아티클 목록 </h6> </a>
-                    <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminMemberList.jsp" > <h6> 회원 관리 </h6> </a>
-                    <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminAnalysis.jsp" > <h6> 통계 </h6> </a>
+                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+                    <a style="text-decoration:none" href="AdminAnalysis.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 통계 </h6> </a>
+                </div>
 
+                <div>
                     <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="/AdminDataCheck">
                     <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
-
                 </div>
-                <hr>
             </div>
 
-            <hr>
-
+            <form action="/write" id="admin-add-frm" method="post" enctype="multipart/form-data">
             <!--  아티클 기본 정보 Section -->
             <div class="item">
                 <div class="ArticleInfo" align="center">
@@ -308,10 +305,12 @@
                 </div>
                 <!-- 가장 바깥 div -->
             </div>
-
+            </form>
         </div>
-    </form>
+    </div>
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
+
 
 
 
@@ -377,8 +376,6 @@
         }
         ArticleSave.submit();
     }
-
-
 </script>
 
 

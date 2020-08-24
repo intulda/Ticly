@@ -87,15 +87,15 @@ public class AdminAddController {
 
 
         /* Voca 데이터들을 넣어준다 */
-        HashMap<String[], String[]> vocamap = new HashMap<String[], String[]>();
-
-        vocamap.put(insert_word[], insert_mean[]);
-
-
-
+/*
+        Map<String[], String[]> vocaMap = new HashMap<>();
+        for(int i=0; i < insert_word.length < i++){
+            vocaMap.put(insert_word[], insert_mean[]);
+        }*/
 
 
         /* 등록된 모든 단어 출력 */
+        /*
         Set<String[]> keys = vocamap.keySet(); // key 문자열을 가진 Set 리턴
         Iterator<String[]> it = keys.iterator();
         while(it.hasNext()) {
@@ -104,7 +104,7 @@ public class AdminAddController {
             System.out.println("(" + key + "," + value + ")");
         }
 
-
+        */
 
         /* 아티클 정보 받기 */
         int nResult = dao.writeArticleDao(map);
