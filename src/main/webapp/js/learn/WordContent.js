@@ -5,7 +5,6 @@ class WordContent {
 
     process() {
         const getElementsArray = [];
-        let checkPoint = -1;
         let voca_order = 0;
         const lastVoca = this.data.filter((obj) => {
             return obj.last_voca == 1;
@@ -27,42 +26,6 @@ class WordContent {
             }
         }
 
-
-        // if(readingCount.length == 0) {
-        //     for(let i=0; i<this.data.length; i++) {
-        //         let className = 'word-list-hide';
-        //         if(i == 0) {
-        //             className = 'act';
-        //         }
-        //         getElementsArray.push(this.getElements(this.data[i], className));
-        //     }
-        // } else {
-        //     for(let i=0; i<this.data.length; i++) {
-        //         if(this.data[i].check_reading === 0) {
-        //             let className = 'word-list-hide';
-        //             if(checkPoint == -1) {
-        //                 checkPoint = this.data[i].voca_order;
-        //                 className = 'act';
-        //             }
-        //             getElementsArray.push(this.getElements(this.data[i], className));
-        //         } else if(this.data[i].check_reading === 1) {
-        //             let className = 'word-list-end'
-        //             if(checkPoint != -1) {
-        //                 if (checkPoint < this.data[i].voca_order) {
-        //                     className = 'word-list-hide'
-        //                 } else if (checkPoint > this.data[i].voca_order) {
-        //                     className = 'word-list-end'
-        //                 }
-        //             }
-        //
-        //             if(this.data[this.data.length-1] === this.data[i]) {
-        //                 className = 'act';
-        //             }
-        //
-        //             getElementsArray.push(this.getElements(this.data[i], className));
-        //         }
-        //     }
-        // }
         return getElementsArray;
     }
 
@@ -80,7 +43,7 @@ class WordContent {
                 <li>전체 단어 ${this.data.length}개</li>`
     }
 
-    getLastCardElement(groupNumber, maxGroupNumber) {
+    getLastCardElement(groupNumber, maxGroupNumber, maxDataLength) {
         const _element = document.createElement('li');
         _element.dataset.group = groupNumber;
         _element.classList.add("word-list-hide");

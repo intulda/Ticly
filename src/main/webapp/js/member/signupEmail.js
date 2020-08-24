@@ -64,7 +64,7 @@
             } else {
                 axios({
                     method: 'post',
-                    url: '/emailCheck',
+                    url: '/member/emailCheck',
                     params: {
                         email: signupEmailElem.value.trim()
                     }

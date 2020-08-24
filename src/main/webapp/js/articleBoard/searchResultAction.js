@@ -178,6 +178,7 @@ import SkeletonCard from './skeletonCard.js';
                             , JSON.stringify(key.summary)
                             , JSON.stringify(key.reg_date)
                         ).getElements());
+                        cardCount++;
                     }
                 }
 

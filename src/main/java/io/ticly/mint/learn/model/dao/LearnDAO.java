@@ -85,4 +85,20 @@ public class LearnDAO {
     public int saveVocaGroup(VocaGroupDTO vocaGroupDTO) {
         return sqlSessionTemplate.insert(NAMESPACE+"saveVocaGroup", vocaGroupDTO);
     }
+
+    public int getUserLearning(UserLearnDTO userLearnDTO) {
+        return sqlSessionTemplate.selectOne(NAMESPACE+"getUserLearning", userLearnDTO);
+    }
+
+    public int deleteVocaGroup(VocaGroupDTO vocaGroupDTO) {
+        return sqlSessionTemplate.delete(NAMESPACE+"deleteVocaGroup", vocaGroupDTO);
+    }
+
+    public int updateVocaGroupDown(VocaGroupDTO vocaGroupDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateVocaGroupDown", vocaGroupDTO);
+    }
+
+    public int updateUserVocaGroupDown(VocaGroupDTO vocaGroupDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateUserVocaGroupDown", vocaGroupDTO);
+    }
 }

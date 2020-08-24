@@ -72,3 +72,13 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+.ticly__basic-layout {
+    position: relative;
+    min-height: calc(100vh - 80px);
+}
+
+.ticly__basic-content-layout{
+    margin-top: 80px;
+    padding-bottom: 150px;
+}
