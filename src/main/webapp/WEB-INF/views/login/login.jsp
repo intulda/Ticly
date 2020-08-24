@@ -36,7 +36,6 @@
             margin-bottom: 0;
         }
 
-
         /*로그인 페이지 footer*/
         .login-footer{
             display: flex;

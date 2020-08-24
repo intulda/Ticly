@@ -42,12 +42,12 @@ public class MemberController {
      */
     @RequestMapping("emailSignup")
     public String showSignup(){
-        return "emailSignin";
+        return "login/emailSignup";
     }
 
     @RequestMapping("emailSignin")
     public String showSignin(){
-        return "emailSign";
+        return "login/emailSignin";
     }
 
 

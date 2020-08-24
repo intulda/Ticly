@@ -45,30 +45,30 @@
                     <div class="bs-component" id="login-fail-alert"></div>
 
                     <div class="login-input-group">
-                        <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                        <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" />
-                        <div class="signin-validation-message"></div>
+                        <label for="modal-signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
+                        <input type="text" class="form-control form-control-lg" id="modal-signin-email" name="email" placeholder="ticly@ticly.io" />
+                        <div class="modal-signin-validation-message"></div>
                     </div>
                     <div class="login-input-group">
-                        <label for="signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                        <input type="password" class="form-control form-control-lg" id="signin-password" name="password" placeholder="비밀번호를 입력하세요." />
-                        <div class="eyes-box" id="signin-eyes-box">
-                            <i class="icon_show" id="signin-eyes-icon"></i>
+                        <label for="modal-signin-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
+                        <input type="password" class="form-control form-control-lg" id="modal-signin-password" name="password" placeholder="비밀번호를 입력하세요." />
+                        <div class="eyes-box" id="modal-signin-eyes-box">
+                            <i class="icon_show" id="modal-signin-eyes-icon"></i>
                         </div>
-                        <div class="signin-validation-message"></div>
+                        <div class="modal-signin-validation-message"></div>
                     </div>
-                    <div class="signin-validation-message"></div>
+                    <div class="modal-signin-validation-message"></div>
                     <div class="signin-check">
                         <div class="signin-check-box custom-control custom-checkbox">
-                            <input type="checkbox" id="signin-check" class="custom-control-input">
-                            <label for="signin-check" class="custom-control-label text text-color-gray100 text-weight-regular body1 label-signin-check" id="stay-logined">로그인 상태 유지</label>
+                            <input type="checkbox" id="modal-signin-check" class="custom-control-input">
+                            <label for="modal-signin-check" class="custom-control-label text text-color-gray100 text-weight-regular body1 label-signin-check" id="modal-stay-logined">로그인 상태 유지</label>
                         </div>
                         <div class="password-inquiry">
                             <a href="#" class="text body1 text-color-gray100 text-weight-regular">비밀번호 찾기</a>
                         </div>
                     </div>
                     <div class="login-modal-button">
-                        <button id="signinSubmitBtn" class="btn btn-primary">로그인</button>
+                        <button id="modal-signinSubmitBtn" class="btn btn-primary">로그인</button>
                     </div>
                 </div>
                 <footer class="login-modal-footer">
