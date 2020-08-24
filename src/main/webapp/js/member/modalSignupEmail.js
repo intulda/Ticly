@@ -58,9 +58,9 @@
 
         const onModalSignupEmailCheck = () => {
             if(modalSignupEmailElem.value.trim()==""){
-                modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일을 입력해주세요.</p>';
+                modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이메일을 입력해주세요.</p>';
             } else if(!isEmail(modalSignupEmailElem.value)) {
-                modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일 형식에 맞게 입력해주세요.</p>';
+                modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이메일 형식에 맞게 입력해주세요.</p>';
             } else {
                 axios({
                     method: 'post',
@@ -72,10 +72,10 @@
                     .then(function (response){
                         // alert("전송 성공"+response.data);
                         if(response.data==0){
-                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">사용 가능한 이메일입니다.</p>'
+                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">사용 가능한 이메일입니다.</p>'
                             modalSignupEmailCheck = true;
                         } else if(response.data==1){
-                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이미 사용 중인 이메일입니다.</p>'
+                            modalErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이미 사용 중인 이메일입니다.</p>'
                             modalSignupEmailCheck = false;
                         }
                     })
@@ -88,15 +88,15 @@
         }
         const onModalSignupPasswordCheck = () => {
             if(modalSignupPasswordElem.value.trim()==""){
-                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호를 입력해주세요.</p>';
+                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">비밀번호를 입력해주세요.</p>';
                 modalSignupPasswordCheck = false;
 
             } else if(modalSignupPasswordElem.value.length<8) {
-                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">8자 이상의 비밀번호를 입력하세요.</p>';
+                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">8자 이상의 비밀번호를 입력하세요.</p>';
                 modalSignupPasswordCheck = false;
 
             } else if(!isJobPassword(modalSignupPasswordElem.value)) {
-                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">숫자와 영문자를 혼용하여야 합니다.</p>';
+                modalErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">숫자와 영문자를 혼용하여야 합니다.</p>';
                 modalSignupPasswordCheck = false;
 
             } else {

@@ -43,10 +43,10 @@
 
     modalSigninSubmitBtn.addEventListener("click", function () {
         if(modalSigninEmailElem.value.trim()==""){
-            modalSigninErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일을 입력해주세요</p>';
+            modalSigninErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이메일을 입력해주세요</p>';
             modalSigninEmailCheck = false;
         } else if(!isEmail(modalSigninEmailElem.value.trim())) {
-            modalSigninErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">이메일 형식에 맞게 입력해주세요.</p>';
+            modalSigninErrorLabelElem[0].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">이메일 형식에 맞게 입력해주세요.</p>';
             modalSigninEmailCheck = false;
         } else{
             modalSigninErrorLabelElem[0].innerHTML = '';
@@ -54,7 +54,7 @@
         }
 
         if(modalSigninPasswordElem.value.trim()==""){
-            modalSigninErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-gray300 body2">비밀번호를 입력해주세요.</p>';
+            modalSigninErrorLabelElem[1].innerHTML = '<i class="icon_info_circle validation-info-icon"></i><p class="text text-color-red body2">비밀번호를 입력해주세요.</p>';
             modalSigninPasswordCheck = false;
         } else{
             modalSigninErrorLabelElem[1].innerHTML = '';

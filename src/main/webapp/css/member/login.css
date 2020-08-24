@@ -46,3 +46,9 @@
     cursor: pointer;
 }
 
+
+@media (max-height: 750px) {
+    .login-container{
+        padding-top : 2%;
+    }
+}
