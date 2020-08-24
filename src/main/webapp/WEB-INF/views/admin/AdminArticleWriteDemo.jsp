@@ -68,8 +68,9 @@
         }
 
         .Admin-header-menu-tab {
-            display: flex;
-            padding: 12px;
+            position: relative;
+            display: inline-block;
+            padding: 10px;
         }
 
         .word-info {
@@ -91,6 +92,7 @@
             padding: 0px;
             line-height: 0;
         }
+
         .admin-header{
             width: 100%;
             display: flex;
@@ -116,23 +118,6 @@
 
     <div class="container-xg ticly__basic-content-layout">
         <div class="flex_container">
-
-
-            <!--  Ticly 로고 라인 탭 -->
-            <%--
-            <div class="item">
-                <div class="main-logo">
-                    <img src="./images/logo_color.svg" align="left">
-
-                    <a href="ArticleFindTab.jsp" style="text-decoration:none" align="center" class="article-find-tab" > 아티클 찾기 </a>
-                    <a href="IntroService.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 서비스 소개 </a>
-                    <a href="AdminArticleWrite.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 관리자 페이지 </a>
-
-                    <input type="image" src="./css/Admin/images/츄.png" border="0" style="float: right;">
-                    <input type="button" class="btn btn-success" value="내 학습 보드" style="float: right;">
-                </div>
-            </div>
-    --%>
 
 
             <!-- 관리자 페이지 내 Tab + 저장하기 -->
