@@ -40,7 +40,7 @@ public class ArticleBoardController {
             user = articleBoardService.setMember(user);
         }
 
-        return "articleBoard/category";
+        return "articleBoard/categoryModal";
     }
 
     // 아티클 찾기 페이지로 이동

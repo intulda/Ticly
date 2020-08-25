@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchResultStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchBarStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryModalStyle.css">
 </head>
 <body>
 <!-- header -->
@@ -50,8 +51,7 @@
                     </c:otherwise>
 
                 </c:choose>
-                <button class="category__tab btn btn-tab" onclick="location.href ='category'" name="tooltip" data-placement="bottom" title="관심분야 설정"><i
-                        class="icons icon_setting md"></i></button>
+                <button class="btn btn-tab hide js-category-setting-btn js-category-modal-trigger" name="tooltip" data-placement="bottom" title="관심분야 설정"><i class="icon_setting"></i></button>
             </div>
 
             <!-- search bar -->
@@ -108,6 +108,9 @@
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
+<!-- Category Setting Modal -->
+<c:import url="/WEB-INF/views/articleBoard/categoryModal.jsp"></c:import>
+
 <!-- 검색 키워드-->
 <input type="hidden" class="js-search-keyword" value=${searchKeyword}>
 
@@ -119,11 +122,14 @@
     <input type="hidden" class="js-categories-str" value=${category}>
 </c:forEach>
 
+<!-- Get User info-->
+<input type="hidden" name="userAuth" value="${userInfo.auth}">
+
 <!-- script -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchResultAction.js"></script>
 <script bufer type="module" src="${ pageContext.request.contextPath }/js/articleBoard/searchBarAction.js"></script>
-
+<script type="module" src="${ pageContext.request.contextPath }/js/articleBoard/categoryModalAction.js"></script>
 
 </body>
 </html>

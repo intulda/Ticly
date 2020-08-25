@@ -208,9 +208,8 @@ import LastLearningCard from "./module/lastLearningCard.js";
         // 스켈레톤 UI 그려주기
         paintSkeletonCard();
 
-        // Guest가 아니면, 마지막 학습 카드 그려주기
+        // Guest가 아니면 마지막 학습 카드 그려주기
         if (userAuth != 1 && userAuth != "" ){
-        console.log("userAuth : " + userAuth);
             lastLearningSection.classList.remove("hide");
             path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
             let section = lastLearningCardSection;
