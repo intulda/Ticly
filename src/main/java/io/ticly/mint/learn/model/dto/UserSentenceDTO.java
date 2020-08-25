@@ -7,10 +7,11 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLearnDTO {
-
-    private String email;
+public class UserSentenceDTO {
+    private int user_sentence_seq;
     private int article_seq;
     private int user_learning_seq;
-    private int last_learning_type;
+    private String eng_sentence;
+    private String kor_sentence;
+    private String last_sentence;
 }

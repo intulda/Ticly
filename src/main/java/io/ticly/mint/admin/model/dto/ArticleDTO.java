@@ -1,15 +1,11 @@
 package io.ticly.mint.admin.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 @Builder
-@Getter
 public class ArticleDTO {
 
     private int article_seq;
@@ -25,8 +21,6 @@ public class ArticleDTO {
 
     public ArticleDTO() {
     }
-
-
 
     public ArticleDTO(int article_seq, String title, String summary, int file_seq, String url, String hashtag, int category_seq, String reg_date, Integer del, Integer apply_count) {
         this.article_seq = article_seq;
