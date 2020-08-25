@@ -28,7 +28,7 @@
         del = '0'
     </select>
 
-    <select id="ArticleDetailDao" resultType="ArticleDTO">
+    <select id="ArticleDetailDao" resultType="ArticleDTO"  parameterType="java.lang.String" >
         SELECT
         <include refid="ArticleColumns" />
         FROM
@@ -61,7 +61,8 @@
 -->
 
 
-    <update id="deleteArticleDao">
+    <update id="deleteArticleDao" parameterType="java.lang.String">
+
 		UPDATE ARTICLE
 		SET
 			del = '1'
@@ -94,6 +95,8 @@
 
 
 <!-- Article_Vocabook :: 아티클 소속 단어들 input -->
+<!--
+
 <mapper namespace="ArticleVocabookDAO">
 
         <sql id="ArticleVocabookColumns">
@@ -139,7 +142,7 @@
 	    </delete>
 
 
-<!-- Vocabook 테이블에 중복 없는 단어 input -->
+&lt;!&ndash; Vocabook 테이블에 중복 없는 단어 input &ndash;&gt;
 <mapper namespace="VocabookDAO">
 
     <sql id="VocabookColumns">
@@ -183,3 +186,4 @@
     </mapper>
 
 
+-->
