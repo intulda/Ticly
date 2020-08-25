@@ -15,7 +15,8 @@
             TO_CHAR(ARTICLE.REG_DATE, 'YYYY.MM.DD') AS REG_DATE,
             CATE.CATEGORY,
             FM.FILE_CONTENTS,
-            FM.FILE_EXT
+            FM.FILE_EXT,
+            ARTICLE.IMAGE_PATH
         FROM ARTICLE ARTICLE, FILE_MANAGEMENT FM, CATEGORY CATE
         WHERE ARTICLE.ARTICLE_SEQ = #{article_seq}
         AND ARTICLE.FILE_SEQ = FM.FILE_SEQ(+)
@@ -26,7 +27,8 @@
     <select id="getUserLearning" parameterType="UserLearnDTO" resultType="UserLearnDTO">
         SELECT
             USER_LEARNING_SEQ,
-            LAST_LEARNING_TYPE
+            LAST_LEARNING_TYPE,
+            LEARNING_DONE
         FROM USER_LEARNING
         WHERE EMAIL = #{email}
         AND ARTICLE_SEQ = #{article_seq}
@@ -144,8 +146,9 @@
          FROM USER_VOCA UV,
               VOCABOOK VB,
               ARTICLE_VOCABOOK AV
-        WHERE UV.VOCA = VB.VOCA(+)
-          AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ(+)
+        WHERE UV.VOCA = AV.VOCA(+)
+          AND UV.VOCA = VB.VOCA(+)
+          AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ
           AND AV.MEANING_NUM = VB.MEANING_NUM
           AND UV.USER_LEARNING_SEQ = #{user_learning_seq}
           AND UV.MEANING IS NULL
@@ -371,5 +374,11 @@
         WHERE USER_SENTENCE_SEQ != #{user_sentence_seq}
         AND USER_LEARNING_SEQ = #{user_learning_seq}
         AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateArticleDone" parameterType="UserLearnDTO">
+        UPDATE USER_LEARNING
+        SET LEARNING_DONE = 1
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
     </update>
 </mapper>
