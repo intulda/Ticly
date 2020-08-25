@@ -88,12 +88,14 @@ public class AdminAddController {
         String content = dto.getContents();
         String hashtag = dto.getHashtag();
 
+        /*
         System.out.println(category);
         System.out.println(title);
         System.out.println(summary);
         System.out.println(url);
         System.out.println(content);
         System.out.println(hashtag);
+        */
 
         List<VocaDTO> _vocaDTO = dto.getVocaDTOS();
         for (int i=0; i<_vocaDTO.size(); i++) {
@@ -101,24 +103,21 @@ public class AdminAddController {
             System.out.println(_vocaDTO.get(i));
         }
 
-        // mpRequest.getMultiFileMap(file).
+        Map<String, String> map = new HashMap<String, String>();
+
+        map.put("category", category);
+        map.put("title", title);
+        map.put("url", url);
+        map.put("summary", summary);
+        map.put("hashtag", hashtag);
+        map.put("content", content);
+
+        System.out.println("category:" + category + " title: " + title + " " + "url: " + url + " " +
+                "\n" + "summary: " + summary + "hashtag: " + hashtag + "content: " + content );
 
 
+        int nResult = dao.writeArticleDao(map);
 
-        /*
-        String jsonStr = mapper.writeValueAsString(param);
-        System.out.println("param : " + param);
-        System.out.println("jsonStr : " + jsonStr);
-        */
-
-
-
-
-        /*
-        System.out.println(dto.getSummary());
-        System.out.println(dto.getUrl());
-        System.out.println(dto.getContents());
-        */
         return "redirect:ArticleList";
     }
 
@@ -130,7 +129,6 @@ public class AdminAddController {
         model.addAttribute("article", article);
 
         return "redirect:ArticleList";
-
     }
 
 
