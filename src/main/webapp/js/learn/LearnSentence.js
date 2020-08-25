@@ -2,7 +2,8 @@ export function init() {
     const URL = {
         GET_PROGRESS_ALL: '/learn/getProgressPercent',
         GET_ARTILCE_SENTENCE: '/learn/getArticleSentence',
-        UPDATE_USER_SENTENCE: '/learn/updateUserSentence'
+        UPDATE_USER_SENTENCE: '/learn/updateUserSentence',
+        UPDATE_ARTICLE_DONE: '/learn/updateArticleDone'
     }
 
     const percentElem = document.querySelector('.leaning-progress-percent span:first-child');
@@ -43,13 +44,13 @@ export function init() {
     async function setData() {
         const sentenceList = await getArticleSentence();
         getList(sentenceList);
-        progressUpdate();
+        await progressUpdate();
     }
 
     async function progressUpdate() {
         _allProgressPercent = _allProgressPercent = await getProgress();
         updateAllProgress(_allProgressPercent.percent);
-        circleProgress();
+        await circleProgress();
     }
 
     function updateAllProgress(percent) {
@@ -58,12 +59,36 @@ export function init() {
         const _percent = `${percent}%`;
         progressInfoElem.innerText = _percent;
         percentBarElem.style.width = _percent;
+        const done = document.querySelector('#currentArticle').getAttribute("data-learning-done");
+        console.log(done);
+        if(percent === 100 && done != 1) {
+            document.getElementById('signinup-modal').style.display = "flex";
+            document.getElementById('main-login-form').classList.remove('hidden');
+            updateArticleDone();
+        }
     }
+
+    function updateArticleDone() {
+        const options = {
+            method: 'POST',
+            data: JSON.stringify({
+                article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq"),
+                user_learning_seq: document.querySelector('#currentArticle').getAttribute("data-user-learning-seq"),
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios(URL.UPDATE_ARTICLE_DONE, options).then(response => {
+            console.log(response.data);
+        });
+    }
+
 
     function onSentenceClickHandler(event) {
         const liElems = document.querySelectorAll('#learningSentence>li');
         let targetElem = event.target;
-        if(targetElem.nodeName == 'UL') {
+        if(targetElem.nodeName == 'UL' || targetElem.classList.contains('sentence__translate')) {
             return false;
         }
         const liElem = targetElem.closest('li');
@@ -111,6 +136,9 @@ export function init() {
             }
             check++;
         }
+
+        document.querySelectorAll('.learning__sentence-item-options-right')[0].childNodes[1].style.display = 'none';
+        document.querySelectorAll('.learning__sentence-item-options-right')[document.querySelectorAll('.learning__sentence-item-options-right').length-1].childNodes[3].style.display = 'none';
         if(list.length > 0) {
             learningSentenceElem.children[triggerNumber].click();
         }
@@ -124,7 +152,10 @@ export function init() {
             // target.childNodes[2].lastElementChild.classList.remove('n-none');
             target.childNodes[4].classList.remove('n-none');
             target.childNodes[2].lastElementChild.focus();
-            target.childNodes[2].lastElementChild.addEventListener('change', inputLabel)
+            target.childNodes[2].lastElementChild.removeEventListener('change', inputLabel);
+            target.childNodes[2].lastElementChild.addEventListener('change', inputLabel);
+            target.childNodes[2].lastElementChild.removeEventListener('keyup', onSentenceSaveHandler);
+            target.childNodes[2].lastElementChild.addEventListener('keyup', onSentenceSaveHandler);
         } else {
             target.childNodes[2].firstElementChild.classList.remove('n-none');
             target.childNodes[2].lastElementChild.classList.add('n-none');
@@ -137,6 +168,7 @@ export function init() {
     }
 
     function onSentenceSaveHandler(e) {
+        console.log(e.code);
         if(e.code !== 'Enter') {
             const targetElem = this.closest('li');
             const obj = {
@@ -144,7 +176,14 @@ export function init() {
                 kor_sentence: this.value
             }
             userSentenceSave(obj);
-
+        } else if(e.code === 'Enter') {
+            const targetElem = this.closest('li');
+            if(targetElem.nextElementSibling != null) {
+                targetElem.nextElementSibling.click();
+                e.stopPropagation();
+            } else {
+                document.querySelector('#learnContents').click();
+            }
         }
     }
 
@@ -160,7 +199,7 @@ export function init() {
                                 <p class="text h6 text-color-gray300">${obj.kor_sentence != null ? obj.kor_sentence : ''}</p>
                                 <input type="text" class="text h6 n-none" value="${obj.kor_sentence != null ? obj.kor_sentence : ''}" placeholder="해석을 입력하세요.">
                             </div>
-                            <p class="text body2 n-none"></p>
+                            <p class="text body2 n-none sentence__translate"></p>
                             <div class="learning__sentence-item-options n-none">
                                 <div class="learning__sentence-item-options-left">
                                     <span>
@@ -192,25 +231,28 @@ export function init() {
                 currentCount++;
             }
         }
-        const canvasElem = document.querySelector('.leaning-progress-canvas');
-        const context = canvasElem.getContext('2d');
-        const centerX = canvasElem.width / 2;
-        const centerY = canvasElem.height / 2;
-        const radius = 73;
         const max = (currentCount / sentenceList.length) * 2;
+        document.querySelector('#leaning-progress').children[0].setAttribute('stroke-dasharray', `${(max / 2) * 100}, 100`);
         percentElem.innerHTML = Math.round((max / 2) * 100) + '%';
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, ((pie / 2) * Math.PI) * 2, false);
-        context.lineWidth = 16;
-        context.lineCap = 'round';
-        context.strokeStyle = '#257FF9';
-        context.stroke();
-        pie += 0.035;
-        restart = requestAnimationFrame(circleProgress);
-        if (pie >= max) {
-            cancelAnimationFrame(restart);
-            context.restore();
-        }
+
+        // const canvasElem = document.querySelector('.leaning-progress-canvas');
+        // const context = canvasElem.getContext('2d');
+        // const centerX = canvasElem.width / 2;
+        // const centerY = canvasElem.height / 2;
+        // const radius = 73;
+        //
+        //
+        // context.beginPath();
+        // context.arc(centerX, centerY, radius, 0, ((pie / 2) * Math.PI) * 2, false);
+        // context.lineWidth = 16;
+        // context.lineCap = 'round';
+        // context.strokeStyle = '#257FF9';
+        // context.stroke();
+        // pie += 0.035;
+        // restart = requestAnimationFrame(circleProgress);
+        // if (pie >= max) {
+        //     cancelAnimationFrame(restart);
+        // }
     }
 
     function userSentenceSave(obj) {
@@ -267,6 +309,7 @@ export function init() {
                 obj.dataset.state = 'read'
                 changeInputMode(obj);
             }
+            event.stopPropagation();
         }
     })
 
