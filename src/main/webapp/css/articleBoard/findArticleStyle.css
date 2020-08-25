@@ -52,6 +52,22 @@
     padding-top: 1rem;
 }
 
+.card__body-tag-wrapper{
+    display: flex;
+    justify-content: start;
+}
+
+.card__body-tag{
+    width: auto;
+    margin-left: 0.5rem;
+    display: -webkit-box;
+    word-wrap: break-word;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 1.67em;
+}
 
 .card__body-title {
     margin-top: 0.5rem;

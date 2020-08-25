@@ -7,7 +7,11 @@
         categoryAllBtn = document.querySelector(".js-category__all-btn"),
         categoryList = document.querySelectorAll(".js-category-list"),
         userAuth = document.querySelector("input[name=userAuth]").value,
-        categorySettingBtn = document.querySelector(".js-category-setting-btn");
+        categorySettingBtn = document.querySelector(".js-category-setting-btn"),
+        modalTrigger = document.querySelector('.js-category-modal-trigger'),
+        modalCloseBtn = document.querySelector(".js-modal-close-btn"),
+        modalWrapper = document.getElementById('category-modal'),
+        currentPageURLInput = document.querySelector("input[name=currentPageURL]");
 
     const CARD_ACTIVE = "card-item-active",
         DISABLE = "disabled";
@@ -20,9 +24,7 @@
             categoriesInput.forEach(inputElem => {
                 if (listElem.value === inputElem.value){
                     inputElem.parentNode.classList.add(CARD_ACTIVE);
-                    console.log(inputElem.checked);
                     inputElem.checked = true;
-                    console.log(inputElem.checked);
                 }
             });
         });
@@ -103,6 +105,27 @@
         }
     }
 
+    // Modal Show Event
+    function handleCategorySettingBtnClickEvent(){
+        modalWrapper.style.display = "flex";
+        // 이미 선택한 관심 분야 표시하기
+        alreadyCheckedTrue();
+        // Done 버튼 활성화 Event
+        buttonActiveEvent();
+    }
+
+    // Modal hide Event - Close Btn
+    function handleCloseBtnClickEvent(){
+        modalWrapper.style.display = "none";
+    }
+
+    // Modal hide Event - background
+    function handleBackgroundClickEvent(ev){
+        if(ev.target.id === 'category-modal'){
+            modalWrapper.style.display = "none";
+        }
+    }
+
     function init() {
         window.onpageshow = () => {
             pageLoadEvent();
@@ -117,16 +140,13 @@
         });
 
         // Modal Show Event
-        document.querySelector('.js-category-modal-trigger').addEventListener("click", () => {
-            document.getElementById('category-modal').style.display = "flex";
+        modalTrigger.addEventListener("click", handleCategorySettingBtnClickEvent);
 
-            // 이미 선택한 관심 분야 표시하기
-            alreadyCheckedTrue();
+        // Modal hide Event - Close Btn
+        modalCloseBtn.addEventListener("click", handleCloseBtnClickEvent);
 
-            // Done 버튼 활성화 Event
-            buttonActiveEvent();
-        });
-
+        // Modal hide Event - background
+        modalWrapper.addEventListener("click", handleBackgroundClickEvent);
 
     }
 

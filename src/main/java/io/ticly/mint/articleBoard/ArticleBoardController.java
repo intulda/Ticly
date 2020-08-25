@@ -61,6 +61,7 @@ public class ArticleBoardController {
     // 관심 분야 선택 완료 후 세션 처리 및 이동
     @GetMapping("choiceDone")
     public String choiceDone(Model model, HttpServletRequest req) throws SQLException {
+
         // 사용자의 권한과 관심 분야 세션에 등록하기
         MemberDTO dto = new MemberDTO();
 
@@ -89,7 +90,11 @@ public class ArticleBoardController {
 
         //세션 정보 등록
         model.addAttribute("userInfo", dto);
-        return "articleBoard/findArticle";
+
+        // 들어온 경로에 따라 보내주는 경로 다르게 처리
+        String referer = req.getHeader("Referer");
+        String sendURL = "redirect:" + referer;
+        return sendURL;
     }
 
     // 아티클 찾기 페이지에서 *새로운* 아티클 정보 로드를 위한 동적 데이터 처리

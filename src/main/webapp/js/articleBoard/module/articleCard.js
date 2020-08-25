@@ -27,9 +27,9 @@ class ArticleCard {
                 <button class="btn btn-outline-white btn-lg" onclick="location.href='${this.url}'">원문보기</button>
             </div>
             <div class="card__body">
-                <div class="card__body-tag">
-                     <span class="badge badge-neutral">${this.categoryTitle}</span>
-                    <span class="text body2 text-color-gray300 text-weight-regular">${this.hashtag}</span>
+                <div class="card__body-tag-wrapper">
+                    <span class="badge badge-neutral">${this.categoryTitle}</span>
+                    <span class="card__body-tag text body2 text-color-gray300 text-weight-regular">${this.hashtag}</span>
                 </div>
                 <h4 class="card__body-title text text-color-gray100 text-weight-medium">${this.title}</h4>
                 <p class="text body1 text-color-gray200">${this.summary}</p>
