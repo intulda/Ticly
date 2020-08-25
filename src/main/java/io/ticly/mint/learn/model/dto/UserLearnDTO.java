@@ -12,4 +12,5 @@ public class UserLearnDTO {
     private String email;
     private int article_seq;
     private int user_learning_seq;
+    private int last_learning_type;
 }

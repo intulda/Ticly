@@ -11,6 +11,7 @@ public class LearnArticleDTO {
 
     private int article_seq;
     private int user_learning_seq;
+    private int last_learning_type;
     private String title;
     private String summary;
     private String url;

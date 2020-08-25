@@ -84,7 +84,6 @@ public class MemberService {
      * @return
      */
     public int insertNewMember(UserDTO userDTO){
-
         //닉네임 가져오기
         String email = userDTO.getEmail();
         int nicknamePoint = email.indexOf("@");
