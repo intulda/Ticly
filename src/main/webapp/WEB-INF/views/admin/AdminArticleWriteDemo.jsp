@@ -1,5 +1,8 @@
 <%@ page import="java.io.BufferedReader" %>
-<%@ page import="java.io.InputStreamReader" %><%--
+<%@ page import="java.io.InputStreamReader" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%--
   Created by IntelliJ IDEA.
   User: Hyeseung Jang
   Date: 2020-08-12
@@ -12,10 +15,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-
+    <title>AdminArticleWriteDemo.jsp</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"/>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Common -->
+    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
+
     <style>
 
         .flex_container {
@@ -62,8 +68,9 @@
         }
 
         .Admin-header-menu-tab {
-            margin: 1px 300px;
-            padding: 12px;
+            position: relative;
+            display: inline-block;
+            padding: 10px;
         }
 
         .word-info {
@@ -86,157 +93,141 @@
             line-height: 0;
         }
 
-        h1,h2,h3,h4,h5,h6 {
-            display:inline
+        .admin-header{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+
+
 
         a {
             /*margin-left: 1px;*/
             padding: 6px;
         }
-
-
-
     </style>
-    <title>AdminArticleWriteDemo.jsp</title>
 
-    <link rel="stylesheet" href="./css/bootstrap.css">
 </head>
+
 <body>
 
 
+<div class="ticly__basic-layout">
+    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
-<form action="/write" id="admin-add-frm" method="post" enctype="multipart/form-data">
-
-    <div class="flex_container">
-
-        <!--  Ticly 로고 라인 탭 -->
-        <div class="item">
-            <div class="main-logo">
-                <img src="./images/logo_color.svg" align="left">
-
-                <a href="ArticleFindTab.jsp" style="text-decoration:none" align="center" class="article-find-tab" > 아티클 찾기 </a>
-                <a href="IntroService.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 서비스 소개 </a>
-                <a href="AdminArticleWrite.jsp" style="text-decoration:none" align="center" class="article-find-tab"> 관리자 페이지 </a>
-
-                <input type="image" src="./css/Admin/images/츄.png" border="0" style="float: right;">
-                <input type="button" class="btn btn-success" value="내 학습 보드" style="float: right;">
-            </div>
-        </div>
+    <div class="container-xg ticly__basic-content-layout">
+        <div class="flex_container">
 
 
+            <!-- 관리자 페이지 내 Tab + 저장하기 -->
+            <form action="/write" id="admin-add-frm" method="post">
+            <div class="item admin-header">
+                <div class="Admin-header-menu-tab" align="left">
+                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+                    <a style="text-decoration:none" href="AdminAnalysis.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 통계 </h6> </a>
+                </div>
 
-        <!-- 관리자 페이지 내 Tab + 저장하기 -->
-        <div class="item">
-            <hr>
-            <div class="Admin-header-menu-tab" align="left">
-                <a class="text text-color-green text-weight-medium" style="text-decoration:none" href="/writeForm"> <h6> 아티클 등록하기 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="/ArticleList"> <h6> 아티클 목록 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminMemberList.jsp" > <h6> 회원 관리 </h6> </a>
-                <a class="text text-color-gray300 text-weight-medium" style="text-decoration:none" href="AdminAnalysis.jsp" > <h6> 통계 </h6> </a>
-
-                <input type="submit" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" onclick="/AdminDataCheck">
-                <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
-
-            </div>
-            <hr>
-        </div>
-
-        <hr>
-
-        <!--  아티클 기본 정보 Section -->
-        <div class="item">
-            <div class="ArticleInfo" align="center">
-                <table>
-                    <col width="200px"><col width="908px">
-                    <tr>
-                        <td rowspan="5" valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 아티클 기본 정보 </p>
-
-                        </td>
-                        <td>
-                            <p class="text body1 text-weight-medium text-color-gray100"> 카테고리 </p>
-                            <select class="form-control" name="category">
-                                <option value="카테고리X"> 카테고리를 선택하세요 </option>
-                                <option value="개발"> 개발 </option>
-                                <option value="UI/UX"> UI/UX </option>
-                                <option value="브랜딩"> 브랜딩 </option>
-                                <option value="마케팅"> 마케팅 </option>
-                                <option value="경제"> 경제 </option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
-                            <input type="text" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
-                            <input type="text" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
-                            <input type="file" id="file" name="file">
-                            <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
-                            <textarea name="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
-                        </td>
-                    </tr>
-                </table>
+                <div>
+                    <input type="button" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" >
+                    <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
+                </div>
             </div>
 
-            <hr width="65%">
 
-            <!--  아티클 내용 Section -->
-            <div class="content" align="center">
-                <table>
-                    <col width="200px"><col width="908px">
-                    <tr>
-                        <td valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
-                        </td>
-                        <td>
-                            <textarea name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
-                        </td>
-                    </tr>
+            <!--  아티클 기본 정보 Section -->
+            <div class="item">
+                <div class="ArticleInfo" align="center">
+                    <table>
+                        <col width="200px"><col width="908px">
+                        <tr>
+                            <td rowspan="5" valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 아티클 기본 정보 </p>
 
-                    <tr>
-                        <td valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
-                        </td>
-                        <td>
-                            <input type="text" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                <p class="text body1 text-weight-medium text-color-gray100"> 카테고리 </p>
+                                <select id="cb_category" class="form-control" name="category">
+                                    <option value="카테고리X"> 카테고리를 선택하세요 </option>
+                                    <option value="개발"> 개발 </option>
+                                    <option value="UI/UX"> UI/UX </option>
+                                    <option value="브랜딩"> 브랜딩 </option>
+                                    <option value="마케팅"> 마케팅 </option>
+                                    <option value="경제"> 경제 </option>
+                                </select>
+                            </td>
+                        </tr>
 
-                </table>
-            </div>
+                        <tr>
+                            <td>
+                                <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
+                                <input type="text" id="title" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
+                                <input type="text" id="url" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
+                            </td>
+                        </tr>
 
-            <br><br>
+                        <tr>
+                            <td>
+                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
+                                <input type="file" id="file1" name="file1">
+                                <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
+                            </td>
+                        </tr>
 
-            <!--  단어 정보 Section  -->
-            <div class="word-info" align="center">
-                <table class="table">
-                    <col width="200px"><col width="908px">
-                    <tr>
-                        <td rowspan="5" valign="top" align="left">
-                            <p class="text body1 text-weight-black text-color-gray100"> 단어 정보 </p>
-                        </td>
-                        <td>
-                            <div id="divTest" class="table">
+                        <tr>
+                            <td>
+                                <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
+                                <textarea name="summary" id="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
+                <hr width="65%">
+
+                <!--  아티클 내용 Section -->
+                <div class="content" align="center">
+                    <table>
+                        <col width="200px"><col width="908px">
+                        <tr>
+                            <td valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
+                            </td>
+                            <td>
+                                <textarea id="contents" name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
+                            </td>
+                            <td>
+                                <input type="text" id="tag" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control"  aria-describedby="basic-addon3">
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <br><br>
+
+                <!--  단어 정보 Section  -->
+                <div class="word-info" align="center">
+                    <table class="table">
+                        <col width="200px"><col width="908px">
+                        <tr>
+                            <td rowspan="5" valign="top" align="left">
+                                <p class="text body1 text-weight-black text-color-gray100"> 단어 정보 </p>
+                            </td>
+                            <td>
                                 <table>
                                     <col width="260px"><col width="568px"><col width="100px">
                                     <tr>
@@ -270,47 +261,174 @@
                                             <%--<button type="button" class="btn"> 삭제 </button>--%>
                                         </td>
                                     </tr>
-                                    <tr>
+
+
+                                </table>
+                                <table id="word_rows">
+                                    <col width="260px"><col width="568px"><col width="100px">
+                                    <tr class="word-row">
                                         <td>
-                                            <input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
+                                            <input type="text"  class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요">
                                         </td>
                                         <td>
-                                            <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
+                                            <input type="text"  class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"><br>
                                         </td>
                                         <td>
                                             <%-- <button type="button" class="btn" onclick="Remove_WordBox(this)"> 삭제 </button>--%>
                                             <button type="button" class="btn" > 삭제 </button>
+                                        </td>
                                     </tr>
-
                                 </table>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td colspan="2">
-                            <input type="button" class="btn" onclick="Add_WordBox()" value=" + 단어 추가하기">
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="button" class="btn" onclick="Add_WordBox()" value=" + 단어 추가하기">
+                            </td>
+                        </tr>
 
-                </table>
+                    </table>
 
+                </div>
+                <!-- 가장 바깥 div -->
             </div>
-            <!-- 가장 바깥 div -->
+            </form>
         </div>
-
     </div>
-</form>
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
+</div>
+
 
 
 
 <script type="text/javascript">
+    $(function(){
+        $('#saveBtn').click(function(){
+            var formData = new FormData();
+            var data = new Object();
+            data.category = $("#cb_category").val();
+            data.title = $("#title").val();
+            data.url = $("#url").val();
+            data.file = $("#file").val();
+            data.summary = $("#summary").val();
+            data.contents = $("#contents").val();
+            data.hashtag = $("#tag").val();
+            data.vocaDTOS = [];
+
+            $.each($("tr[class='word-row']"), function(index, item){
+                var row = $(item).find("td");
+                console.log(row);
+                var word = new Object();
+                word.voca = $($(row[0]).find("input[type='text']")).val();
+                word.meaning = $($(row[1]).find("input[type='text']")).val();
+                data.vocaDTOS.push(word);
+            });
+
+
+            formData.append('file', $('input[type=file]')[0].files[0]);
+            formData.append('data',JSON.stringify(data));
+
+            console.log(formData);
+
+
+            axios("/write", {
+                method: 'POST',
+                data: formData,
+                header: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+        });
+    });
     var count = 1;
+    /*const saveBtn = document.querySelector('#saveBtn');
+    saveBtn.addEventListener('click', () => {
+      /!*  const insertwordElmes = document.querySelectorAll('input[name="insertword"]');
+        const insertmeanElems = document.querySelectorAll('input[name="insertmean"]');
+        const data = {
+            category: document.querySelector('select[name="category"]').value,
+            title: document.querySelector('input[name="title"]').value,
+            url: document.querySelector('input[name="url"]').value,
+            summary: document.querySelector('textarea[name="summary"]').value,
+            content: document.querySelector('textarea[name="content"]').value,
+            hashtag: document.querySelector('input[name="hashtag"]').value,
+            vocaDTOS: []
+        };
+        const size = insertwordElmes.length;
+        for(let i=0; i<size; i++) {
+            let obj = {
+                voca: insertwordElmes[i].value,
+                meaning: insertmeanElems[i].value
+            }
+            data.vocaDTOS.push(obj);
+        }
+*!/
+        var formData = new FormData();
+        var data = new Object();
+        data.category = $("#cb_category").val();
+        data.title = $("#title").val();
+        data.url = $("#url").val();
+        data.file = $("#file").val();
+        data.summary = $("#summary").val();
+        data.contents = $("#contents").val();
+        data.tag = $("#tag").val();
+        data.vocaDTOS = [];
+
+        $.each($("tr[class='word-row']"), function(index, item){
+            var row = $(item).find("td");
+            console.log(row);
+            var word = new Object();
+            word.voca = $($(row[0]).find("input[type='text']")).val();
+            word.meaning = $($(row[1]).find("input[type='text']")).val();
+            data.vocaDTOS.push(word);
+        });
+
+
+        formData.append('file', $('input[type=file]')[0].files[0]);
+        formData.append('articleDTO',JSON.stringify(data));
+
+        console.log(formData);
+
+        axios("/write", {
+            method: 'POST',
+            data: formData,
+            header: {
+                'Content-Type': 'application/json',
+            },
+        }).then(response => console.log(response));
+
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/write',
+        //     data: JSON.stringify(data),
+        //     contentType : 'application/json',
+        //     success: function (res) {
+        //         console.log(res);
+        //     }
+        // })
+
+      /!*  axios("/write", {
+            method: 'POST',
+            data: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => console.log(response));*!/
+    });*/
 
     function Add_WordBox() {
 
-        var obj = document.getElementById("divTest");
-        var WordDiv = document.createElement('div');
+       /* var obj = $("#divTest");*/
+        var html = '<tr class="word-row">';
+        html += '<td><input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요"></td>'
+        html += '<td> <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"></td>'
+        html += ' <td><button type="button" class="btn" > 삭제 </button></td>'
+        html += '</tr>'
+        $("#word_rows").append(html);
+
+
+        /*var WordDiv = document.createElement('div');
 
         WordDiv.innerHTML = "<table>\n" +
             "                  <col width=\"260px\"><col width=\"568px\"><col width=\"100px\">\n" +
@@ -334,7 +452,7 @@
             var p = this.parentElement;
             //    p.removeChild(this);
         };
-        obj.appendChild(WordDiv);
+        obj.appendChild(WordDiv);*/
 
     }
 
@@ -366,9 +484,8 @@
         }
         ArticleSave.submit();
     }
-
-
 </script>
+
 
 </body>
 </html>

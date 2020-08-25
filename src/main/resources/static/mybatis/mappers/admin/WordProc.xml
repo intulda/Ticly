@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper>
+
+    CREATE OR REPLACE PROCEDURE VOCABOOKPROC(pvoca IN VARCHAR2, pmeaning_num IN NUMBER, pmeaning IN VARCHAR2, count_num IN NUMBER)
+        IS
+        num NUMBER(3);
+        CNT NUMBER:= 0;
+        BEGIN
+        SELECT nvl(MAX(MEANING_NUM),0) INTO num
+        FROM VOCABOOK WHERE VOCA = pvoca
+
+        DBMS_OUTPUT.PUT_LINE('count:' || num );
+
+        IF num = 0 THEN
+        DBMS_OUTPUT.PUT_LINE('num = 0 --------------->');
+
+        ELSE
+        DBMS_OUTPUT.PUT_LINE('num != 0 --------------->');
+
+        WHILE CNT < count_num
+             INSERT INTO VOCABOOK
+             VALUES(VOCABOOK_PK_SEQ.NEXTVAL, VOCA, MEANING_NUM + CNT, MEANING)
+
+        CNT := CNT + 1;
+        END LOOP;
+
+        END IF;
+
+        END;
+        /
+
+        exec VOCABOOKPROC('aa', 100, 'bb');
+
+
+
+    INSERT INTO VOCABOOK(VOCABOOK_SEQ, VOCA, MEANING_NUM, MEANING)
+    VALUES (
+    VOCABOOK_PK_SEQ.NEXTVAL,
+    'apple',
+    '1',
+    '사과'
+    );
+        WHERE
+        NOT EXISTS (
+        SELECT VOCA
+        FROM VOCABOOK
+        WHERE VOCA = #{VOCA} AND MEANING = #{MEANING}
+        )
+    );
+
+
+
+</mapper>
