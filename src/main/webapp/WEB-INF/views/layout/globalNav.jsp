@@ -50,29 +50,11 @@
 %>
 
 <header class="globalHeader-wrap">
-    <div class="globalHeader">
+    <div>
         <div class="globalHeader-left">
             <a href="/">
                 <img src = "${pageContext.request.contextPath}/images/logo_color.svg" alt="logoColor" class="header-logo">
             </a>
-        </div>
-        <div class="globalHeader-center">
-            <c:choose>
-                <c:when test="${empty sessionScope.userInfo.email}">
-                    <ul class="header-index">
-                        <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs" id="">아티클 찾기</a></li>
-                        <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceuIntrdText navTabs">서비스 소개</a></li>
-                        <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li>
-                    </ul>
-                </c:when>
-                <c:otherwise>
-                    <ul class="header-index">
-                        <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs">아티클 찾기</a></li>
-                        <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceIntrdText navTabs">서비스 소개 </a></li>
-                    </ul>
-                </c:otherwise>
-            </c:choose>
-
         </div>
         <div class="globalHeader-right">
             <c:choose>
@@ -99,6 +81,24 @@
                 </c:otherwise>
             </c:choose>
         </div>
+    </div>
+    <div class="globalHeader-center">
+        <c:choose>
+            <c:when test="${empty sessionScope.userInfo.email}">
+                <ul class="header-index">
+                    <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs" id="">아티클 찾기</a></li>
+                    <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceuIntrdText navTabs">서비스 소개</a></li>
+                    <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li>
+                </ul>
+            </c:when>
+            <c:otherwise>
+                <ul class="header-index">
+                    <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs">아티클 찾기</a></li>
+                    <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceIntrdText navTabs">서비스 소개 </a></li>
+                </ul>
+            </c:otherwise>
+        </c:choose>
+
     </div>
 </header>
 

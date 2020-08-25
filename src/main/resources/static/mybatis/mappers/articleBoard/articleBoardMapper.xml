@@ -30,7 +30,8 @@
             C_.CATEGORY AS CATEGORY_TITLE,
             A_.REG_DATE,
             A_.DEL,
-            A_.APPLY_COUNT
+            A_.APPLY_COUNT,
+            A_.IMAGE_PATH
         FROM ARTICLE A_, CATEGORY C_
         WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
             AND C_.CATEGORY IN (${categoryStr})
@@ -50,7 +51,8 @@
             C_.CATEGORY AS CATEGORY_TITLE,
             A_.REG_DATE,
             A_.DEL,
-            A_.APPLY_COUNT
+            A_.APPLY_COUNT,
+            A_.IMAGE_PATH
         FROM ARTICLE A_, CATEGORY C_
         WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
             AND C_.CATEGORY IN (${categoryStr})
@@ -77,7 +79,8 @@
                      U_LEN.LAST_LEARNING_TYPE                                   AS LAST_LEARNING_TYPE,
                      U_LEN.ARTICLE_SEQ                                          AS ARTICLE_SEQ,
                      A_.URL                                                     AS URL,
-                     A_.TITLE                                                   AS TITLE
+                     A_.TITLE                                                   AS TITLE,
+                     A_.IMAGE_PATH                                              AS IMAGE_PATH
               FROM USER_LEARNING U_LEN,
                   ARTICLE A_
               WHERE U_LEN.ARTICLE_SEQ = A_.ARTICLE_SEQ

@@ -2,8 +2,8 @@
 내 학습보드에 사용자가 학습중인 아티클 정보를 카드에 담아 화면에 그려주기 위한 모듈
 */
 class LearningListCard {
-    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, regDate, lastLearningDate, achievementRate, learningDone, userArticleShow) {
-        //this.imgFilePath = imgFilePath;
+    constructor(imagePath, articleSeq, url, categoryTitle, hashtag, title, summary, regDate, lastLearningDate, achievementRate, learningDone, userArticleShow) {
+        this.imagePath = imagePath.replace(/\"/g, "");
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
         this.categoryTitle = categoryTitle.replace(/\"/g, "");
@@ -25,7 +25,9 @@ class LearningListCard {
             <div class="learningList__card-content-wrapper">
                 <!-- Done Badge & Thumbnail -->
                 <div class="learningList__card-${(this.learningDone == 1) ? "done" : ""}-badge"></div>
-                <img class="learningList__card-img" src="../../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
+                <div class="learningList__card-img-wrapper">
+                    <img class="learningList__card-img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+                </div>
                 
                 <!-- Card Title & Description -->
                 <div class="learningList__card-body learningList__card-body">

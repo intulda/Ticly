@@ -26,9 +26,11 @@ import LearningListCard from './module/learningListCard.js';
                 // 스크롤할 때 마다 (한 번에 보여주는 카드 개수 * 스크롤 횟수)번째 카드 부터
                 // (한 번에 보여주는 카드 개수만큼)  카드 그려주기
                 let startCount = MAXIMUM_NUMBER_OF_CARDS * scrollCount;
-                let result = myArticleList.filter(it => JSON.stringify(it.learning_done).includes(state));
 
-                if (startCount <= result.length) {
+                let showState = checkShowState(state);
+                let result = myArticleList.filter(it => JSON.stringify(it.user_article_show).includes(showState));
+                result = result.filter(it => JSON.stringify(it.learning_done).includes(state));
+                if (startCount < result.length) {
                     articleCardModule(result, startCount);
                 }
             }
@@ -129,7 +131,8 @@ import LearningListCard from './module/learningListCard.js';
             }
 
             learningListSection.appendChild(new LearningListCard(
-                JSON.stringify(list[i].article_seq)
+                JSON.stringify(list[i].image_path)
+                , JSON.stringify(list[i].article_seq)
                 , JSON.stringify(list[i].url)
                 , JSON.stringify(list[i].category_title)
                 , JSON.stringify(list[i].hashtag)
@@ -252,6 +255,13 @@ import LearningListCard from './module/learningListCard.js';
     }
 
     function init() {
+
+        // 다른 페이지에서 뒤로가기 했을 때 새로고침 해주는 이벤트
+        let perfEntries = performance.getEntriesByType("navigation");
+        if (perfEntries[0].type === "back_forward") {
+            location.reload(true);
+        }
+
         window.onpageshow = () => {
             pageLoadEvent();
         };

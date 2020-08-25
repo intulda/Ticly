@@ -33,6 +33,7 @@
 <div class="ticly__basic-layout">
     <div class="container container-xxl ticly__basic-content-layout">
         <div class="findArticle__header">
+
             <!-- category tab -->
             <div class="category__tab-wrapper">
                 <c:choose>

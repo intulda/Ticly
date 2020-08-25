@@ -1,26 +1,17 @@
 /* globalNav */
 .globalHeader-wrap{
-    position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    position: sticky;
+    padding: 17px 24px;
     height: 80px;
     z-index: 11;
     box-shadow: 0 1px 0 0 #E1E1E8;
     background-color: white;
 }
 
-.globalHeader{
-    display: flex;
-    align-items: center;
-    max-width: 1600px;
-    justify-content: space-between;
-    height: 80px;
-    padding: 20px 24px;
-    margin: 0 auto;
-}
-
 .globalHeader-left{
+    float: left;
+    margin-left: 0;
     cursor: pointer;
 }
 
@@ -45,6 +36,7 @@
 }
 
 .globalHeader-right{
+    float: right;
     display: flex;
     align-items: center;
 }
@@ -106,6 +98,13 @@
 /*드롭다운*/
 .dropdown-menu{
     min-width: 0 !important;
+}
+
+.globalHeader-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* For small screen */
