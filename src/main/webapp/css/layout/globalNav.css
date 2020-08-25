@@ -88,12 +88,9 @@
     cursor: pointer;
 }
 
-.header-learing-board{
-    cursor: pointer;
-    border: 1px solid #008E6D;
-    border-radius: 5px;
-    background-color: rgba(0,168,129,0.08);
+.globalHeader__move-learing-board{
     margin-right: 16px;
+    padding-right: 12px;
 }
 
 .icon_caret-down{

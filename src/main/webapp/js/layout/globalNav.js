@@ -18,6 +18,10 @@
         document.getElementById('email-signin-form').classList.add('hidden');
     }
 
+    document.getElementById('move-learning-board').addEventListener("click", function (){
+      window.location.href = "/dashboard/my";
+    })
+
     /*네비 클릭 이벤트*/
     document.addEventListener('DOMContentLoaded', function() {
         var current_page_URL = location.href;
