@@ -1,24 +1,43 @@
-import LearningListCard from './learningListCard.js';
-import LastLearningCard from './lastLearningCard.js';
+'use static';
+
+import LearningListCard from './module/learningListCard.js';
 
 (() => {
-    const lastLearningSection = document.querySelector(".js-lastLearning-section"),
-        learningListSection = document.querySelector(".js-learningList-section"),
-        userEmail = document.querySelector("input[name=userEmail]").value,
+    const learningListSection = document.querySelector(".js-learningList-section"),
         listTabBtn = document.querySelectorAll(".js-list-tab-btn"),
-        selectBox = document.querySelector(".js-my-select-box");
+        selectBox = document.querySelector(".js-my-select-box"),
+        userEmail = document.querySelector("input[name=userEmail]").value;
 
-    const LAST_LEARNING_ARTICLE_CARD_PATH = "getLastLearningArticleInfo?",
-        LEARNING_ARTICLE_LIST_PATH = "getLearningListInfo?";
+    const MY_ARTICLE_LIST_PATH = "getMyArticleListInfo?", // 내가 [학습하기]로 선택한 아티클 정보를 구하는 경로
+        MAXIMUM_NUMBER_OF_CARDS = 5; // 한 번에 보여주는 카드 개수
 
-    let count = 0;
-    let learningList = [];
+    let myArticleList = []; // axios로 받아온 데이터를 담는 배열
+    let scrollCount = 0; // 무한 스크롤용 스크롤 횟수
+    let state = 0; // 학습중 / 학습완료 탭 중 현재 활성화된 탭의 상태를 저장하는 변수
 
     //---------------------------------------------------------------------------------------
 
+    // 무한 스크롤을 위한 함수
+    function infinityScroll() {
+        window.onscroll = function (ev) {
+            // window height + window scrollY 값이 document height보다 클 경우,
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+
+                // 스크롤할 때 마다 (한 번에 보여주는 카드 개수 * 스크롤 횟수)번째 카드 부터
+                // (한 번에 보여주는 카드 개수만큼)  카드 그려주기
+                let startCount = MAXIMUM_NUMBER_OF_CARDS * scrollCount;
+                let result = myArticleList.filter(it => JSON.stringify(it.learning_done).includes(state));
+
+                if (startCount <= result.length) {
+                    articleCardModule(result, startCount);
+                }
+            }
+        }
+    }
+
     // 정렬 옵션에 변동사항이 있을 때 마다 카드의 정렬을 바꾸는 함수
     function changeSortOption() {
-
+        scrollCount = 0;
         let selectedValue = selectBox.options[selectBox.selectedIndex].value;
         let state = null;
 
@@ -28,51 +47,69 @@ import LastLearningCard from './lastLearningCard.js';
             }
         });
 
+        let showState = checkShowState(state);
+
         // 선택한 옵션에 따라 배열 정렬하기
-        let newSortedList = learningList;
+        let newSortedList = myArticleList;
         if (newSortedList.length > 1) {
             switch (selectedValue) {
-
                 // 최근 학습순 정렬
-                case "1" :
+                case "1":
                     newSortedList.sort((a, b) => {
                         return a.last_learning_date > b.last_learning_date ? -1 : a.last_learning_date < b.last_learning_date ? 1 : 0;
                     });
                     break;
 
                 // 최신 등록순
-                case "2" :
+                case "2":
                     newSortedList.sort((a, b) => {
                         return a.reg_date > b.reg_date ? -1 : a.reg_date < b.reg_date ? 1 : 0;
                     });
                     break;
 
                 // 제목순
-                case "3" :
+                case "3":
                     newSortedList.sort((a, b) => {
-                        return a.title > b.title ? -1 : a.title < b.title ? 1 : 0;
+                        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
                     });
                     break;
             }
-            paintLearningListCardModule(newSortedList, state)
+            let showState = checkShowState(state);
+            paintCard(newSortedList, state, showState)
         }
     }
 
     // 리스트 탭 버튼 클릭시 이벤트
     function handleListTabBtnEvent(ev) {
-        if (!ev.target.classList.contains("active")) {
+        let targetElem = ev.target;
+        if (ev.target.nodeName === 'SPAN') {
+            targetElem = targetElem.parentElement;
+        }
+        if (!targetElem.classList.contains("active")) {
             // 눌려진 아티클 목록 탭의 버튼의 value 받아오기
             // 0 : 학습중 / 1 : 학습 완료
-            let state = ev.target.value;
+            state = targetElem.value;
 
             // 탭 활상화 상태 바꿔주기
-            ev.target.classList.add("active");
-            let inactiveNum = (state == 0 ) ? 1 : 0;
-            listTabBtn[inactiveNum].classList.remove("active")
+            listTabBtn.forEach(el => {
+                el.classList.remove("active");
+            });
+            targetElem.classList.add("active");
+
+            // scrollCount 초기화
+            scrollCount = 0;
+
+            let showState = checkShowState(state);
 
             // 상태에 따라 아티클 목록에 학습 카드 그려주기
-            paintLearningListCardModule(learningList, state);
+            paintCard(myArticleList, state, showState);
         }
+    }
+
+    function checkShowState(tabState) {
+        if (tabState == 0) return "TRUE";
+        else if (tabState == 1) return "TRUE";
+        else if (tabState == 2) return "FALSE";
     }
 
     // null인지 확인하는 함수
@@ -80,8 +117,36 @@ import LastLearningCard from './lastLearningCard.js';
         return (v === undefined || v === null) ? true : false;
     }
 
-    // json 파일을 입력받아 학습중인 아티클 카드를 그려주는 모듈
-    function paintLearningListCardModule(list, state) {
+    // 아티클 카드 모듈
+    function articleCardModule(list, startCount) {
+        let count = 0;
+        scrollCount++;
+
+        for (let i = startCount; i < list.length; i++) {
+            // 그려주는 카드 개수 제한
+            if (count == MAXIMUM_NUMBER_OF_CARDS) {
+                return;
+            }
+
+            learningListSection.appendChild(new LearningListCard(
+                JSON.stringify(list[i].article_seq)
+                , JSON.stringify(list[i].url)
+                , JSON.stringify(list[i].category_title)
+                , JSON.stringify(list[i].hashtag)
+                , JSON.stringify(list[i].title)
+                , JSON.stringify(list[i].summary)
+                , JSON.stringify(list[i].reg_date)
+                , JSON.stringify(list[i].last_learning_date)
+                , JSON.stringify(list[i].achievement_rate)
+                , JSON.stringify(list[i].learning_done)
+                , JSON.stringify(list[i].user_article_show)
+            ).getElements());
+            count++;
+        }
+    }
+
+    // list의 정보를 가져와 학습중인 아티클 카드를 그려주기
+    function paintCard(list, state, showState) {
         // section의 모든 자식 요소 삭제
         while (learningListSection.hasChildNodes()) {
             learningListSection.removeChild(learningListSection.firstChild);
@@ -90,23 +155,14 @@ import LastLearningCard from './lastLearningCard.js';
         learningListSection.style.display = "grid";
 
         if (!isNull(list)) {
-            let result = list.filter(it => JSON.stringify(it.learning_done).includes(state));
+            let result = list.filter(it => JSON.stringify(it.user_article_show).includes(showState));
+            if (state != 2) {
+                result = result.filter(it => JSON.stringify(it.learning_done).includes(state));
+            }
+
             if (result.length > 0) {
-                for (let key of result) {
-                    learningListSection.appendChild(new LearningListCard(
-                        JSON.stringify(key.article_seq)
-                        , JSON.stringify(key.url)
-                        , JSON.stringify(key.category_title)
-                        , JSON.stringify(key.hashtag)
-                        , JSON.stringify(key.title)
-                        , JSON.stringify(key.summary)
-                        , JSON.stringify(key.reg_date)
-                        , JSON.stringify(key.last_learning_date)
-                        , JSON.stringify(key.achievement_rate)
-                        , JSON.stringify(key.learning_done)
-                    ).getElements());
-                    count++;
-                }
+                articleCardModule(result, scrollCount);
+                $('[name="tooltip"]').tooltip();
             } else {
                 paintDefault(state);
             }
@@ -132,40 +188,32 @@ import LastLearningCard from './lastLearningCard.js';
             goToFindArticleBtn.setAttribute("onclick", "location.href='../articleBoard/findArticle'");
             defaultStateWrapper.appendChild(defaultText);
             defaultStateWrapper.appendChild(goToFindArticleBtn);
-        } else {
+        } else if (state == 1) {
             defaultText.innerHTML = `아직 완료한 아티클이 없네요🙈<br> 열심히 공부해서 이곳을 꽉 채워주세요!`;
+            defaultStateWrapper.appendChild(defaultText);
+        } else if (state == 2) {
+            defaultText.innerHTML = `<span class="text text-color-green">학습중</span>인 아티클을 숨길 수 있어요🙈<br> 숨기길 원하시면 카드 우측 상단의 '<i class="icon_show"></i>' 버튼을 클릭해주세요!`;
             defaultStateWrapper.appendChild(defaultText);
         }
         learningListSection.appendChild(defaultStateWrapper);
         learningListSection.style.display = "block";
     }
 
-    // json 파일을 입력받아 마지막으로 학습한 아티클 카드 그려주는 비동기 처리
-    function getAndPaintLastLearningCard(path, section) {
-        axios({
-            method: 'get',
-            url   : path
-        })
-            .then(function (json) {
-                console.log("Receive Success!");
-                console.log(json.data);
+    // 아티클 목록에서 완료 유무를 파악해 각각 몇개의 목록을 가지고 있는지 연산하는 함수
+    function counting(list) {
+        // 학습중
+        let result = list.filter(it => JSON.stringify(it.user_article_show).includes("TRUE"));
+        result = result.filter(it => JSON.stringify(it.learning_done).includes(0));
+        listTabBtn[0].firstElementChild.innerHTML = result.length;
 
-                // sectionr의 모든 자식 요소 삭제
-                while (section.hasChildNodes()) {
-                    section.removeChild(section.firstChild);
-                }
+        // 학습 완료
+        result = list.filter(it => JSON.stringify(it.learning_done).includes(1));
+        listTabBtn[1].firstElementChild.innerHTML = result.length;
 
-                if (json.data.length != 0) {
-                    lastLearningSection.appendChild(new LastLearningCard(
-                        JSON.stringify(json.data.article_seq)
-                        , JSON.stringify(json.data.url)
-                        , JSON.stringify(json.data.title)
-                        , JSON.stringify(json.data.last_learning_type)
-                        , JSON.stringify(json.data.last_learning_content)
-                        , JSON.stringify(json.data.last_learning_date)
-                    ).getElements());
-                }
-            });
+        // 숨긴 아티클
+        result = list.filter(it => JSON.stringify(it.user_article_show).includes("FALSE"));
+        result = result.filter(it => JSON.stringify(it.learning_done).includes(0));
+        listTabBtn[2].firstElementChild.innerHTML = result.length;
     }
 
     // json 객체를 리스트에 담아주는 비동기 처리
@@ -179,9 +227,10 @@ import LastLearningCard from './lastLearningCard.js';
                 console.log(json.data);
 
                 if (json.data.length != 0) {
-                    learningList = json.data;
-                    paintLearningListCardModule(learningList, 0);
-                    counting(learningList);
+                    myArticleList = json.data;
+                    paintCard(myArticleList, 0, "TRUE");
+                    counting(myArticleList);
+
                 } else {
                     paintDefault(0);
                 }
@@ -192,43 +241,37 @@ import LastLearningCard from './lastLearningCard.js';
     function createPath(startSpot) {
         let path = startSpot;
         path += "email=" + userEmail;
-
         return path;
     }
 
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
-        // 마지막 학습 카드 그려주기
-        let path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
-        let section = lastLearningSection;
-        getAndPaintLastLearningCard(path, section);
-
-        // 학습중인 카드 목록 그려주기
-        path = createPath(LEARNING_ARTICLE_LIST_PATH);
-        section = learningListSection;
+        const path = createPath(MY_ARTICLE_LIST_PATH);
+        const section = learningListSection;
         getArticleList(path, section);
     }
 
-    // 아티클 목록에서 완료 유무를 파악해 각각 몇개의 목록을 가지고 있는지 연산하는 함수
-    function counting(list) {
-        let result = list.filter(it => JSON.stringify(it.learning_done).includes(0));
-
-        listTabBtn[0].firstElementChild.innerHTML = "(" + result.length + ")";
-
-        result = list.filter(it => JSON.stringify(it.learning_done).includes(1));
-        listTabBtn[1].firstElementChild.innerHTML = "(" + result.length + ")";
-    }
-
     function init() {
-        window.onload = () => {
+        window.onpageshow = () => {
             pageLoadEvent();
         };
 
+        // 무한 스크롤 이벤트
+        infinityScroll();
+
+        // 학습중 / 학습완료 탭 이벤트
         listTabBtn.forEach(el => {
             el.addEventListener("click", handleListTabBtnEvent);
         });
 
+        // 카드 정렬 이벤트
         selectBox.addEventListener("change", changeSortOption);
+
+        // 비로그인시 로그인 모달을 닫을 때 이벤트
+        document.querySelector("#modal-close").addEventListener("click", () => {
+            location.href = "../articleBoard/findArticle";
+        });
+
     }
 
     init();

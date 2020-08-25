@@ -11,7 +11,6 @@
 }
 
 .btn > i[class*='icon'], .btn > i[class^='icon']{
-  line-height: inherit;
 }
 
 i[class^="icon"], i[class*="icon"] {

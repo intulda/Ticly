@@ -49,18 +49,18 @@
 <html>
 <head>
     <title></title>
-    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/learn/learn.css">
+<%--    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>--%>
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/learn/learn.css">--%>
 </head>
 <body>
 <header class="leaning-header-wrap">
     <div class="leaning-header">
         <div class="leaning-header-left">
-            <button class="text btn btn-secondary btn-custom-option text-weight-medium header-btn-back">
+            <button class="text btn btn-secondary btn-custom-option text-weight-medium header-btn-back" onclick="history.back();">
                 <i class="icon_chevron-left"></i>
                 학습 끝내기
             </button>
-            <ul class="header-index">
+            <ul class="learning__header-index">
                 <li class="text">내 학습보드</li>
                 <li class="text">${currentArticle.title}</li>
             </ul>

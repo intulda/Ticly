@@ -1,11 +1,9 @@
 package io.ticly.mint.learn;
 
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
-import io.ticly.mint.learn.model.dto.LearnArticleDTO;
-import io.ticly.mint.learn.model.dto.UserLearnDTO;
-import io.ticly.mint.learn.model.dto.VocaDTO;
-import io.ticly.mint.learn.model.dto.VocaGroupDTO;
+import io.ticly.mint.learn.model.dto.*;
 import io.ticly.mint.learn.model.service.LearnService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,18 +53,33 @@ public class LearnController {
                 .article_seq(seq)
                 .build();
         learnService.saveUserLearning(userLearnDTO);
-        int userLearningSeq = learnService.getUserLearning(userLearnDTO);
-        userLearnDTO.setUser_learning_seq(userLearningSeq);
+        UserLearnDTO userLearnInfo = learnService.getUserLearning(userLearnDTO);
+        userLearnDTO.setUser_learning_seq(userLearnInfo.getUser_learning_seq());
         if(learnService.getGroupDataCheck(userLearnDTO)) {
             learnService.saveArticleGroupToUser(userLearnDTO);
         }
         if(learnService.getUserVocaCheck(userLearnDTO)) {
             learnService.saveArticleVocaToUser(userLearnDTO);
         }
+        if(learnService.getSentenceSaveCheck(userLearnDTO)) {
+            learnService.saveArticleSentenceToUser(userLearnDTO);
+        }
+
         LearnArticleDTO learnArticleDTO = learnService.getArticle(userLearnDTO);
-        learnArticleDTO.setUser_learning_seq(userLearningSeq);
+        learnArticleDTO.setUser_learning_seq(userLearnInfo.getUser_learning_seq());
+        learnArticleDTO.setLast_learning_type(userLearnInfo.getLast_learning_type());
         model.addAttribute("currentArticle", learnArticleDTO);
-        return "learn/leaning";
+        return "learn/learning";
+    }
+
+    @PostMapping(value="learnWordTemplate")
+    public String learnWordTemplate() {
+        return "/learn/learnWordTemplate";
+    }
+
+    @PostMapping(value="learnSentenceTemplate")
+    public String learnSentenceTemplate() {
+        return "/learn/learnSentenceTemplate";
     }
 
     /**
@@ -164,7 +177,7 @@ public class LearnController {
      */
     @PostMapping(value="updateLastVoca")
     @ResponseBody
-    private boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
+    public boolean updateLastVoca(@RequestBody VocaDTO vocaDTO) throws SQLException {
         return learnService.updateLastVoca(vocaDTO);
     }
 
@@ -176,15 +189,49 @@ public class LearnController {
      */
     @PostMapping(value="saveVocaGroup")
     @ResponseBody
-    private boolean saveVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO, Model model) throws SQLException {
+    public boolean saveVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO, Model model) throws SQLException {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
         vocaGroupDTO.setEmail(memberDTO.getEmail());
         return learnService.saveVocaGroup(vocaGroupDTO);
     }
 
+    /**
+     * 단어그룹 삭제 메소드
+     * @param vocaGroupDTO
+     * @return
+     * @throws SQLException
+     */
     @PostMapping(value="deleteVocaGroup")
     @ResponseBody
-    private boolean deleteVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO) throws SQLException {
+    public boolean deleteVocaGroup(@RequestBody VocaGroupDTO vocaGroupDTO) throws SQLException {
         return learnService.deleteVocaGroup(vocaGroupDTO);
+    }
+
+    /**
+     *
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    @PostMapping(value="updateLastLearningType")
+    @ResponseBody
+    public boolean updateLastLearningType(@RequestBody UserLearnDTO userLearnDTO, Model model) throws SQLException {
+        MemberDTO memberDTO = (MemberDTO) model.getAttribute("userInfo");
+        userLearnDTO.setEmail(memberDTO.getEmail());
+        return learnService.updateLastLearningType(userLearnDTO);
+    }
+
+    @PostMapping(value="getArticleSentence")
+    @ResponseBody
+    public List<UserSentenceDTO> getArticleSentence(@RequestBody UserSentenceDTO userSentenceDTO) throws SQLException {
+        return learnService.getArticleSentence(userSentenceDTO);
+    }
+
+    @PostMapping(value="updateUserSentence")
+    @ResponseBody
+    public boolean updateUserSentence(@RequestBody UserSentenceDTO userSentenceDTO) throws SQLException {
+        learnService.updateUserSentence(userSentenceDTO);
+        learnService.updateLastUserSentence(userSentenceDTO);
+        return true;
     }
 }

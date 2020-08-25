@@ -1,17 +1,21 @@
+.category__tab-wrapper > button{
+    margin-right: 0.188rem;
+}
+
 .findArticle__header {
-    margin: 2rem 0 2.75rem;
+    padding: 2rem 0 2.5rem;
     display: flex;
     justify-content: space-between;
 }
 
 .card__outer {
-    cursor: pointer;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem 2rem;
 }
 
 .card__wrapper {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 100%;
@@ -31,12 +35,12 @@
 
 .card__body {
     position: relative;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
 }
 
 
 .card__body-title {
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     width: 90%;
     display: -webkit-box;
@@ -45,7 +49,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 3.5rem;
+    max-height: 3.75rem;
 }
 
 .card__body > p {
@@ -98,18 +102,24 @@
     padding-right: 2rem;
 }
 
-button.category__tab {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 500;
+/*icon-btn*/
+.btn > i {
+    font-size: 1.125rem;
+    position: relative;
+    vertical-align: middle;
+    bottom: 1px;
 }
 
 .findArticle__section {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+}
+
+.findArticle__section > p {
+    margin-bottom: 0.4rem;
 }
 
 .findArticle__section > div {
-    margin: 0.25rem 0 1rem;
+    margin: 0.25rem 0 1.25rem;
 }
 
 .findArticle__section > div > a {
@@ -117,16 +127,41 @@ button.category__tab {
     margin-bottom: 1rem;
 }
 
+
+.findArticle__section-title{
+    position: relative;
+}
+.findArticle__section-title:before{
+    content:'';
+    width:100%;
+    height:100%;
+    z-index: 1;
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+.findArticle__section-title > i {
+    margin-left:0.25rem;
+}
+
+
 .findArticle__section-title:hover {
     filter: opacity(86%);
 }
 
+.findArticle__section-title i {
+    margin-left: 0;
+}
+
 .findArticle__section-title:hover i {
+    margin-left: 0;
     animation-duration: 0.5s;
     animation-name: hoverLink;
-    animation-iteration-count: 1;
+    animation-iteration-count: infinite;
     animation-direction: alternate;
 }
+
 
 @media (max-width: 1440px) {
     .card__body-title {
@@ -135,13 +170,117 @@ button.category__tab {
 }
 
 @keyframes hoverLink {
-    from {
+    0% {
         margin-left: 0;
-    }
-    30% {
-        margin-left: 12px;
     }
     100% {
-        margin-left: 0;
+        margin-left: 12px;
     }
+}
+
+.default__null{
+    position: relative;
+    text-align: center;
+    line-height: 1.6;
+    min-height: 100px;
+    padding: 3rem;
+    background-color: #F7F7FA;
+    border-radius: 0.938rem;
+}
+
+/* last learning Card */
+.lastLearning__Section{
+    margin-bottom: 3.5rem;
+}
+
+.lastLearning__Section-title {
+    margin: 0 0 1.25rem;
+}
+
+/*마지막 학습한 카드 */
+.lastLearning__card-outer {
+    transition: all 0.2s;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.lastLearning__card-outer:hover {
+    box-shadow: 0 -10px 12px 0 rgba(225,225,232,0.20), 0 8px 12px 0 rgba(0,0,0,0.20);
+}
+.lastLearning__card-outer:hover .lastLearning__card-title:hover > h6   {
+    text-decoration: underline;
+}
+
+.lastLearning__card-img {
+    position: relative;
+    /*flex-basis: 16rem;*/
+    height: 7rem;
+    min-width: 12.438rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+}
+
+.lastLearning__card-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.lastLearning__card-body {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    min-height: 7rem;
+    flex-direction: column;
+}
+
+.lastLearning__card-title {
+    width: 100%;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.lastLearning__card-title > h6 {
+    width: 80%;
+    margin-bottom: 0.25rem;
+    display: -webkit-box;
+    word-wrap: break-word;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 1.75em;
+}
+
+.lastLearning__card-position {
+    /* 총 너비에서 이어하기 버튼과 패딩 간격 만큼 빼기 */
+    width: calc(100% - 6.375rem - 1rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 라인수 */
+    -webkit-box-orient: vertical;
+    word-wrap:break-word;
+}
+
+.lastLearning__card-subInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.lastLearning__card-continue-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.btn > i {
+    font-size: 1.125rem;
 }
