@@ -81,7 +81,7 @@
                 </c:when>
                 <c:otherwise>
                     <c:if test="${sessionScope.userInfo.auth eq 0}">
-                        <a href="/writeTest" class="text text-weight-medium" style="margin-right: 12px">관리자페이지</a>
+                        <a href="/writeForm" class="text text-weight-medium" style="margin-right: 12px">관리자페이지</a>
                     </c:if>
                     <button class="globalHeader__move-learing-board btn btn-outline-primary btn-right-icon" id="move-learning-board">
                         내 학습 보드
