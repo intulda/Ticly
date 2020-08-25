@@ -12,8 +12,11 @@
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
     <div class="container adminClientManage_Container ticly__basic-content-layout">
         <div class="adminClientManage_Div">
-            <span class="filter_Title">검색 설정</span>
-            <div class="filter_Div">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch" checked="">
+                <label class="custom-control-label filter_Title" for="customSwitch">검색 설정</label>
+            </div>
+            <div class="filter_Div" id="customSwitchContent">
                 <div class="searchCategoryBar">
                     <span class="filter_SubTitle">검색어</span>
                     <select class="form-control" id="searchCategory">
@@ -66,13 +69,13 @@
                         <label class="custom-control-label" for="accountCheckboxNaver">네이버</label>
                     </div>
                 </div>
-                <div class="searchButton">
-                    <button type="submit"
-                            class="btn btn-outline-primary"
-                            id="search_Client_Button">
-                        검색하기
-                    </button>
-                </div>
+            </div>
+            <div class="searchButton">
+                <button type="submit"
+                        class="btn btn-outline-primary"
+                        id="search_Client_Button">
+                    검색하기
+                </button>
             </div>
             <div class="rectangle adminClientManage_Rectangle"></div>
             <span class="filter_Title">검색 결과</span>
@@ -178,6 +181,47 @@
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
+<script>
+    checkSwitch();
+
+    $("#customSwitch").click(function(){
+        checkSwitch();
+    });
+
+    function checkSwitch() {
+        const switchValue = $('#customSwitch').prop('checked');
+
+        if(switchValue) {
+            searchBoxDisabledToggle(false);
+        } else {
+            searchBoxDisabledToggle(true);
+        }
+    }
+
+    function searchBoxDisabledToggle(check) {
+        //TODO: 일반 for
+        // for(let i=0; i<$('#customSwitchContent').children().length; i++) {
+        //     const node = $('#customSwitchContent').children()[i];
+        //     if($(node).find('input') != null) {
+        //         $(node).find('input').prop('disabled', check);
+        //     }
+        //
+        //     if($(node).find('select') != null){
+        //         $(node).find('select').prop('disabled', check);
+        //     }
+        // }
+        //TODO: ES6 for of
+        for(let node of $('#customSwitchContent').children()) {
+            if($(node).find('input') != null) {
+                $(node).find('input').prop('disabled', check);
+            }
+
+            if($(node).find('select') != null){
+                $(node).find('select').prop('disabled', check);
+            }
+        }
+    }
+</script>
 <script type="module" src="${pageContext.request.contextPath}/js/admin/AdminClientManage.js"></script>
 </body>
 </html>

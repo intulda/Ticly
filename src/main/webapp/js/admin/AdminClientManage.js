@@ -3,7 +3,6 @@ import AdminClientSearch from './AdminClientSearch.js'
 (() => {
     const searchClientButton = document.getElementById("search_Client_Button");
     const searchResultTableContent = document.getElementById("search_Result_Table_Content");
-    let searchClientAuthority = document.getElementById("clientAuthority");
 
     let searchClientButtonCheck = true;
 
@@ -56,7 +55,8 @@ import AdminClientSearch from './AdminClientSearch.js'
             });
     }
 
-
     searchClientButton.addEventListener("click", searchClientBtn);
+
+
 
 })();
