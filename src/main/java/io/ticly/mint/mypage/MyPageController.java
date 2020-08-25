@@ -20,7 +20,6 @@ public class MyPageController {
 
         this.mypageService = mypageService;
     }
-
     /**
      * 마이페이지로 이동
      * @return
