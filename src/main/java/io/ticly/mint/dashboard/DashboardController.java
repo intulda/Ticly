@@ -30,6 +30,17 @@ public class DashboardController {
     public String goToCategoryPage(Model model){
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
         model.addAttribute("userInfo", user);
+
+        if(user == null) {
+            return "redirect:/member/login";
+        }
+
+        if(user != null) {
+            if(user.getEmail() == null) {
+                return "redirect:/member/login";
+            }
+        }
+
         return "dashboard/my";
     }
 
