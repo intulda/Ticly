@@ -20,12 +20,25 @@ public class MyPageController {
 
         this.mypageService = mypageService;
     }
+
     /**
      * 마이페이지로 이동
      * @return
      */
     @GetMapping("/mypage")
-    public String showMyPage() {
+    public String showMyPage(HttpSession httpSession) {
+        MemberDTO memberDTO = (MemberDTO)httpSession.getAttribute("userInfo");
+
+        if(memberDTO == null) {
+            return "redirect:/member/login";
+        }
+
+        if(memberDTO != null) {
+            if(memberDTO.getEmail() == null) {
+                return "redirect:/member/login";
+            }
+        }
+
         return "mypage/myPage";
     }
 
