@@ -1,6 +1,9 @@
 package io.ticly.mint.home;
 
+import io.ticly.mint.articleBoard.model.dao.ArticleBoardDAO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
+import io.ticly.mint.articleBoard.model.service.ArticleBoardService;
+import io.ticly.mint.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +14,11 @@ import java.util.List;
 @Controller
 @SessionAttributes("userInfo")
 public class HomeController {
+
+    private ArticleBoardService articleBoardService;
+    public HomeController(ArticleBoardService articleBoardService, MemberService memberService) {
+        this.articleBoardService = articleBoardService;
+    }
 
     /**
      * 사이트 진입시 세션을 확인해 이동시키는 메소드 
@@ -23,13 +31,13 @@ public class HomeController {
 
         // 세션이 비어있다면, Guest 등록
         if(model.getAttribute("userInfo") == null) {
-            int auth = 1;
-            List<String> categories = null;
-            MemberDTO user = new MemberDTO(auth, categories);
+            MemberDTO user = new MemberDTO();
+            user = articleBoardService.setMember(user);
             model.addAttribute("userInfo", user);
 
-            path = "redirect:/articleBoard/category";
+            path = "redirect:/articleBoard/findArticle";
         }
+
         // 세션이 등록되어 있을 경우
         else {
             // Member일 경우
@@ -43,14 +51,8 @@ public class HomeController {
             // 한 번 이상 방문한 Guest일 경우
             else {
                 // 카테고리를 선택하지 않았다면,
-                if(user.getCategories() == null) {
-                    path = "redirect:/articleBoard/category";
-                }
-
-                // 카테고리를 선택했다면,
-                else {
+                    System.out.println("이미 등록된 Guest다!");
                     path = "redirect:/articleBoard/findArticle";
-                }
             }
         }
         return path;
