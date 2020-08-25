@@ -50,8 +50,18 @@ public class PrincipalDetail implements UserDetails {
     //계정이 가지고 있는 권한 목록을 리턴한다.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collectors = new ArrayList<>();
-        collectors.add(()->{ return "ROLE_"+userDTO.getAuth();}); //"ROLE은 규칙이다."
-        return collectors;
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(()->{ return "ROLE_"+userDTO.getAuth();}); //"ROLE은 규칙이다."
+        return authorities;
+
+        /*
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+		for(int x=0; x<userVO.size(); x++) {
+			authorities.add(new SimpleGrantedAuthority(userVO.get(x).getRoleName()));
+		}
+
+		return authorities;
+         */
     }
 }

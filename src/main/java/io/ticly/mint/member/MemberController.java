@@ -116,6 +116,7 @@ public class MemberController {
     @PostMapping("/auth/joinProc")
     @ResponseBody
     public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
+        //비밀번호 암호화
         int checkNum = memberService.insertNewMember(userDTO);
 
         if(checkNum==1){
