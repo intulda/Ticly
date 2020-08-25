@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminClientManageDAO">
+    
+    <!-- 전체 조회 -->
+    <select id="clientSearchBtn" resultType="AdminClientManageDTO">
+        SELECT
+            ROWNUM,
+            EMAIL,
+            NICKNAME,
+            AUTH,
+            SIGNUP_TYPE,
+            TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE,
+            DEL,
+            MARKETING_AGREE
+        FROM MEMBER
+    </select>
+</mapper>
