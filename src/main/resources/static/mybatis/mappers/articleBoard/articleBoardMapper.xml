@@ -8,13 +8,13 @@
         @param categoryList -->
     <select id="getHashtagInfo" parameterType="String" resultType="HashtagDTO">
         SELECT
-            DISTINCT TRIM(a.HASHTAG) AS HASHTAG,
-            length(a.HASHTAG)-length(replace(a.HASHTAG, '#', '')) AS HASHTAG_COUNT,
-            a.APPLY_COUNT
-        FROM ARTICLE a, CATEGORY c
-        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
-          AND c.CATEGORY IN (${categoryStr})
-        ORDER BY a.APPLY_COUNT DESC
+            DISTINCT TRIM(A_.HASHTAG) AS HASHTAG,
+            length(A_.HASHTAG)-length(replace(A_.HASHTAG, '#', '')) AS HASHTAG_COUNT,
+            A_.APPLY_COUNT
+        FROM ARTICLE A_, CATEGORY C_
+        WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+          AND C_.CATEGORY IN (${categoryStr})
+        ORDER BY A_.APPLY_COUNT DESC
     </select>
 
     <!--DB에서 검색어를 만족하는 아티클 찾기
@@ -22,57 +22,98 @@
         @param searchKeyword -->
     <select id="findArticleBySearch" parameterType="hashmap" resultType="ArticleInfoDTO">
         SELECT
-            a.ARTICLE_SEQ,
-            a.TITLE,
-            a.SUMMARY,
-            a.URL,
-            a.HASHTAG,
-            c.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
-            a.DEL,
-            a.APPLY_COUNT
-        FROM ARTICLE a, CATEGORY c
-        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
-            AND c.CATEGORY IN (${categoryStr})
-            AND (UPPER(a.TITLE) LIKE UPPER(${searchKeyword}) OR UPPER(a.HASHTAG) LIKE UPPER(${searchKeyword}))
-        ORDER BY a.REG_DATE DESC
+            A_.ARTICLE_SEQ,
+            A_.TITLE,
+            A_.SUMMARY,
+            A_.URL,
+            A_.HASHTAG,
+            C_.CATEGORY AS CATEGORY_TITLE,
+            A_.REG_DATE,
+            A_.DEL,
+            A_.APPLY_COUNT,
+            A_.IMAGE_PATH
+        FROM ARTICLE A_, CATEGORY C_
+        WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+            AND C_.CATEGORY IN (${categoryStr})
+            AND (UPPER(A_.TITLE) LIKE UPPER(${searchKeyword}) OR UPPER(A_.HASHTAG) LIKE UPPER(${searchKeyword}))
+        ORDER BY A_.REG_DATE DESC
     </select>
 
-    <!--DB에서 내 관심분야 최신순 아티클 찾기
+    <!--DB에서 내 관심분야 아티클 찾기
         @param categoryList -->
-    <select id="findNewMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
+    <select id="findMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
         SELECT
-            a.ARTICLE_SEQ,
-            a.TITLE,
-            a.SUMMARY,
-            a.URL,
-            a.HASHTAG,
-            c.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
-            a.DEL,
-            a.APPLY_COUNT
-        FROM ARTICLE a, CATEGORY c
-        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
-            AND c.CATEGORY IN (${categoryStr})
-        ORDER BY a.REG_DATE DESC
+            A_.ARTICLE_SEQ,
+            A_.TITLE,
+            A_.SUMMARY,
+            A_.URL,
+            A_.HASHTAG,
+            C_.CATEGORY AS CATEGORY_TITLE,
+            A_.REG_DATE,
+            A_.DEL,
+            A_.APPLY_COUNT,
+            A_.IMAGE_PATH
+        FROM ARTICLE A_, CATEGORY C_
+        WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+            AND C_.CATEGORY IN (${categoryStr})
+        ORDER BY A_.REG_DATE DESC
     </select>
 
-    <!--DB에서 내 관심분야 인기순 아티클 찾기
-        @param categoryList -->
-    <select id="findPopularMyTypeArticle" parameterType="String" resultType="ArticleInfoDTO">
+    <!-- TODO 아티클에 파일이 포함되어 있으면, ARTICLE_SEQ와 일치하는 파일 경로 불러오기 -->
+    <select id="getImgFilePath" parameterType="String" resultType="String">
         SELECT
-            a.ARTICLE_SEQ,
-            a.TITLE,
-            a.SUMMARY,
-            a.URL,
-            a.HASHTAG,
-            c.CATEGORY AS CATEGORY_TITLE,
-            TO_CHAR(TO_DATE(a.REG_DATE),'YYYY.MM.DD') AS REG_DATE,
-            a.DEL,
-            a.APPLY_COUNT
-        FROM ARTICLE a, CATEGORY c
-        WHERE a.CATEGORY_SEQ = c.CATEGORY_SEQ
-            AND c.CATEGORY IN (${categoryStr})
-        ORDER BY a.APPLY_COUNT DESC
+            F_.FILE_PATH
+        FROM ARTICLE A_, FILE_MANAGEMENT F_
+        WHERE A_.ARTICLE_SEQ = F_.FILE_MANAGEMENT
+            AND A_.ARTICLE_SEQ = #{article_seq}
+    </select>
+
+
+    <!--DB에서 사용자가 마지막으로 학습한 아티클 정보 불러오기
+        @param String 이메일-->
+    <select id="getLastLearningArticleInfo" parameterType="String" resultType="UserArticleInfoDTO">
+        SELECT *
+        FROM (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)       AS R_NUM,
+                     U_LEN.USER_LEARNING_SEQ                                    AS USER_LEARNING_SEQ,
+                     TO_CHAR(TO_DATE(U_LEN.LAST_LEARNING_DATE),'YYYY.MM.DD')    AS LAST_LEARNING_DATE,
+                     U_LEN.LAST_LEARNING_TYPE                                   AS LAST_LEARNING_TYPE,
+                     U_LEN.ARTICLE_SEQ                                          AS ARTICLE_SEQ,
+                     A_.URL                                                     AS URL,
+                     A_.TITLE                                                   AS TITLE,
+                     A_.IMAGE_PATH                                              AS IMAGE_PATH
+              FROM USER_LEARNING U_LEN,
+                  ARTICLE A_
+              WHERE U_LEN.ARTICLE_SEQ = A_.ARTICLE_SEQ
+                AND U_LEN.EMAIL = #{email})
+        WHERE R_NUM = 1
+    </select>
+
+    <!--DB에서 특정 아티클에서 마지막으로 학습한 VOCA 데이터 가져오기
+    @param String USER_LEARNING_SEQ-->
+    <select id="getLastVoca" parameterType="int" resultType="String">
+        SELECT U_VO.VOCA AS LAST_LEARNING_VOCA
+        FROM USER_LEARNING U_LEN,
+             USER_VOCA U_VO
+        WHERE U_LEN.USER_LEARNING_SEQ = U_VO.USER_LEARNING_SEQ
+          AND U_LEN.USER_LEARNING_SEQ = ${user_learning_seq}
+          AND U_VO.LAST_VOCA != 0
+    </select>
+
+    <!--DB에서 특정 아티클에서 마지막으로 학습한 문장 데이터 가져오기
+    @param String USER_LEARNING_SEQ-->
+    <select id="getLastSentence" parameterType="int" resultType="String">
+        SELECT ENG_SENTENCE AS LAST_LEARNING_SENTENCE
+        FROM ARTICLE_SENTENCE
+        WHERE ARTICLE_SENTENCE_SEQ = (SELECT U_SEN.ARTICLE_SENTENCE_SEQ
+                                      FROM USER_LEARNING U_LEN,
+                                           USER_SENTENCE U_SEN
+                                      WHERE U_LEN.USER_LEARNING_SEQ = U_SEN.USER_LEARNING_SEQ
+                                        AND U_LEN.USER_LEARNING_SEQ = ${user_learning_seq}
+                                        AND U_SEN.LAST_SENTENCE != 0)
+    </select>
+
+    <!-- 전체 카테고리 가져오기 -->
+    <select id="getCategoryKind" resultType="String">
+        SELECT CATEGORY FROM CATEGORY
     </select>
 </mapper>

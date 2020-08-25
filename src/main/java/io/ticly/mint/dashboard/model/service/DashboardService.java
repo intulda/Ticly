@@ -16,21 +16,19 @@ public class DashboardService {
     }
 
     /**
-     * 마지막으로 학습한 아티클 정보 가져오기
-     * @param email
-     * @return
-     */
-    public UserArticleInfoDTO getLastLearningArticleInfo(String email) {
-        return dashboardDAO.getLastLearningArticleInfo(email);
-    }
-
-    /**
      * 학습중인 아티클 정보 가져오기
      * @param email
      * @return
      */
-    public List<UserArticleInfoDTO> getLearningListInfo(String email)  {
-        return dashboardDAO.getLearningListInfo(email);
+    public List<UserArticleInfoDTO> getMyArticleListInfo(String email)  {
+        return dashboardDAO.getMyArticleListInfo(email);
     }
 
+    /**
+     * [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기
+     * @param seq
+     */
+    public int updateUserArticleShow(String seq, String showState, String email)  {
+        return dashboardDAO.updateUserArticleShow(seq, showState, email);
+    }
 }

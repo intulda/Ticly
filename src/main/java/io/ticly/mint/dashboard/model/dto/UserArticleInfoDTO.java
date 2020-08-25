@@ -23,5 +23,7 @@ public class UserArticleInfoDTO {
     private int achievement_rate;
     private int learning_done;
     private String reg_date;
+    private String user_article_show;
+    private String image_path;
 
 }

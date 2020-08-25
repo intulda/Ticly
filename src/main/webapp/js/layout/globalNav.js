@@ -30,9 +30,9 @@
             if(thisNavTabs.href !== "#"){
                 var target_URL = thisNavTabs.href;
 
-                if(current_page_URL === target_URL){
+                if(current_page_URL === target_URL) {
 
-                    for(var i = 0; i < navTabs.length; i++){
+                    for (var i = 0; i < navTabs.length; i++) {
                         navTabs[i].classList.remove('nav-list-active');
                     }
                     thisNavTabs.classList.add('nav-list-active');

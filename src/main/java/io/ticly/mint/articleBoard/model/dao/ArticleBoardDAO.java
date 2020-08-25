@@ -2,6 +2,7 @@ package io.ticly.mint.articleBoard.model.dao;
 
 import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
 import io.ticly.mint.articleBoard.model.dto.HashtagDTO;
+import io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,24 +46,15 @@ public class ArticleBoardDAO {
     }
 
     /**
-     * DB에서 내 관심분야 최신순 아티클 찾기
+     * DB에서 내 관심분야 아티클 찾기
      * @param categoryList
      * @return
      */
-    public List<ArticleInfoDTO> findNewMyTypeArticle(List<String> categoryList){
+    public List<ArticleInfoDTO> findMyTypeArticle(List<String> categoryList){
         String categoryStr = getCategoryStr(categoryList);
-        return sqlSessionTemplate.selectList("articleBoardDAO.findNewMyTypeArticle", categoryStr);
+        return sqlSessionTemplate.selectList("articleBoardDAO.findMyTypeArticle", categoryStr);
     }
 
-    /**
-     * DB에서 내 관심분야 인기순 아티클 찾기
-     * @param categoryList
-     * @return
-     */
-    public List<ArticleInfoDTO> findPopularMyTypeArticle(List<String> categoryList){
-        String categoryStr = getCategoryStr(categoryList);
-        return sqlSessionTemplate.selectList("articleBoardDAO.findPopularMyTypeArticle", categoryStr);
-    }
 
     /**
      * 쿼리문에 넣어주기 위해 관심분야 배열을 ',' 단위로 이어주기
@@ -79,5 +71,33 @@ public class ArticleBoardDAO {
             }
         }
         return categoryStr;
+    }
+
+    /**
+     * 사용자가 마지막으로 학습한 아티클 정보 가져오기
+     * @param email
+     * @return
+     */
+    public UserArticleInfoDTO getLastLearningArticleInfo(String email){
+        UserArticleInfoDTO info = sqlSessionTemplate.selectOne("articleBoardDAO.getLastLearningArticleInfo", email);
+
+        // 마지막 학습 유형이 단어일 때
+        if (info.getLast_learning_type() == 0){
+            info.setLast_learning_content(sqlSessionTemplate.selectOne("articleBoardDAO.getLastVoca", info.getUser_learning_seq()));
+        }
+
+        // 마지막 학습 유형이 문장일 때
+        else if (info.getLast_learning_type() == 1){
+            info.setLast_learning_content(sqlSessionTemplate.selectOne("articleBoardDAO.getLastSentence", info.getUser_learning_seq()));
+        }
+        return info;
+    }
+
+    /**
+     * 전체 카테고리 가져오기
+     * @return
+     */
+    public List<String> getCategoryKind() {
+        return sqlSessionTemplate.selectList("articleBoardDAO.getCategoryKind");
     }
 }

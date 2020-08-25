@@ -1,10 +1,7 @@
 package io.ticly.mint.learn.model.service;
 
 import io.ticly.mint.learn.model.dao.LearnDAO;
-import io.ticly.mint.learn.model.dto.LearnArticleDTO;
-import io.ticly.mint.learn.model.dto.UserLearnDTO;
-import io.ticly.mint.learn.model.dto.VocaDTO;
-import io.ticly.mint.learn.model.dto.VocaGroupDTO;
+import io.ticly.mint.learn.model.dto.*;
 import io.ticly.mint.util.CommonUtil;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +62,7 @@ public class LearnService {
     public void saveArticleVocaToUser(UserLearnDTO userLearnDTO) throws SQLException {
         int count = learnDAO.saveArticleVocaToUser(userLearnDTO);
 
-        if(count <= 0) {
+        if(count < 0) {
             throw new SQLException("아티클 보카 -> 유저 보카로 insert 실패");
         }
     }
@@ -78,7 +75,7 @@ public class LearnService {
     public void saveArticleGroupToUser(UserLearnDTO userLearnDTO) throws SQLException {
         int count = learnDAO.saveArticleGroupToUser(userLearnDTO);
 
-        if(count <= 0) {
+        if(count < 0) {
             throw new SQLException("아티클 보카 그룹 -> 유저 보카 그룹 insert 실패");
         }
     }
@@ -210,7 +207,7 @@ public class LearnService {
      * @param userLearnDTO
      * @return
      */
-    public int getUserLearning(UserLearnDTO userLearnDTO) {
+    public UserLearnDTO getUserLearning(UserLearnDTO userLearnDTO) {
         return learnDAO.getUserLearning(userLearnDTO);
     }
 
@@ -226,6 +223,64 @@ public class LearnService {
         }
         learnDAO.updateVocaGroupDown(vocaGroupDTO);
         learnDAO.updateUserVocaGroupDown(vocaGroupDTO);
+        return true;
+    }
+
+    /**
+     * 마지막 문장 or 단어 타입 수정 메소드
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean updateLastLearningType(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.updateLastLearningType(userLearnDTO);
+        if(count < 0) {
+            throw new SQLException("마지막 단어 문장 타입 업데이트");
+        }
+        return true;
+    }
+
+    /**
+     * 유저 문장 테이블에 저장되어있는지 확인하는 메소드
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean getSentenceSaveCheck(UserLearnDTO userLearnDTO) {
+        return learnDAO.getSentenceSaveCheck(userLearnDTO) > 0 ? false : true;
+    }
+
+    /**
+     * 아티클 문장 유저문장으로 넣는 메소드
+     * @param userLearnDTO
+     * @return
+     * @throws SQLException
+     */
+    public boolean saveArticleSentenceToUser(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.saveArticleSentenceToUser(userLearnDTO);
+        if(count < 0) {
+            throw new SQLException("아티클 문장 유저 문장테이블로 저장 실패");
+        }
+        return true;
+    }
+
+    public List<UserSentenceDTO> getArticleSentence(UserSentenceDTO userSentenceDTO) {
+        return learnDAO.getArticleSentence(userSentenceDTO);
+    }
+
+    public boolean updateUserSentence(UserSentenceDTO userSentenceDTO) throws SQLException {
+        int count = learnDAO.updateUserSentence(userSentenceDTO);
+        if(count < 0) {
+            throw new SQLException("유저 문장 저장 실패");
+        }
+        return true;
+    }
+
+    public boolean updateLastUserSentence(UserSentenceDTO userSentenceDTO) throws SQLException {
+        int count = learnDAO.updateLastUserSentence(userSentenceDTO);
+        if(count < 0) {
+            throw new SQLException("유저 문장 저장 실패");
+        }
         return true;
     }
 }

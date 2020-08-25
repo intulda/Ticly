@@ -19,4 +19,5 @@ public class ArticleInfoDTO {
     private String reg_date;
     private int del;
     private int apply_count;
+    private String image_path;
 }

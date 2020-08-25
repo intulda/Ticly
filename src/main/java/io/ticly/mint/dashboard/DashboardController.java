@@ -28,35 +28,38 @@ public class DashboardController {
     // 내 학습 보드로 단순 이동
     @GetMapping(value ="my")
     public String goToCategoryPage(Model model){
+        MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+        model.addAttribute("userInfo", user);
 
-        // 테스트용으로 사용자 정보 세션에 저장
-        int auth = 3;
-        List<String> categories = new ArrayList<>();
-        categories.add("디자인");
-        categories.add("개발");
-        String email = "test4@naver.com";
-        MemberDTO dto = new MemberDTO(auth, categories, email);
-        model.addAttribute("userInfo", dto);
+        if(user == null) {
+            return "redirect:/member/login";
+        }
+
+        if(user != null) {
+            if(user.getEmail() == null) {
+                return "redirect:/member/login";
+            }
+        }
 
         return "dashboard/my";
     }
 
-     // 마지막으로 학습한 아티클 정보 가져오는 비동기 처리
-    @GetMapping(value = "getLastLearningArticleInfo")
+    // 학습중인 아티클 정보 가져오는 비동기 처리
+    @GetMapping(value = "getMyArticleListInfo")
     @ResponseBody
-    public UserArticleInfoDTO getLastLearningArticleInfo(Model model, HttpServletRequest req){
+    public List<UserArticleInfoDTO> getMyArticleListInfo(Model model, HttpServletRequest req){
         String email = req.getParameter("email");
-        UserArticleInfoDTO lastLearningArticleInfo = dashboardService.getLastLearningArticleInfo(email);
-        return lastLearningArticleInfo;
+        List<UserArticleInfoDTO> getMyArticleListInfo = dashboardService.getMyArticleListInfo(email);
+        return getMyArticleListInfo;
     }
 
-    // 학습중인 아티클 정보 가져오는 비동기 처리
-    @GetMapping(value = "getLearningListInfo")
-    @ResponseBody
-    public List<UserArticleInfoDTO> getLearningListInfo(Model model, HttpServletRequest req){
-        String email = req.getParameter("email");
-        System.out.println("email : " + email);
-        List<UserArticleInfoDTO> getLearningListInfo = dashboardService.getLearningListInfo(email);
-        return getLearningListInfo;
+    // [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기
+    @GetMapping(value = "updateUserArticleShow")
+    public String updateUserArticleShow(Model model, HttpServletRequest req){
+        String seq = req.getParameter("seq");
+        String showState = req.getParameter("showState");
+        String email = ((MemberDTO)model.getAttribute("userInfo")).getEmail();
+        dashboardService.updateUserArticleShow(seq, showState, email);
+        return "dashboard/my";
     }
 }

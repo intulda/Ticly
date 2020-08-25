@@ -112,9 +112,6 @@
     </div>
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="module" src="${pageContext.request.contextPath}/js/member/mypage.js"></script>
 </body>
