@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ArticleSentenceDao">
+    <insert id="saveArticleSentenceDao" parameterType="java.util.HashMap">
+        INSERT INTO ARTICLE_SENTENCE (
+                    ARTICLE_VOCABOOK_SEQ
+                    , ARTICLE_SEQ
+                    , ENG_SENTENCE
+        )
+        VALUES (
+                ARTICLE_VOCABOOK_SEQ.NEXTVAL
+                , #{ARTICLE_SEQ}
+                , #{ENG_SENTENCE}
+        )
+    </insert>
+
+    <delete id="deleteArticleSentenceDao">
+		DELETE FROM ARTICLE_SENTENCE
+		WHERE ARTICLE_VOCABOOK_SEQ = #{ARTICLE_VOCABOOK_SEQ}
+	</delete>
+
+</mapper>
+
