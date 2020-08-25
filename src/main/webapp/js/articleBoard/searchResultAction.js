@@ -113,7 +113,7 @@ import SkeletonCard from './module/skeletonCard.js';
                     hashTagSection.appendChild(btn);
 
                     count++;
-                    if (count === 20) {
+                    if (count === 14) {
                         break;
                     }
                 }
@@ -123,6 +123,7 @@ import SkeletonCard from './module/skeletonCard.js';
 
     // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
     function handleCategoryTabClickEvent(ev) {
+        scrollCount = 0;
         let target = ev.target;
 
         categoryTabBtn.forEach(el => {
@@ -174,7 +175,8 @@ import SkeletonCard from './module/skeletonCard.js';
             }
 
             searchResultCardOuter.appendChild(new ArticleCard(
-                JSON.stringify(list[i].article_seq)
+                JSON.stringify(list[i].image_path)
+                , JSON.stringify(list[i].article_seq)
                 , JSON.stringify(list[i].url)
                 , JSON.stringify(list[i].category_title)
                 , JSON.stringify(list[i].hashtag)
@@ -298,6 +300,13 @@ import SkeletonCard from './module/skeletonCard.js';
     }
 
     function init() {
+
+        // 다른 페이지에서 뒤로가기 했을 때 새로고침 해주는 이벤트
+        let perfEntries = performance.getEntriesByType("navigation");
+        if (perfEntries[0].type === "back_forward") {
+            location.reload(true);
+        }
+
         window.onload = () => {
             pageLoadEvent();
         };
@@ -314,6 +323,7 @@ import SkeletonCard from './module/skeletonCard.js';
         });
 
         searchResultCardOuter.addEventListener("click", handleHashtagBtnClickEvent);
+
     }
 
     init();

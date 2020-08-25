@@ -13,6 +13,7 @@
             ABS.USER_LEARNING_SEQ,
             ABS.LAST_LEARNING_DATE,
             ABS.LAST_LEARNING_TYPE,
+            ABS.USER_ARTICLE_SHOW,
             ABS.ARTICLE_SEQ,
             ABS.URL,
             ABS.CATEGORY_TITLE,
@@ -20,7 +21,7 @@
             ABS.TITLE,
             ABS.SUMMARY,
             ABS.REG_DATE,
-            ABS.USER_ARTICLE_SHOW,
+            ABS.IMAGE_PATH,
             ROUND(((NVL(DECODE(VOCA_COUNT_READING, 0, null,VOCA_COUNT_READING)/
                 DECODE(VOCA_COUNT, 0, null, VOCA_COUNT),0))*50) +
           (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
@@ -39,6 +40,7 @@
                     A_.TITLE                                                 AS TITLE,
                     A_.SUMMARY                                               AS SUMMARY,
                     A_.REG_DATE                                              AS REG_DATE,
+                    A_.IMAGE_PATH                                            AS IMAGE_PATH,
                     (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS VOCA_COUNT,
                     (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND CHECK_READING != 0) AS VOCA_COUNT_READING,
                     (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS SENTENCE_COUNT,

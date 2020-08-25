@@ -24,12 +24,14 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/searchBarStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/skeletonCardStyle.css">
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryModalStyle.css">
-
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/intro/introPage.css">
 </head>
 <body>
 
 <!-- header -->
 <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+
+<c:import url="/WEB-INF/views/intro/introPage.jsp"></c:import>
 
 <div class="ticly__basic-layout">
 

@@ -121,4 +121,8 @@ public class LearnDAO {
     public int updateLastUserSentence(UserSentenceDTO userSentenceDTO) {
         return sqlSessionTemplate.update(NAMESPACE+"updateLastUserSentence", userSentenceDTO);
     }
+
+    public int updateArticleDone(UserLearnDTO userLearnDTO) {
+        return sqlSessionTemplate.update(NAMESPACE+"updateArticleDone", userLearnDTO);
+    }
 }

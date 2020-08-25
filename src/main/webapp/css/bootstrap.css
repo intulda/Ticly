@@ -104,6 +104,7 @@ address {
 ol,
 ul,
 dl {
+    padding-inline-start: 0;
     margin-top: 0;
 }
 
@@ -7771,6 +7772,16 @@ button.bg-dark:focus {
 .ml-5,
 .mx-5 {
     margin-left: 3rem !important;
+}
+
+.mr-6,
+.mx-6 {
+    margin-right: 4rem !important;
+}
+
+.mr-7,
+.mx-7 {
+    margin-right: 5rem !important;
 }
 
 .p-0 {

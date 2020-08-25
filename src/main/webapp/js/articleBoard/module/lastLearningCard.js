@@ -2,8 +2,8 @@
 내 학습보드에 사용자가 최근 학습한 카드를 화면에 그려주기 위한 모듈
 */
 class LastLearningCard {
-    constructor(articleSeq, url, title, lastLearningType, lastLearningContent, lastLearningDate) {
-        //this.imgFilePath = imgFilePath;
+    constructor(imagePath, articleSeq, url, title, lastLearningType, lastLearningContent, lastLearningDate) {
+        this.imagePath = imagePath.replace(/\"/g, "");
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
         this.title = title.replace(/\"/g, "");
@@ -18,7 +18,9 @@ class LastLearningCard {
         this.element.innerHTML =
             `
                 <div class="lastLearning__card-content-wrapper">
-                    <img class="lastLearning__card-img" src="../../../images/articleBoard/ticly_thumbnail.png" alt="thumbnail">
+                <div class="lastLearning__card-img-wrapper">
+                    <img class="lastLearning__card-img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+                </div>
                     <div class="lastLearning__card-body lastLearning__card-body">
                         <div class="lastLearning__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">
                             <h6 class="text text-weight-medium">${this.title}</h6>

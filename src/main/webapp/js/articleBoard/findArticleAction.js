@@ -30,14 +30,15 @@ import LastLearningCard from "./module/lastLearningCard.js";
                 console.log("Receive Success!");
                 console.log(json.data);
 
-                // sectionr의 모든 자식 요소 삭제
+                // section의 모든 자식 요소 삭제
                 while (lastLearningCardSection.hasChildNodes()) {
                     lastLearningCardSection.removeChild(lastLearningCardSection.firstChild);
                 }
 
                 if (json.data.length != 0) {
                     lastLearningCardSection.appendChild(new LastLearningCard(
-                        JSON.stringify(json.data.article_seq)
+                        JSON.stringify(json.data.image_path)
+                        , JSON.stringify(json.data.article_seq)
                         , JSON.stringify(json.data.url)
                         , JSON.stringify(json.data.title)
                         , JSON.stringify(json.data.last_learning_type)
@@ -45,7 +46,10 @@ import LastLearningCard from "./module/lastLearningCard.js";
                         , JSON.stringify(json.data.last_learning_date)
                     ).getElements());
                 }
+            }, (error) => {
+                lastLearningSection.classList.add("hide");
             });
+
     }
 
     // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
@@ -148,7 +152,8 @@ import LastLearningCard from "./module/lastLearningCard.js";
             let count = 0;
             for (let key of list) {
                 section.appendChild(new ArticleCard(
-                    JSON.stringify(key.article_seq)
+                    JSON.stringify(key.image_path)
+                    , JSON.stringify(key.article_seq)
                     , JSON.stringify(key.url)
                     , JSON.stringify(key.category_title)
                     , JSON.stringify(key.hashtag)
@@ -175,6 +180,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
         })
             .then(function (json) {
                 console.log("Receive Success!");
+                console.log(json.data);
 
                 articleList = json.data;
                 cardSortingAndPaint(newSectionCardOuter, "latest");
@@ -209,7 +215,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
         paintSkeletonCard();
 
         // Guest가 아니면 마지막 학습 카드 그려주기
-        if (userAuth != 1 && userAuth != "" ){
+        if (userAuth != 1 && userAuth != "") {
             lastLearningSection.classList.remove("hide");
             path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
             let section = lastLearningCardSection;
@@ -231,12 +237,18 @@ import LastLearningCard from "./module/lastLearningCard.js";
                 path += "&";
             }
         });
-
         getArticleInfo(path);
     }
 
     // init
     function init() {
+
+        // 다른 페이지에서 뒤로가기 했을 때 새로고침 해주는 이벤트
+        let perfEntries = performance.getEntriesByType("navigation");
+        if (perfEntries[0].type === "back_forward") {
+            location.reload(true);
+        }
+
         window.onload = () => {
             pageLoadEvent();
         };

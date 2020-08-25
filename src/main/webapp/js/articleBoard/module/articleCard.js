@@ -3,8 +3,8 @@
 */
 // <img class="card__img card" src="${(this.imgFilePath === "")? '../../../images/articleBoard/ticly_thumbnail.png' : this.imgFilePath }">
 class ArticleCard {
-    constructor(articleSeq, url, categoryTitle, hashtag, title, summary, regDate) {
-        // this.imgFilePath = imgFilePath;
+    constructor(imagePath, articleSeq, url, categoryTitle, hashtag, title, summary, regDate) {
+        this.imagePath = imagePath.replace(/\"/g, "");
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
         this.categoryTitle = categoryTitle.replace(/\"/g, "");
@@ -19,7 +19,9 @@ class ArticleCard {
         this.element.className = "card__wrapper";
         this.element.innerHTML =
             `
-            <img class="card__img card" src="../../../images/articleBoard/ticly_thumbnail.png">
+            <div class="card__img_wrapper card">
+                <img class="card__img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+            </div>
             <div class="card__hover-after">
                 <button class="btn btn-primary btn-lg" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">학습하기</button>
                 <button class="btn btn-outline-white btn-lg" onclick="location.href='${this.url}'">원문보기</button>

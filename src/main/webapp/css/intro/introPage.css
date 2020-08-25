@@ -1,13 +1,13 @@
 /* introPage */
 .introPage_Rectangle {
-    display: flex;
+    z-index: 30;
+    display: none;
     height: 100%;
     width: 100%;
-    opacity: 0.98;
     background-color: rgba(0, 0, 0, 0.08);
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     backdrop-filter: blur(4px);
@@ -16,9 +16,10 @@
 .introPage_Container {
     height: 640px;
     width: 980px;
-    display: flex;
-    justify-content: center;
     position: relative;
+    border-radius: 30px;
+    background-color: #257FF9;
+    padding: 50px 60px;
 }
 
 .intro_Button_Oval {
@@ -31,6 +32,9 @@
     width: 70px;
     border: 4px solid #FFFFFF;
     background-color: #2B2D36;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .intro_Button_X {
@@ -38,30 +42,22 @@
     color: #FFFFFF;
 }
 
-
 .introPage_Mask {
-    height: 100%;
     width: 100%;
-    border-radius: 30px;
-    background-color: #257FF9;
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    position: relative;
 }
 
 .introPage_img {
+    position: absolute;
     height: 366px;
     width: 775px;
-    margin-left: 145px;
+    bottom: 0;
+    right: 0;
 }
 
-.introPage_wordI {
-    margin-top: 35px;
-    margin-left: 60px;
-}
-
-.introPage_wordII {
+.introPage_Word {
     padding-top: 8px;
-    padding-left: 60px;
     letter-spacing: -0.4px !important;
     line-height: 57px !important;
 }
