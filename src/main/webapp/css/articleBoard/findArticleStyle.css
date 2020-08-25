@@ -124,7 +124,7 @@
     bottom: 1px;
 }
 
-.findArticle__section {
+.findArticle__section:first-child {
     margin-bottom: 2rem;
 }
 

@@ -1,7 +1,9 @@
 /* globalNav */
 .globalHeader-wrap{
+    position: fixed;
     top: 0;
-    position: sticky;
+    left: 0;
+    right: 0;
     padding: 17px 24px;
     height: 80px;
     z-index: 11;

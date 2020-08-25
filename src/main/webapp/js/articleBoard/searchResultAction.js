@@ -113,7 +113,7 @@ import SkeletonCard from './module/skeletonCard.js';
                     hashTagSection.appendChild(btn);
 
                     count++;
-                    if (count === 20) {
+                    if (count === 14) {
                         break;
                     }
                 }
