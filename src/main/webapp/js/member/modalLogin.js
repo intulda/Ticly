@@ -48,4 +48,12 @@
                 console.log("데이터 가져오기 실패");
             });
     });
+
+    /*바깥클릭시 모달 닫는 이벤트*/
+    function closeModal(e) {
+        if (e.target.id === 'signinup-modal') {
+            document.getElementById('signinup-modal').style.display = "none";
+        }
+    }
+    document.getElementById('signinup-modal').addEventListener("click", closeModal);
 })();

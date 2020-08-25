@@ -56,6 +56,25 @@
                 <img src = "${pageContext.request.contextPath}/images/logo_color.svg" alt="logoColor" class="header-logo">
             </a>
         </div>
+        <div class="globalHeader-center">
+            <c:choose>
+                <c:when test="${empty sessionScope.userInfo.email}">
+                    <ul class="header-index">
+                        <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs" id="">아티클 찾기</a></li>
+                        <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceuIntrdText navTabs">서비스 소개</a></li>
+                       <!-- <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li> -->
+                        <li><button class="btn btn-primary btn-bg" id="start-free-btn">무료로 시작하기</button></li>
+                    </ul>
+                </c:when>
+                <c:otherwise>
+                    <ul class="header-index">
+                        <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs">아티클 찾기</a></li>
+                        <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceIntrdText navTabs">서비스 소개 </a></li>
+                    </ul>
+                </c:otherwise>
+            </c:choose>
+
+        </div>
         <div class="globalHeader-right">
             <c:choose>
                 <c:when test="${empty sessionScope.userInfo.email}">
@@ -65,7 +84,7 @@
                     <c:if test="${sessionScope.userInfo.auth eq 0}">
                         <a href="/writeForm" class="text text-weight-medium" style="margin-right: 12px">관리자페이지</a>
                     </c:if>
-                    <button class="globalHeader__move-learing-board btn btn-outline-primary btn-right-icon" id="move-learning-board">
+                    <button class="globalHeader__move-learing-board btn btn-outline-primary btn-right-icon" id="move-learning-board" onclick="location.href='../dashboard/my'">
                         내 학습 보드
                     </button>
                     <div class="dropdown">
@@ -82,7 +101,7 @@
             </c:choose>
         </div>
     </div>
-    <div class="globalHeader-center">
+<%--    <div class="globalHeader-center">
         <c:choose>
             <c:when test="${empty sessionScope.userInfo.email}">
                 <ul class="header-index">
@@ -98,8 +117,7 @@
                 </ul>
             </c:otherwise>
         </c:choose>
-
-    </div>
+    </div>--%>
 </header>
 
 <!--login modal-->

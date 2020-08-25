@@ -32,8 +32,20 @@ public class MemberController {
      * @return
      */
     @RequestMapping("login")
-    public String showLogin() {
-        return "login/login";
+    public String showLogin(HttpSession httpSession) {
+        //로그인 세션 정보가 있을 때 이전 페이지로 보내줌.
+        //세션에 저장되어 있는 유저 정보 확인
+        MemberDTO memberDTO = (MemberDTO)httpSession.getAttribute("userInfo");
+        //이전페이지 불러오기
+        String prev_url = (String)httpSession.getAttribute("prev_url");
+        //로그인 정보가 있으면 이전페이지로 보내준다.
+        if(memberDTO != null && memberDTO.getEmail() != null) {
+            return "redirect:"+prev_url;
+        }
+        //로그인한 기록이 없으면, login페이지로 이동
+        else{
+            return "login/login";
+        }
     }
 
     /**
@@ -41,13 +53,37 @@ public class MemberController {
      * @return
      */
     @RequestMapping("emailSignup")
-    public String showSignup(){
-        return "login/emailSignup";
+    public String showSignup(HttpSession httpSession){
+        //로그인 세션 정보가 있을 때 이전 페이지로 보내줌.
+        //세션에 저장되어 있는 유저 정보 확인
+        MemberDTO memberDTO = (MemberDTO)httpSession.getAttribute("userInfo");
+        //이전페이지 불러오기
+        String prev_url = (String)httpSession.getAttribute("prev_url");
+        //로그인 정보가 있으면 이전페이지로 보내준다.
+        if(memberDTO != null && memberDTO.getEmail() != null) {
+            return "redirect:"+prev_url;
+        }
+        //로그인한 기록이 없으면, login페이지로 이동
+        else{
+            return "login/emailSignup";
+        }
     }
 
     @RequestMapping("emailSignin")
-    public String showSignin(){
-        return "login/emailSignin";
+    public String showSignin(HttpSession httpSession){
+        //로그인 세션 정보가 있을 때 이전 페이지로 보내줌.
+        //세션에 저장되어 있는 유저 정보 확인
+        MemberDTO memberDTO = (MemberDTO)httpSession.getAttribute("userInfo");
+        //이전페이지 불러오기
+        String prev_url = (String)httpSession.getAttribute("prev_url");
+        //로그인 정보가 있으면 이전페이지로 보내준다.
+        if(memberDTO != null && memberDTO.getEmail() != null) {
+            return "redirect:"+prev_url;
+        }
+        //로그인한 기록이 없으면, login페이지로 이동
+        else{
+            return "login/emailSignin";
+        }
     }
 
 
