@@ -138,4 +138,12 @@ public class ArticleDTO {
     public void setContents(String contents) {
         this.contents = contents;
     }
+
+    public List<VocaDTO> getVocaDTOS() {
+        return vocaDTOS;
+    }
+
+    public void setVocaDTOS(List<VocaDTO> vocaDTOS) {
+        this.vocaDTOS = vocaDTOS;
+    }
 }

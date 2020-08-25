@@ -81,10 +81,36 @@ public class AdminAddController {
 
         MultipartHttpServletRequest file = mpRequest;
 
+        String category = dto.getCategory();
+        String title = dto.getTitle();
+        String summary = dto.getSummary();
+        String url = dto.getUrl();
+        String content = dto.getContents();
+        String hashtag = dto.getHashtag();
 
+        System.out.println(category);
+        System.out.println(title);
+        System.out.println(summary);
+        System.out.println(url);
+        System.out.println(content);
+        System.out.println(hashtag);
+
+        List<VocaDTO> _vocaDTO = dto.getVocaDTOS();
+        for (int i=0; i<_vocaDTO.size(); i++) {
+            VocaDTO str = _vocaDTO.get(i);
+            System.out.println(_vocaDTO.get(i));
+        }
+
+        // mpRequest.getMultiFileMap(file).
+
+
+
+        /*
         String jsonStr = mapper.writeValueAsString(param);
         System.out.println("param : " + param);
         System.out.println("jsonStr : " + jsonStr);
+        */
+
 
 
 
