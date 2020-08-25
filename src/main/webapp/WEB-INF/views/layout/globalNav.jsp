@@ -62,7 +62,8 @@
                     <ul class="header-index">
                         <li class="text h6 text-color-gray200 text-weight-medium moveArticleBoardTab"><a href="/articleBoard/findArticle" class="navTabs" id="">아티클 찾기</a></li>
                         <li class="text h6 text-color-gray200 text-weight-medium moveServiceIntrdTab"><a href="/service" class="moveServiceuIntrdText navTabs">서비스 소개</a></li>
-                        <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li>
+                       <!-- <li class="text h6 text-color-white text-weight-medium" id="start-free-btn">무료로 시작하기</li> -->
+                        <li><button class="btn btn-primary btn-bg" id="start-free-btn">무료로 시작하기</button></li>
                     </ul>
                 </c:when>
                 <c:otherwise>
