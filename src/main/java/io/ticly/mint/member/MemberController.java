@@ -39,7 +39,7 @@ public class MemberController {
         //이전페이지 불러오기
         String prev_url = (String)httpSession.getAttribute("prev_url");
         //로그인 정보가 있으면 이전페이지로 보내준다.
-        if(memberDTO.getEmail() != null) {
+        if(memberDTO != null && memberDTO.getEmail() != null) {
             return "redirect:"+prev_url;
         }
         //로그인한 기록이 없으면, login페이지로 이동
@@ -60,7 +60,7 @@ public class MemberController {
         //이전페이지 불러오기
         String prev_url = (String)httpSession.getAttribute("prev_url");
         //로그인 정보가 있으면 이전페이지로 보내준다.
-        if(memberDTO.getEmail() != null) {
+        if(memberDTO != null && memberDTO.getEmail() != null) {
             return "redirect:"+prev_url;
         }
         //로그인한 기록이 없으면, login페이지로 이동
@@ -77,7 +77,7 @@ public class MemberController {
         //이전페이지 불러오기
         String prev_url = (String)httpSession.getAttribute("prev_url");
         //로그인 정보가 있으면 이전페이지로 보내준다.
-        if(memberDTO.getEmail() != null) {
+        if(memberDTO != null && memberDTO.getEmail() != null) {
             return "redirect:"+prev_url;
         }
         //로그인한 기록이 없으면, login페이지로 이동
