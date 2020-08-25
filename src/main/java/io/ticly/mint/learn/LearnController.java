@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +40,12 @@ public class LearnController {
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
 
         if(memberDTO == null) {
-            return "redirect:/";
+            return "redirect:/member/login";
         }
 
         if(memberDTO != null) {
             if(memberDTO.getEmail() == null) {
-                return "redirect:/";
+                return "redirect:/member/login";
             }
         }
 
