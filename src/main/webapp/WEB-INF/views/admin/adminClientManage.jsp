@@ -181,47 +181,6 @@
     <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
-<script>
-    checkSwitch();
-
-    $("#customSwitch").click(function(){
-        checkSwitch();
-    });
-
-    function checkSwitch() {
-        const switchValue = $('#customSwitch').prop('checked');
-
-        if(switchValue) {
-            searchBoxDisabledToggle(false);
-        } else {
-            searchBoxDisabledToggle(true);
-        }
-    }
-
-    function searchBoxDisabledToggle(check) {
-        //TODO: 일반 for
-        // for(let i=0; i<$('#customSwitchContent').children().length; i++) {
-        //     const node = $('#customSwitchContent').children()[i];
-        //     if($(node).find('input') != null) {
-        //         $(node).find('input').prop('disabled', check);
-        //     }
-        //
-        //     if($(node).find('select') != null){
-        //         $(node).find('select').prop('disabled', check);
-        //     }
-        // }
-        //TODO: ES6 for of
-        for(let node of $('#customSwitchContent').children()) {
-            if($(node).find('input') != null) {
-                $(node).find('input').prop('disabled', check);
-            }
-
-            if($(node).find('select') != null){
-                $(node).find('select').prop('disabled', check);
-            }
-        }
-    }
-</script>
 <script type="module" src="${pageContext.request.contextPath}/js/admin/AdminClientManage.js"></script>
 </body>
 </html>
