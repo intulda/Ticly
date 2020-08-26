@@ -28,13 +28,13 @@
 </head>
 <body>
 
-<!-- header -->
-<c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
-
-<c:import url="/WEB-INF/views/intro/introPage.jsp"></c:import>
-
 <div class="ticly__basic-layout">
 
+    <!-- header -->
+    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+    <c:import url="/WEB-INF/views/intro/introPage.jsp"></c:import>
+
+    <!-- content -->
     <div class="container container-xxl ticly__basic-content-layout">
 
         <!-- Choice Category Section-->

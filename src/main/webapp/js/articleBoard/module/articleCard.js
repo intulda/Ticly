@@ -17,14 +17,11 @@ class ArticleCard {
 
     getElements() {
         this.element.className = "card__wrapper";
+        this.element.onclick = () => {location.href=`../learningApply/goToLeaningApply?seq=${this.articleSeq}`;}
         this.element.innerHTML =
             `
-            <div class="card__img_wrapper card">
+            <div class="card__img_wrapper card" >
                 <img class="card__img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
-            </div>
-            <div class="card__hover-after">
-                <button class="btn btn-primary btn-lg" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">학습하기</button>
-                <button class="btn btn-outline-white btn-lg" onclick="location.href='${this.url}'">원문보기</button>
             </div>
             <div class="card__body">
                 <div class="card__body-tag-wrapper">

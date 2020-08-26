@@ -27,10 +27,12 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryModalStyle.css">
 </head>
 <body>
-<!-- header -->
-<c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
 <div class="ticly__basic-layout">
+    <!-- header -->
+    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+
+    <!-- content -->
     <div class="container container-xxl ticly__basic-content-layout">
         <div class="findArticle__header">
 

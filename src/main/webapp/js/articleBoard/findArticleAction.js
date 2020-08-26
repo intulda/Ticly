@@ -240,6 +240,10 @@ import LastLearningCard from "./module/lastLearningCard.js";
         getArticleInfo(path);
     }
 
+    function getPath(){
+
+    }
+
     // init
     function init() {
 
