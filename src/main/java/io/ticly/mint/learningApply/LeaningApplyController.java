@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @SessionAttributes({"userInfo", "learningApplyInfo"})
@@ -30,7 +31,7 @@ public class LeaningApplyController {
 
     // 아티클 찾기 페이지에서 학습 신청페이지로 이동시,
     @GetMapping(value ="goToLeaningApply")
-    public String getArticleInfo(Model model, HttpServletRequest req, RedirectAttributes redirectAttributes){
+    public String getArticleInfo(Model model, HttpServletRequest req, RedirectAttributes redirectAttributes, HttpServletResponse response){
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
         String seqStr = req.getParameter("seq");
         int seq = Integer.parseInt(req.getParameter("seq"));
@@ -51,6 +52,8 @@ public class LeaningApplyController {
         // 학습하기 신청을 하지 않았다면?
         ArticleInfoDTO list = learningApplyService.getArticleInfo(seq);
         model.addAttribute("articleInfo", list);
+
+        response.setHeader("X-Frame-Options", "ALLOW-FROM http://abc.com");
 
         return "learningApply/readArticle";
     }

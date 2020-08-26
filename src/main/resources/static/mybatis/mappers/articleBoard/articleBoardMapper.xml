@@ -59,15 +59,47 @@
         ORDER BY A_.REG_DATE DESC
     </select>
 
-    <!-- TODO 아티클에 파일이 포함되어 있으면, ARTICLE_SEQ와 일치하는 파일 경로 불러오기 -->
-    <select id="getImgFilePath" parameterType="String" resultType="String">
-        SELECT
-            F_.FILE_PATH
-        FROM ARTICLE A_, FILE_MANAGEMENT F_
-        WHERE A_.ARTICLE_SEQ = F_.FILE_MANAGEMENT
-            AND A_.ARTICLE_SEQ = #{article_seq}
+    <!-- 최신 아티클 가져오기 -->
+    <select id="getLatestArticle" parameterType="String" resultType="ArticleInfoDTO">
+        SELECT * FROM
+            (SELECT
+            ROW_NUMBER() over (ORDER BY REG_DATE DESC) AS R_NUM,
+            A_.ARTICLE_SEQ,
+            A_.TITLE,
+            A_.SUMMARY,
+            A_.URL,
+            A_.HASHTAG,
+            C_.CATEGORY AS CATEGORY_TITLE,
+            A_.REG_DATE,
+            A_.DEL,
+            A_.APPLY_COUNT,
+            A_.IMAGE_PATH
+            FROM ARTICLE A_, CATEGORY C_
+            WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+            AND C_.CATEGORY IN (${categoryStr}))
+        WHERE 3 >= R_NUM
     </select>
 
+    <!-- 인기 아티클 가져오기 -->
+    <select id="getPopularArticle" parameterType="String" resultType="ArticleInfoDTO">
+        SELECT * FROM
+            (SELECT
+                 ROW_NUMBER() over (ORDER BY APPLY_COUNT DESC) AS R_NUM,
+                 A_.ARTICLE_SEQ,
+                 A_.TITLE,
+                 A_.SUMMARY,
+                 A_.URL,
+                 A_.HASHTAG,
+                 C_.CATEGORY AS CATEGORY_TITLE,
+                 A_.REG_DATE,
+                 A_.DEL,
+                 A_.APPLY_COUNT,
+                 A_.IMAGE_PATH
+             FROM ARTICLE A_, CATEGORY C_
+             WHERE A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+               AND C_.CATEGORY IN (${categoryStr}))
+        WHERE 3 >= R_NUM
+    </select>
 
     <!--DB에서 사용자가 마지막으로 학습한 아티클 정보 불러오기
         @param String 이메일-->

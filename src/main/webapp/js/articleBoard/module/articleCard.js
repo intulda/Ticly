@@ -21,7 +21,7 @@ class ArticleCard {
         this.element.innerHTML =
             `
             <div class="card__img_wrapper card" onclick="location.href='../learningApply/goToLeaningApply?seq=${this.articleSeq}'" >
-                <img class="card__img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+                <img class="card__img" src="${(this.imagePath != 0)? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
             </div>
             <div class="card__body" onclick="location.href='../learningApply/goToLeaningApply?seq=${this.articleSeq}'">
                 <div class="card__body-tag-wrapper">

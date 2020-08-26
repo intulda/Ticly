@@ -14,7 +14,8 @@ import LastLearningCard from "./module/lastLearningCard.js";
         userEmail = document.querySelector("input[name=userEmail]").value,
         userAuth = document.querySelector("input[name=userAuth]").value;
 
-    const GET_ARTICLE_CARD_PATH = "findMyTypeArticle?",
+    const GET_LATEST_ARTICLE_CARD_PATH = "findLatestMyTypeArticle?",
+        GET_POPULAR_ARTICLE_CARD_PATH = "findPopularMyTypeArticle?",
         LAST_LEARNING_ARTICLE_CARD_PATH = "getLastLearningArticleInfo?";
 
     let articleList = [];
@@ -65,7 +66,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
     // 관심 분야 버튼을 눌렀을 때 이벤트
     function categoryTabBtnEvent(ev) {
         const target = ev.currentTarget;
-        let path = GET_ARTICLE_CARD_PATH;
+        let path = "";
 
         // 관심분야 탭의 ALL 버튼 클릭시 아티클 찾기 페이지에서 받아온
         // 전체 관심 분야를, axios를 통해 header에 담아 보낼 수 있도록 movePath에 담기
@@ -86,7 +87,12 @@ import LastLearningCard from "./module/lastLearningCard.js";
         else {
             path += "&categories=" + target.value;
         }
-        getArticleInfo(path);
+
+        let latestListPath = GET_LATEST_ARTICLE_CARD_PATH + path;
+        let popularListPath = GET_POPULAR_ARTICLE_CARD_PATH + path;
+
+        getArticleInfo(newSectionCardOuter, latestListPath, "latest");
+        getArticleInfo(popularSectionCardOuter, popularListPath, "popular");
     }
 
     // null인지 확인하는 함수
@@ -107,7 +113,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
                     break;
 
                 // 인기순
-                case "popularity" :
+                case "popular" :
                     newSortedList = newSortedList.filter(it => it.apply_count > 100);
                     newSortedList.sort((a, b) => {
                         return a.apply_count > b.apply_count ? -1 : a.apply_count < b.apply_count ? 1 : 0;
@@ -171,7 +177,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
     }
 
     // 아티클 정보 받아와서 리스트에 담아주는 함수
-    function getArticleInfo(path) {
+    function getArticleInfo(section, path, state) {
 
         // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
         axios({
@@ -183,9 +189,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
                 console.log(json.data);
 
                 articleList = json.data;
-                cardSortingAndPaint(newSectionCardOuter, "latest");
-                cardSortingAndPaint(popularSectionCardOuter, "popularity");
-
+                cardSortingAndPaint(section, state);
             });
     }
 
@@ -223,7 +227,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
         }
 
         // 최신 / 인기 아티클 그려주기
-        path = GET_ARTICLE_CARD_PATH;
+        path = "";
         let categoriesArr = [];
 
         categoriesStr.forEach(el => {
@@ -237,7 +241,12 @@ import LastLearningCard from "./module/lastLearningCard.js";
                 path += "&";
             }
         });
-        getArticleInfo(path);
+
+        let latestListPath = GET_LATEST_ARTICLE_CARD_PATH + path;
+        let popularListPath = GET_POPULAR_ARTICLE_CARD_PATH + path;
+
+        getArticleInfo(newSectionCardOuter, latestListPath, "latest");
+        getArticleInfo(popularSectionCardOuter, popularListPath, "popular");
     }
 
     function getPath(){
@@ -248,10 +257,10 @@ import LastLearningCard from "./module/lastLearningCard.js";
     function init() {
 
         // 다른 페이지에서 뒤로가기 했을 때 새로고침 해주는 이벤트
-        // let perfEntries = performance.getEntriesByType("navigation");
-        // if (perfEntries[0].type === "back_forward") {
-        //     location.reload(true);
-        // }
+        let perfEntries = performance.getEntriesByType("navigation");
+        if (perfEntries[0].type === "back_forward") {
+            location.reload(true);
+        };
 
         window.onload = () => {
             pageLoadEvent();

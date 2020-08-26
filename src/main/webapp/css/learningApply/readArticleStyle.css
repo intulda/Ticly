@@ -17,7 +17,25 @@
     align-items: center;
 }
 
-.header__left-content > .btn-left-icon{
+.header__left-content > button{
+    margin-right: 1rem;
+    width: 102px;
+}
+
+.breadcrumb-item.active{
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 라인수 */
+    -webkit-box-orient: vertical;
+    word-wrap:break-word;
+    line-height: 1.5;
+    height: 1.5em;
+}
+
+.header__right-content > button {
+    width: 114px;
     margin-right: 1rem;
 }
 
@@ -30,3 +48,18 @@
 
     border-width: 0px;
 }
+
+.default__null{
+    position: relative;
+    text-align: center;
+    line-height: 1.6;
+    min-height: 100px;
+    padding: 3rem;
+    background-color: #F7F7FA;
+    border-radius: 0.938rem;
+}
+
+.default__null > button {
+    margin: 0.75rem auto 0;
+}
+

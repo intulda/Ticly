@@ -73,8 +73,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     background: orange;
     border-radius: 5px;
     color: white;
@@ -84,7 +84,7 @@
 }
 
 .globalHeader__move-learing-board{
-    margin-right: 16px;
+    margin-right: 8px;
     padding-right: 12px;
 }
 

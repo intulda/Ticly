@@ -26,7 +26,7 @@ class LearningListCard {
                 <!-- Done Badge & Thumbnail -->
                 <div class="learningList__card-${(this.learningDone == 1) ? "done" : ""}-badge"></div>
                 <div class="learningList__card-img-wrapper">
-                    <img class="learningList__card-img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+                    <img class="learningList__card-img" src="${(this.imagePath != 0)? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
                 </div>
                 
                 <!-- Card Title & Description -->

@@ -3,7 +3,7 @@
 (() => {
     const articleSeq = document.querySelector("input[name=articleSeq]").value,
         learningApplyBtn = document.querySelector(".js-learning-apply-btn"),
-        iframeBody = document.querySelector(".js-iframe-body");
+        objectBody = document.querySelector(".js-object-body");
 
     const SAVE_LEARNING_APPLY_INFO_PATH = "saveLearningApplyInfo?";
 
@@ -17,13 +17,13 @@
     }
 
     // Modal Show Event
-    function showModal(){
+    function showModal() {
         document.querySelector("#signinup-modal").style.display = "flex";
         document.querySelector(".main-login-form").classList.remove("hidden");
     }
 
     // Modal hide Event - Close Btn
-    function hideModal(){
+    function hideModal() {
         document.querySelector("#signinup-modal").style.display = "none";
         document.querySelector(".main-login-form").classList.add("hidden");
     }
@@ -39,7 +39,7 @@
                 console.log(json.data);
 
                 // 로그인 전이면,
-                if (json.data.auth == 1){
+                if (json.data.auth == 1) {
                     showModal();
                 }
 
@@ -51,9 +51,14 @@
     }
 
     function init() {
-        iframeBody.onload = () => {
-            alert("success");
-        }
+
+        objectBody.onload = function() {
+            objectBody.onsuspend = function (){
+                alert('true');
+            }
+        };
+
+
 
         learningApplyBtn.addEventListener("click", handleLearningApplyBtnClickEvent);
 
