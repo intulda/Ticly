@@ -283,4 +283,12 @@ public class LearnService {
         }
         return true;
     }
+
+    public boolean updateArticleDone(UserLearnDTO userLearnDTO) throws SQLException {
+        int count = learnDAO.updateArticleDone(userLearnDTO);
+        if(count < 0) {
+            throw new SQLException("유저 학습 종료 업데이트 실패");
+        }
+        return true;
+    }
 }

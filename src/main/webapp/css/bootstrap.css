@@ -7774,6 +7774,16 @@ button.bg-dark:focus {
     margin-left: 3rem !important;
 }
 
+.mr-6,
+.mx-6 {
+    margin-right: 4rem !important;
+}
+
+.mr-7,
+.mx-7 {
+    margin-right: 5rem !important;
+}
+
 .p-0 {
     padding: 0 !important;
 }
