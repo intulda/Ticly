@@ -81,7 +81,7 @@ public class OAuthController {
      * @throws ParseException
      */
     @RequestMapping("/naver/callback")
-    public void naverCallback(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) throws IOException, ParseException {
+    public void naverCallback(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) throws IOException, ParseException, Exception {
         System.out.println("naverCallback 접속성공");
 
         String code = request.getParameter("code");
@@ -139,34 +139,38 @@ public class OAuthController {
             userDTO.setEmail(naverUserEmail);
             userDTO.setNickname(naverUserNickname);
 
-            //5. MemberDTO생성(세션 저장용)
-            MemberDTO memberDTO = new MemberDTO();
-
-            //이메일로 가입자 혹은 비가입자 체크
-                //가입자의 경우
-                    //이메일로 로그인 했던 회원인 경우 > 이메일로 로그인페이지로 이동
-                    //네이버로 초기에 접속해서 DB에 회원이 경우 > 바로 로그인으로 이동
-                //비가입자인 경우
-                    //DB에 데이터 저장
+            //가입자의 경우
+                //이메일로 로그인 했던 회원인 경우 > 이메일로 로그인페이지로 이동
+                //네이버로 초기에 접속해서 DB에 회원이 경우 > 바로 로그인으로 이동
 
             //이메일이 같은 경우를 찾는다. > DTO로 값 전달 받음
             UserDTO originUser = memberService.findMember(naverUserEmail);
 
-            //처음 로그인 했을 경우(이메일로도 회원가입한적 없고, 회원정보도 없음)
+            /*처음 로그인 했을 경우(이메일로도 회원가입한적 없고, 회원정보도 없음)*/
             if(originUser == null){
                 System.out.println("새로운 회원입니다.");
                 //DB에 가입정보 저장(서비스에서 password와 nickname처리)
-                memberService.insertOAuthMember(userDTO);
-            }else{
-                //사전에 이미 가입한 적이 있는 경우.
-                //DB에 있는 카테고리 정보를 가져온다.
-                List<String> categories = memberService.getUserCategories(originUser.getEmail());
-                memberDTO.setCategories(categories); //세션에 저장한다.
+                int checkNum = memberService.insertOAuthMember(userDTO);
+
+                /*회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온 뒤, DB에 저장한다.*/
+                if(checkNum==1){
+                    System.out.println("로그인 회원 세션 정보 확인");
+                    if(model.getAttribute("userInfo")!=null){
+                        if(((MemberDTO)model.getAttribute("userInfo")).getCategories()!=null) {
+                            List<String> categories = ((MemberDTO) model.getAttribute("userInfo")).getCategories();
+                            //세션 정보를 User_Categories테이블에 저장한다.
+                            memberService.saveUserCategories(userDTO.getEmail(), categories);
+                        }
+                    }
+                }
             }
 
-            //세션에 멤버데이터 저장
-            memberDTO.setEmail(naverUserEmail);
-            memberDTO.setNickname(naverUserNickname);
+            /*로그인한 회원 세션 정보 저장*/
+            //1) 네이버 로그인한 회원의 카테고리 정보를 가져온다.
+            List<String> categories = memberService.getUserCategories(originUser.getEmail());
+
+            //2) 세션에 멤버데이터 저장
+            MemberDTO memberDTO = new MemberDTO(naverUserEmail, naverUserNickname, 3, categories);
             session.setAttribute("userInfo", memberDTO);
 
             response.setContentType("text/html; charset=UTF-8");
@@ -233,7 +237,7 @@ public class OAuthController {
     @RequestMapping("/naver/invalidate")
     public String invalidateSession(HttpSession session) {
         session.invalidate();
-        return "redirect:/naver";
+        return "redirect:/";
     }
 
 /*    *//**
