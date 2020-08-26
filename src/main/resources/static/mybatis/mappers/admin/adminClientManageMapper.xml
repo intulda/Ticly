@@ -17,4 +17,20 @@
             MARKETING_AGREE
         FROM MEMBER
     </select>
+
+    <!-- 검색조건에 맞는 멤버 데이터 조회 -->
+    <select id="findMemberBySearch" resultType="AdminClientManageDTO">
+        SELECT
+            ROWNUM,
+            EMAIL,
+            NICKNAME,
+            AUTH,
+            SIGNUP_TYPE,
+            TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE,
+            DEL,
+            MARKETING_AGREE
+        FROM MEMBER
+        WHERE EMAIL like '%${searchKeyword}%'
+           OR NICKNAME like '%${searchKeyword}%'
+    </select>
 </mapper>
