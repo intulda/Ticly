@@ -37,7 +37,7 @@ class LearningListCard {
                             <span class="text body1 text-color-gray300 text-weight-regular">${this.hashtag}</span>
                         </div>
                         <h4 class="text text-weight-medium" onclick="location.href='workBook?seq=${this.articleSeq}'">${this.title}</h4>
-                        <p class="learningList__card-desc text body1 text-color-gray200">${this.summary}</p>
+                        <p class="learningList__card-desc text body1">${this.summary}</p>
                     </div>
                     
                     <!-- Button trigger modal -->
@@ -73,7 +73,7 @@ class LearningListCard {
                     <div>
                         <div class="learningList__card-footer">
                             <div class="learningList__card-subInfo">
-                                <p class="text body1 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>
+                                <p class="text body2 text-color-gray300">마지막 학습 날짜 : ${this.lastLearningDate}</p>
                                 <div class="learningList__card-progress progress">
                                     <div class="progress-bar" role="progressbar" style="width: ${this.achievementRate}%" aria-valuenow="${this.achievementRate}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>

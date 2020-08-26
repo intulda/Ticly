@@ -248,10 +248,10 @@ import LastLearningCard from "./module/lastLearningCard.js";
     function init() {
 
         // 다른 페이지에서 뒤로가기 했을 때 새로고침 해주는 이벤트
-        let perfEntries = performance.getEntriesByType("navigation");
-        if (perfEntries[0].type === "back_forward") {
-            location.reload(true);
-        }
+        // let perfEntries = performance.getEntriesByType("navigation");
+        // if (perfEntries[0].type === "back_forward") {
+        //     location.reload(true);
+        // }
 
         window.onload = () => {
             pageLoadEvent();

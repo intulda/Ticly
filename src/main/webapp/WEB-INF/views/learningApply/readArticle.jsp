@@ -25,13 +25,26 @@
 <!--login modal-->
 <c:import url="/WEB-INF/views/login/loginModal.jsp"></c:import>
 
-<div class="header">
-    <div>${articleInfo.title}</div>
-    <input type="hidden" name="articleSeq" value="${articleInfo.article_seq}">
-    <button class="btn btn-primary btn-lg js-learning-apply-btn">바로 학습하기</button>
+<div class="header__wrapper">
+    <div class="header__left-content">
+        <button class="btn btn-outline-secondary btn-left-icon" onclick="history.back()">
+            <i class="icon_chevron-left"></i>돌아가기
+        </button>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../articleBoard/findArticle">아티클 찾기</a></li>
+            <li class="breadcrumb-item active">${articleInfo.title}</li>
+
+        </ol>
+
+        <input type="hidden" name="articleSeq" value="${articleInfo.article_seq}">
+    </div>
+    <div class="header__right-content">
+        <button class="btn btn-primary js-learning-apply-btn">바로 학습하기</button>
+    </div>
 </div>
 
-<iframe class="iframeBody" src="${articleInfo.url}">${articleInfo.url}</iframe>
+<iframe class="iframeBody js-iframe-body" src="${articleInfo.url}">${articleInfo.url}</iframe>
 
 <!-- javascript -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

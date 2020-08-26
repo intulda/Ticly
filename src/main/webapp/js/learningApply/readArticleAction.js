@@ -2,7 +2,8 @@
 
 (() => {
     const articleSeq = document.querySelector("input[name=articleSeq]").value,
-        learningApplyBtn = document.querySelector(".js-learning-apply-btn");
+        learningApplyBtn = document.querySelector(".js-learning-apply-btn"),
+        iframeBody = document.querySelector(".js-iframe-body");
 
     const SAVE_LEARNING_APPLY_INFO_PATH = "saveLearningApplyInfo?";
 
@@ -50,6 +51,10 @@
     }
 
     function init() {
+        iframeBody.onload = () => {
+            alert("success");
+        }
+
         learningApplyBtn.addEventListener("click", handleLearningApplyBtnClickEvent);
 
         // Modal hide Event - Close Btn
