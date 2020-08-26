@@ -31,7 +31,7 @@
 
                         <div class="login-input-group">
                             <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                            <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" />
+                            <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" autocomplete=”off”/>
                             <div class="signin-validation-message validation-message"></div>
                         </div>
                         <div class="login-input-group">
