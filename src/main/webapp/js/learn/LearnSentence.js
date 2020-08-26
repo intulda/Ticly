@@ -13,6 +13,15 @@ export function init() {
     let pie = 0;
     let _allProgressPercent = 0;
     let triggerNumber=0;
+    let voices = [];
+
+    function setVoiceList() {
+        voices = window.speechSynthesis.getVoices();
+    }
+    setVoiceList();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = setVoiceList;
+    }
 
     function getProgress() {
         const options = {
@@ -60,7 +69,6 @@ export function init() {
         progressInfoElem.innerText = _percent;
         percentBarElem.style.width = _percent;
         const done = document.querySelector('#currentArticle').getAttribute("data-learning-done");
-        console.log(done);
         if(percent === 100 && done != 1) {
             document.getElementById('signinup-modal').style.display = "flex";
             document.getElementById('main-login-form').classList.remove('hidden');
@@ -88,6 +96,7 @@ export function init() {
     function onSentenceClickHandler(event) {
         const liElems = document.querySelectorAll('#learningSentence>li');
         let targetElem = event.target;
+        console.log(targetElem);
         if(targetElem.nodeName == 'UL' || targetElem.classList.contains('sentence__translate')) {
             return false;
         }
@@ -95,6 +104,11 @@ export function init() {
 
         if(targetElem.nodeName === 'I' && targetElem.classList.contains('icon_translate')) {
             papago(liElem.childNodes[0].innerText, liElem.childNodes[4]);
+            return;
+        }
+
+        if(targetElem.nodeName === 'I' && targetElem.classList.contains('icon_speaker')) {
+            googleTts(liElem.childNodes[0].innerText, liElem.childNodes[4]);
             return;
         }
 
@@ -127,7 +141,6 @@ export function init() {
 
     function getList(list) {
         learningSentenceElem.innerHTML = '';
-        console.log(list);
         let check = 0;
         for(let obj of list) {
             learningSentenceElem.appendChild(getSentence(obj));
@@ -139,6 +152,7 @@ export function init() {
 
         document.querySelectorAll('.learning__sentence-item-options-right')[0].childNodes[1].style.display = 'none';
         document.querySelectorAll('.learning__sentence-item-options-right')[document.querySelectorAll('.learning__sentence-item-options-right').length-1].childNodes[3].style.display = 'none';
+        // $('[data-toggle="tooltip"]').tooltip();
         if(list.length > 0) {
             learningSentenceElem.children[triggerNumber].click();
         }
@@ -148,27 +162,27 @@ export function init() {
         if(target.dataset.state === 'update') {
             target.childNodes[2].firstElementChild.classList.add('n-none');
             target.childNodes[2].lastElementChild.classList.remove('n-none');
-            console.log(target.childNodes[2]);
-            // target.childNodes[2].lastElementChild.classList.remove('n-none');
-            target.childNodes[4].classList.remove('n-none');
+            if(!target.childNodes[4].classList.contains('n-none')) {
+                // target.childNodes[4].classList.remove('n-none')
+            }
             target.childNodes[2].lastElementChild.focus();
-            target.childNodes[2].lastElementChild.removeEventListener('change', inputLabel);
-            target.childNodes[2].lastElementChild.addEventListener('change', inputLabel);
-            target.childNodes[2].lastElementChild.removeEventListener('keyup', onSentenceSaveHandler);
-            target.childNodes[2].lastElementChild.addEventListener('keyup', onSentenceSaveHandler);
+            // target.childNodes[2].lastElementChild.removeEventListener('change', inputLabel);
+            // target.childNodes[2].lastElementChild.addEventListener('change', inputLabel);
+            target.childNodes[2].lastElementChild.removeEventListener('keypress', onKeyPressHandler);
+            target.childNodes[2].lastElementChild.addEventListener('keypress', onKeyPressHandler);
         } else {
             target.childNodes[2].firstElementChild.classList.remove('n-none');
             target.childNodes[2].lastElementChild.classList.add('n-none');
-            target.childNodes[2].lastElementChild.removeEventListener('focusout', onSentenceSaveHandler);
-            target.childNodes[2].lastElementChild.addEventListener('focusout', onSentenceSaveHandler);
+            target.childNodes[2].lastElementChild.removeEventListener('blur', onSentenceSaveHandler);
+            target.childNodes[2].lastElementChild.addEventListener('blur', onSentenceSaveHandler);
         }
     }
-    function inputLabel(e) {
-        this.previousElementSibling.innerText = this.value;
-    }
+    // function inputLabel(e) {
+    //     this.previousElementSibling.innerText = this.value;
+    //     e.stopPropagation();
+    // }
 
     function onSentenceSaveHandler(e) {
-        console.log(e.code);
         if(e.code !== 'Enter') {
             const targetElem = this.closest('li');
             const obj = {
@@ -176,14 +190,22 @@ export function init() {
                 kor_sentence: this.value
             }
             userSentenceSave(obj);
-        } else if(e.code === 'Enter') {
+            this.previousElementSibling.innerText = this.value;
+            // this.parentElement.nextElementSibling.classList.add('n-none');
+        }
+    }
+
+    function onKeyPressHandler(e) {
+        if(e.code === 'Enter') {
             const targetElem = this.closest('li');
             if(targetElem.nextElementSibling != null) {
                 targetElem.nextElementSibling.click();
-                e.stopPropagation();
             } else {
                 document.querySelector('#learnContents').click();
             }
+            e.stopPropagation();
+            this.previousElementSibling.innerText = this.value;
+            this.parentElement.nextElementSibling.classList.add('n-none');
         }
     }
 
@@ -196,17 +218,19 @@ export function init() {
                                 <p>${obj.eng_sentence}</p>
                             </div>
                             <div class="learning__sentence-item-kor">
-                                <p class="text h6 text-color-gray300">${obj.kor_sentence != null ? obj.kor_sentence : ''}</p>
+                                <p class="text h6 text-color-gray200">${obj.kor_sentence != null ? obj.kor_sentence : ''}</p>
                                 <input type="text" class="text h6 n-none" value="${obj.kor_sentence != null ? obj.kor_sentence : ''}" placeholder="해석을 입력하세요.">
                             </div>
-                            <p class="text body2 n-none sentence__translate"></p>
+                            <p class="text body2 text-color-gray300 n-none sentence__translate"
+                            data-toggle="tooltip" data-placement="bottom" title="Click on Copy!"
+                            ></p>
                             <div class="learning__sentence-item-options n-none">
                                 <div class="learning__sentence-item-options-left">
                                     <span>
-                                        <i class="icon_speaker text text-color-gray300"></i>
+                                        <i class="icon_translate text text-color-gray300"></i>
                                     </span>
                                     <span>
-                                        <i class="icon_translate text text-color-gray300"></i>
+                                        <i class="icon_speaker text text-color-gray300"></i>
                                     </span>
                                 </div>
                                 <div class="learning__sentence-item-options-right">
@@ -232,27 +256,10 @@ export function init() {
             }
         }
         const max = (currentCount / sentenceList.length) * 2;
-        document.querySelector('#leaning-progress').children[0].setAttribute('stroke-dasharray', `${(max / 2) * 100}, 100`);
+        TweenMax.to(document.querySelector('#leaning-progress').children[0], 1, {
+            strokeDasharray:`${(max / 2) * 100}, ${100}`
+        });
         percentElem.innerHTML = Math.round((max / 2) * 100) + '%';
-
-        // const canvasElem = document.querySelector('.leaning-progress-canvas');
-        // const context = canvasElem.getContext('2d');
-        // const centerX = canvasElem.width / 2;
-        // const centerY = canvasElem.height / 2;
-        // const radius = 73;
-        //
-        //
-        // context.beginPath();
-        // context.arc(centerX, centerY, radius, 0, ((pie / 2) * Math.PI) * 2, false);
-        // context.lineWidth = 16;
-        // context.lineCap = 'round';
-        // context.strokeStyle = '#257FF9';
-        // context.stroke();
-        // pie += 0.035;
-        // restart = requestAnimationFrame(circleProgress);
-        // if (pie >= max) {
-        //     cancelAnimationFrame(restart);
-        // }
     }
 
     function userSentenceSave(obj) {
@@ -295,8 +302,31 @@ export function init() {
                 'X-Naver-Client-Secret': 'ZeLqe4Ki5L'
             }
         }).then(response => {
+            if(pTagElem.classList.contains('n-none')) {
+                pTagElem.classList.remove('n-none');
+            }
             pTagElem.innerText = response.data.message.result.translatedText;
         })
+    }
+
+    function googleTts(text) {
+        const lang = 'en-GB';
+        const utterThis = new SpeechSynthesisUtterance(text);
+        let voiceFound = false;
+        for(var i = 0; i < voices.length ; i++) {
+            if(voices[i].lang.indexOf(lang) >= 0 || voices[i].lang.indexOf(lang.replace('-', '_')) >= 0) {
+                utterThis.voice = voices[i];
+                voiceFound = true;
+            }
+        }
+        if(!voiceFound) {
+            alert('voice not found');
+            return;
+        }
+        utterThis.lang = lang;
+        utterThis.pitch = 1;
+        utterThis.rate = 1; //속도
+        window.speechSynthesis.speak(utterThis);
     }
 
     window.addEventListener("click", function (event) {
