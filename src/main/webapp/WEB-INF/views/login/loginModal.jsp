@@ -46,7 +46,7 @@
 
                     <div class="login-input-group">
                         <label for="modal-signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                        <input type="text" class="form-control form-control-lg" id="modal-signin-email" name="email" placeholder="ticly@ticly.io" />
+                        <input type="text" class="form-control form-control-lg" id="modal-signin-email" name="email" placeholder="ticly@ticly.io" autocomplete=”off”/>
                         <div class="modal-signin-validation-message validation-message"></div>
                     </div>
                     <div class="login-input-group">
@@ -86,13 +86,13 @@
                 </hearder>
                 <div class="login-content-wrapper">
                     <div class="login-input-group">
-                        <label for="modal-signup-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                        <input type="text" class="form-control form-control-lg" id="modal-signup-email" name="email" placeholder="ticly@ticly.io" />
+                        <label for="modal-signup-email" class="text text-color-gray100 body1 text-weight-medium login-label-title" >이메일 <span class="required-label">*</span></label>
+                        <input type="text" class="form-control form-control-lg" id="modal-signup-email" name="email" placeholder="ticly@ticly.io" autocomplete=”off”/>
                         <div class="modal-signup-validation-message validation-message"></div>
                     </div>
                     <div class="login-input-group">
                         <label for="modal-signup-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                        <input type="password" class="form-control form-control-lg" id="modal-signup-password" name="password" placeholder="숫자 포함, 8자 이상" style="ime-mode:inactive;"/>
+                        <input type="password" class="form-control form-control-lg" id="modal-signup-password" name="password" placeholder="숫자 포함, 8자 이상"/>
                         <div class="eyes-box" id="modal-signup-eyes-box">
                             <i class="icon_show" id="modal-signup-eyes-icon"></i>
                         </div>
@@ -145,4 +145,8 @@
 
     <!--Email Signup-->
     <script src="${pageContext.request.contextPath}/js/member/modalSignupEmail.js"></script>
+
+    <script>
+
+    </script>
 </div>

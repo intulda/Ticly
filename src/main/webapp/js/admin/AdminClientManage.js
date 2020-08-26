@@ -3,13 +3,14 @@ import AdminClientSearch from './AdminClientSearch.js'
 (() => {
     const searchClientButton = document.getElementById("search_Client_Button");
     const searchResultTableContent = document.getElementById("search_Result_Table_Content");
-    let searchClientAuthority = document.getElementById("clientAuthority");
-
     let searchClientButtonCheck = true;
 
     /*  검색하기 버튼 클릭 시  */
     const searchClientBtn = () => {
+        getMemberList();
+    }
 
+    function getMemberList() {
         //TODO: JQuery
         // $.ajax({
         //     url: '/admin/clientSearchButton',
@@ -35,6 +36,7 @@ import AdminClientSearch from './AdminClientSearch.js'
         })
             .then(function (response) { //call back function
                 if(searchClientButtonCheck){
+                    searchResultTableContent.innerHTML = '';
                     for (let i=0; i<response.data.length; i++) {
                         const adminClientSearch = new AdminClientSearch(
                             response.data[i].rownum,
@@ -46,7 +48,6 @@ import AdminClientSearch from './AdminClientSearch.js'
                             response.data[i].del,
                             response.data[i].marketing_agree
                         )
-
                         searchResultTableContent.appendChild(adminClientSearch.getElements())
                     }
                 }
@@ -56,7 +57,57 @@ import AdminClientSearch from './AdminClientSearch.js'
             });
     }
 
-
     searchClientButton.addEventListener("click", searchClientBtn);
 
+    $("#customSwitch").click(function(){
+        checkSwitch();
+    });
+
+    function checkSwitch() {
+        const switchValue = $('#customSwitch').prop('checked');
+        if(switchValue) {
+            searchBoxDisabledToggle(false);
+        } else {
+            searchBoxDisabledToggle(true);
+        }
+    }
+
+    function searchBoxDisabledToggle(check) {
+        //TODO: 일반 for
+        // for(let i=0; i<$('#customSwitchContent').children().length; i++) {
+        //     const node = $('#customSwitchContent').children()[i];
+        //     if($(node).find('input') != null) {
+        //         $(node).find('input').prop('disabled', check);
+        //     }
+        //
+        //     if($(node).find('select') != null){
+        //         $(node).find('select').prop('disabled', check);
+        //     }
+        // }
+        //TODO: ES6 for of
+        for(let node of $('#customSwitchContent').children()) {
+            if($(node).find('input') != null) {
+                $(node).find('input').prop('disabled', check);
+            }
+
+            if($(node).find('select') != null){
+                $(node).find('select').prop('disabled', check);
+            }
+        }
+    }
+
+    function onTableClickHandler(event) {
+        console.log(event.target);
+        if(event.target.nodeName === 'I') {
+            alert(1);
+        }
+    }
+
+
+
+
+    checkSwitch();
+    getMemberList();
+
+    searchResultTableContent.addEventListener('click', onTableClickHandler);
 })();

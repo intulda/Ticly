@@ -26,6 +26,7 @@
     <!-- header -->
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
+    <!-- content -->
     <div class="container ticly__basic-content-layout">
 
         <!-- My Article List Section-->

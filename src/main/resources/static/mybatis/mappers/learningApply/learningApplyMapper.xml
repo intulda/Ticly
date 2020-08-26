@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="learningApplyDAO">
+
+    <!-- 클릭한 아티클의 아티클 시퀀스 번호와 일치하는 아티클의 정보 가져오기
+    @param int 시퀀스 번호 -->
+    <select id="getArticleInfo" parameterType="int" resultType="ArticleInfoDTO">
+        SELECT URL, TITLE, ARTICLE_SEQ
+        FROM ARTICLE
+        WHERE ARTICLE_SEQ = #{seq}
+    </select>
+
+</mapper>

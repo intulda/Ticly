@@ -77,7 +77,6 @@
                 data : JSON.stringify(signinData)
             })
                 .then(function (result){
-                    console.log(result)
                     if(result.data.okay == "true"){
                         window.location.href = result.data.prev_url;
                     } else {
