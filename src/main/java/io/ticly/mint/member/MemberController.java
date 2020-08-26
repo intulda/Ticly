@@ -162,10 +162,12 @@ public class MemberController {
 
         if(checkNum==1){
             //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
-            if((MemberDTO)model.getAttribute("userInfo")!=null && (MemberDTO)((MemberDTO) model.getAttribute("userInfo")).getCategories()!=null){
-                List<String> categories = ((MemberDTO)model.getAttribute("userInfo")).getCategories();
-                //세션 정보를 User_Categories테이블에 저장한다.
-                memberService.saveUserCategories(userDTO.getEmail(), categories);
+            if(model.getAttribute("userInfo")!=null){
+                if(((MemberDTO) model.getAttribute("userInfo")).getCategories()!=null) {
+                    List<String> categories = ((MemberDTO) model.getAttribute("userInfo")).getCategories();
+                    //세션 정보를 User_Categories테이블에 저장한다.
+                    memberService.saveUserCategories(userDTO.getEmail(), categories);
+                }
             }
         }
         return new ResponseDto<String>(HttpStatus.OK.value(), checkNum > 0 ? "success" : "fail");
