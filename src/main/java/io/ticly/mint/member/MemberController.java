@@ -105,7 +105,7 @@ public class MemberController {
             loginInfo.put( "status", HttpStatus.OK.value() );
             loginInfo.put( "okay", "true" ); //회원정보가 있으니, true를 넣어준다.
 
-            //DB에서 회원 카테고리 정보 가져오기
+            //DB에서 회원 카테고리 정보 가져오기, 테이블에 카테고리 정보가 없으면 전체를 가져온다.
             List<String> categories = memberService.getUserCategories(principal.getEmail());
 
             //session에 로그인한 회원정보 저장
@@ -157,11 +157,10 @@ public class MemberController {
     @PostMapping("signup")
     @ResponseBody
     public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
-        int checkNum = 0;
-        checkNum = memberService.insertNewMember(userDTO);
+        int checkNum = memberService.insertNewMember(userDTO);
 
+        /*회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.*/
         if(checkNum==1){
-            //회원가입 성공시, 세션에 저장된 관심분야 카테고리 정보를 가져온다.
             if(model.getAttribute("userInfo")!=null){
                 if(((MemberDTO) model.getAttribute("userInfo")).getCategories()!=null) {
                     List<String> categories = ((MemberDTO) model.getAttribute("userInfo")).getCategories();
