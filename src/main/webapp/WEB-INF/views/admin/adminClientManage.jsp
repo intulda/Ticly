@@ -13,25 +13,14 @@
     <div class="container adminClientManage_Container ticly__basic-content-layout">
         <div class="adminClientManage_Div">
             <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitch" checked="">
+                <input type="checkbox" class="custom-control-input" id="customSwitch">
                 <label class="custom-control-label filter_Title" for="customSwitch">검색 설정</label>
             </div>
             <div class="filter_Div" id="customSwitchContent">
-                <div class="searchCategoryBar">
-                    <span class="filter_SubTitle">검색어</span>
-                    <select class="form-control" id="searchCategory">
-                        <option> 전체 </option>
-                        <option> 이메일 </option>
-                        <option> 닉네임 </option>
-                    </select>
-                    <div>
-                        <input type="text" id="searchInput" class="form-control"/>
-                    </div>
-                </div>
                 <div class="clientRadio">
                     <span class="filter_SubTitle">회원 구분</span>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioTotal" name="client_radio" class="custom-control-input custom-radio"/>
+                        <input type="radio" id="clientRadioTotal" name="client_radio" class="custom-control-input custom-radio" checked="checked"/>
                         <label class="custom-control-label" for="clientRadioTotal">전체</label>
                     </div>
                     <div class="custom-control custom-radio clientRadioContents">
@@ -46,7 +35,7 @@
                 <div class="marketingRadio">
                     <span class="filter_SubTitle">마케팅 수신 정보</span>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioTotal" name="marketing_radio" class="custom-control-input">
+                        <input type="radio" id="marketingRadioTotal" name="marketing_radio" class="custom-control-input" checked="checked"/>
                         <label class="custom-control-label" for="marketingRadioTotal">전체</label>
                     </div>
                     <div class="custom-control custom-radio marketingRadioContents">
@@ -61,13 +50,24 @@
                 <div class="accountCheckbox">
                     <span class="filter_SubTitle">계정 구분</span>
                     <div class="custom-control custom-checkbox accountCheckboxContents">
-                        <input type="checkbox" id="accountCheckboxEmail" class="custom-control-input">
+                        <input type="checkbox" id="accountCheckboxEmail" class="custom-control-input" checked="checked">
                         <label class="custom-control-label" for="accountCheckboxEmail">일반 이메일</label>
                     </div>
                     <div class="custom-control custom-checkbox accountCheckboxContents">
-                        <input type="checkbox" id="accountCheckboxNaver" class="custom-control-input">
+                        <input type="checkbox" id="accountCheckboxNaver" class="custom-control-input" checked="checked">
                         <label class="custom-control-label" for="accountCheckboxNaver">네이버</label>
                     </div>
+                </div>
+            </div>
+            <div class="searchCategoryBar">
+                <span class="filter_SubTitle">검색어</span>
+                <select class="form-control" id="searchCategory">
+                    <option> 전체 </option>
+                    <option> 이메일 </option>
+                    <option> 닉네임 </option>
+                </select>
+                <div>
+                    <input type="text" id="searchInput" class="form-control"/>
                 </div>
             </div>
             <div class="searchButton">
