@@ -78,9 +78,12 @@
                 data : JSON.stringify(signinData)
             })
                 .then(function (result){
-                    console.log(result)
                     if(result.data.okay == "true"){
-                        window.location.href = result.data.prev_url;
+                        if(result.data.learningApplyInfo == "false"){
+                            window.location.href = result.data.prev_url;
+                        }else{
+                            window.location.href = result.data.learningApplyInfo;
+                        }
                     } else {
                         failEmailLogin(); //로그인 실패시 경고 alert
                     }
