@@ -36,9 +36,9 @@ public class ArticleWriteServiceImpl implements ArticleWriteService{
     }
 
     @Override
-    public int deleteArticle(String article_seq) {
-        int nResult = articleDAO.deleteArticleDao(article_seq);
-        return nResult;
+    public int deleteArticle(int article_seq) {
+        int dResult = articleDAO.deleteArticleDao(article_seq);
+        return dResult;
     }
 
     @Override

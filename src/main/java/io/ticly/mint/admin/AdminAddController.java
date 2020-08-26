@@ -33,11 +33,13 @@ public class AdminAddController {
     ArticleDAO dao;
 
     @Autowired
-    VocabookDAO vocabookDAO;
+    VocabookDAO vocabookdao;
 
 
     private static final String SAVE_PATH = "/fileimages";
     private static final String PREFIX_URL = "/fileimages/";
+    private String voca = "";
+    private String meaning = "";
 
 
     /* 아티클 목록 */
@@ -76,6 +78,9 @@ public class AdminAddController {
 
         ObjectMapper mapper = new ObjectMapper();
 
+        String voca = "";
+        String meaning = "";
+
         String param = mpRequest.getParameter("data");
         ArticleDTO dto = mapper.readValue(param, ArticleDTO.class);
 
@@ -97,11 +102,16 @@ public class AdminAddController {
         System.out.println(hashtag);
         */
 
+        /*
         List<VocaDTO> _vocaDTO = dto.getVocaDTOS();
         for (int i=0; i<_vocaDTO.size(); i++) {
             VocaDTO str = _vocaDTO.get(i);
-            System.out.println(_vocaDTO.get(i));
+            voca = str.getVoca();
+            meaning = str.getMeaning();
+            System.out.println("voca:" + voca + " / " + "meaning:" + meaning);
         }
+        */
+
 
         Map<String, String> map = new HashMap<String, String>();
 
@@ -115,21 +125,26 @@ public class AdminAddController {
         System.out.println("category:" + category + " title: " + title + " " + "url: " + url + " " +
                 "\n" + "summary: " + summary + "hashtag: " + hashtag + "content: " + content );
 
-
         int nResult = dao.writeArticleDao(map);
+
+        // VOCABOOK 테이블에 넣어주기
+        /*
+        Map<String, String> wordSetMap = new HashMap<String, String>();
+
+        wordSetMap.put("voca", voca);
+        wordSetMap.put("meaning", meaning);
+
+        int wordSet = vocabookdao.saveVocabookDao(wordSetMap);
+        */
 
         return "redirect:ArticleList";
     }
 
     /* 아티클 목록에서 삭제 */
-    @RequestMapping("/delete")
-    public String Delete(HttpServletRequest request, Model model) throws Exception {
-        String title = request.getParameter("articleseq");
-        int article = dao.deleteArticleDao("article_seq");
-        model.addAttribute("article", article);
-
+    @RequestMapping(value="/delete", method=RequestMethod.GET )
+    public String Delete(int article_seq) throws Exception {
+        dao.deleteArticleDao(article_seq);
         return "redirect:ArticleList";
     }
-
 
 }

@@ -17,6 +17,7 @@
 		, reg_date
 		, del
 		, apply_count
+		, image_path
 	</sql>
 
     <select id="ArticleListDao" resultType="ArticleDTO">
@@ -40,7 +41,7 @@
 
     <insert id="writeArticleDao" parameterType="java.util.HashMap">
         INSERT INTO ARTICLE( article_seq, title, summary, file_seq, url,
-                            hashtag, category_seq, reg_date, del, apply_count)
+                            hashtag, category_seq, reg_date, del, apply_count, image_path)
         VALUES ( article_pk_seq.NEXTVAL
                 , #{title}
                 , #{summary}
@@ -51,24 +52,37 @@
                 , SYSDATE
                 , 0
                 , 10
+                , 0
                 )
     </insert>
+
+
 <!--
+    <insert id="writeArticleDao" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="article_seq">
+        INSERT INTO ARTICLE( article_seq, title, summary, file_seq, url,
+                            hashtag, category_seq, reg_date, del, apply_count, image_path)
+        VALUES ( article_pk_seq.NEXTVAL
+                , #{title}
+                , #{summary}
+                , 1
+                , #{url}
+                , #{hashtag}
+                , 3
+                , SYSDATE
+                , 0
+                , 10
+                , 0
+                )
 
-    <selectKey keyProperty="art_seq" resultType="int" order="AFTER">
-        SELECT article_seq.CURRVAL from dual
-    </selectKey>
--->
+    </insert>-->
 
 
-    <update id="deleteArticleDao" parameterType="java.lang.String">
-
-		UPDATE ARTICLE
-		SET
-			del = '1'
+    <delete id="deleteArticleDao" parameterType="int">
+		DELETE FROM ARTICLE
 		WHERE
 			article_seq = #{article_seq}
-	</update>
+	</delete>
+
 
     <select id="ArticleCount" resultType="int">
 		SELECT
@@ -80,110 +94,4 @@
 	</select>
 
 
-
-<!--
-    <update id="readCount" resultType="int">
-        UPDATE ARTICLE
-        SET
-            apply_count = nvl(apply_count, 0) + 1
-        WHERE
-            article_seq = #{article_seq};
-    </update>
--->
-
-</mapper>
-
-
-<!-- Article_Vocabook :: 아티클 소속 단어들 input -->
-<!--
-
-<mapper namespace="ArticleVocabookDAO">
-
-        <sql id="ArticleVocabookColumns">
-		  article_vocabook_seq
-		, article_seq
-		, voca
-		, meaning_num
-		, voca_order
-		, voca_group
-	    </sql>
-
-
-
-        <select id="ArticleVocabookListDao" resultType="VocaDTO">
-            SELECT
-            <include refid="ArticleVocabookColumns" />
-            FROM
-            ARTICLE_VOCABOOK
-        </select>
-
-
-        <insert id="saveArticleVocabookDao" parameterType="java.util.HashMap">
-        INSERT INTO ARTICLE_VOCABOOK (
-                            ARTICLE_VOCABOOK_SEQ
-                            , ARTICLE_SEQ
-                            , VOCA
-                            , MEANING_NUM
-                            , VOCA_ORDER
-                            , VOCA_GROUP
-        )
-        VALUES ( ARTICLE_VOCABOOK_SEQ.NEXTVAL
-                , #{ARTICLE_SEQ}
-                , #{VOCA}
-                , #{MEANING_NUM}
-                , #{VOCA_ORDER}
-                , #{VOCA_GROUP}
-                )
-        </insert>
-
-        <delete id="deleteArticleVocabookDao">
-		DELETE FROM ARTICLE_VOCABOOK
-		WHERE ARTICLE_VOCABOOK_SEQ = #{ARTICLE_VOCABOOK_SEQ}
-	    </delete>
-
-
-&lt;!&ndash; Vocabook 테이블에 중복 없는 단어 input &ndash;&gt;
-<mapper namespace="VocabookDAO">
-
-    <sql id="VocabookColumns">
-		  vocabook_seq
-		, voca
-		, meaning_num
-		, meaning
-	    </sql>
-
-
-    <select id="VocabookListDao" resultType="VocaDTO">
-        SELECT
-        <include refid="VocabookColumns" />
-        FROM
-        VOCABOOK
-    </select>
-
-
-    <insert id="saveVocabookDao" parameterType="java.util.HashMap">
-        INSERT INTO VOCABOOK (
-                    VOCABOOK_SEQ
-                    , VOCA
-                    , MEANING_NUM
-                    , MEANING
-        )
-        VALUES (
-                VOCABOOK_SEQ.NEXTVAL
-                , #{ARTICLE_SEQ}
-                , #{VOCA}
-                , #{MEANING_NUM}
-                , #{MEANING}
-        )
-    </insert>
-
-
-    <delete id="deleteVocabookDao">
-		DELETE FROM VOCABOOK
-		WHERE VOCABOOK_SEQ = #{VOCABOOK_SEQ}
-	    </delete>
-
     </mapper>
-
-
--->
