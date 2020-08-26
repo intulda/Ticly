@@ -18,8 +18,10 @@ public class PrincipalDetailService implements UserDetailsService{
 	// 스프링이 로그인 요청을 가로챌 때, username, password 변수 2개를 가로채는데
 	// password 부분 처리는 알아서 함. username이 DB에 있는지만 확인해주면 됨.
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserDTO principal = memberDAO.findDuplicateEmail(username);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		System.out.println("loadUserByUsername호출");
+		System.out.println("email : " + email);
+		UserDTO principal = memberDAO.findDuplicateEmail(email);
 
 		//회원정보가 있는 경우
 		if(principal!=null){
@@ -27,7 +29,7 @@ public class PrincipalDetailService implements UserDetailsService{
 		}
 		//회원정보가 없는 경우
 		else {
-			throw new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다. : "+username);
+			throw new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다. : "+email);
 		}
 	}
 }

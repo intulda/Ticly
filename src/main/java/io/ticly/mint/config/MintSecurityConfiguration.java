@@ -38,11 +38,13 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //실제 인증을 진행할 provider
-        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD()); //유저로 부터 받은 패스워 값을 넘겨 줘야겠죠
+        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD()); //유저로 부터 받은 패스워드 값을 넘겨 줘야겠죠
     }
+
     /*
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -54,12 +56,13 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()  // csrf 토큰 비활성화 (테스트시 걸어두는 게 좋음)
             .authorizeRequests() //request가 들어오면
-                .antMatchers("/", "/auth/**").permitAll() //설정한 url은 누구나 접속 가능하다.
-                .anyRequest().authenticated() ////위에 설정한 것이 아닌 다른 요청들은 인증이 되어야 한다.
+                .antMatchers("/", "/member/**").permitAll() //설정한 url은 누구나 접속 가능하다.
+                .anyRequest().authenticated() //위에 설정한 것이 아닌 다른 요청들은 인증이 되어야 한다.
             .and()
                 .formLogin()
                 .loginPage("/member/login") //권한 인증이 안되어 있는 경우 로그인 페이지로 이동한다.
                 .loginProcessingUrl("/member/loginPoc") // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인을 진행한다.
+                .usernameParameter("email") //스프링 시큐리티에서는 username을 기본 아이디 매핑 값으로 사용하는데 이거 쓰면 변경
                 .defaultSuccessUrl("/")
             .and()
                 .logout()
@@ -70,6 +73,6 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //이미지,자바스크립트,css 디렉토리 보안 설정
-        web.ignoring().antMatchers("/js/**", "/css/**", "/image/**");
+        web.ignoring().antMatchers("/js/**", "/css/**", "/images/**", "/fileimages/**");
     }
 }

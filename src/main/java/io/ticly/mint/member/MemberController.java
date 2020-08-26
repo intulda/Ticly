@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 ;
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -157,7 +158,6 @@ public class MemberController {
     @PostMapping("signup")
     @ResponseBody
     public ResponseDto<String> memberSignup(@RequestBody UserDTO userDTO, Model model) throws SQLException {
-        //비밀번호 암호화
         int checkNum = memberService.insertNewMember(userDTO);
 
         if(checkNum==1){

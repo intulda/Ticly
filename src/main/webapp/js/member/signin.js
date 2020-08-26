@@ -72,7 +72,7 @@
 
             axios({
                 method: 'post',
-                url: '/member/signin',
+                url: '/member/loginPoc',
                 headers: { 'content-type': 'application/json' },
                 data : JSON.stringify(signinData)
             })
