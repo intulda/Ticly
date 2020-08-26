@@ -38,29 +38,22 @@
         article_seq = #{article_seq}
     </select>
 
-    <select id="article_pk_seq" resultType="int">
-        select article_pk_seq.NEXTVAL FROM dual
-    </select>
 
     <insert id="writeArticleDao" parameterType="java.util.HashMap">
-        <selectKey keyProperty="article_seq" resultType="int" order="BEFORE">
-            select article_pk_seq.NEXTVAL FROM dual
-        </selectKey>
         INSERT INTO ARTICLE( article_seq, title, summary, file_seq, url,
                             hashtag, category_seq, reg_date, del, apply_count, image_path)
-        VALUES ( #{article_seq}
+        VALUES ( article_pk_seq.NEXTVAL
                 , #{title}
                 , #{summary}
                 , 1
                 , #{url}
                 , #{hashtag}
-                , #{category_seq}
+                , 3
                 , SYSDATE
                 , 0
                 , 10
                 , 0
                 )
-
     </insert>
 
 

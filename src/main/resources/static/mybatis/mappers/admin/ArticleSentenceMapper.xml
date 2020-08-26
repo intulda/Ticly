@@ -5,7 +5,7 @@
 
 
 <mapper namespace="ArticleSentenceDao">
-    <insert id="saveArticleSentenceDao" parameterType="java.util.HashMap">
+    <insert id="saveArticleSentenceDao" parameterType="java.util.List">
         INSERT INTO ARTICLE_SENTENCE (
                     ARTICLE_VOCABOOK_SEQ
                     , ARTICLE_SEQ

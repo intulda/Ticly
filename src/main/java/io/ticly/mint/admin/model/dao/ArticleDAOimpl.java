@@ -30,7 +30,6 @@ class ArticleDAOImpl implements ArticleDAO{
 
     @Override
     public int writeArticleDao(Map<String, String> map) {
-        int article_seq = sqlSessionTemplate.insert(namespace+"writeArticleDao", "java.util.HashMap");
         return sqlSessionTemplate.insert(namespace+".writeArticleDao", map);
     }
 

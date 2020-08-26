@@ -112,7 +112,7 @@
 
 
             <!-- 관리자 페이지 내 Tab + 저장하기 -->
-            <form action="/ArticleList" id="admin-add-frm" method="post">
+            <form action="/write" id="admin-add-frm" method="post">
             <div class="item admin-header">
                 <div class="Admin-header-menu-tab" align="left">
                     <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
@@ -294,6 +294,8 @@
 
 
 
+
+
 <script type="text/javascript">
     $(function(){
         $('#saveBtn').click(function(){
@@ -324,13 +326,13 @@
             console.log(formData);
 
 
-            axios("/ArticleList", {
+            axios("/write", {
                 method: 'POST',
                 data: formData,
                 header: {
                     'Content-Type': 'multipart/form-data',
                 },
-            });
+            })
             $(location).attr('href','/ArticleList');
         });
     });
@@ -338,7 +340,7 @@
 
     function Add_WordBox() {
 
-       /* var obj = $("#divTest");*/
+        /* var obj = $("#divTest");*/
         var html = '<tr class="word-row">';
         html += '<td><input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요"></td>'
         html += '<td> <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"></td>'
