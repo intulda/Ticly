@@ -57,6 +57,8 @@ public class AdminClientManageController {
     public List<AdminClientManageDTO> findArticleBySearch(HttpServletRequest req) {
         //검색 키워드 가져오기
         String searchKeyword = req.getParameter("searchKeyword");
+
+
         //검색 결과 호출
         List<AdminClientManageDTO> searchResultMember = adminClientManageService.findMemberBySearch(searchKeyword);
 

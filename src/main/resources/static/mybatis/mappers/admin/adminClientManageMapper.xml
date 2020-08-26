@@ -30,7 +30,11 @@
             DEL,
             MARKETING_AGREE
         FROM MEMBER
-        WHERE EMAIL like '%${searchKeyword}%'
-           OR NICKNAME like '%${searchKeyword}%'
+        <where>
+            <if test="searchKeyword != null and searchKeyword != ''">
+                EMAIL like '%#{searchKeyword}%'
+                OR NICKNAME like '%#{searchKeyword}%'
+            </if>
+        </where>
     </select>
 </mapper>
