@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@SessionAttributes("userInfo")
+@SessionAttributes({"userInfo", "learningApplyInfo"})
 @RequestMapping(value="/learningApply/*")
 public class LeaningApplyController {
 
@@ -75,7 +75,7 @@ public class LeaningApplyController {
         LearningApplyInfoDTO learningApplyInfo = new LearningApplyInfoDTO();
         learningApplyInfo.setAuth(user.getAuth());
         learningApplyInfo.setPrevious_path(previousPath);
-        learningApplyInfo.setArticle_path("learn/workBook?seq=" + seq);
+        learningApplyInfo.setArticle_path("/learn/workBook?seq=" + seq);
         model.addAttribute("learningApplyInfo", learningApplyInfo);
 
         return learningApplyInfo;

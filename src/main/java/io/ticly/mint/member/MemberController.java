@@ -1,6 +1,7 @@
 package io.ticly.mint.member;
 
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
+import io.ticly.mint.learningApply.model.dto.LearningApplyInfoDTO;
 import io.ticly.mint.member.dto.ResponseDto;
 import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
@@ -102,7 +103,7 @@ public class MemberController {
         //가져온 회원정보가 null이 아닐때, 로그인이 성공하면 DB에 있는 회원 카테고리 정보를 불러온다.
         if(principal != null){
             loginInfo.put( "status", HttpStatus.OK.value() );
-            loginInfo.put( "okay", "true" );
+            loginInfo.put( "okay", "true" ); //회원정보가 있으니, true를 넣어준다.
 
             //DB에서 회원 카테고리 정보 가져오기
             List<String> categories = memberService.getUserCategories(principal.getEmail());
@@ -112,20 +113,20 @@ public class MemberController {
             model.addAttribute("userInfo", memberDTO);
 
             // 세션 값 꺼내오기
-            MemberDTO user = (MemberDTO)model.getAttribute("userInfo");
-            System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+user.getCategories());
+            LearningApplyInfoDTO learningApplyInfoDTO = (LearningApplyInfoDTO)httpSession.getAttribute("learningApplyInfo");
+            //System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+learningApplyInfoDTO.getArticle_path());
 
             //이전페이지 불러오기
             String prev_url = (String)httpSession.getAttribute("prev_url");
             System.out.println("prev_url : " + prev_url);
             loginInfo.put("prev_url", prev_url);
 
-            if(!(user.getCategories()).isEmpty()){
-                System.out.println("카테고리 데이터 있음");
-                loginInfo.put( "sessionInfo", "카테고리데이터있음" );
+            if(learningApplyInfoDTO==null){
+                System.out.println("유저학습정보없음");
+                loginInfo.put( "learningApplyInfo", "false" );
             }else{
-                System.out.println("카테고리 데이터 없음");
-                loginInfo.put( "sessionInfo", "카테고리데이터없음" );
+                System.out.println("유저학습정보있음");
+                loginInfo.put( "learningApplyInfo", learningApplyInfoDTO.getArticle_path() );
             }
         }else{ //가져온 회원정보가 없으면, 로그인 불가
             loginInfo.put( "status", HttpStatus.OK.value() );
@@ -172,9 +173,8 @@ public class MemberController {
 
     @RequestMapping("logout")
     public String logout(@ModelAttribute("userInfo") MemberDTO memberDTO, SessionStatus sessionStatus, HttpSession httpSession){
-     //   session.invalidate();
-
+        httpSession.invalidate();
         sessionStatus.setComplete();
-        return "redirect:"+(String)httpSession.getAttribute("prev_url");
+        return "redirect:/";
     }
 }
