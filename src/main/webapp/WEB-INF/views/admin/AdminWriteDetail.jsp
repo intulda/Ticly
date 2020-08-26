@@ -97,7 +97,7 @@
 
                     <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
                     <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+                    <a style="text-decoration:none" href="admin/clientmanage" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
 
                 </div>
             </div>
@@ -137,7 +137,6 @@
                     <button type="button" class="btn btn-sm btn-primary" id="btnList" href="/admin/AdminArticleCatalog">목록
                 </div>
             </div>
-
     </div>
 </div>
 
@@ -154,6 +153,18 @@
     $(document).on('click', '#btnToUrl', function(){
         location.href = "${article.url}";
     });
+
+    $(document).on('click', '#btnDelete', function(){
+        var confirmMsg = confirm('해당 아티클을 삭제 하시겠습니까?');
+
+        if(confirmMsg) {
+            location.href = "delete?article_seq=${article.article_seq}";
+        } else {
+            // 변화 없음
+        }
+
+    });
+
 
 </script>
 

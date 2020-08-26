@@ -11,7 +11,7 @@ public interface ArticleDAO {
     public List<ArticleDTO> ArticleListDao();
     public ArticleDTO ArticleDetailDao(String article_seq);
     public int writeArticleDao(Map<String, String> map);
-    public int deleteArticleDao(String article_seq);
+    public int deleteArticleDao(int article_seq);
     public int ArticleCount();
 
 }

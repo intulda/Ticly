@@ -120,6 +120,7 @@ public class AdminAddController {
         System.out.println(content);
         System.out.println(hashtag);
         */
+
         /*
         int article_seq = dto.getArticle_seq();
         System.out.println(article_seq);
@@ -151,8 +152,6 @@ public class AdminAddController {
         int nResult = dao.writeArticleDao(map);
 
         // VOCABOOK 테이블에 넣어주기
-
-
         Map<String, String> wordSetMap = new HashMap<String, String>();
             for(int i=0; i< wordSetMap.size(); i++) {
                 wordSetMap.put("voca", voca);
@@ -161,17 +160,15 @@ public class AdminAddController {
         int wordSet = vocabookdao.saveVocabookDao(wordSetMap);
 
         // 문장 받아와서 . 단위로 자르고 Article_sentence 넣어주기
-        /*
         String artContent = dto.getContents();
         String[] senArray = artContent.split(".");
         List<String> senList = Arrays.asList(senArray);
         System.out.println(senList);
 
         int SentenceSet = articleSentenceDAO.saveArticleSentenceDao(senList);
-        */
+
 
         // File Upload 처리
-        /*
         MultipartFile multipartfile = mpRequest.getFile("file");
 
         String path = "C:\\git\\local_mint_mygit\\src\\main\\webapp\\fileimages\\";
@@ -198,7 +195,7 @@ public class AdminAddController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        */
+
 
         /*
         System.out.println(multipartfile.getName());
@@ -223,14 +220,10 @@ public class AdminAddController {
     }
 
     /* 아티클 목록에서 삭제 */
-    @RequestMapping("/delete")
-    public String Delete(HttpServletRequest request, Model model) throws Exception {
-        String article_seq = request.getParameter("article_seq");
-        int article = dao.deleteArticleDao("article_seq");
-        model.addAttribute("article", article);
+    @RequestMapping(value="/delete", method=RequestMethod.GET )
+    public String Delete(int article_seq) throws Exception {
+        // String article_seq = request.getParameter("article_seq");
         dao.deleteArticleDao(article_seq);
-
-        int dResult = dao.deleteArticleDao(article_seq);
 
          return "redirect:ArticleList";
     }

@@ -75,8 +75,6 @@
         }
 
 
-
-
     </style>
 </head>
 <body>
@@ -115,12 +113,10 @@
                 <%--<td><a href="${pageContext.request.contextPath}/AdminWriteDetail?title=${dto.title}">${dto.title}</td>--%>
                 <td><a href="${pageContext.request.contextPath}/AdminWriteDetail?articleseq=${dto.article_seq}">${dto.title}</td>
                 <td>${dto.reg_date}</a></td>
-                <td><a href="delete?seq=${dto.article_seq}" >X</a></td>
+                <td><a href="delete?article_seq=${dto.article_seq}" >X</a></td>
             <tr>
         </c:forEach>
     </table>
-
-    <p><a href="/writeForm">아티클 등록하기</a></p>
 
 
 </div>

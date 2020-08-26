@@ -38,6 +38,9 @@
         article_seq = #{article_seq}
     </select>
 
+    <select id="article_pk_seq" resultType="int">
+        select article_pk_seq.NEXTVAL FROM dual
+    </select>
 
     <insert id="writeArticleDao" parameterType="java.util.HashMap">
         <selectKey keyProperty="article_seq" resultType="int" order="BEFORE">
