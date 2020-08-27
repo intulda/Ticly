@@ -132,7 +132,7 @@ public class ArticleBoardController {
 
     // 검색시 search 페이지로 단순 이동
     @GetMapping("goToSearchPage")
-    public String goToSearchPage(Model model, HttpServletRequest req) {
+    public String goToSearchPage(Model model, HttpServletRequest req, String[] categories) {
 
         // 키워드 및 사용자 정보 내보내기
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
@@ -146,6 +146,7 @@ public class ArticleBoardController {
 
         String searchKeyword = req.getParameter("searchKeyword");
         model.addAttribute("searchKeyword", searchKeyword);
+        model.addAttribute("categories", categories);
         return "articleBoard/searchResult";
     }
 
@@ -184,10 +185,9 @@ public class ArticleBoardController {
 
     // 아티클 찾기 페이지에서 최신/인기 섹션 클릭시, 처리 결과
     @GetMapping(value = "clickArticleSection")
-    public String clickArticleSection(Model model, HttpServletRequest req) {
+    public String clickArticleSection(Model model, HttpServletRequest req, String[] categories) {
         String state = req.getParameter("state");
-        HashMap<String, String> sectionInfo = new HashMap<String, String>();
-
+        HashMap<String, Object> sectionInfo = new HashMap<String, Object>();
         if (state.equals("new")) {
             sectionInfo.put("sectionName", "새로운 아티클");
             sectionInfo.put("sectionNum", "0");
@@ -195,8 +195,10 @@ public class ArticleBoardController {
             sectionInfo.put("sectionName", "필독 아티클");
             sectionInfo.put("sectionNum", "1");
         }
+        sectionInfo.put("categories", categories);
 
         model.addAttribute("sectionInfo", sectionInfo);
+        model.addAttribute("categories", categories);
         return "articleBoard/searchResult";
     }
 }
