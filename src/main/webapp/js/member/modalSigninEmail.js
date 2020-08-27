@@ -95,6 +95,14 @@
         }
     }
 
+    modalSigninEmailElem.addEventListener('focus',function (){
+        modalSigninErrorLabelElem[0].innerHTML = '';
+    });
+
+    modalSigninPasswordElem.addEventListener('focus',function (){
+        modalSigninErrorLabelElem[1].innerHTML = '';
+    });
+
     function handleModalSigninByKeyPress(event){
         if(event.keyCode == 13){
             onModalSigninHandler();
