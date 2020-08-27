@@ -1,21 +1,15 @@
 package io.ticly.mint.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
 import io.ticly.mint.admin.model.dao.VocabookDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
 import io.ticly.mint.admin.model.service.AdminFileUploadService;
 import io.ticly.mint.learn.model.dto.VocaDTO;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParseException;
-import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,13 +67,10 @@ public class AdminAddController {
     /* 아티클 정보 Json에 넣어주는 부분 */
     @RequestMapping(value="/write", method=RequestMethod.POST)
     @ResponseBody
-    public String adminWrite(ArticleDTO data, MultipartHttpServletRequest mpRequest,  HttpServletResponse response,
+    public String adminWrite(ArticleDTO data, MultipartHttpServletRequest mpRequest, HttpServletResponse response,
                              Model model) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
-
-        String voca = "";
-        String meaning = "";
 
         String param = mpRequest.getParameter("data");
         ArticleDTO dto = mapper.readValue(param, ArticleDTO.class);
@@ -93,49 +84,73 @@ public class AdminAddController {
         String content = dto.getContents();
         String hashtag = dto.getHashtag();
 
-        /*
-        System.out.println(category);
-        System.out.println(title);
-        System.out.println(summary);
-        System.out.println(url);
-        System.out.println(content);
-        System.out.println(hashtag);
-        */
 
-        /*
-        List<VocaDTO> _vocaDTO = dto.getVocaDTOS();
-        for (int i=0; i<_vocaDTO.size(); i++) {
-            VocaDTO str = _vocaDTO.get(i);
-            voca = str.getVoca();
-            meaning = str.getMeaning();
-            System.out.println("voca:" + voca + " / " + "meaning:" + meaning);
+        /* 카테고리 SEQ 값으로 바꿔주기 */
+        int category_seq=0;
+
+        switch(category){
+            case "개발":
+                category_seq = 1;
+                break;
+            case "UI/UX":
+                category_seq = 2;
+                break;
+            case "브랜딩":
+                category_seq = 3;
+                break;
+            case "마케팅":
+                category_seq = 4;
+                break;
+            case "경제":
+                category_seq = 5;
+                break;
+            default:
+                System.out.println("category Missing Error");
         }
-        */
 
 
-        Map<String, String> map = new HashMap<String, String>();
 
-        map.put("category", category);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        // map.put("category", category);
         map.put("title", title);
         map.put("url", url);
         map.put("summary", summary);
         map.put("hashtag", hashtag);
         map.put("content", content);
+        map.put("category_seq", category_seq);
+
 
         System.out.println("category:" + category + " title: " + title + " " + "url: " + url + " " +
                 "\n" + "summary: " + summary + "hashtag: " + hashtag + "content: " + content );
 
         int nResult = dao.writeArticleDao(map);
 
+
         // VOCABOOK 테이블에 넣어주기
         /*
+        String voca = "";
+        String meaning = "";
+
+        List<VocaDTO> _vocaDTO = dto.getVocaDTOS();
         Map<String, String> wordSetMap = new HashMap<String, String>();
 
-        wordSetMap.put("voca", voca);
-        wordSetMap.put("meaning", meaning);
+        for (int i=0; i<_vocaDTO.size(); i++) {
+
+            VocaDTO str = _vocaDTO.get(i);
+
+            voca = str.getVoca();
+            meaning = str.getMeaning();
+
+            System.out.println("voca:" + voca + " / " + "meaning:" + meaning);
+
+            wordSetMap.put("voca", voca);
+            wordSetMap.put("meaning", meaning);
+        }
+
 
         int wordSet = vocabookdao.saveVocabookDao(wordSetMap);
-        */
+         */
 
         return "redirect:ArticleList";
     }

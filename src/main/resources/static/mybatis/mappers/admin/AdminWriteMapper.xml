@@ -48,7 +48,7 @@
                 , 1
                 , #{url}
                 , #{hashtag}
-                , 3
+                , #{category_seq}
                 , SYSDATE
                 , 0
                 , 10

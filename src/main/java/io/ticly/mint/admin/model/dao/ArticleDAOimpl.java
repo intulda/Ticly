@@ -29,7 +29,7 @@ class ArticleDAOImpl implements ArticleDAO{
     }
 
     @Override
-    public int writeArticleDao(Map<String, String> map) {
+    public int writeArticleDao(Map<String, Object> map) {
         return sqlSessionTemplate.insert(namespace+".writeArticleDao", map);
     }
 

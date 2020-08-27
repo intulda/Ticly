@@ -20,8 +20,8 @@ public class VocabookServiceImpl implements VocabookService{
     }
 
     @Override
-    public int saveVocabookDao(Map<String, String> vocamap) {
-        int wordSet = vocabookdao.saveVocabookDao(vocamap);
+    public int saveVocabookDao(Map<String, String> wordSetMap) {
+        int wordSet = vocabookdao.saveVocabookDao(wordSetMap);
         return wordSet;
     }
 
