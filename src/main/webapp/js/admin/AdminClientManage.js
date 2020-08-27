@@ -5,39 +5,33 @@ import AdminClientSearch from './AdminClientSearch.js'
     const searchResultTableContent = document.getElementById("search_Result_Table_Content");
     const searchInput = document.getElementById("searchInput");
 
-    /*라디오 버튼 값*/
-    //let 회원 구분에서 선택된 라디오 박스 = 전체
-    let clientRadioElement = document.getElementsByName("client_radio");
-    //let 마케팅 수신 정보에서 선택된 라디오 박스 = 수신허용
-    let marketingRadioElement = document.getElementsByName("marketing_radio");
-    /*체크박스 값*/
-    //let 일반 이메일 체크 여부 =
-    let accountCheckboxEmailElement = document.getElementById("accountCheckboxEmail");
-    //let 네이버 체크 여부 =
-    let accountCheckboxNaverElement = document.getElementById("accountCheckboxNaver");
-    /*select박스 값*/
-    //let 검색어 조건 = 전체 이메일
-    let searchCategoryElement = document.getElementById("searchCategory");
-    let searchClientButtonCheck = true;
-
     /*  검색하기 버튼 클릭 시  */
     const searchClientBtn = () => {
-        let searchKeyword = searchInput.value;
-        let clientType = document.querySelector('input[name="client_radio"]:checked').value
-        let marketingAgree = document.querySelector('input[name="marketing_radio"]:checked').value;
-        let selectNormalEmail = document.querySelector('input[id="accountCheckboxEmail"]:checked').value;
-        let selectNaver = document.querySelector('input[id="accountCheckboxNaver"]:checked').value;
-        let searchType = document.querySelector("#searchCategory").value;
+        let searchType = document.querySelector("#searchCategory").value; //검색 셀렉트바
+        let searchKeyword = searchInput.value; //검색어
 
-/*
+        let clientType = document.querySelector('input[name="client_radio"]:checked').value; //회원구분 라디오 버튼
+        let marketingAgree = document.querySelector('input[name="marketing_radio"]:checked').value; //마케팅 수신 정보 라디오 버튼
+
+        //계정 구분 - 일반이메일
+        let selectNormalEmail = 'noChecked'
+        if (document.querySelector('input[id="accountCheckboxEmail"]').checked){
+            selectNormalEmail = document.querySelector('input[id="accountCheckboxEmail"]:checked').value;
+        }
+
+        //계정 구분 - 네이버
+        let selectNaver = 'noChecked'
+        if (document.querySelector('input[id="accountCheckboxNaver"]').checked){
+            selectNaver = document.querySelector('input[id="accountCheckboxNaver"]:checked').value;
+        }
+        /*
         console.log(searchKeyword);
         console.log(clientType);
         console.log(marketingAgree);
         console.log(selectNormalEmail);
         console.log(selectNaver);
         console.log(searchType);
-*/
-
+        */
         //데이터 객체 생성
         const obj = {
             searchKeyword: searchKeyword,
@@ -47,9 +41,6 @@ import AdminClientSearch from './AdminClientSearch.js'
             selectNaver: selectNaver,
             searchType: searchType
         }
-
-        // const obj = {};
-        // const obj = new Object();
 
         /*검색 조건에 맞는 데이터를 가져온다.*/
         getMemberBySearch(obj);
@@ -62,28 +53,27 @@ import AdminClientSearch from './AdminClientSearch.js'
             params: obj
         })
             .then(function (response) { //call back function
-                if(searchClientButtonCheck){
-                    searchResultTableContent.innerHTML = '';
-                    for (let i=0; i<response.data.length; i++) {
-                        const adminClientSearch = new AdminClientSearch(
-                            response.data[i].rownum,
-                            response.data[i].email,
-                            response.data[i].nickname,
-                            response.data[i].auth,
-                            response.data[i].signup_type,
-                            response.data[i].reg_date,
-                            response.data[i].del,
-                            response.data[i].marketing_agree
-                        )
-                        searchResultTableContent.appendChild(adminClientSearch.getElements())
-                    }
+                searchResultTableContent.innerHTML = '';
+                for (let i=0; i<response.data.length; i++) {
+                    const adminClientSearch = new AdminClientSearch(
+                        response.data[i].rownum,
+                        response.data[i].email,
+                        response.data[i].nickname,
+                        response.data[i].auth,
+                        response.data[i].signup_type,
+                        response.data[i].reg_date,
+                        response.data[i].del,
+                        response.data[i].marketing_agree
+                    )
+                    searchResultTableContent.appendChild(adminClientSearch.getElements())
                 }
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
-
+    
+    /*전체 리스트를 가져오는 함수*/
     function getMemberList() {
         //TODO: JQuery
         // $.ajax({
@@ -109,22 +99,21 @@ import AdminClientSearch from './AdminClientSearch.js'
             url: '/admin/clientSearchButton'
         })
             .then(function (response) { //call back function
-                if(searchClientButtonCheck){
-                    searchResultTableContent.innerHTML = '';
-                    for (let i=0; i<response.data.length; i++) {
-                        const adminClientSearch = new AdminClientSearch(
-                            response.data[i].rownum,
-                            response.data[i].email,
-                            response.data[i].nickname,
-                            response.data[i].auth,
-                            response.data[i].signup_type,
-                            response.data[i].reg_date,
-                            response.data[i].del,
-                            response.data[i].marketing_agree
-                        )
-                        searchResultTableContent.appendChild(adminClientSearch.getElements())
-                    }
+                searchResultTableContent.innerHTML = '';
+                for (let i=0; i<response.data.length; i++) {
+                    const adminClientSearch = new AdminClientSearch(
+                        response.data[i].rownum,
+                        response.data[i].email,
+                        response.data[i].nickname,
+                        response.data[i].auth,
+                        response.data[i].signup_type,
+                        response.data[i].reg_date,
+                        response.data[i].del,
+                        response.data[i].marketing_agree
+                    )
+                    searchResultTableContent.appendChild(adminClientSearch.getElements())
                 }
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -178,8 +167,7 @@ import AdminClientSearch from './AdminClientSearch.js'
     }
 
     checkSwitch();
-    getMemberList();
-
+    getMemberList(); //전체 리스트를 가져오는 함수
     searchResultTableContent.addEventListener('click', onTableClickHandler);
 
 })();
