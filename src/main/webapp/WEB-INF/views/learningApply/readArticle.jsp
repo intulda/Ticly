@@ -42,13 +42,13 @@
 <%
     Object ologin = session.getAttribute("userInfo");
 
-    String nickname ="";
-    if(ologin != null){
-        MemberDTO memberDTO = (MemberDTO)ologin;
+    String nickname = "";
+    if (ologin != null) {
+        MemberDTO memberDTO = (MemberDTO) ologin;
         nickname = memberDTO.getNickname();
         nickname = subStringBytes(nickname, 2, 2);
-        System.out.println("nickname : " +nickname);
-    }else{
+        System.out.println("nickname : " + nickname);
+    } else {
         System.out.println("로그인 세션 정보 없음");
     }
 %>
@@ -94,7 +94,8 @@
                 <c:otherwise>
                     <div class="dropdown">
                         <div class="header-profile-wrap" data-toggle="dropdown">
-                            <div id="header-profile" class="text leaning-header-profile"><%=nickname%></div>
+                            <div id="header-profile" class="text leaning-header-profile"><%=nickname%>
+                            </div>
                             <i for="header-profile" class="icon_caret-down profile-drop-button"></i>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -111,12 +112,14 @@
 
 <object type="text/html" class="iframeBody js-object-body" data="${articleInfo.url}" allowFullScreen></object>
 
-<div class="container">
-    <div class="default__null">
-        <p class="text h4 text-weight-medium">앗, 원문 사이트에서 아티클을 불러오는 것을 원하지 않네요🤭<br>아래 [원문 보러가기] 버튼을 눌러 이동해주세요!</p>
-        <button class="btn btn-primary btn-right-icon mt-3">원문 보러가기<i class="icon_chevron-right"></i></button>
+<%--<div class="default__null-wrapper">
+    <div class="container">
+        <div class="default__null">
+            <p class="text h4 text-weight-medium">앗, 원문 사이트에서 아티클을 불러오는 것을 원하지 않네요🤭<br>아래 [원문 보러가기] 버튼을 눌러 이동해주세요!</p>
+            <button class="btn btn-primary btn-right-icon mt-3">원문 보러가기<i class="icon_chevron-right"></i></button>
+        </div>
     </div>
-</div>
+</div>--%>
 
 <!--login modal-->
 <c:import url="/WEB-INF/views/login/loginModal.jsp"></c:import>
