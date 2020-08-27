@@ -9,9 +9,9 @@
         INSERT INTO VOCABOOK
         VALUES (
                 VOCABOOK_PK_SEQ.NEXTVAL
-                , #{VOCA}
+                , #{voca}
                 , 2
-                , #{MEANING}
+                , #{meaning}
         )
     </insert>
 

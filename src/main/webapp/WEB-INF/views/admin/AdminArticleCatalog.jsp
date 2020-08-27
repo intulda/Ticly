@@ -68,15 +68,18 @@
         }
 
         #a1 {
-            margin-left: 50px;
+            margin-top: 8px;
+            margin-left: 150px;
             margin-right: 30px;
         }
 
         #a2 {
+            margin-top: 8px;
             margin-right: 20px;
         }
 
         #a3 {
+            margin-top: 8px;
             margin-left: 10px;
         }
 

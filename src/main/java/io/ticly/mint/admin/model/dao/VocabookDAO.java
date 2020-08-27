@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface VocabookDAO {
 
-    public int saveVocabookDao(Map<String, String> map);
+    public int saveVocabookDao(Map<String, String> wordSetMap);
     public int deleteVocabookDao(int vocabook_seq);
 
 }
