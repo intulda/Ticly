@@ -27,9 +27,8 @@
         .flex_container {
             display: flex;
             flex-direction: column;
-            padding-left: 200px;
-            padding-right: 50px;
-            padding-top: 10px;
+            width: 100%;
+            padding-top: 60px;
             padding-bottom: 30px;
             text-align: center;
             justify-content: space-between;
@@ -49,10 +48,6 @@
 
         .Admin-header-menu-tab {
             display: flex;
-            padding-left: 200px;
-            padding-right: 50px;
-            padding-top: 20px;
-            padding-bottom: 10px;
             text-align: justify;
         }
 
@@ -77,21 +72,26 @@
         }
 
         .admin-header{
+            position: sticky;
+            top: 80px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: white;
+            border: solid 1px #E1E1E8;
+        }
+
+        .empty-zone{
+            width: 100%;
+            height: 80px;
+            position: sticky;
+            top: 0;
         }
 
         .admin-write-btn{
             display: flex;
-            padding-left: 10px;
-            padding-right: 200px;
-            padding-top: 20px;
-            padding-bottom: 10px;
         }
-
-
 
         a {
             /*margin-left: 1px;*/
@@ -106,6 +106,13 @@
             margin-left: 10px;
         }
 
+        .admin-header-container{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+
     </style>
 
 </head>
@@ -115,32 +122,27 @@
 
 <div class="ticly__basic-layout">
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+    <div class="item admin-header">
+        <div class="container admin-header-container">
+        <div class="Admin-header-menu-tab" align="left">
+            <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+            <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+            <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+        </div>
 
-    <div class="container-xg ticly__basic-content-layout">
+        <div class="admin-write-btn">
+            <input type="button" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;">
+        </div>
+        </div>
+    </div>
+    <div class="container ticly__basic-content-layout">
         <div class="flex_container">
-
-
             <!-- 관리자 페이지 내 Tab + 저장하기 -->
             <form action="/write" id="admin-add-frm" method="post">
-            <div class="item admin-header">
-                <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
-                </div>
-
-                <div class="admin-write-btn">
-                    <input type="button" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;">
-                    <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
-                </div>
-            </div>
-
-
 
             <!--  아티클 기본 정보 Section -->
             <div class="item">
                 <div class="ArticleInfo" align="center">
-                    <hr>
                     <table>
                         <col width="200px"><col width="908px">
                         <tr>
