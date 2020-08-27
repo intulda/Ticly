@@ -146,7 +146,7 @@
         modalCloseBtn.addEventListener("click", handleCloseBtnClickEvent);
 
         // Modal hide Event - background
-        modalWrapper.addEventListener("click", handleBackgroundClickEvent);
+        modalWrapper.addEventListener("mousedown", handleBackgroundClickEvent);
 
     }
 
