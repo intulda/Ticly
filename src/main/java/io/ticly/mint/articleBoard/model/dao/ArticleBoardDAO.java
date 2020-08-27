@@ -52,9 +52,31 @@ public class ArticleBoardDAO {
      */
     public List<ArticleInfoDTO> findMyTypeArticle(List<String> categoryList){
         String categoryStr = getCategoryStr(categoryList);
-        return sqlSessionTemplate.selectList("articleBoardDAO.findMyTypeArticle", categoryStr);
+        List<ArticleInfoDTO> list = sqlSessionTemplate.selectList("articleBoardDAO.getLatestArticle", categoryStr);
+        list.addAll(sqlSessionTemplate.selectList("articleBoardDAO.getPopularArticle", categoryStr));
+
+        return list;
     }
 
+    /**
+     * DB에서 내 관심분야와 일치하는 최신 아티클 찾기
+     * @param categoryList
+     * @return
+     */
+    public List<ArticleInfoDTO> findLatestMyTypeArticle(List<String> categoryList){
+        String categoryStr = getCategoryStr(categoryList);
+        return sqlSessionTemplate.selectList("articleBoardDAO.getLatestArticle", categoryStr);
+    }
+
+    /**
+     * DB에서 내 관심분야와 일치하는 인기 아티클 찾기
+     * @param categoryList
+     * @return
+     */
+    public List<ArticleInfoDTO> findPopularMyTypeArticle(List<String> categoryList){
+        String categoryStr = getCategoryStr(categoryList);
+        return sqlSessionTemplate.selectList("articleBoardDAO.getPopularArticle", categoryStr);
+    }
 
     /**
      * 쿼리문에 넣어주기 위해 관심분야 배열을 ',' 단위로 이어주기

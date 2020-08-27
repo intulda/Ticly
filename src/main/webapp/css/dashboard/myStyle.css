@@ -116,6 +116,7 @@
 }
 
 .learningList__card-desc {
+    color: #858899;
     width: 90%;
     display: -webkit-box;
     word-wrap: break-word;
@@ -125,6 +126,12 @@
     text-overflow: ellipsis;
     max-height: 3rem;
 }
+
+.learningList__card-title:hover > .learningList__card-desc{
+    color: #525463;
+}
+
+
 
 .learningList__card-footer {
     display: flex;

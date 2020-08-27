@@ -19,7 +19,7 @@ class LastLearningCard {
             `
                 <div class="lastLearning__card-content-wrapper">
                 <div class="lastLearning__card-img-wrapper">
-                    <img class="lastLearning__card-img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+                    <img class="lastLearning__card-img" src="${(this.imagePath != 0)? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
                 </div>
                     <div class="lastLearning__card-body lastLearning__card-body">
                         <div class="lastLearning__card-title" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">

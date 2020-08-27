@@ -27,9 +27,7 @@ import LearningListCard from './module/learningListCard.js';
                 // (한 번에 보여주는 카드 개수만큼)  카드 그려주기
                 let startCount = MAXIMUM_NUMBER_OF_CARDS * scrollCount;
 
-                let showState = checkShowState(state);
-                let result = myArticleList.filter(it => JSON.stringify(it.user_article_show).includes(showState));
-                result = result.filter(it => JSON.stringify(it.learning_done).includes(state));
+                let result = listFilter(myArticleList, state);
                 if (startCount < result.length) {
                     articleCardModule(result, startCount);
                 }
@@ -48,8 +46,6 @@ import LearningListCard from './module/learningListCard.js';
                 state = el.value;
             }
         });
-
-        let showState = checkShowState(state);
 
         // 선택한 옵션에 따라 배열 정렬하기
         let newSortedList = myArticleList;
@@ -76,8 +72,7 @@ import LearningListCard from './module/learningListCard.js';
                     });
                     break;
             }
-            let showState = checkShowState(state);
-            paintCard(newSortedList, state, showState)
+            paintCard(newSortedList, state)
         }
     }
 
@@ -101,17 +96,9 @@ import LearningListCard from './module/learningListCard.js';
             // scrollCount 초기화
             scrollCount = 0;
 
-            let showState = checkShowState(state);
-
             // 상태에 따라 아티클 목록에 학습 카드 그려주기
-            paintCard(myArticleList, state, showState);
+            paintCard(myArticleList, state);
         }
-    }
-
-    function checkShowState(tabState) {
-        if (tabState == 0) return "TRUE";
-        else if (tabState == 1) return "TRUE";
-        else if (tabState == 2) return "FALSE";
     }
 
     // null인지 확인하는 함수
@@ -148,8 +135,24 @@ import LearningListCard from './module/learningListCard.js';
         }
     }
 
+    function listFilter(list, state){
+        let resultList = null;
+        if (state == 0) {
+            resultList = list.filter(it => JSON.stringify(it.user_article_show).includes("TRUE"));
+            resultList = resultList.filter(it => JSON.stringify(it.learning_done).includes(0));
+        }
+        else if (state == 1) {
+            resultList = list.filter(it => JSON.stringify(it.learning_done).includes(1));
+        }
+        else if (state == 2) {
+            resultList = list.filter(it => JSON.stringify(it.user_article_show).includes("FALSE"));
+            resultList = resultList.filter(it => JSON.stringify(it.learning_done).includes(0));
+        }
+        return resultList;
+    }
+
     // list의 정보를 가져와 학습중인 아티클 카드를 그려주기
-    function paintCard(list, state, showState) {
+    function paintCard(list, state) {
         // section의 모든 자식 요소 삭제
         while (learningListSection.hasChildNodes()) {
             learningListSection.removeChild(learningListSection.firstChild);
@@ -158,10 +161,7 @@ import LearningListCard from './module/learningListCard.js';
         learningListSection.style.display = "grid";
 
         if (!isNull(list)) {
-            let result = list.filter(it => JSON.stringify(it.user_article_show).includes(showState));
-            if (state != 2) {
-                result = result.filter(it => JSON.stringify(it.learning_done).includes(state));
-            }
+            let result = listFilter(list, state);
 
             if (result.length > 0) {
                 articleCardModule(result, scrollCount);
