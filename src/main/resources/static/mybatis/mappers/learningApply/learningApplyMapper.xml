@@ -12,4 +12,13 @@
         WHERE ARTICLE_SEQ = #{seq}
     </select>
 
+    <!-- 클릭한 아티클의 아티클 시퀀스 번호와 일치하는 아티클의 정보 가져오기
+    @param int 시퀀스 번호 -->
+    <select id="checkUserLearningArticle" parameterType="hashMap" resultType="int">
+        SELECT COUNT(*)
+        FROM USER_LEARNING
+        WHERE ARTICLE_SEQ = ${seq}
+        AND EMAIL = #{email}
+    </select>
+
 </mapper>
