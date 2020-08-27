@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 @SessionAttributes({"userInfo", "learningApplyInfo"})
@@ -27,26 +29,43 @@ public class LeaningApplyController {
         this.learningApplyService = learningApplyService;
     }
 
-    // 내 학습 보드로 단순 이동
+    // 아티클 찾기 페이지에서 학습 신청페이지로 이동시,
     @GetMapping(value ="goToLeaningApply")
-    public String getArticleInfo(Model model, HttpServletRequest req){
-
+    public String getArticleInfo(Model model, HttpServletRequest req, RedirectAttributes redirectAttributes, HttpServletResponse response){
+        MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
+        String seqStr = req.getParameter("seq");
         int seq = Integer.parseInt(req.getParameter("seq"));
-        ArticleInfoDTO list = learningApplyService.getArticleInfo(seq);
 
+        System.out.println("auth : " + user.getAuth());
+        System.out.println("seqStr : " + seqStr);
+        // 만약 로그인을 한 상태라면?
+        if(user.getAuth() != 1){
+            System.out.println("로그인한 상태 : " + true);
+            // 이미 학습하기 신청이 되어 있다면?
+            if (learningApplyService.checkUserLearningArticle(seqStr, user.getEmail()) == 1){
+                System.out.println("학습하기 상태 : " + true);
+                redirectAttributes.addAttribute("seq", seq);
+                return "redirect:/learn/workBook";
+            }
+        }
+
+        // 학습하기 신청을 하지 않았다면?
+        ArticleInfoDTO list = learningApplyService.getArticleInfo(seq);
         model.addAttribute("articleInfo", list);
+
+        response.setHeader("X-Frame-Options", "ALLOW-FROM http://abc.com");
+
         return "learningApply/readArticle";
     }
 
+    // 학습 신청 페이지에서 [바로 학습하기] 버튼 클릭시
+    // 이전경로, 다음 경로, auth를 세션에 저장시켜주기
     @GetMapping(value ="saveLearningApplyInfo")
     @ResponseBody
     public LearningApplyInfoDTO saveLearningApplyInfo(Model model, HttpServletRequest req){
 
         int seq = Integer.parseInt(req.getParameter("seq"));
         String previousPath = req.getParameter("previousPath");
-
-        System.out.println("seq" + seq);
-        System.out.println("previousPath" + previousPath);
 
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
 

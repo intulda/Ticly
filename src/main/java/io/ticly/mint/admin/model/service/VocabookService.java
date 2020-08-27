@@ -1,11 +1,8 @@
-package io.ticly.mint.admin.model.dao;
+package io.ticly.mint.admin.model.service;
 
-import io.ticly.mint.learn.model.dto.VocaDTO;
-
-import java.util.List;
 import java.util.Map;
 
-public interface VocabookDAO {
+public interface VocabookService {
 
     public int saveVocabookDao(Map<String, String> wordSetMap);
     public int deleteVocabookDao(int vocabook_seq);

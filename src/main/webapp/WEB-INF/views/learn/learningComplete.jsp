@@ -29,7 +29,7 @@
                 </hearder>
                 <div class="complete-button-wrapper">
                     <div class="complete-button move-original-article-button" id="move-original-article">
-                        <h5 class="text text-color-gray100 text-weight-medium">원문 보러가기</h5>
+                        <h5 class="text text-color-gray100 text-weight-medium text-color-white">원문 보러가기</h5>
                     </div>
                     <div class="complete-button move-another-article-button" id="move-another-article">
                         <h5 class="text text-color-gray100 text-weight-medium">다른 아티클 학습하기</h5>

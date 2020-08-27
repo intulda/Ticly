@@ -19,12 +19,6 @@
         else searchBtn.type = "button";
     }
 
-    // 검색바에 아무것도 입력하지 않았을 때 이동하는 것 막아주기(by 검색 버튼)
-    function handleSearchBarByCancleBtn() {
-        if(searchBar.firstElementChild.value.length === 0) searchBtn.type = "button";
-        else searchBtn.type = "button";
-    }
-
     // 검색바에 아무것도 입력하지 않았을 때 이동하는 것 막아주기(by 엔터키)
     function handleSearchBarByKeyPress(ev){
         if (ev.keyCode == 13){

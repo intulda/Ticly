@@ -25,6 +25,21 @@ public class VocaDTO {
     private int meaning_num;
     private int article_vocabook_seq;
 
+    public String getVoca() {
+        return voca;
+    }
+
+    public void setVoca(String voca) {
+        this.voca = voca;
+    }
+
+    public String getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
+    }
 }
 
 

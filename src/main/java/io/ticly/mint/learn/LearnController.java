@@ -37,6 +37,8 @@ public class LearnController {
      */
     @GetMapping(value="workBook")
     public String view(Model model, int seq) throws SQLException {
+//        seq = (int)model.getAttribute("seq");
+        System.out.println(seq);
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
 
         if(memberDTO == null) {
