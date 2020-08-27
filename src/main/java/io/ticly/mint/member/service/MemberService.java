@@ -1,9 +1,12 @@
 package io.ticly.mint.member.service;
 
+import io.ticly.mint.articleBoard.model.dao.ArticleBoardDAO;
+import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.member.dao.MemberDAO;
 import io.ticly.mint.member.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +16,11 @@ import java.util.UUID;
 public class MemberService {
 
     private MemberDAO memberDAO;
+    private ArticleBoardDAO articleBoardDAO;
 
-    public MemberService(MemberDAO memberDAO) {
+    public MemberService(MemberDAO memberDAO, ArticleBoardDAO articleBoardDAO) {
         this.memberDAO = memberDAO;
+        this.articleBoardDAO = articleBoardDAO;
     }
 
     /**
@@ -28,7 +33,12 @@ public class MemberService {
     }
 
     public List<String> getUserCategories(String email){
-        return memberDAO.getUserCategories(email);
+        List<String> categories = memberDAO.getUserCategories(email);
+        //카테고리 정보가 없으면 전체를 넣어준다.
+        if(categories.isEmpty()){
+            categories = articleBoardDAO.getCategoryKind();
+        }
+        return categories;
     }
 
     /**
@@ -111,7 +121,7 @@ public class MemberService {
      * @param userDTO
      * @return
      */
-    public void insertOAuthMember(UserDTO userDTO){
+    public int insertOAuthMember(UserDTO userDTO){
         System.out.println("Service에 넘어온 값 확인 : " + userDTO.getEmail());
 
         //임시 패스워드 값 넣어주기
@@ -131,7 +141,11 @@ public class MemberService {
         userDTO.setSignup_type("NAVER");
 
         //세팅된 DTO를 DAO로 넘기기
-        int checkNum = memberDAO.insertNewMember(userDTO);
-        System.out.println("checkNum = "+checkNum + "(1이면 데이터 저장 성공)");
+        return memberDAO.insertNewMember(userDTO);
+    }
+
+    public List<String> getCategoryKind(){
+        List<String> categories = articleBoardDAO.getCategoryKind();
+        return categories;
     }
 }

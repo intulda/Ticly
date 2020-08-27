@@ -478,24 +478,11 @@ export function init() {
                 currentCount++;
             }
         }
-        const canvasElem = document.querySelector('.leaning-progress-canvas');
-        const context = canvasElem.getContext('2d');
-        const centerX = canvasElem.width / 2;
-        const centerY = canvasElem.height / 2;
-        const radius = 73;
         const max = (currentCount / vocaData.length) * 2;
+        TweenMax.to(document.querySelector('#leaning-progress').children[0], 1, {
+            strokeDasharray:`${(max / 2) * 100}, ${100}`
+        });
         percentElem.innerHTML = Math.round((max / 2) * 100) + '%';
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, ((pie / 2) * Math.PI) * 2, false);
-        context.lineWidth = 16;
-        context.lineCap = 'round';
-        context.strokeStyle = '#257FF9';
-        context.stroke();
-        pie += 0.035;
-        restart = requestAnimationFrame(circleProgress);
-        if (pie >= max) {
-            cancelAnimationFrame(restart);
-        }
     }
 
     function onWordSetBtnHandler(e) {
