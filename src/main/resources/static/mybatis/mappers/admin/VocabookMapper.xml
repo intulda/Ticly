@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="VocabookDAO">
+
+    <insert id="saveVocabookDao" parameterType="java.util.HashMap">
+        INSERT INTO VOCABOOK
+        VALUES (
+                VOCABOOK_PK_SEQ.NEXTVAL
+                , #{VOCA}
+                , 2
+                , #{MEANING}
+        )
+    </insert>
+
+    <delete id="deleteVocabookDao" parameterType="int">
+		DELETE FROM VOCABOOK
+		WHERE VOCABOOK_SEQ = #{VOCABOOK_SEQ}
+	</delete>
+
+</mapper>

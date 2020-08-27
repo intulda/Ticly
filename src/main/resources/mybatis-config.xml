@@ -17,5 +17,6 @@
         <typeAlias type="io.ticly.mint.mypage.model.dto.MyPageDTO" alias="MyPageDTO"/>
         <typeAlias type="io.ticly.mint.dashboard.model.dto.UserArticleInfoDTO" alias="UserArticleInfoDTO"/>
         <typeAlias type="io.ticly.mint.admin.model.dto.AdminClientManageDTO" alias="AdminClientManageDTO"/>
+        <typeAlias type="io.ticly.mint.admin.model.dto.ArticleSentenceDTO" alias="ArticleSentenceDTO"/>
     </typeAliases>
 </configuration>

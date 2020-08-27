@@ -30,15 +30,15 @@ public class ArticleWriteServiceImpl implements ArticleWriteService{
     }
 
     @Override
-    public int writeArticle(Map<String, String> map) {
+    public int writeArticle(Map<String, Object> map) {
         int nResult = articleDAO.writeArticleDao(map);
         return nResult;
     }
 
     @Override
-    public int deleteArticle(String article_seq) {
-        int nResult = articleDAO.deleteArticleDao(article_seq);
-        return nResult;
+    public int deleteArticle(int article_seq) {
+        int dResult = articleDAO.deleteArticleDao(article_seq);
+        return dResult;
     }
 
     @Override

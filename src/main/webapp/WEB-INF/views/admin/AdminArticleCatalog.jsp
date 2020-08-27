@@ -26,41 +26,60 @@
         .flex_container {
             display: flex;
             flex-direction: column;
+            padding-left: 60px;
+            padding-right: 50px;
+            padding-top: 10px;
+            padding-bottom: 30px;
             text-align: center;
+            justify-content: space-between;
         }
 
-        .clearfix:after {
-            content: "";
-            clear: both;
-            display: block;
+        .item {
+            float: left;
         }
+
 
         .admin-header{
             width: 100%;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
+
 
         .Admin-header-menu-tab {
             display: flex;
-            padding: 32px;
-            text-align: justify;
-        }
-
-        .article-find-tab {
-            display: flex;
-            margin-left: 50px;
-            padding: 10px;
-            margin-right: 50px;
-            justify-content: space-between
-        }
-
-        .item {
-            float: left;
-            margin-left: 30px;
-            margin-right: 50px;
+            padding-left: 200px;
+            padding-right: 50px;
+            padding-top: 20px;
+            padding-bottom: 40px;
             justify-content: space-between;
+
         }
+
+        .word-info {
+            align-content: center;
+        }
+
+        .button {
+            border-radius: 0;
+            border: 0;
+            outline: 0;
+        }
+
+        #a1 {
+            margin-left: 50px;
+            margin-right: 30px;
+        }
+
+        #a2 {
+            margin-right: 20px;
+        }
+
+        #a3 {
+            margin-left: 10px;
+        }
+
 
 
     </style>
@@ -75,20 +94,16 @@
         <div class="item">
             <div class="item admin-header">
                 <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
-                    <a style="text-decoration:none" href="AdminAnalysis.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 통계 </h6> </a>
+                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
                 </div>
             </div>
         </div>
 
-
-
-
-    <table width="1000" class="table table-hover">
+    <table width="700" class="table table-hover">
         <colgroup>
-            <col width="20"><col width="300"><col width="100"><col width="20">
+            <col width="10"><col width="180"><col width="80"><col width="20">
         </colgroup>
         <tr>
             <td>번호</td>
@@ -102,15 +117,21 @@
                 <%--<td><a href="${pageContext.request.contextPath}/AdminWriteDetail?title=${dto.title}">${dto.title}</td>--%>
                 <td><a href="${pageContext.request.contextPath}/AdminWriteDetail?articleseq=${dto.article_seq}">${dto.title}</td>
                 <td>${dto.reg_date}</a></td>
-                <td><a href="delete?seq=${dto.article_seq}">X</a></td>
+                <td><a href="delete?article_seq=${dto.article_seq}" >X</a></td>
             <tr>
         </c:forEach>
     </table>
 
-    <p><a href="/writeForm">아티클 등록하기</a></p>
-
 
 </div>
 <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
+
+    <script type="text/javascript">
+
+
+
+    </script>
+
+
 </body>
 </html>

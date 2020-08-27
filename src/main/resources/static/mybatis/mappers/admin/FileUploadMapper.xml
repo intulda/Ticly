@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FileDAO">
+    <sql id="FileColumns">
+		  file_seq
+		, file_key
+		, file_type
+		, file_name
+		, file_origin_name
+		, file_contents
+		, file_ext
+		, file_size
+		, reg_date
+		, reg_email
+		, udt_date
+		, udt_email
+	</sql>
+
+
+    <insert id="saveFileDao" parameterType="java.util.Map">
+        INSERT INTO FILE_MANAGEMENT
+        VALUES(
+                FILE_PK_SEQ.NEXTVAL
+            ,   #{FILE_KEY}
+            ,   #{FILE_TYPE}
+            ,   #{FILE_NAME}
+            ,   #{FILE_ORIGIN_NAME}
+            ,   #{FILE_CONTENTS}
+            ,   #{FILE_EXT}
+            ,   #{FILE_SIZE}
+            ,   SYSDATE
+            ,   #{REG_EMAIL}
+            ,   SYSDATE
+            ,   0
+        )
+
+    </insert>
+
+
+
+    <update id="deleteArticleDao" parameterType="java.lang.String">
+
+		UPDATE ARTICLE
+		SET
+			del = '1'
+		WHERE
+			article_seq = #{article_seq}
+	</update>
+
+
+</mapper>
+

@@ -29,13 +29,13 @@ class ArticleDAOImpl implements ArticleDAO{
     }
 
     @Override
-    public int writeArticleDao(Map<String, String> map) {
+    public int writeArticleDao(Map<String, Object> map) {
         return sqlSessionTemplate.insert(namespace+".writeArticleDao", map);
     }
 
     @Override
-    public int deleteArticleDao(String article_seq) {
-        return sqlSessionTemplate.update(namespace+".deleteArticleDao", article_seq);
+    public int deleteArticleDao(int article_seq) {
+        return sqlSessionTemplate.delete(namespace+".deleteArticleDao", article_seq);
     }
 
     @Override

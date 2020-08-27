@@ -18,6 +18,7 @@
 <body>
     <div class="ticly__basic-layout">
         <c:import url="learningNav.jsp"/>
+        <div class="ticly__basic-content-layout">
         <article class="leaning-current-article-wrap" id="currentArticle"
                  data-article-seq="${currentArticle.article_seq}"
                  data-user-learning-seq="${currentArticle.user_learning_seq}"
@@ -104,9 +105,11 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-        <c:import url="./learningComplete.jsp"/>
+            <c:import url="./learningComplete.jsp"/>
+        </div>
         <c:import url="/WEB-INF/views/layout/globalFooter.jsp"/>
     </div>
+
     <script type="module" src="${pageContext.request.contextPath}/js/learn/Learn.js"></script>
 <%--    <script type="module" src="${pageContext.request.contextPath}/js/learn/LearnWord.js"/>--%>
 </body>
