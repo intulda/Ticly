@@ -31,9 +31,26 @@
             MARKETING_AGREE
         FROM MEMBER
         <where>
-            <if test="searchKeyword != null and searchKeyword != ''">
-                EMAIL like '%#{searchKeyword}%'
-                OR NICKNAME like '%#{searchKeyword}%'
+            <choose>
+                <when test="searchType == 'allSearchType'">
+                    (EMAIL like '%${searchKeyword}%'
+                    OR NICKNAME like '%${searchKeyword}%')
+                </when>
+                <otherwise>
+                    ${searchType} like '%${searchKeyword}%'
+                </otherwise>
+            </choose>
+            <if test="clientType != 'allClientType'">
+                AND DEL = #{clientType}
+            </if>
+            <if test="marketingAgree != 'allMarketingType'">
+                AND MARKETING_AGREE = #{marketingAgree}
+            </if>
+            <if test="selectNormalEmail != 'EMAIL'">
+                AND SIGNUP_TYPE !='EMAIL'
+            </if>
+            <if test="selectNaver != 'NAVER' ">
+                AND SIGNUP_TYPE !='NAVER'
             </if>
         </where>
     </select>
