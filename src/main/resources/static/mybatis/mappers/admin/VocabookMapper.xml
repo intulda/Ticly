@@ -10,7 +10,7 @@
         VALUES (
                 VOCABOOK_PK_SEQ.NEXTVAL
                 , #{VOCA}
-                , 0
+                , 2
                 , #{MEANING}
         )
     </insert>

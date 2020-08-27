@@ -30,7 +30,7 @@
             padding-right: 50px;
             padding-top: 30px;
             padding-bottom: 20px;
-            justify-content: space-around;
+            justify-content: space-between;
         }
 
         .clearfix:after {
@@ -82,6 +82,19 @@
             padding-bottom: 10px;
         }
 
+        #a1 {
+            margin-right: 30px;
+        }
+
+        #a2 {
+            margin-right: 20px;
+        }
+
+        #a3 {
+            margin-left: 10px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -95,9 +108,9 @@
             <div class="item admin-header">
                 <div class="Admin-header-menu-tab" >
 
-                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="admin/clientmanage" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
 
                 </div>
             </div>

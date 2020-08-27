@@ -14,7 +14,7 @@ public interface ArticleWriteService{
 
     public List<ArticleDTO> ArticleList();
     public ArticleDTO ArticleDetail(String title);
-    public int writeArticle(Map<String, String> map);
+    public int writeArticle(Map<String, Object> map);
     public int deleteArticle(int article_seq);
     public int ArtCount();
 

@@ -30,7 +30,7 @@ public class ArticleWriteServiceImpl implements ArticleWriteService{
     }
 
     @Override
-    public int writeArticle(Map<String, String> map) {
+    public int writeArticle(Map<String, Object> map) {
         int nResult = articleDAO.writeArticleDao(map);
         return nResult;
     }

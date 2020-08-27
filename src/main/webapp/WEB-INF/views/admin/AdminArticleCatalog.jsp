@@ -38,13 +38,6 @@
             float: left;
         }
 
-        .word-info {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 0;
-            padding: 0;
-
-        }
 
         .admin-header{
             width: 100%;
@@ -74,6 +67,20 @@
             outline: 0;
         }
 
+        #a1 {
+            margin-left: 50px;
+            margin-right: 30px;
+        }
+
+        #a2 {
+            margin-right: 20px;
+        }
+
+        #a3 {
+            margin-left: 10px;
+        }
+
+
 
     </style>
 </head>
@@ -87,9 +94,9 @@
         <div class="item">
             <div class="item admin-header">
                 <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
                 </div>
             </div>
         </div>
