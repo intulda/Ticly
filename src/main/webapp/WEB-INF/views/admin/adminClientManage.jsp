@@ -10,6 +10,15 @@
 <body>
 <div class="ticly__basic-layout">
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+    <div class="admin-header">
+        <div class="container admin-header-container">
+            <div class="Admin-header-menu-tab" align="left">
+                <a href="/writeForm"> <h6 class="text text-color-gray300 text-weight-medium" > 아티클 등록하기 </h6> </a>
+                <a href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                <a href="/admin/clientmanage"> <h6 class="text text-color-green text-weight-medium"> 회원 관리 </h6> </a>
+            </div>
+        </div>
+    </div>
     <div class="container adminClientManage_Container ticly__basic-content-layout">
         <div class="adminClientManage_Div">
             <div class="custom-control custom-switch">

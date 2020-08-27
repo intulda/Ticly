@@ -26,63 +26,45 @@
         .flex_container {
             display: flex;
             flex-direction: column;
-            padding-left: 60px;
-            padding-right: 50px;
-            padding-top: 10px;
-            padding-bottom: 30px;
-            text-align: center;
             justify-content: space-between;
+            width: 100%;
+            padding-top: 60px;
+            text-align: center;
         }
 
         .item {
             float: left;
         }
 
-
         .admin-header{
+            position: sticky;
+            top: 80px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: white;
+            border: solid 1px #E1E1E8;
+            z-index: 12;
         }
 
+        .admin-header-container{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
 
         .Admin-header-menu-tab {
             display: flex;
-            padding-left: 200px;
-            padding-right: 50px;
-            padding-top: 20px;
-            padding-bottom: 40px;
-            justify-content: space-between;
-
+            text-align: justify;
+            align-items: center;
+            height: 40px;
         }
 
-        .word-info {
-            align-content: center;
+        .Admin-header-menu-tab a{
+            margin-right: 17px;
         }
-
-        .button {
-            border-radius: 0;
-            border: 0;
-            outline: 0;
-        }
-
-        #a1 {
-            margin-top: 8px;
-            margin-left: 150px;
-            margin-right: 30px;
-        }
-
-        #a2 {
-            margin-top: 8px;
-            margin-right: 20px;
-        }
-
-        #a3 {
-            margin-top: 8px;
-            margin-left: 10px;
-        }
-
 
 
     </style>
@@ -90,19 +72,16 @@
 <body>
 <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 <div class="admin-catalog ticly__basic-layout">
-    <div class="flex_container ticly__basic-content-layout">
-
-
-        <!-- 관리자 페이지 내 Tab + 저장하기 -->
-        <div class="item">
-            <div class="item admin-header">
-                <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
-                </div>
+    <div class="admin-header">
+        <div class="container admin-header-container">
+            <div class="Admin-header-menu-tab" align="left">
+                <a href="/writeForm"> <h6 class="text text-color-gray300 text-weight-medium" > 아티클 등록하기 </h6> </a>
+                <a href="/ArticleList"> <h6 class="text text-color-green text-weight-medium"> 아티클 목록 </h6> </a>
+                <a href="/admin/clientmanage"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
             </div>
         </div>
+    </div>
+    <div class="container flex_container ticly__basic-content-layout">
 
     <table width="700" class="table table-hover">
         <colgroup>

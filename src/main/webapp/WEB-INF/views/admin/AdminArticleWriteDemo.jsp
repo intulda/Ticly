@@ -46,11 +46,6 @@
 
         }
 
-        .Admin-header-menu-tab {
-            display: flex;
-            text-align: justify;
-        }
-
         .word-info {
             align-content: center;
         }
@@ -71,6 +66,10 @@
             line-height: 0;
         }
 
+        .admin-write-btn{
+            display: flex;
+        }
+
         .admin-header{
             position: sticky;
             top: 80px;
@@ -82,36 +81,26 @@
             border: solid 1px #E1E1E8;
         }
 
-        .empty-zone{
-            width: 100%;
-            height: 80px;
-            position: sticky;
-            top: 0;
-        }
-
-        .admin-write-btn{
-            display: flex;
-        }
-
-        a {
-            /*margin-left: 1px;*/
-            padding: 6px;
-        }
-
-        #a1 {
-            margin-right: 17px;
-        }
-
-        #a3 {
-            margin-left: 10px;
-        }
-
         .admin-header-container{
             display: flex;
             justify-content: space-between;
             padding-top: 16px;
             padding-bottom: 16px;
         }
+
+
+        .Admin-header-menu-tab {
+            display: flex;
+            text-align: justify;
+            align-items: center;
+        }
+
+
+        .Admin-header-menu-tab a{
+            margin-right: 17px;
+            text-decoration: none;
+        }
+
 
     </style>
 
@@ -122,12 +111,12 @@
 
 <div class="ticly__basic-layout">
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
-    <div class="item admin-header">
+    <div class="admin-header">
         <div class="container admin-header-container">
         <div class="Admin-header-menu-tab" align="left">
-            <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-            <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-            <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+            <a href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+            <a href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+            <a href="/admin/clientmanage"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
         </div>
 
         <div class="admin-write-btn">

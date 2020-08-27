@@ -24,13 +24,11 @@
 
     <style>
         .flex_container {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            padding-left: 200px;
-            padding-right: 50px;
-            padding-top: 30px;
-            padding-bottom: 20px;
             justify-content: space-between;
+            padding-top: 30px;
         }
 
         .clearfix:after {
@@ -39,22 +37,6 @@
             display: block;
         }
 
-        .admin-header{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .Admin-header-menu-tab {
-            display: flex;
-            padding-left: 45px;
-            padding-right: 50px;
-            padding-top: 5px;
-            align-items: left;
-            text-align: justify;
-            justify-content: space-between;
-        }
 
         .item {
             float: left;
@@ -63,68 +45,58 @@
             justify-content: space-between;
         }
 
-        .article-detail-btn{
-            margin: 100px;
-        }
-
         .admin-header{
+            position: sticky;
+            top: 80px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: white;
+            border: solid 1px #E1E1E8;
+            z-index: 12;
         }
 
-        .admin-write-btn{
+        .admin-header-container{
             display: flex;
-            padding-left: 3px;
-            padding-right: 150px;
-            padding-top: 20px;
-            padding-bottom: 10px;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
         }
 
-        #a1 {
-            margin-top: 3px;
-            padding-left: 105px;
-            margin-right: 30px;
+        .Admin-header-menu-tab {
+            display: flex;
+            text-align: justify;
+            align-items: center;
+            height: 40px;
         }
 
-        #a2 {
-            margin-top: 3px;
-            margin-right: 20px;
+        .Admin-header-menu-tab a{
+            margin-right: 17px;
         }
 
-        #a3 {
-            margin-top: 3px;
-            margin-left: 10px;
-        }
+
 
 
     </style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
-<div class="admin-catalog ticly__basic-layout">
-    <div class="flex_container ticly__basic-content-layout">
-
-
-        <!-- 관리자 페이지 내 Tab + 저장하기 -->
-        <div class="item">
-            <div class="item admin-header">
-                <div class="Admin-header-menu-tab" >
-
-                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
-
-                </div>
+<div class="ticly__basic-layout">
+    <div class="admin-header">
+        <div class="container admin-header-container">
+            <div class="Admin-header-menu-tab" align="left">
+                <a href="/writeForm"> <h6 class="text text-color-gray300 text-weight-medium" > 아티클 등록하기 </h6> </a>
+                <a href="/ArticleList"> <h6 class="text text-color-green text-weight-medium"> 아티클 목록 </h6> </a>
+                <a href="/admin/clientmanage"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
             </div>
         </div>
-        <hr>
+    </div>
 
+    <div class="container flex_container ticly__basic-content-layout">
 
         <%--<p> 아티클 상세 페이지 </p>--%>
         <article>
-            <hr>
             <div class="container" role="main">
                 <h2>아티클 간략하게 보기</h2>
                 <div class="bg-white rounded shadow-sm">
@@ -163,12 +135,10 @@
                     <button type="button" class="btn btn-sm btn-primary" id="btnList" href="/admin/AdminArticleCatalog">목록
                 </div>
             </div>
+        </article>
     </div>
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
-
-
-
-<c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 
 <script>
 
