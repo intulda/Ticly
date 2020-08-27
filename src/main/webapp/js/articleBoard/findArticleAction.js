@@ -12,7 +12,11 @@ import LastLearningCard from "./module/lastLearningCard.js";
         newSectionCardOuter = document.querySelector(".js-new-section-card-outer"),
         popularSectionCardOuter = document.querySelector(".js-popular-section-card-outer"),
         userEmail = document.querySelector("input[name=userEmail]").value,
-        userAuth = document.querySelector("input[name=userAuth]").value;
+        userAuth = document.querySelector("input[name=userAuth]").value,
+        newArticleElem = document.querySelector('#newArticle'),
+        mustArticleElem = document.querySelector('#mustArticle');
+
+
 
     const GET_LATEST_ARTICLE_CARD_PATH = "findLatestMyTypeArticle?",
         GET_POPULAR_ARTICLE_CARD_PATH = "findPopularMyTypeArticle?",
@@ -56,7 +60,7 @@ import LastLearningCard from "./module/lastLearningCard.js";
     // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
     function handleCategoryTabClickEvent(ev) {
         let target = ev.target;
-
+        console.log(target);
         categoryTabBtn.forEach(el => {
             el.classList.remove("active");
         });
@@ -90,6 +94,9 @@ import LastLearningCard from "./module/lastLearningCard.js";
 
         let latestListPath = GET_LATEST_ARTICLE_CARD_PATH + path;
         let popularListPath = GET_POPULAR_ARTICLE_CARD_PATH + path;
+
+        newArticleElem.setAttribute('href', `clickArticleSection?state=new${path}`);
+        mustArticleElem.setAttribute('href', `clickArticleSection?state=popular${path}`);
 
         getArticleInfo(newSectionCardOuter, latestListPath, "latest");
         getArticleInfo(popularSectionCardOuter, popularListPath, "popular");
@@ -249,8 +256,13 @@ import LastLearningCard from "./module/lastLearningCard.js";
         getArticleInfo(popularSectionCardOuter, popularListPath, "popular");
     }
 
-    function getPath() {
-
+    function reset() {
+        let path = '';
+        for(let obj of categoriesStr) {
+            path += `&categories=${obj.value}`
+        }
+        newArticleElem.setAttribute('href', `clickArticleSection?state=new${path}`);
+        mustArticleElem.setAttribute('href', `clickArticleSection?state=popular${path}`);
     }
 
     // init
@@ -271,12 +283,11 @@ import LastLearningCard from "./module/lastLearningCard.js";
 
         // tooltip
         $('[name="tooltip"]').tooltip();
-
+        reset();
         categoryTabBtn.forEach(el => {
             el.addEventListener("click", handleCategoryTabClickEvent);
             el.addEventListener("click", categoryTabBtnEvent);
         });
     }
-
     init();
 })();
