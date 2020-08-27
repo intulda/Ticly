@@ -164,20 +164,20 @@
                         <tr>
                             <td>
                                 <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
-                                <input type="text" id="title" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
+                                <input type="text" id="title" name="title" class="form-control form-control-lg" placeholder="제목을 입력해주세요">
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
-                                <input type="text" id="url" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
+                                <input type="text" id="url" name="url" class="form-control" aria-describedby="basic-addon3" placeholder="http://">
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
-                                <input type="file" id="file1" name="file1">
+                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 Path </p>
+                                <input type="text" id="image_path" name="image_path" class="form-control" aria-describedby="basic-addon3" placeholder="http://">
                                 <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
                             </td>
                         </tr>
@@ -185,7 +185,7 @@
                         <tr>
                             <td>
                                 <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
-                                <textarea name="summary" id="summary" class="form-control " cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
+                                <textarea name="summary" id="summary" class="form-control " cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."></textarea>
                             </td>
                         </tr>
                     </table>
@@ -202,7 +202,7 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
                             </td>
                             <td>
-                                <textarea id="contents" name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                                <textarea id="contents" name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."></textarea>
                             </td>
                         </tr>
 
@@ -211,7 +211,7 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
                             </td>
                             <td>
-                                <input type="text" id="tag" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control"  aria-describedby="basic-addon3">
+                                <input type="text" id="tag" name="hashtag" size="200" placeholder="내용을 입력하세요 (#해시태그)" class="form-control"  aria-describedby="basic-addon3">
                             </td>
                         </tr>
 
@@ -313,6 +313,7 @@
             data.category = $("#cb_category").val();
             data.title = $("#title").val();
             data.url = $("#url").val();
+            data.image_path = $("#image_path").val();
             data.file = $("#file").val();
             data.summary = $("#summary").val();
             data.contents = $("#contents").val();
@@ -329,7 +330,7 @@
             });
 
 
-            formData.append('file', $('input[type=file]')[0].files[0]);
+            // formData.append('file', $('input[type=file]')[0].files[0]);
             formData.append('data',JSON.stringify(data));
 
             console.log(formData);

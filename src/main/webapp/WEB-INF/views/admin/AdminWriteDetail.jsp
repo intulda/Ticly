@@ -141,6 +141,15 @@
 
                         </span><span class="board_date"><c:out value="${dto.reg_date}"/></span>
                     </div>
+
+                    <div class="board_image_path">
+                        <br><br><br>
+                        <p> <b> 이미지 경로 </b></p>
+                        <span class="board_author"><c:out value="${article.image_path }"/>
+                    </div>
+
+
+
                     <div class="board_content">${article.contents}</div>
                     <br>
                     <div class="board_tag"> <b> 관련 TAG </b> <br>

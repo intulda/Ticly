@@ -84,6 +84,7 @@ public class AdminAddController {
         String title = dto.getTitle();
         String summary = dto.getSummary();
         String url = dto.getUrl();
+        String image_path = dto.getImage_path();
         String content = dto.getContents();
         String hashtag = dto.getHashtag();
 
@@ -116,16 +117,17 @@ public class AdminAddController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         // map.put("category", category);
+        map.put("category_seq", category_seq);
         map.put("title", title);
         map.put("url", url);
+        map.put("image_path", image_path);
         map.put("summary", summary);
         map.put("hashtag", hashtag);
         map.put("content", content);
-        map.put("category_seq", category_seq);
 
 
         System.out.println("category:" + category + " title: " + title + " " + "url: " + url + " " +
-                "\n" + "summary: " + summary + "hashtag: " + hashtag + "content: " + content );
+                "\n" + " " + "image_path: " + image_path + "summary: " + summary + "hashtag: " + hashtag + "content: " + content );
 
         int nResult = dao.writeArticleDao(map);
 
@@ -156,14 +158,14 @@ public class AdminAddController {
 
 
         // 문장 받아와서 . 단위로 자르고 Article_sentence 넣어주기
-
+        /*
         String artContent = dto.getContents();
         String[] senArray = artContent.split(".");
         List<String> senList = Arrays.asList(senArray);
         System.out.println(senList);
 
         int SentenceSet = articleSentenceDAO.saveArticleSentenceDao(senList);
-
+        */
 
         return "redirect:ArticleList";
     }

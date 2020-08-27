@@ -52,7 +52,7 @@
                 , SYSDATE
                 , 0
                 , 10
-                , 0
+                , #{image_path}
                 )
     </insert>
 
