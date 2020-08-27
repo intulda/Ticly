@@ -2,6 +2,7 @@ package io.ticly.mint.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.ticly.mint.admin.model.dao.ArticleDAO;
+import io.ticly.mint.admin.model.dao.ArticleSentenceDAO;
 import io.ticly.mint.admin.model.dao.VocabookDAO;
 import io.ticly.mint.admin.model.dto.ArticleDTO;
 import io.ticly.mint.admin.model.service.AdminFileUploadService;
@@ -28,6 +29,8 @@ public class AdminAddController {
 
     @Autowired
     VocabookDAO vocabookdao;
+
+    ArticleSentenceDAO articleSentenceDAO;
 
 
     private static final String SAVE_PATH = "/fileimages";
@@ -128,7 +131,7 @@ public class AdminAddController {
 
 
         // VOCABOOK 테이블에 넣어주기
-        /*
+
         String voca = "";
         String meaning = "";
 
@@ -150,7 +153,17 @@ public class AdminAddController {
 
 
         int wordSet = vocabookdao.saveVocabookDao(wordSetMap);
-         */
+
+
+        // 문장 받아와서 . 단위로 자르고 Article_sentence 넣어주기
+
+        String artContent = dto.getContents();
+        String[] senArray = artContent.split(".");
+        List<String> senList = Arrays.asList(senArray);
+        System.out.println(senList);
+
+        int SentenceSet = articleSentenceDAO.saveArticleSentenceDao(senList);
+
 
         return "redirect:ArticleList";
     }
