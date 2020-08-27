@@ -20,41 +20,41 @@
                 <div class="clientRadio">
                     <span class="filter_SubTitle">회원 구분</span>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioTotal" name="client_radio" class="custom-control-input custom-radio" checked="checked"/>
+                        <input type="radio" id="clientRadioTotal" name="client_radio" class="custom-control-input custom-radio" value="allClientType" checked="checked"/>
                         <label class="custom-control-label" for="clientRadioTotal">전체</label>
                     </div>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioNormal" name="client_radio" class="custom-control-input custom-radio"/>
+                        <input type="radio" id="clientRadioNormal" name="client_radio" class="custom-control-input custom-radio" value="0"/>
                         <label class="custom-control-label" for="clientRadioNormal">일반</label>
                     </div>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioWithdrawal" name="client_radio" class="custom-control-input custom-radio"/>
+                        <input type="radio" id="clientRadioWithdrawal" name="client_radio" class="custom-control-input custom-radio" value="1"/>
                         <label class="custom-control-label" for="clientRadioWithdrawal">탈퇴</label>
                     </div>
                 </div>
                 <div class="marketingRadio">
                     <span class="filter_SubTitle">마케팅 수신 정보</span>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioTotal" name="marketing_radio" class="custom-control-input" checked="checked"/>
+                        <input type="radio" id="marketingRadioTotal" name="marketing_radio" class="custom-control-input" value="allMarketingType" checked="checked"/>
                         <label class="custom-control-label" for="marketingRadioTotal">전체</label>
                     </div>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioAgree" name="marketing_radio" class="custom-control-input"/>
-                        <label class="custom-control-label" for="marketingRadioAgree">수신허용</label>
+                        <input type="radio" id="marketingRadioAgree" name="marketing_radio" class="custom-control-input" value="1"/>
+                        <label class="custom-control-label" for="marketingRadioAgree" >수신허용</label>
                     </div>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioDisAgree" name="marketing_radio" class="custom-control-input"/>
+                        <input type="radio" id="marketingRadioDisAgree" name="marketing_radio" class="custom-control-input" value="0"/>
                         <label class="custom-control-label" for="marketingRadioDisAgree">수신거부</label>
                     </div>
                 </div>
                 <div class="accountCheckbox">
                     <span class="filter_SubTitle">계정 구분</span>
                     <div class="custom-control custom-checkbox accountCheckboxContents">
-                        <input type="checkbox" id="accountCheckboxEmail" class="custom-control-input" checked="checked">
+                        <input type="checkbox" id="accountCheckboxEmail" class="custom-control-input" checked="checked" value="EMAIL"/>
                         <label class="custom-control-label" for="accountCheckboxEmail">일반 이메일</label>
                     </div>
                     <div class="custom-control custom-checkbox accountCheckboxContents">
-                        <input type="checkbox" id="accountCheckboxNaver" class="custom-control-input" checked="checked">
+                        <input type="checkbox" id="accountCheckboxNaver" class="custom-control-input" checked="checked" value="NAVER"/>
                         <label class="custom-control-label" for="accountCheckboxNaver">네이버</label>
                     </div>
                 </div>
@@ -62,9 +62,9 @@
             <div class="searchCategoryBar">
                 <span class="filter_SubTitle">검색어</span>
                 <select class="form-control" id="searchCategory">
-                    <option> 전체 </option>
-                    <option> 이메일 </option>
-                    <option> 닉네임 </option>
+                    <option value="allSearchType"> 전체 </option>
+                    <option value="EMAIL"> 이메일 </option>
+                    <option value="NICKNAME"> 닉네임 </option>
                 </select>
                 <div>
                     <input type="text" id="searchInput" class="form-control"/>
