@@ -7,31 +7,59 @@ import AdminClientSearch from './AdminClientSearch.js'
 
     /*라디오 버튼 값*/
     //let 회원 구분에서 선택된 라디오 박스 = 전체
+    let clientRadioElement = document.getElementsByName("client_radio");
     //let 마케팅 수신 정보에서 선택된 라디오 박스 = 수신허용
-
+    let marketingRadioElement = document.getElementsByName("marketing_radio");
     /*체크박스 값*/
     //let 일반 이메일 체크 여부 =
+    let accountCheckboxEmailElement = document.getElementById("accountCheckboxEmail");
     //let 네이버 체크 여부 =
-
+    let accountCheckboxNaverElement = document.getElementById("accountCheckboxNaver");
     /*select박스 값*/
     //let 검색어 조건 = 전체 이메일
-
+    let searchCategoryElement = document.getElementById("searchCategory");
     let searchClientButtonCheck = true;
 
     /*  검색하기 버튼 클릭 시  */
     const searchClientBtn = () => {
-        var searchKeyword = searchInput.value;
+        let searchKeyword = searchInput.value;
+        let clientType = document.querySelector('input[name="client_radio"]:checked').value
+        let marketingAgree = document.querySelector('input[name="marketing_radio"]:checked').value;
+        let selectNormalEmail = document.querySelector('input[id="accountCheckboxEmail"]:checked').value;
+        let selectNaver = document.querySelector('input[id="accountCheckboxNaver"]:checked').value;
+        let searchType = document.querySelector("#searchCategory").value;
+
+/*
+        console.log(searchKeyword);
+        console.log(clientType);
+        console.log(marketingAgree);
+        console.log(selectNormalEmail);
+        console.log(selectNaver);
+        console.log(searchType);
+*/
+
+        //데이터 객체 생성
+        const obj = {
+            searchKeyword: searchKeyword,
+            clientType: clientType,
+            marketingAgree: marketingAgree,
+            selectNormalEmail: selectNormalEmail,
+            selectNaver: selectNaver,
+            searchType: searchType
+        }
+
+        // const obj = {};
+        // const obj = new Object();
+
         /*검색 조건에 맞는 데이터를 가져온다.*/
-        getMemberBySearch(searchKeyword);
+        getMemberBySearch(obj);
     }
 
-    function getMemberBySearch(searchKeyword){
+    function getMemberBySearch(obj){
         axios({
             method: 'get',
             url: '/admin/findMemberBySearch',
-            params: {
-                searchKeyword: searchKeyword
-            }
+            params: obj
         })
             .then(function (response) { //call back function
                 if(searchClientButtonCheck){
