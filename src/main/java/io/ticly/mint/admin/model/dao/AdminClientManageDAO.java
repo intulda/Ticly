@@ -2,6 +2,7 @@ package io.ticly.mint.admin.model.dao;
 
 
 import io.ticly.mint.admin.model.dto.AdminClientManageDTO;
+import io.ticly.mint.admin.model.dto.MemberSearchInfoDTO;
 import io.ticly.mint.articleBoard.model.dto.ArticleInfoDTO;
 import io.ticly.mint.learn.model.dto.UserLearnDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
@@ -33,9 +34,8 @@ public class AdminClientManageDAO {
         return  sqlSessionTemplate.selectList("adminClientManageDAO.clientSearchBtn");
     }
 
-    public List<AdminClientManageDTO> findMemberBySearch(String searchKeyword){
-        System.out.println("DaoSearchKeyword" + searchKeyword);
-        return sqlSessionTemplate.selectList("adminClientManageDAO.findMemberBySearch", searchKeyword);
+    public List<AdminClientManageDTO> findMemberBySearch(MemberSearchInfoDTO memberSearchInfoDTO){
+        return sqlSessionTemplate.selectList("adminClientManageDAO.findMemberBySearch", memberSearchInfoDTO);
     }
 }
 
