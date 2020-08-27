@@ -97,6 +97,15 @@
             /*margin-left: 1px;*/
             padding: 6px;
         }
+
+        #a1 {
+            margin-right: 17px;
+        }
+
+        #a3 {
+            margin-left: 10px;
+        }
+
     </style>
 
 </head>
@@ -115,9 +124,9 @@
             <form action="/write" id="admin-add-frm" method="post">
             <div class="item admin-header">
                 <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="admin/clientmanage" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+                    <a style="text-decoration:none" href="/writeForm" id="a1"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+                    <a style="text-decoration:none" href="/ArticleList" id="a2"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                    <a style="text-decoration:none" href="admin/clientmanage" id="a3"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
                 </div>
 
                 <div class="admin-write-btn">

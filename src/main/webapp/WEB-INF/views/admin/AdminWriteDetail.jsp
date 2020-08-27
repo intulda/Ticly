@@ -76,21 +76,25 @@
 
         .admin-write-btn{
             display: flex;
-            padding-left: 10px;
-            padding-right: 200px;
+            padding-left: 3px;
+            padding-right: 150px;
             padding-top: 20px;
             padding-bottom: 10px;
         }
 
         #a1 {
+            margin-top: 3px;
+            padding-left: 105px;
             margin-right: 30px;
         }
 
         #a2 {
+            margin-top: 3px;
             margin-right: 20px;
         }
 
         #a3 {
+            margin-top: 3px;
             margin-left: 10px;
         }
 
