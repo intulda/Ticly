@@ -24,14 +24,14 @@ import AdminClientSearch from './AdminClientSearch.js'
         if (document.querySelector('input[id="accountCheckboxNaver"]').checked){
             selectNaver = document.querySelector('input[id="accountCheckboxNaver"]:checked').value;
         }
-
+        /*
         console.log(searchKeyword);
         console.log(clientType);
         console.log(marketingAgree);
         console.log(selectNormalEmail);
         console.log(selectNaver);
         console.log(searchType);
-
+        */
         //데이터 객체 생성
         const obj = {
             searchKeyword: searchKeyword,
@@ -72,7 +72,8 @@ import AdminClientSearch from './AdminClientSearch.js'
                 console.log(error);
             });
     }
-
+    
+    /*전체 리스트를 가져오는 함수*/
     function getMemberList() {
         //TODO: JQuery
         // $.ajax({
@@ -166,8 +167,7 @@ import AdminClientSearch from './AdminClientSearch.js'
     }
 
     checkSwitch();
-    getMemberList();
-
+    getMemberList(); //전체 리스트를 가져오는 함수
     searchResultTableContent.addEventListener('click', onTableClickHandler);
 
 })();
