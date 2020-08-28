@@ -103,14 +103,17 @@ public class ArticleBoardDAO {
     public UserArticleInfoDTO getLastLearningArticleInfo(String email){
         UserArticleInfoDTO info = sqlSessionTemplate.selectOne("articleBoardDAO.getLastLearningArticleInfo", email);
 
-        // 마지막 학습 유형이 단어일 때
-        if (info.getLast_learning_type() == 0){
-            info.setLast_learning_content(sqlSessionTemplate.selectOne("articleBoardDAO.getLastVoca", info.getUser_learning_seq()));
-        }
+        // 최근 학습한 항목이 없다면,
+        if(info != null) {
+            // 마지막 학습 유형이 단어일 때
+            if (info.getLast_learning_type() == 0) {
+                info.setLast_learning_content(sqlSessionTemplate.selectOne("articleBoardDAO.getLastVoca", info.getUser_learning_seq()));
+            }
 
-        // 마지막 학습 유형이 문장일 때
-        else if (info.getLast_learning_type() == 1){
-            info.setLast_learning_content(sqlSessionTemplate.selectOne("articleBoardDAO.getLastSentence", info.getUser_learning_seq()));
+            // 마지막 학습 유형이 문장일 때
+            else if (info.getLast_learning_type() == 1) {
+                info.setLast_learning_content(sqlSessionTemplate.selectOne("articleBoardDAO.getLastSentence", info.getUser_learning_seq()));
+            }
         }
         return info;
     }
