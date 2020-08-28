@@ -11,6 +11,13 @@
     background-color: white;
 }
 
+.globalHeader-wrap > div{
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 100%;
+}
+
 .globalHeader-left{
     float: left;
     margin-left: 0;

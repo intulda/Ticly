@@ -19,7 +19,11 @@
 
 .header__left-content > button {
     margin-right: 1rem;
-    width: 102px;
+    min-width: max-content;
+}
+
+.breadcrumb-item:first-child{
+    min-width: max-content;
 }
 
 .breadcrumb-item.active {
@@ -34,9 +38,14 @@
     height: 1.5em;
 }
 
+.header__right-content{
+    min-width: max-content;
+}
+
 .header__right-content > button {
-    width: 114px;
-    margin-right: 1rem;
+    min-width: max-content;
+    margin-right: 0.5rem;
+
 }
 
 .iframeBody {
