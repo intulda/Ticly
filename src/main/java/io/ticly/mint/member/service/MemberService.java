@@ -41,6 +41,11 @@ public class MemberService {
         return categories;
     }
 
+
+    public List<String> getCategories(){
+        return articleBoardDAO.getCategoryKind();
+    }
+
     /**
      * 세션에 있던 카테고리 정보를 user_categories에 저장
      * @param email
