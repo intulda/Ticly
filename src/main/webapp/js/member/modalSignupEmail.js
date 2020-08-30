@@ -185,10 +185,7 @@
                     }*/
                 })
                     .then(function (result){
-                        console.log(result);
-
                         if(result.data.message == "success"){
-                            alert("회원가입이 완료되었습니다.");
                             goSignup() //로그인페이지로 이동
 
                         } else {

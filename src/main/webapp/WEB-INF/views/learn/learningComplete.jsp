@@ -7,20 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>학습완료</title>
-    <!-- Common -->
-    <c:import url="/WEB-INF/views/layout/globalImport.jsp"></c:import>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/learn/learn.css">
-</head>
-<body>
-<!--클릭 테스트용-->
-<div>
-    <a href="#" id="modal-open-button" class="button">Click Me</a>
-</div>
-
-</div>
 <!--complete Modal-->
 <div class="ticly-modal" id="signinup-modal">
     <div class="ticly-modal-contents">
@@ -43,7 +29,7 @@
                 </hearder>
                 <div class="complete-button-wrapper">
                     <div class="complete-button move-original-article-button" id="move-original-article">
-                        <h5 class="text text-color-gray100 text-weight-medium">원문 보러가기</h5>
+                        <h5 class="text text-color-gray100 text-weight-medium text-color-white">원문 보러가기</h5>
                     </div>
                     <div class="complete-button move-another-article-button" id="move-another-article">
                         <h5 class="text text-color-gray100 text-weight-medium">다른 아티클 학습하기</h5>
@@ -53,13 +39,3 @@
         </div>
     </div>
 </div>
-</body>
-
-<script>
-    //모달 열기
-    document.getElementById('modal-open-button').addEventListener("click", function() {
-        document.getElementById('signinup-modal').style.display = "flex";
-        document.getElementById('main-login-form').classList.remove('hidden');
-    });
-</script>
-</html>

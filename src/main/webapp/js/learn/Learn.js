@@ -9,6 +9,8 @@
     const tabClickElem = document.querySelector('#learnTab');
     const contentElem = document.querySelector('#learnContents');
     const currentArticleElem = document.querySelector('#currentArticle');
+    const articleLocateElem = document.querySelector('#move-original-article');
+    const moreArticleElem = document.querySelector('#move-another-article');
 
     function init() {
         const lastType = currentArticleElem.getAttribute("data-last-learning-type");
@@ -78,6 +80,35 @@
             onLastTypeUpdateHandler(e);
         }
     }
+
+    function onPageMoveHandler(e) {
+        let linkValue = '';
+        let target = '';
+        if(this === moreArticleElem) {
+            linkValue = '/'
+            target = '_self'
+        } else {
+            linkValue = document.querySelector('#articleLink').getAttribute('href');
+            target = '_blank';
+        }
+        window.open(linkValue,target)
+    }
+    document.getElementById('signinup-modal').addEventListener('click', (e) =>{
+        if(e.target == document.getElementById('signinup-modal')) {
+            document.getElementById('signinup-modal').style.display = "none";
+            document.getElementById('main-login-form').classList.add('hidden');
+            e.stopPropagation();
+        }
+    })
+
+    document.getElementById('modal-close').addEventListener('click', (e) => {
+        document.getElementById('signinup-modal').style.display = "none";
+        document.getElementById('main-login-form').classList.add('hidden');
+        e.stopPropagation();
+    })
     tabClickElem.addEventListener('click', onTabMoveHandler);
+    articleLocateElem.addEventListener('click', onPageMoveHandler)
+    moreArticleElem.addEventListener('click', onPageMoveHandler)
+
     init();
 })();

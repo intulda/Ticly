@@ -6,7 +6,7 @@
     <div class="category__content ticly-modal-contents">
 
         <!--닫기 버튼-->
-        <div class="intro_Button_Oval" id="modal-close">
+        <div class="intro_Button_Oval js-modal-close-btn" id="modal-close">
             <i class="icon_close intro_Button_X"></i>
         </div>
 

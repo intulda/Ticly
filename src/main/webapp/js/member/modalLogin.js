@@ -55,5 +55,5 @@
             document.getElementById('signinup-modal').style.display = "none";
         }
     }
-    document.getElementById('signinup-modal').addEventListener("click", closeModal);
+    document.getElementById('signinup-modal').addEventListener("mousedown", closeModal);
 })();

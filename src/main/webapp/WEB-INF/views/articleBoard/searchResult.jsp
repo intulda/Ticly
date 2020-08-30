@@ -27,10 +27,12 @@
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/articleBoard/categoryModalStyle.css">
 </head>
 <body>
-<!-- header -->
-<c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
 
 <div class="ticly__basic-layout">
+    <!-- header -->
+    <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+
+    <!-- content -->
     <div class="container container-xxl ticly__basic-content-layout">
         <div class="findArticle__header">
 
@@ -39,7 +41,7 @@
                 <c:choose>
                     <%-- 선택한 관심분야가 1개 이상일 경우--%>
                     <c:when test="${fn:length(userInfo.categories) > 1}">
-                        <button class="category__tab btn btn-tab active js-category-tab">ALL</button>
+                        <button class="category__tab btn btn-tab js-category-tab">ALL</button>
                         <c:forEach items="${userInfo.categories}" var="category">
                             <button class="category__tab btn btn-tab js-category-tab"
                                     value="${category}">${category}</button>
@@ -122,6 +124,10 @@
 <c:forEach items="${userInfo.categories}" var="category">
     <input type="hidden" class="js-categories-str" value=${category}>
 </c:forEach>
+<c:forEach items="${categories}" var="category">
+    <input type="hidden" class="js-categories-choice" value="${category}">
+</c:forEach>
+
 
 <!-- Get User info-->
 <input type="hidden" name="userAuth" value="${userInfo.auth}">

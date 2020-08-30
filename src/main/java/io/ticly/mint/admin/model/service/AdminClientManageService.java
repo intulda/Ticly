@@ -2,6 +2,7 @@ package io.ticly.mint.admin.model.service;
 
 import io.ticly.mint.admin.model.dao.AdminClientManageDAO;
 import io.ticly.mint.admin.model.dto.AdminClientManageDTO;
+import io.ticly.mint.admin.model.dto.MemberSearchInfoDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import io.ticly.mint.mypage.model.dao.MyPageDAO;
 import io.ticly.mint.mypage.model.dto.MyPageDTO;
@@ -24,5 +25,13 @@ public class AdminClientManageService {
      */
     public List<AdminClientManageDTO> buttonClientSearch() {
         return adminClientManageDAO.buttonClientSearch();
+    }
+
+    /**
+     * 전달된 키워드와 동일한 회원 정보를 가져오는 메소드
+     *
+     */
+    public List<AdminClientManageDTO> findMemberBySearch(MemberSearchInfoDTO memberSearchInfoDTO) {
+        return adminClientManageDAO.findMemberBySearch(memberSearchInfoDTO);
     }
 }

@@ -31,12 +31,12 @@
 
                         <div class="login-input-group">
                             <label for="signin-email" class="text text-color-gray100 body1 text-weight-medium login-label-title">이메일 <span class="required-label">*</span></label>
-                            <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" />
+                            <input type="text" class="form-control form-control-lg" id="signin-email" name="email" placeholder="ticly@ticly.io" autocomplete=”off”/>
                             <div class="signin-validation-message validation-message"></div>
                         </div>
                         <div class="login-input-group">
                             <label for="signin-password" class="text text-color-gray100 body1 text-weight-medium login-label-title">비밀번호 <span class="required-label">*</span></label>
-                            <input type="password" class="form-control form-control-lg" id="signin-password" name="password" placeholder="비밀번호를 입력하세요." />
+                            <input type="password" class="form-control form-control-lg" id="signin-password" name="password" placeholder="비밀번호를 입력하세요."  autocomplete=”off”/>
                             <div class="eyes-box" id="signin-eyes-box">
                                 <i class="icon_show" id="signin-eyes-icon"></i>
                             </div>

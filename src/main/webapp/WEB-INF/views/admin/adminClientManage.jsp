@@ -10,69 +10,81 @@
 <body>
 <div class="ticly__basic-layout">
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+    <div class="admin-header">
+        <div class="container admin-header-container">
+            <div class="Admin-header-menu-tab" align="left">
+                <a href="/writeForm"> <h6 class="text text-color-gray300 text-weight-medium" > 아티클 등록하기 </h6> </a>
+                <a href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+                <a href="/admin/clientmanage"> <h6 class="text text-color-green text-weight-medium"> 회원 관리 </h6> </a>
+            </div>
+        </div>
+    </div>
     <div class="container adminClientManage_Container ticly__basic-content-layout">
         <div class="adminClientManage_Div">
-            <span class="filter_Title">검색 설정</span>
-            <div class="filter_Div">
-                <div class="searchCategoryBar">
-                    <span class="filter_SubTitle">검색어</span>
-                    <select class="form-control" id="searchCategory">
-                        <option> 전체 </option>
-                        <option> 이메일 </option>
-                        <option> 닉네임 </option>
-                    </select>
-                    <div>
-                        <input type="text" id="searchInput" class="form-control"/>
-                    </div>
-                </div>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch">
+                <label class="custom-control-label filter_Title" for="customSwitch">검색 설정</label>
+            </div>
+            <div class="filter_Div" id="customSwitchContent">
                 <div class="clientRadio">
                     <span class="filter_SubTitle">회원 구분</span>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioTotal" name="client_radio" class="custom-control-input custom-radio"/>
+                        <input type="radio" id="clientRadioTotal" name="client_radio" class="custom-control-input custom-radio" value="allClientType" checked="checked"/>
                         <label class="custom-control-label" for="clientRadioTotal">전체</label>
                     </div>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioNormal" name="client_radio" class="custom-control-input custom-radio"/>
+                        <input type="radio" id="clientRadioNormal" name="client_radio" class="custom-control-input custom-radio" value="0"/>
                         <label class="custom-control-label" for="clientRadioNormal">일반</label>
                     </div>
                     <div class="custom-control custom-radio clientRadioContents">
-                        <input type="radio" id="clientRadioWithdrawal" name="client_radio" class="custom-control-input custom-radio"/>
+                        <input type="radio" id="clientRadioWithdrawal" name="client_radio" class="custom-control-input custom-radio" value="1"/>
                         <label class="custom-control-label" for="clientRadioWithdrawal">탈퇴</label>
                     </div>
                 </div>
                 <div class="marketingRadio">
                     <span class="filter_SubTitle">마케팅 수신 정보</span>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioTotal" name="marketing_radio" class="custom-control-input">
+                        <input type="radio" id="marketingRadioTotal" name="marketing_radio" class="custom-control-input" value="allMarketingType" checked="checked"/>
                         <label class="custom-control-label" for="marketingRadioTotal">전체</label>
                     </div>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioAgree" name="marketing_radio" class="custom-control-input"/>
-                        <label class="custom-control-label" for="marketingRadioAgree">수신허용</label>
+                        <input type="radio" id="marketingRadioAgree" name="marketing_radio" class="custom-control-input" value="1"/>
+                        <label class="custom-control-label" for="marketingRadioAgree" >수신허용</label>
                     </div>
                     <div class="custom-control custom-radio marketingRadioContents">
-                        <input type="radio" id="marketingRadioDisAgree" name="marketing_radio" class="custom-control-input"/>
+                        <input type="radio" id="marketingRadioDisAgree" name="marketing_radio" class="custom-control-input" value="0"/>
                         <label class="custom-control-label" for="marketingRadioDisAgree">수신거부</label>
                     </div>
                 </div>
                 <div class="accountCheckbox">
                     <span class="filter_SubTitle">계정 구분</span>
                     <div class="custom-control custom-checkbox accountCheckboxContents">
-                        <input type="checkbox" id="accountCheckboxEmail" class="custom-control-input">
+                        <input type="checkbox" id="accountCheckboxEmail" class="custom-control-input" checked="checked" value="EMAIL"/>
                         <label class="custom-control-label" for="accountCheckboxEmail">일반 이메일</label>
                     </div>
                     <div class="custom-control custom-checkbox accountCheckboxContents">
-                        <input type="checkbox" id="accountCheckboxNaver" class="custom-control-input">
+                        <input type="checkbox" id="accountCheckboxNaver" class="custom-control-input" checked="checked" value="NAVER"/>
                         <label class="custom-control-label" for="accountCheckboxNaver">네이버</label>
                     </div>
                 </div>
-                <div class="searchButton">
-                    <button type="submit"
-                            class="btn btn-outline-primary"
-                            id="search_Client_Button">
-                        검색하기
-                    </button>
+            </div>
+            <div class="searchCategoryBar">
+                <span class="filter_SubTitle">검색어</span>
+                <select class="form-control" id="searchCategory">
+                    <option value="allSearchType"> 전체 </option>
+                    <option value="EMAIL"> 이메일 </option>
+                    <option value="NICKNAME"> 닉네임 </option>
+                </select>
+                <div>
+                    <input type="text" id="searchInput" class="form-control"/>
                 </div>
+            </div>
+            <div class="searchButton">
+                <button type="submit"
+                        class="btn btn-outline-primary"
+                        id="search_Client_Button">
+                    검색하기
+                </button>
             </div>
             <div class="rectangle adminClientManage_Rectangle"></div>
             <span class="filter_Title">검색 결과</span>

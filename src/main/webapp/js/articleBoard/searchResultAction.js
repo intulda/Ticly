@@ -12,6 +12,7 @@ import SkeletonCard from './module/skeletonCard.js';
         currentCategoryValue = document.querySelector(".js-category-value"),
         searchBar = document.querySelector(".js-submit-hashtag-input"),
         searchBarForm = document.querySelector(".js-submit-hashtag-form"),
+        categoriesChoiceElem = document.querySelectorAll('.js-categories-choice'),
         sectionNum = document.querySelector(".js-section-number").value;
 
     const SEARCH_RESULT_ARTICLE_CARD_PATH = "findArticleBySearch?", // 검색 결과를 얻기위한 컨트롤러 경로
@@ -47,6 +48,27 @@ import SkeletonCard from './module/skeletonCard.js';
         if (!target) return;
 
         searchBar.value = target.lastElementChild.innerHTML;
+        for(let obj of categoryTabBtn) {
+            if(obj.classList.contains('active')) {
+                if(obj.innerText === 'ALL') {
+                    for(let obj of categoryTabBtn) {
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.name = 'categories';
+                        input.value = `${obj.innerText}`
+                        searchBarForm.appendChild(input);
+                    }
+                    break;
+                } else {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.name = 'categories';
+                    input.value = `${obj.innerText}`
+                    searchBarForm.appendChild(input);
+                    break;
+                }
+            }
+        }
         searchBarForm.submit();
     }
 
@@ -94,6 +116,7 @@ import SkeletonCard from './module/skeletonCard.js';
                 console.log(data);
 
                 // default message
+                // searchResultCardOuter.innerHTML = ''
                 const searchDefaultState = document.createElement("div");
                 searchDefaultState.className = "search__null text h4";
                 searchDefaultState.innerHTML = `앗, 관련 아티클이 준비되어 있지 않아 정말 죄송합니다🙇<br> 이런 키워드로 검색해보는건 어떠세요?`;
@@ -194,7 +217,7 @@ import SkeletonCard from './module/skeletonCard.js';
         while (searchResultCardOuter.hasChildNodes()) {
             searchResultCardOuter.removeChild(searchResultCardOuter.firstChild);
         }
-
+        console.log(list);
         // 화면에 새롭게 요소 그려주기
         if (list.length != 0) {
             searchResultCardOuter.style.display = "grid";
@@ -257,6 +280,7 @@ import SkeletonCard from './module/skeletonCard.js';
                         countingSearchResult(articleList);
                         paintCard(articleList);
                     }
+
                 }
             );
     }
@@ -285,18 +309,59 @@ import SkeletonCard from './module/skeletonCard.js';
         categoriesStr.forEach(el => {
             categoriesArr.push(el.value);
         });
-
         // url에 관심 분야 배열 요소 붙여서 전송하기
-        categoriesArr.forEach((el, index) => {
-            path += "categories=" + el;
-            if (index < categoriesArr.length - 1) {
-                path += "&";
-            }
-        });
+        if(categoryTypeCheck()) {
+            categoriesChoiceElem.forEach((el, index) => {
+                path += "categories=" + el.value;
+                if (index < categoriesArr.length - 1) {
+                    path += "&";
+                }
+            });
+        } else {
+            categoriesArr.forEach((el, index) => {
+                path += "categories=" + el.value;
+                if (index < categoriesArr.length - 1) {
+                    path += "&";
+                }
+            });
+        }
+
 
         // url에 검색 키워드 붙여서 전송하기
         path += "&searchKeyword=" + searchKeyword;
         getSearchResultArticleInfo(path);
+    }
+
+    function categoryTabHandler(categoriesChoiceElem) {
+        if(categoriesChoiceElem.length > 1) {
+            categoryTabBtn[0].classList.add('active');
+        } else {
+            if(categoryTypeCheck()) {
+                for(let node of categoryTabBtn) {
+                    if(node.value == categoriesChoiceElem[0].value) {
+                        node.classList.add('active');
+                        break;
+                    }
+                }
+            } else {
+                categoryTabBtn[0].classList.add('active');
+            }
+        }
+    }
+
+    function categoryTypeCheck() {
+        let check = false;
+        if(categoriesChoiceElem.length > 1) {
+            check = true;
+        } else {
+            for(let node of categoriesStr) {
+                if(node.value == categoriesChoiceElem[0].value) {
+                    check = true;
+                    break;
+                }
+            }
+        }
+        return check;
     }
 
     function init() {
@@ -309,6 +374,7 @@ import SkeletonCard from './module/skeletonCard.js';
 
         window.onload = () => {
             pageLoadEvent();
+            categoryTabHandler(categoriesChoiceElem);
         };
 
         // 무한 스크롤

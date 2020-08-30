@@ -207,9 +207,7 @@
             })
                 .then(function (result){
                     if(result.data.message == "success"){
-                        alert("회원가입이 완료되었습니다.");
                         window.location.href="/member/emailSignin";
-
                     } else {
                         alert("회원가입이 완료되지 않았습니다.");
                     }

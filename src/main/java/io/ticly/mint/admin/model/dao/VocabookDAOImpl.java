@@ -16,20 +16,16 @@ public class VocabookDAOImpl implements VocabookDAO{
     protected SqlSessionTemplate sqlSessionTemplate;
 
     // Mapper XML의 namespace
-    private static String namespace = "VocabookDAO";
+    private String namespace = "VocabookDAO";
 
     @Override
-    public List<Map<String, String>> VocabookListDao() {
-        return sqlSessionTemplate.selectList(namespace+".VocabookListDao");
+    public int saveVocabookDao(Map<String, String> wordSetMap) {
+        return sqlSessionTemplate.insert(namespace+".saveVocabookDao", wordSetMap); // 여기까지 데이터 온다
     }
 
     @Override
-    public int saveVocabookDao(List<Map<String, String>> list) {
-        return sqlSessionTemplate.insert(namespace+".saveVocabookDao", list);
+    public int deleteVocabookDao(int vocabook_seq) {
+        return sqlSessionTemplate.update(namespace+".deleteVocabookDao", vocabook_seq);
     }
 
-    @Override
-    public int deleteVocabookDao(int article_vocabook_seq) {
-        return sqlSessionTemplate.update(namespace+".deleteVocabookDao");
-    }
 }

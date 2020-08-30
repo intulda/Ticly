@@ -75,4 +75,11 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
         //이미지,자바스크립트,css 디렉토리 보안 설정
         web.ignoring().antMatchers("/js/**", "/css/**", "/images/**", "/fileimages/**");
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .headers()
+                .frameOptions().disable();
+    }
 }

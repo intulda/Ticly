@@ -24,9 +24,11 @@
 
     <style>
         .flex_container {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            margin-left: 100px;
+            justify-content: space-between;
+            padding-top: 30px;
         }
 
         .clearfix:after {
@@ -35,19 +37,6 @@
             display: block;
         }
 
-        .admin-header{
-            width: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .article-find-tab {
-            display: flex;
-            margin-left: 50px;
-            padding: 10px;
-            margin-right: 50px;
-            justify-content: space-between
-        }
 
         .item {
             float: left;
@@ -56,9 +45,36 @@
             justify-content: space-between;
         }
 
-        .article-detail-btn{
-            margin: 100px;
+        .admin-header{
+            position: sticky;
+            top: 80px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            border: solid 1px #E1E1E8;
+            z-index: 12;
         }
+
+        .admin-header-container{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+
+        .Admin-header-menu-tab {
+            display: flex;
+            text-align: justify;
+            align-items: center;
+            height: 40px;
+        }
+
+        .Admin-header-menu-tab a{
+            margin-right: 17px;
+        }
+
 
 
 
@@ -66,45 +82,87 @@
 </head>
 <body>
 <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
-<div class="admin-catalog ticly__basic-layout">
-    <div class="flex_container ticly__basic-content-layout">
-
-
-        <!-- 관리자 페이지 내 Tab + 저장하기 -->
-        <div class="item">
-            <div class="item admin-header">
-                <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
-                    <a style="text-decoration:none" href="AdminAnalysis.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 통계 </h6> </a>
-                </div>
+<div class="ticly__basic-layout">
+    <div class="admin-header">
+        <div class="container admin-header-container">
+            <div class="Admin-header-menu-tab" align="left">
+                <a href="/writeForm"> <h6 class="text text-color-gray300 text-weight-medium" > 아티클 등록하기 </h6> </a>
+                <a href="/ArticleList"> <h6 class="text text-color-green text-weight-medium"> 아티클 목록 </h6> </a>
+                <a href="/admin/clientmanage"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
             </div>
         </div>
+    </div>
 
-
+    <div class="container flex_container ticly__basic-content-layout">
 
         <%--<p> 아티클 상세 페이지 </p>--%>
-                    <hr><br><br>
-                    제목 :  ${article.title } <br>
-                    기사 요약 : ${article.summary} <br>
-                    해시태그 : ${article.hashtag} <br>
-                    원문 주소 : ${article.url}  <br>
-                    <hr>
+        <article>
+            <div class="container" role="main">
+                <h2>아티클 간략하게 보기</h2>
+                <div class="bg-white rounded shadow-sm">
+                    <div class="board_title">
+                        <br><br><br>
+                        <p> <b> 제목 </b></p>
+                        <h2><c:out value="${article.title }"/></h2></div>
+                    <div class="board_info_box">
+                        <br><br>
+                        <p> <b> 요약 </b> </p>
+                        <span class="board_author"><c:out value="${article.summary}"/>
 
-                    단어 모음
+
+
+                        </span><span class="board_date"><c:out value="${dto.reg_date}"/></span>
+                    </div>
+
+                    <div class="board_image_path">
+                        <br><br><br>
+                        <p> <b> 이미지 경로 </b></p>
+                        <span class="board_author"><c:out value="${article.image_path }"/>
+                    </div>
+
+
+
+                    <div class="board_content">${article.contents}</div>
+                    <br>
+                    <div class="board_tag"> <b> 관련 TAG </b> <br>
+                        <c:out value="${article.hashtag}"/></div>
                 </div>
+                <br><br>
 
-        <div class="article-detail-btn">
-            <p><a href="/ArticleList">아티클 목록보기</a></p>
-            <p><a href="/writeForm">아티클 등록하기</a></p>
-        </div>
+                <div style="margin-top : 20px">
+                    <button type="button" class="btn btn-sm btn-primary" id="btnToUrl" href="${article.url}">자세히 보러가기</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="btnDelete">삭제</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="btnList" href="/admin/AdminArticleCatalog">목록
+                </div>
+            </div>
+        </article>
     </div>
+    <c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
 </div>
 
+<script>
+
+    $(document).on('click', '#btnList', function(){
+        location.href = "${pageContext.request.contextPath}/ArticleList";
+    });
+
+    $(document).on('click', '#btnToUrl', function(){
+        location.href = "${article.url}";
+    });
+
+    $(document).on('click', '#btnDelete', function(){
+        var confirmMsg = confirm('해당 아티클을 삭제 하시겠습니까?');
+
+        if(confirmMsg) {
+            location.href = "delete?article_seq=${article.article_seq}";
+        } else {
+            // 변화 없음
+        }
+
+    });
 
 
-<c:import url="/WEB-INF/views/layout/globalFooter.jsp"></c:import>
+</script>
 
 </body>
 </html>

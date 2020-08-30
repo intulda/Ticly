@@ -82,7 +82,6 @@
                 data : form
             })
                 .then(function (result){
-                    console.log(result)
                     if(result.data.okay == "true"){
                         window.location.href = result.data.prev_url;
                     } else {
@@ -95,6 +94,15 @@
                 });
         }
     }
+
+    signinEmailElem.addEventListener('focus',function (){
+        signinErrorLabelElem[0].innerHTML = '';
+    });
+
+    signinPasswordElem.addEventListener('focus',function (){
+        signinErrorLabelElem[1].innerHTML = '';
+    });
+
 
     function handleSigninByKeyPress(ev){
         if(ev.keyCode == 13){

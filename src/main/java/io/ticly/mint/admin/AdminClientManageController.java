@@ -1,6 +1,7 @@
 package io.ticly.mint.admin;
 
 import io.ticly.mint.admin.model.dto.AdminClientManageDTO;
+import io.ticly.mint.admin.model.dto.MemberSearchInfoDTO;
 import io.ticly.mint.articleBoard.model.dto.MemberDTO;
 import io.ticly.mint.learn.model.dto.VocaDTO;
 import io.ticly.mint.mypage.model.dto.MyPageDTO;
@@ -41,5 +42,19 @@ public class AdminClientManageController {
     @ResponseBody
     public List<AdminClientManageDTO> buttonClientSearch() {
         return adminClientManageService.buttonClientSearch();
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("findMemberBySearch")
+    @ResponseBody
+    public List<AdminClientManageDTO> findArticleBySearch(MemberSearchInfoDTO memberSearchInfoDTO) {
+        //검색 결과 호출
+        List<AdminClientManageDTO> searchResultMember = adminClientManageService.findMemberBySearch(memberSearchInfoDTO);
+
+        return searchResultMember;
     }
 }

@@ -215,5 +215,4 @@
     nicknameChangeButtonElement.addEventListener("click", myPageNicknameCheckButton);
     passwordChangeButtonElement.addEventListener("click", myPagePasswordCheckButton);
     membershipWithdrawalButtonElement.addEventListener("click", myPageWithdrawalCheckButton);
-
 })();

@@ -37,6 +37,8 @@ public class LearnController {
      */
     @GetMapping(value="workBook")
     public String view(Model model, int seq) throws SQLException {
+//        seq = (int)model.getAttribute("seq");
+        System.out.println(seq);
         MemberDTO memberDTO = (MemberDTO)model.getAttribute("userInfo");
 
         if(memberDTO == null) {
@@ -69,6 +71,7 @@ public class LearnController {
         LearnArticleDTO learnArticleDTO = learnService.getArticle(userLearnDTO);
         learnArticleDTO.setUser_learning_seq(userLearnInfo.getUser_learning_seq());
         learnArticleDTO.setLast_learning_type(userLearnInfo.getLast_learning_type());
+        learnArticleDTO.setLearning_done(userLearnInfo.getLearning_done());
         model.addAttribute("currentArticle", learnArticleDTO);
         return "learn/learning";
     }
@@ -233,6 +236,13 @@ public class LearnController {
     public boolean updateUserSentence(@RequestBody UserSentenceDTO userSentenceDTO) throws SQLException {
         learnService.updateUserSentence(userSentenceDTO);
         learnService.updateLastUserSentence(userSentenceDTO);
+        return true;
+    }
+
+    @PostMapping(value="updateArticleDone")
+    @ResponseBody
+    public boolean updateArticleDone(@RequestBody UserLearnDTO userLearnDTO) throws SQLException {
+        learnService.updateArticleDone(userLearnDTO);
         return true;
     }
 }

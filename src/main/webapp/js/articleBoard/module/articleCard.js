@@ -17,25 +17,24 @@ class ArticleCard {
 
     getElements() {
         this.element.className = "card__wrapper";
+        // this.element.onclick = () => {location.href=`../learningApply/goToLeaningApply?seq=${this.articleSeq}`;}
         this.element.innerHTML =
             `
-            <div class="card__img_wrapper card">
-                <img class="card__img" src="${(this.imagePath != "")? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
+            <div class="card__img_wrapper card" onclick="location.href='../learningApply/goToLeaningApply?seq=${this.articleSeq}'" >
+                <img class="card__img" src="${(this.imagePath != 0)? this.imagePath : '../../../images/articleBoard/ticly_thumbnail.png'}" alt="thumbnail">
             </div>
-            <div class="card__hover-after">
-                <button class="btn btn-primary btn-lg" onclick="location.href='../learn/workBook?seq=${this.articleSeq}'">학습하기</button>
-                <button class="btn btn-outline-white btn-lg" onclick="location.href='${this.url}'">원문보기</button>
-            </div>
-            <div class="card__body">
-                <div class="card__body-tag">
-                     <span class="badge badge-neutral">${this.categoryTitle}</span>
-                    <span class="text body2 text-color-gray300 text-weight-regular">${this.hashtag}</span>
+            <div class="card__body" onclick="location.href='../learningApply/goToLeaningApply?seq=${this.articleSeq}'">
+                <div class="card__body-tag-wrapper">
+                    <span class="badge badge-neutral">${this.categoryTitle}</span>
+                    <span class="card__body-tag text body2 text-color-gray300 text-weight-regular">${this.hashtag}</span>
                 </div>
-                <h4 class="card__body-title text text-color-gray100 text-weight-medium">${this.title}</h4>
-                <p class="text body1 text-color-gray200">${this.summary}</p>
+                <div class="card__body-content">
+                    <h4 class="card__body-title text text-color-gray100 text-weight-medium">${this.title}</h4>
+                    <p class="text body1">${this.summary}</p>
+                </div>
             </div>
             <div class="card__footer">
-                <p class="text body1 text-color-gray300">${this.regDate}</p>
+                <p class="text body2 text-color-gray300">${this.regDate}</p>
             </div>
 			`
         return this.element;

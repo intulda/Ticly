@@ -56,7 +56,7 @@
 <header class="leaning-header-wrap">
     <div class="leaning-header">
         <div class="leaning-header-left">
-            <button class="text btn btn-secondary btn-custom-option text-weight-medium header-btn-back" onclick="history.back();">
+            <button class="text btn btn-secondary btn-custom-option text-weight-medium header-btn-back" onclick="location.href='${pageContext.request.contextPath}/dashboard/my'">
                 <i class="icon_chevron-left"></i>
                 학습 끝내기
             </button>

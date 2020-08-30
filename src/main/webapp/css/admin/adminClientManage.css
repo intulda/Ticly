@@ -118,3 +118,34 @@
     padding: 0 5px 0 0;
     cursor: pointer;
 }
+
+.admin-header{
+    position: sticky;
+    top: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border: solid 1px #E1E1E8;
+    z-index: 12;
+}
+
+.admin-header-container{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.Admin-header-menu-tab {
+    display: flex;
+    text-align: justify;
+    align-items: center;
+    height: 40px;
+}
+
+.Admin-header-menu-tab a{
+    margin-right: 17px;
+}
+

@@ -13,6 +13,7 @@ export function init() {
         UPDATE_USER_VOCA: '/learn/updateUserWord',
         SAVE_VOCA_GROUP: '/learn/saveVocaGroup',
         DELETE_VOCA_GROUP: '/learn/deleteVocaGroup',
+        UPDATE_ARTICLE_DONE: '/learn/updateArticleDone'
     }
 
     //단어셋 추가
@@ -40,6 +41,7 @@ export function init() {
     //단어추가, 삭제
     const tableWordAddElem = document.querySelector('#tableWordAdd');
     const tableWordRemoveElem = document.querySelector('#tableWordRemove');
+    let check = false;
 
     //단어 데이터
     function getVocaList() {
@@ -119,7 +121,7 @@ export function init() {
      * 테이블 단어삭제 비동기 통신
      * @param _data
      */
-    function wordRemove(_data) {
+    function wordRemove(_data, groupNumber) {
         axios(URL.DELETE_USER_VOCA,{
             method: 'POST',
             data: JSON.stringify(_data),
@@ -129,7 +131,7 @@ export function init() {
         }).then(response => {
             if(response.data) {
                 learn.setData(false, 'update');
-                if(learn.groupDataFilter(learn.groupMaxCount).length === 1) {
+                if(learn.groupDataFilter(groupNumber).length === 1) {
                     wordSetAddedCheck = true;
                 }
             } else {
@@ -234,6 +236,20 @@ export function init() {
             }).catch(error => console.log(error));
     }
 
+    function updateArticleDone() {
+        const options = {
+            method: 'POST',
+            data: JSON.stringify({
+                article_seq: document.querySelector('#currentArticle').getAttribute("data-article-seq"),
+                user_learning_seq: document.querySelector('#currentArticle').getAttribute("data-user-learning-seq"),
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios(URL.UPDATE_ARTICLE_DONE, options).then(response => response.data);
+    }
+
     //학습하기 페이지 class
     class Learn {
         constructor() {
@@ -302,6 +318,13 @@ export function init() {
             const _percent = `${this.allProgressPercent}%`;
             progressInfoElem.innerText = _percent;
             percentBarElem.style.width = _percent;
+
+            const done = document.querySelector('#currentArticle').getAttribute("data-learning-done");
+            if(_percent == 100 && done != 1) {
+                document.getElementById('signinup-modal').style.display = "flex";
+                document.getElementById('main-login-form').classList.remove('hidden');
+                updateArticleDone();
+            }
         }
 
         wordSetProcess() {
@@ -395,6 +418,7 @@ export function init() {
             resetTableEvent();
             tableElem.dataset.group = groupNum;
             learn.currentGroup = groupNum;
+            console.log('currentGroup',  learn.currentGroup);
             if(_data.length == 0) {
                 wordSetAddedCheck = true;
             }
@@ -454,24 +478,11 @@ export function init() {
                 currentCount++;
             }
         }
-        const canvasElem = document.querySelector('.leaning-progress-canvas');
-        const context = canvasElem.getContext('2d');
-        const centerX = canvasElem.width / 2;
-        const centerY = canvasElem.height / 2;
-        const radius = 73;
         const max = (currentCount / vocaData.length) * 2;
+        TweenMax.to(document.querySelector('#leaning-progress').children[0], 1, {
+            strokeDasharray:`${(max / 2) * 100}, ${100}`
+        });
         percentElem.innerHTML = Math.round((max / 2) * 100) + '%';
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, ((pie / 2) * Math.PI) * 2, false);
-        context.lineWidth = 16;
-        context.lineCap = 'round';
-        context.strokeStyle = '#257FF9';
-        context.stroke();
-        pie += 0.035;
-        restart = requestAnimationFrame(circleProgress);
-        if (pie >= max) {
-            cancelAnimationFrame(restart);
-        }
     }
 
     function onWordSetBtnHandler(e) {
@@ -631,6 +642,7 @@ export function init() {
 
     function selectCheck(e) {
         if(e.target.nodeName === 'INPUT') {
+            console.log(e.target);
             allDel.checked = inputChecked();
         }
     }
@@ -713,7 +725,8 @@ export function init() {
         for(let obj of _delCheckBox) {
             _data.push({user_voca_seq:obj.closest('tr').getAttribute('data-voca-seq')});
         }
-        wordRemove(_data);
+        let groupNumber = _delCheckBox[0].closest('data-group');
+        wordRemove(_data, groupNumber);
     }
 
 
@@ -732,7 +745,9 @@ export function init() {
             let _data = [{
                 user_voca_seq: trElemSeq
             }];
-            wordRemove(_data);
+
+            const groupNumber = e.target.closest('table').getAttribute('data-group');
+            wordRemove(_data, groupNumber);
         } else {
             // tableElem.dataset.state = 'update';
             trElem.innerHTML = new ArticleTable().getElements(learn.vocaSeqDataFilter(trElemSeq), 'update');
@@ -799,7 +814,9 @@ export function init() {
         }
     }
 
+    let immuTarget = '';
     window.addEventListener("click", function (event) {
+
         if(wordSetAddedCheck) {
             if(event.target.id === 'tableWordAdd'
                 || event.target.nodeName === 'DIV'
@@ -808,55 +825,38 @@ export function init() {
             ) {
                 return;
             }
-            const check = confirm(event);
-            if(check) {
-                removeGroup(learn.currentGroup);
-                learn.wordSetElem.children[0].click();
-                event.target.click();
-            } else {
-                event.stopImmediatePropagation();
+
+            if(event.target.id != 'answerFalse' && event.target.id != 'answerTrue') {
+                immuTarget = event.target;
+                event.stopPropagation();
             }
+            $('#activeModal').modal();
+            const answerFalseElem = document.querySelector('#answerFalse');
+            const answerTrueElem = document.querySelector('#answerTrue');
+            answerFalseElem.removeEventListener('click', toggleModal);
+            answerFalseElem.addEventListener('click', toggleModal);
+            answerTrueElem.removeEventListener('click', toggleModal);
+            answerTrueElem.addEventListener('click', toggleModal);
         }
     }, true);
-    const popupElem = document.querySelector('.cd-popup');
 
-    function confirm(event) {
-        popupElem.classList.add('is-visible');
-        if(event.target.classList.contains('cd-popup-close') || event.target.id === 'answerFalse') {
-            popupElem.classList.remove('is-visible');
-            return false;
-        } else if(event.target.id === 'answerTrue') {
-            popupElem.classList.remove('is-visible');
-            wordSetAddedCheck = false;
-            return true;
+
+    function toggleModal(e) {
+        let check = false;
+        if(this.id === 'answerTrue') {
+            check = true;
+        } else {
+            check = false;
         }
-
+        $('#activeModal').modal('hide');
+        if(check) {
+            removeGroup(document.querySelector('table').getAttribute('data-group'));
+            immuTarget.click();
+            wordSetAddedCheck = false;
+        } else {
+            e.stopImmediatePropagation();
+        }
     }
-
-    // window.onbeforeunload = function(event){
-    //     for(let i=0; i<learn.groupMaxCount; i++) {
-    //         if(learn.groupDataFilter(i).length === 0) {
-    //             removeGroup(i);
-    //         };
-    //     }
-    // }
-    //
-    // document.onkeydown = function(event){
-    //     /* F5, Ctrl+r, Ctrl+F5 */
-    //     if(event.code == 116 || event.ctrlKey == true && (event.code == 82)){
-    //         event.cancelBubble = true;
-    //         event.returnValue = false;
-    //         for(let i=0; i<learn.groupMaxCount; i++) {
-    //             if(learn.groupDataFilter(i).length === 0) {
-    //                 removeGroup(i);
-    //             };
-    //         }
-    //         setTimeout(function(){
-    //             window.location.reload();
-    //         }, 1000);
-    //         return false;
-    //     }
-    // }
 
     function removeGroup(groupNumber) {
             const options = {
@@ -879,10 +879,8 @@ export function init() {
                 }).catch(error => console.log(error));
     }
 
-
     wordListElem.addEventListener('click', nextLevel);
     wordCardElem.addEventListener('click', onCardToggleHandler);
-    // tableElem.addEventListener('click', onTableSortHandler);
     wordSetBtnAddElem.addEventListener('click', onWordSetBtnHandler);
     wordSetElem.addEventListener('click', onWordSetClickHandler)
     wordSwipeElem.addEventListener('click', onSwipeHandler);

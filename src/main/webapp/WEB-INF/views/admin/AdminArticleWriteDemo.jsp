@@ -27,14 +27,11 @@
         .flex_container {
             display: flex;
             flex-direction: column;
-            vertical-align: middle;
+            width: 100%;
+            padding-top: 60px;
+            padding-bottom: 30px;
             text-align: center;
-        }
-
-        .clearfix:after {
-            content: "";
-            clear: both;
-            display: block;
+            justify-content: space-between;
         }
 
         .item {
@@ -47,30 +44,6 @@
             margin: 0;
             padding: 0;
 
-        }
-
-        .myboardBtnGroup {
-            margin: 30px;
-            /*padding: 30px;*/
-        }
-
-        .Admin-header-menu-btn {
-            margin: 30px;
-        }
-
-        .main-logo {
-            margin: 17px;
-        }
-
-        .article-find-tab {
-            margin-left: 50px;
-            padding: 10px;
-        }
-
-        .Admin-header-menu-tab {
-            position: relative;
-            display: inline-block;
-            padding: 10px;
         }
 
         .word-info {
@@ -93,19 +66,42 @@
             line-height: 0;
         }
 
+        .admin-write-btn{
+            display: flex;
+        }
+
         .admin-header{
+            position: sticky;
+            top: 80px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: white;
+            border: solid 1px #E1E1E8;
+        }
+
+        .admin-header-container{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
         }
 
 
-
-        a {
-            /*margin-left: 1px;*/
-            padding: 6px;
+        .Admin-header-menu-tab {
+            display: flex;
+            text-align: justify;
+            align-items: center;
         }
+
+
+        .Admin-header-menu-tab a{
+            margin-right: 17px;
+            text-decoration: none;
+        }
+
+
     </style>
 
 </head>
@@ -115,27 +111,23 @@
 
 <div class="ticly__basic-layout">
     <c:import url="/WEB-INF/views/layout/globalNav.jsp"></c:import>
+    <div class="admin-header">
+        <div class="container admin-header-container">
+        <div class="Admin-header-menu-tab" align="left">
+            <a href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
+            <a href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
+            <a href="/admin/clientmanage"> <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
+        </div>
 
-    <div class="container-xg ticly__basic-content-layout">
+        <div class="admin-write-btn">
+            <input type="button" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;">
+        </div>
+        </div>
+    </div>
+    <div class="container ticly__basic-content-layout">
         <div class="flex_container">
-
-
             <!-- 관리자 페이지 내 Tab + 저장하기 -->
             <form action="/write" id="admin-add-frm" method="post">
-            <div class="item admin-header">
-                <div class="Admin-header-menu-tab" align="left">
-                    <a style="text-decoration:none" href="/writeForm"> <h6 class="text text-color-green text-weight-medium" > 아티클 등록하기 </h6> </a>
-                    <a style="text-decoration:none" href="/ArticleList"> <h6 class="text text-color-gray300 text-weight-medium"> 아티클 목록 </h6> </a>
-                    <a style="text-decoration:none" href="AdminMemberList.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 회원 관리 </h6> </a>
-                    <a style="text-decoration:none" href="AdminAnalysis.jsp" > <h6 class="text text-color-gray300 text-weight-medium"> 통계 </h6> </a>
-                </div>
-
-                <div>
-                    <input type="button" id="saveBtn" class="btn btn-success" value="저장하기" style="float: right;" >
-                    <input type="button" name="backBtn" class="btn" value="뒤로가기" style="float: right;" onclick="history.back()">
-                </div>
-            </div>
-
 
             <!--  아티클 기본 정보 Section -->
             <div class="item">
@@ -163,20 +155,20 @@
                         <tr>
                             <td>
                                 <p class="ext body1 text-weight-medium text-color-gray100"> 제목 </p>
-                                <input type="text" id="title" name="title" class="form-control form-control-lg" value="제목Test" placeholder="제목을 입력해주세요">
+                                <input type="text" id="title" name="title" class="form-control form-control-lg" placeholder="제목을 입력해주세요">
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <p class="ext2 body1 text-weight-medium text-color-gray100"> 원문 URL </p>
-                                <input type="text" id="url" name="url" class="form-control" aria-describedby="basic-addon3" value="http://aaa.aa.a" placeholder="http://">
+                                <input type="text" id="url" name="url" class="form-control" aria-describedby="basic-addon3" placeholder="http://">
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 파일 </p>
-                                <input type="file" id="file1" name="file1">
+                                <p class="ext2 body1 text-weight-medium text-color-gray100"> 아티클 이미지 Path </p>
+                                <input type="text" id="image_path" name="image_path" class="form-control" aria-describedby="basic-addon3" placeholder="http://">
                                 <%--<input type="button" name="file-upload-btn" value="이미지 등록" onclick="window.open('/fileupload','name','resizable=no width=500 height=300');return false">--%>
                             </td>
                         </tr>
@@ -184,7 +176,7 @@
                         <tr>
                             <td>
                                 <p class="ext3 body1 text-weight-medium text-color-gray100"> 요약 </p>
-                                <textarea name="summary" id="summary" class="form-control" cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> SUMMARY TEST </textarea>
+                                <textarea name="summary" id="summary" class="form-control " cols="110" rows="5" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."></textarea>
                             </td>
                         </tr>
                     </table>
@@ -201,7 +193,7 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 내용 </p>
                             </td>
                             <td>
-                                <textarea id="contents" name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."> 내용 TEST </textarea>
+                                <textarea id="contents" name="content" class="form-control" cols="110" rows="10" placeholder="DISCLAIMER: This project was done by me and my classmates for a school project and is not made, owned, or affiliated directly to Accedo. What if Netflix knew what you want..."></textarea>
                             </td>
                         </tr>
 
@@ -210,7 +202,7 @@
                                 <p class="text body1 text-weight-black text-color-gray100"> 태그 </p>
                             </td>
                             <td>
-                                <input type="text" id="tag" name="hashtag" size="200" value="#태그1 #태그2" placeholder="내용을 입력하세요 (#해시태그)" class="form-control"  aria-describedby="basic-addon3">
+                                <input type="text" id="tag" name="hashtag" size="200" placeholder="내용을 입력하세요 (#해시태그)" class="form-control"  aria-describedby="basic-addon3">
                             </td>
                         </tr>
 
@@ -302,6 +294,8 @@
 
 
 
+
+
 <script type="text/javascript">
     $(function(){
         $('#saveBtn').click(function(){
@@ -310,6 +304,7 @@
             data.category = $("#cb_category").val();
             data.title = $("#title").val();
             data.url = $("#url").val();
+            data.image_path = $("#image_path").val();
             data.file = $("#file").val();
             data.summary = $("#summary").val();
             data.contents = $("#contents").val();
@@ -326,7 +321,7 @@
             });
 
 
-            formData.append('file', $('input[type=file]')[0].files[0]);
+            // formData.append('file', $('input[type=file]')[0].files[0]);
             formData.append('data',JSON.stringify(data));
 
             console.log(formData);
@@ -339,87 +334,14 @@
                     'Content-Type': 'multipart/form-data',
                 },
             })
+            $(location).attr('href','/ArticleList');
         });
     });
     var count = 1;
-    /*const saveBtn = document.querySelector('#saveBtn');
-    saveBtn.addEventListener('click', () => {
-      /!*  const insertwordElmes = document.querySelectorAll('input[name="insertword"]');
-        const insertmeanElems = document.querySelectorAll('input[name="insertmean"]');
-        const data = {
-            category: document.querySelector('select[name="category"]').value,
-            title: document.querySelector('input[name="title"]').value,
-            url: document.querySelector('input[name="url"]').value,
-            summary: document.querySelector('textarea[name="summary"]').value,
-            content: document.querySelector('textarea[name="content"]').value,
-            hashtag: document.querySelector('input[name="hashtag"]').value,
-            vocaDTOS: []
-        };
-        const size = insertwordElmes.length;
-        for(let i=0; i<size; i++) {
-            let obj = {
-                voca: insertwordElmes[i].value,
-                meaning: insertmeanElems[i].value
-            }
-            data.vocaDTOS.push(obj);
-        }
-*!/
-        var formData = new FormData();
-        var data = new Object();
-        data.category = $("#cb_category").val();
-        data.title = $("#title").val();
-        data.url = $("#url").val();
-        data.file = $("#file").val();
-        data.summary = $("#summary").val();
-        data.contents = $("#contents").val();
-        data.tag = $("#tag").val();
-        data.vocaDTOS = [];
-
-        $.each($("tr[class='word-row']"), function(index, item){
-            var row = $(item).find("td");
-            console.log(row);
-            var word = new Object();
-            word.voca = $($(row[0]).find("input[type='text']")).val();
-            word.meaning = $($(row[1]).find("input[type='text']")).val();
-            data.vocaDTOS.push(word);
-        });
-
-
-        formData.append('file', $('input[type=file]')[0].files[0]);
-        formData.append('articleDTO',JSON.stringify(data));
-
-        console.log(formData);
-
-        axios("/write", {
-            method: 'POST',
-            data: formData,
-            header: {
-                'Content-Type': 'application/json',
-            },
-        }).then(response => console.log(response));
-
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '/write',
-        //     data: JSON.stringify(data),
-        //     contentType : 'application/json',
-        //     success: function (res) {
-        //         console.log(res);
-        //     }
-        // })
-
-      /!*  axios("/write", {
-            method: 'POST',
-            data: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => console.log(response));*!/
-    });*/
 
     function Add_WordBox() {
 
-       /* var obj = $("#divTest");*/
+        /* var obj = $("#divTest");*/
         var html = '<tr class="word-row">';
         html += '<td><input type="text" name="insertword" class="form-control" size="20" name="insertword" placeholder="단어를 입력하세요"></td>'
         html += '<td> <input type="text" name="insertmean" class="form-control" size="40" name="insertmean" placeholder="뜻을 입력하세요"></td>'

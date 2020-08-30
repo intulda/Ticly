@@ -61,6 +61,7 @@ public class ArticleBoardController {
     // 관심 분야 선택 완료 후 세션 처리 및 이동
     @GetMapping("choiceDone")
     public String choiceDone(Model model, HttpServletRequest req) throws SQLException {
+
         // 사용자의 권한과 관심 분야 세션에 등록하기
         MemberDTO dto = new MemberDTO();
 
@@ -89,10 +90,14 @@ public class ArticleBoardController {
 
         //세션 정보 등록
         model.addAttribute("userInfo", dto);
-        return "articleBoard/findArticle";
+
+        // 들어온 경로에 따라 보내주는 경로 다르게 처리
+        String referer = req.getHeader("Referer");
+        String sendURL = "redirect:" + referer;
+        return sendURL;
     }
 
-    // 아티클 찾기 페이지에서 *새로운* 아티클 정보 로드를 위한 동적 데이터 처리
+    // 아티클 찾기 페이지에서 아티클 정보 로드를 위한 동적 데이터 처리
     @GetMapping("findMyTypeArticle")
     @ResponseBody
     public List<ArticleInfoDTO> findMyTypeArticle(Model model, HttpServletRequest req) {
@@ -103,9 +108,31 @@ public class ArticleBoardController {
         return list;
     }
 
+    // 아티클 찾기 페이지에서 *최신* 아티클 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("findLatestMyTypeArticle")
+    @ResponseBody
+    public List<ArticleInfoDTO> findLatestMyTypeArticle(Model model, HttpServletRequest req) {
+        // 관심 분야 데이터를 기반으로 최신 아티클 불러와서 리스트에 담기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        List<ArticleInfoDTO> list = articleBoardService.findLatestMyTypeArticle(categories);
+
+        return list;
+    }
+
+    // 아티클 찾기 페이지에서 *인기* 아티클 정보 로드를 위한 동적 데이터 처리
+    @GetMapping("findPopularMyTypeArticle")
+    @ResponseBody
+    public List<ArticleInfoDTO> findPopularMyTypeArticle(Model model, HttpServletRequest req) {
+        // 관심 분야 데이터를 기반으로 최신 아티클 불러와서 리스트에 담기
+        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
+        List<ArticleInfoDTO> list = articleBoardService.findPopularMyTypeArticle(categories);
+
+        return list;
+    }
+
     // 검색시 search 페이지로 단순 이동
     @GetMapping("goToSearchPage")
-    public String goToSearchPage(Model model, HttpServletRequest req) {
+    public String goToSearchPage(Model model, HttpServletRequest req, String[] categories) {
 
         // 키워드 및 사용자 정보 내보내기
         MemberDTO user = (MemberDTO) model.getAttribute("userInfo");
@@ -119,6 +146,7 @@ public class ArticleBoardController {
 
         String searchKeyword = req.getParameter("searchKeyword");
         model.addAttribute("searchKeyword", searchKeyword);
+        model.addAttribute("categories", categories);
         return "articleBoard/searchResult";
     }
 
@@ -157,10 +185,9 @@ public class ArticleBoardController {
 
     // 아티클 찾기 페이지에서 최신/인기 섹션 클릭시, 처리 결과
     @GetMapping(value = "clickArticleSection")
-    public String clickArticleSection(Model model, HttpServletRequest req) {
+    public String clickArticleSection(Model model, HttpServletRequest req, String[] categories) {
         String state = req.getParameter("state");
-        HashMap<String, String> sectionInfo = new HashMap<String, String>();
-
+        HashMap<String, Object> sectionInfo = new HashMap<String, Object>();
         if (state.equals("new")) {
             sectionInfo.put("sectionName", "새로운 아티클");
             sectionInfo.put("sectionNum", "0");
@@ -168,8 +195,10 @@ public class ArticleBoardController {
             sectionInfo.put("sectionName", "필독 아티클");
             sectionInfo.put("sectionNum", "1");
         }
+        sectionInfo.put("categories", categories);
 
         model.addAttribute("sectionInfo", sectionInfo);
+        model.addAttribute("categories", categories);
         return "articleBoard/searchResult";
     }
 }
