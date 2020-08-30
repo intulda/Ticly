@@ -64,17 +64,22 @@
             const email = signinEmailElem.value;
             const password = signinPasswordElem.value;
 
+            let form = new FormData();
+            form.append('email', email);
+            form.append('pwd',password);
+
+            /*
             //json객체에 담기
             const signinData={
                 email : email,
                 password : password
-            };
+            };*/
 
             axios({
                 method: 'post',
                 url: '/member/loginPoc',
                 headers: { 'content-type': 'application/json' },
-                data : JSON.stringify(signinData)
+                data : form
             })
                 .then(function (result){
                     console.log(result)
