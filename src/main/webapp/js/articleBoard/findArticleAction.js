@@ -34,13 +34,14 @@ import LastLearningCard from "./module/lastLearningCard.js";
             .then(function (json) {
                 console.log("Receive Success!");
                 console.log(json.data);
+                console.log(json.data == "");
 
                 // section의 모든 자식 요소 삭제
                 while (lastLearningCardSection.hasChildNodes()) {
                     lastLearningCardSection.removeChild(lastLearningCardSection.firstChild);
                 }
 
-                if (json.data.length != 0) {
+                if (json.data != "") {
                     lastLearningCardSection.appendChild(new LastLearningCard(
                         JSON.stringify(json.data.image_path)
                         , JSON.stringify(json.data.article_seq)
@@ -50,11 +51,10 @@ import LastLearningCard from "./module/lastLearningCard.js";
                         , JSON.stringify(json.data.last_learning_content)
                         , JSON.stringify(json.data.last_learning_date)
                     ).getElements());
-                }
-            }, (error) => {
-                lastLearningSection.classList.add("hide");
-            });
 
+                    lastLearningSection.classList.remove("hide");
+                }
+            });
     }
 
     // category tab 영역의 버튼 클릭시 상태가 바뀌도록 처리하는 함수
@@ -227,7 +227,6 @@ import LastLearningCard from "./module/lastLearningCard.js";
 
         // Guest가 아니면 마지막 학습 카드 그려주기
         if (userAuth != 1 && userAuth != "") {
-            lastLearningSection.classList.remove("hide");
             path = createPath(LAST_LEARNING_ARTICLE_CARD_PATH);
             let section = lastLearningCardSection;
             getAndPaintLastLearningCard(path, section);
