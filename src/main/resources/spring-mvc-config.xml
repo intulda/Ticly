@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="EUC-KR"/>
+        <property name="maxUploadSize" value="2000000" />
+        <property name="maxInMemorySize" value="52428800" />
+    </bean>
+
+    <bean id = "uploadPath" class="java.lang.String">
+        <!-- C:\git\local_mint_mygit\src\main\webapp\fileimages -->
+        <!--<constructor-arg value="C:\WorkSpace_Spring\login\src\main\webapp\resources\profileImage">-->
+        <constructor-arg value="C:\git\local_mint_mygit\src\main\webapp\fileimages">
+        </constructor-arg>
+    </bean>
+
+    <!-- resource mapping -->
+    <!-- mapping은 프로그램상의 접근 위치이고, location이 실제 파일시스템 상 경로이다. -->
+    <mvc:resources location="file:/fileimages/" mapping="/fileimages/*"/>
+
+</beans>
+

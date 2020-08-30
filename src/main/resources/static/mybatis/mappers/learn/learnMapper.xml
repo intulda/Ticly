@@ -15,48 +15,63 @@
             TO_CHAR(ARTICLE.REG_DATE, 'YYYY.MM.DD') AS REG_DATE,
             CATE.CATEGORY,
             FM.FILE_CONTENTS,
-            FM.FILE_EXT
+            FM.FILE_EXT,
+            ARTICLE.IMAGE_PATH
         FROM ARTICLE ARTICLE, FILE_MANAGEMENT FM, CATEGORY CATE
-        WHERE ARTICLE.ARTICLE_SEQ = #{articleSeq}
+        WHERE ARTICLE.ARTICLE_SEQ = #{article_seq}
         AND ARTICLE.FILE_SEQ = FM.FILE_SEQ(+)
         AND ARTICLE.CATEGORY_SEQ = CATE.CATEGORY_SEQ(+)
         AND ARTICLE.DEL != 1
     </select>
 
-    <insert id="saveUserLearning" parameterType="UserLearnDTO">
+    <select id="getUserLearning" parameterType="UserLearnDTO" resultType="UserLearnDTO">
+        SELECT
+            USER_LEARNING_SEQ,
+            LAST_LEARNING_TYPE,
+            LEARNING_DONE
+        FROM USER_LEARNING
+        WHERE EMAIL = #{email}
+        AND ARTICLE_SEQ = #{article_seq}
+    </select>
+
+    <update id="saveUserLearning" parameterType="UserLearnDTO">
         MERGE INTO USER_LEARNING UL
-        USING (
-            SELECT USER_LEARNING_SEQ
-            FROM USER_LEARNING
-            WHERE ARTICLE_SEQ = #{articleSeq}
-        ) D
-        ON (
-            UL.USER_LEARNING_SEQ = D.USER_LEARNING_SEQ
-        )
-        WHEN MATCHED
-            THEN
-                UPDATE
-                SET LAST_LEARNING_DATE = SYSDATE
-        WHEN NOT MATCHED
-            THEN
-                INSERT (
-                    USER_LEARNING_SEQ,
-                    EMAIL,
-                    ARTICLE_SEQ,
-                    LAST_LEARNING_DATE
-                ) VALUES (
-                    USER_LEARNING_PK_SEQ.NEXTVAL,
-                    #{email},
-                    #{articleSeq},
-                    SYSDATE
-                )
-    </insert>
+            USING DUAL
+            ON (
+                    UL.ARTICLE_SEQ = #{article_seq}
+                AND UL.EMAIL = #{email}
+            )
+            WHEN MATCHED
+                THEN
+                    UPDATE
+                    SET UL.LAST_LEARNING_DATE = SYSDATE
+            WHEN NOT MATCHED
+                THEN
+                    INSERT (
+                        UL.USER_LEARNING_SEQ,
+                        UL.EMAIL,
+                        UL.ARTICLE_SEQ,
+                        UL.LAST_LEARNING_DATE,
+                        UL.LAST_LEARNING_TYPE
+                    ) VALUES (
+                        USER_LEARNING_PK_SEQ.NEXTVAL,
+                        #{email},
+                        #{article_seq},
+                        SYSDATE,
+                        0
+                    )
+    </update>
 
     <select id="getUserVocaCheck" parameterType="UserLearnDTO" resultType="int">
         SELECT
             COUNT(DISTINCT ARTICLE_SEQ)
         FROM USER_VOCA
-        WHERE ARTICLE_SEQ = #{articleSeq}
+        WHERE ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+    </select>
+
+    <select id="getGroupDataCheck" parameterType="UserLearnDTO" resultType="int">
+        SELECT COUNT(*) FROM USER_VOCA_GROUP WHERE ARTICLE_SEQ = #{article_seq} AND EMAIL = #{email}
     </select>
 
     <insert id="saveArticleVocaToUser" parameterType="UserLearnDTO">
@@ -65,44 +80,305 @@
             USER_LEARNING_SEQ,
             ARTICLE_SEQ,
             VOCA,
-            VOCA_ORDER
+            VOCA_ORDER,
+            VOCA_GROUP
         ) SELECT
             USER_VOCA_PK_SEQ.nextval AS USER_VOCA_SEQ,
             USER_LEARNING_SEQ,
             ARTICLE_SEQ,
             VOCA,
-            VOCA_ORDER
+            VOCA_ORDER,
+            VOCA_GROUP
         FROM (
             SELECT
                 UL.USER_LEARNING_SEQ,
                 ARTI_VOCA.ARTICLE_SEQ,
                 ARTI_VOCA.VOCA,
-                VOCA_ORDER
+                VOCA_ORDER,
+                VOCA_GROUP
             FROM ARTICLE_VOCABOOK ARTI_VOCA,
                  USER_LEARNING UL
             WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
-            AND ARTI_VOCA.ARTICLE_SEQ = #{articleSeq}
+            AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            AND UL.USER_LEARNING_SEQ = #{user_learning_seq}
             ORDER BY ARTI_VOCA.VOCA_ORDER ASC
         )
     </insert>
 
+    <insert id="saveArticleGroupToUser" parameterType="UserLearnDTO">
+        INSERT INTO USER_VOCA_GROUP (
+                USER_VOCA_GROUP_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA_GROUP,
+                EMAIL
+            ) SELECT
+                USER_VOCA_GROUP_PK_SEQ.nextval AS USER_VOCA_GROUP_PK_SEQ,
+                USER_LEARNING_SEQ,
+                ARTICLE_SEQ,
+                VOCA_GROUP,
+                EMAIL
+            FROM (
+                  SELECT DISTINCT
+                UL.USER_LEARNING_SEQ,
+                ARTI_VOCA.ARTICLE_SEQ,
+                VOCA_GROUP,
+                UL.EMAIL
+            FROM ARTICLE_VOCABOOK ARTI_VOCA,
+                 USER_LEARNING UL
+            WHERE ARTI_VOCA.ARTICLE_SEQ = UL.ARTICLE_SEQ
+            AND ARTI_VOCA.ARTICLE_SEQ = #{article_seq}
+            AND UL.EMAIL = #{email}
+            ORDER BY ARTI_VOCA.VOCA_GROUP ASC)
+    </insert>
+
     <select id="getVocaList" parameterType="UserLearnDTO" resultType="VocaDTO">
-        SELECT DISTINCT
-            UV.USER_VOCA_SEQ,
-            UV.USER_LEARNING_SEQ,
-            UV.ARTICLE_SEQ,
-            UV.VOCA,
-            VB.MEANING,
-            UV.CHECK_READING,
-            UV.LAST_VOCA,
-            UV.VOCA_ORDER
-        FROM USER_VOCA UV,
-             VOCABOOK VB,
-             ARTICLE_VOCABOOK AV
-        WHERE UV.VOCA = VB.VOCA
-        AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ
-        AND AV.MEANING_NUM = VB.MEANING_NUM
-        AND UV.ARTICLE_SEQ = #{articleSeq}
-        ORDER BY VOCA_ORDER ASC
+        (SELECT DISTINCT
+              UV.USER_VOCA_SEQ,
+              UV.USER_LEARNING_SEQ,
+              UV.ARTICLE_SEQ,
+              UV.VOCA,
+              VB.MEANING,
+              UV.CHECK_READING,
+              UV.LAST_VOCA,
+              UV.VOCA_ORDER,
+              UV.VOCA_GROUP
+         FROM USER_VOCA UV,
+              VOCABOOK VB,
+              ARTICLE_VOCABOOK AV
+        WHERE UV.VOCA = AV.VOCA(+)
+          AND UV.VOCA = VB.VOCA(+)
+          AND UV.ARTICLE_SEQ = AV.ARTICLE_SEQ
+          AND AV.MEANING_NUM = VB.MEANING_NUM
+          AND UV.USER_LEARNING_SEQ = #{user_learning_seq}
+          AND UV.MEANING IS NULL
+          AND UV.ARTICLE_SEQ = #{article_seq})
+        UNION ALL
+        (SELECT
+           USER_VOCA_SEQ,
+           USER_LEARNING_SEQ,
+           ARTICLE_SEQ,
+           VOCA,
+           MEANING,
+           CHECK_READING,
+           LAST_VOCA,
+           VOCA_ORDER,
+           VOCA_GROUP
+        FROM USER_VOCA
+        WHERE ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND MEANING IS NOT NULL)
+        ORDER BY VOCA_GROUP, VOCA_ORDER ASC
     </select>
+
+    <update id="saveWordReading" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET CHECK_READING = 1
+         WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+           AND USER_VOCA_SEQ = #{user_voca_seq}
+    </update>
+
+    <insert id="saveUserVoca" parameterType="VocaDTO">
+        INSERT INTO USER_VOCA(
+              USER_VOCA_SEQ,
+              USER_LEARNING_SEQ,
+              ARTICLE_SEQ,
+              VOCA,
+              CHECK_READING,
+              LAST_VOCA,
+              VOCA_ORDER,
+              VOCA_GROUP,
+              MEANING
+            ) VALUES (
+                USER_VOCA_PK_SEQ.nextval,
+                #{user_learning_seq},
+                #{article_seq},
+                #{voca},
+                0,
+                0,
+                (SELECT NVL(MAX(VOCA_ORDER), 0)+1 FROM USER_VOCA WHERE ARTICLE_SEQ = #{article_seq} AND USER_LEARNING_SEQ = #{user_learning_seq}),
+                #{voca_group},
+                #{meaning}
+            )
+    </insert>
+
+    <delete id="deleteUserVoca" parameterType="VocaDTO">
+        DELETE FROM USER_VOCA WHERE USER_VOCA_SEQ = #{user_voca_seq}
+    </delete>
+
+    <update id="updateUserWord" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET VOCA = #{voca},
+               MEANING = #{meaning}
+         WHERE USER_VOCA_SEQ = #{user_voca_seq}
+    </update>
+
+    <update id="updateLastVoca" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET LAST_VOCA = 1
+         WHERE USER_VOCA_SEQ = #{user_voca_seq}
+    </update>
+
+    <update id="updateLastVocaAll" parameterType="VocaDTO">
+        UPDATE USER_VOCA
+           SET LAST_VOCA = 0
+         WHERE USER_VOCA_SEQ != #{user_voca_seq}
+    </update>
+
+    <select id="getProgressPercent" parameterType="VocaDTO" resultType="int">
+        SELECT
+            PERCENT
+            FROM (SELECT
+                         ROUND(NVL(DECODE(VOCA_COUNT_READING, 0, null, VOCA_COUNT_READING)/DECODE(VOCA_COUNT, 0, null, VOCA_COUNT)*50,0)
+                            +
+                         NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT)*50, 0)) AS PERCENT
+                  FROM (
+                           SELECT (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = #{user_learning_seq}) AS VOCA_COUNT,
+                                  (SELECT COUNT(VOCA)
+                                   FROM USER_VOCA
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+                                     AND CHECK_READING != 0) AS VOCA_COUNT_READING,
+                                  (SELECT COUNT(NVL(KOR_SENTENCE, 0))
+                                   FROM USER_SENTENCE
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}) AS SENTENCE_COUNT,
+                                  (SELECT COUNT(KOR_SENTENCE)
+                                   FROM USER_SENTENCE
+                                   WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+                                     AND KOR_SENTENCE IS NOT NULL) AS SENTENCE_COUNT_READING
+                           FROM DUAL
+                       )
+                 )
+    </select>
+
+    <select id="getVocaGroupList" parameterType="UserLearnDTO" resultType="VocaGroupDTO">
+        SELECT
+            USER_VOCA_GROUP_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA_GROUP
+        FROM USER_VOCA_GROUP
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+          AND EMAIL = #{email}
+    </select>
+
+    <insert id="saveVocaGroup" parameterType="VocaGroupDTO">
+        INSERT INTO USER_VOCA_GROUP (
+            USER_VOCA_GROUP_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            VOCA_GROUP,
+            EMAIL
+        ) VALUES (
+            USER_VOCA_GROUP_PK_SEQ.nextval,
+            #{user_learning_seq},
+            #{article_seq},
+            #{voca_group},
+            #{email}
+        )
+    </insert>
+
+    <delete id="deleteVocaGroup" parameterType="VocaGroupDTO">
+        DELETE FROM USER_VOCA_GROUP
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+        AND VOCA_GROUP = #{voca_group}
+    </delete>
+
+    <update id="updateVocaGroupDown" parameterType="VocaGroupDTO">
+        UPDATE USER_VOCA_GROUP
+        SET VOCA_GROUP = VOCA_GROUP-1
+        WHERE VOCA_GROUP > #{voca_group}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateUserVocaGroupDown" parameterType="VocaGroupDTO">
+        UPDATE USER_VOCA
+        SET VOCA_GROUP = VOCA_GROUP-1
+        WHERE VOCA_GROUP > #{voca_group}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateLastLearningType" parameterType="UserLearnDTO">
+        UPDATE USER_LEARNING
+        SET LAST_LEARNING_TYPE = #{last_learning_type}
+        WHERE EMAIL = #{email}
+        AND ARTICLE_SEQ = #{article_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+    </update>
+
+    <select id="getSentenceSaveCheck" parameterType="UserLearnDTO" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM USER_SENTENCE
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </select>
+
+    <insert id="saveArticleSentenceToUser" parameterType="UserLearnDTO">
+        INSERT INTO USER_SENTENCE (
+            USER_SENTENCE_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            LAST_SENTENCE,
+            ARTICLE_SENTENCE_SEQ
+        ) SELECT
+            USER_SENTENCE_PK_SEQ.nextval AS USER_SENTENCE_PK_SEQ,
+            USER_LEARNING_SEQ,
+            ARTICLE_SEQ,
+            LAST_SENTENCE,
+            ARTICLE_SENTENCE_SEQ
+        FROM (
+            SELECT
+                UL.USER_LEARNING_SEQ,
+                ARTI_SENTENCE.ARTICLE_SEQ,
+                0 AS LAST_SENTENCE,
+                ARTI_SENTENCE.ARTICLE_SENTENCE_SEQ
+            FROM ARTICLE_SENTENCE ARTI_SENTENCE,
+                 USER_LEARNING UL
+            WHERE ARTI_SENTENCE.ARTICLE_SEQ = UL.ARTICLE_SEQ
+            AND ARTI_SENTENCE.ARTICLE_SEQ = #{article_seq}
+            AND UL.USER_LEARNING_SEQ = #{user_learning_seq}
+            ORDER BY ARTICLE_SENTENCE_SEQ ASC)
+    </insert>
+
+    <select id="getArticleSentence" parameterType="UserSentenceDTO" resultType="UserSentenceDTO">
+        SELECT DISTINCT
+            US.USER_SENTENCE_SEQ,
+            US.USER_LEARNING_SEQ,
+            ARTI.ARTICLE_SEQ,
+            ARTI.ENG_SENTENCE,
+            US.KOR_SENTENCE,
+            US.LAST_SENTENCE
+        FROM ARTICLE_SENTENCE ARTI,
+             USER_SENTENCE US
+        WHERE ARTI.ARTICLE_SENTENCE_SEQ = US.ARTICLE_SENTENCE_SEQ(+)
+        AND ARTI.ARTICLE_SEQ = #{article_seq}
+        AND US.USER_LEARNING_SEQ = #{user_learning_seq}
+        ORDER BY USER_SENTENCE_SEQ ASC
+    </select>
+
+    <update id="updateUserSentence" parameterType="UserSentenceDTO">
+        UPDATE USER_SENTENCE
+        SET KOR_SENTENCE = #{kor_sentence},
+            LAST_SENTENCE = 1
+        WHERE USER_SENTENCE_SEQ = #{user_sentence_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateLastUserSentence" parameterType="UserSentenceDTO">
+        UPDATE USER_SENTENCE
+        SET LAST_SENTENCE = 0
+        WHERE USER_SENTENCE_SEQ != #{user_sentence_seq}
+        AND USER_LEARNING_SEQ = #{user_learning_seq}
+        AND ARTICLE_SEQ = #{article_seq}
+    </update>
+
+    <update id="updateArticleDone" parameterType="UserLearnDTO">
+        UPDATE USER_LEARNING
+        SET LEARNING_DONE = 1
+        WHERE USER_LEARNING_SEQ = #{user_learning_seq}
+    </update>
 </mapper>

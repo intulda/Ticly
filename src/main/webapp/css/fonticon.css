@@ -10,6 +10,9 @@
   font-display: block;
 }
 
+.btn > i[class*='icon'], .btn > i[class^='icon']{
+}
+
 i[class^="icon"], i[class*="icon"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'ticly_icon' !important;
@@ -33,7 +36,7 @@ i[class^="icon"], i[class*="icon"] {
 .icon_setting:before {
   content: "\e904";
 }
-.icon_info_notice:before {
+.icon_notice_circle:before {
   content: "\e91e";
 }
 .icon_translate:before {

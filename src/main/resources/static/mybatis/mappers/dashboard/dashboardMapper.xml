@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dashboardDAO">
+
+
+    <!--DB에서 사용자가 학습중인 아티클 정보와 성취도를 연산 결과 불러오기
+    @param String 이메일-->
+    <select id="getMyArticleListInfo" parameterType="String" resultType="UserArticleInfoDTO">
+        SELECT
+            ABS.R_NUM,
+            ABS.USER_LEARNING_SEQ,
+            ABS.LAST_LEARNING_DATE,
+            ABS.LAST_LEARNING_TYPE,
+            ABS.USER_ARTICLE_SHOW,
+            ABS.ARTICLE_SEQ,
+            ABS.URL,
+            ABS.CATEGORY_TITLE,
+            ABS.HASHTAG,
+            ABS.TITLE,
+            ABS.SUMMARY,
+            ABS.REG_DATE,
+            ABS.IMAGE_PATH,
+            ROUND(((NVL(DECODE(VOCA_COUNT_READING, 0, null,VOCA_COUNT_READING)/
+                DECODE(VOCA_COUNT, 0, null, VOCA_COUNT),0))*50) +
+          (NVL(DECODE(SENTENCE_COUNT_READING, 0, null, SENTENCE_COUNT_READING)/
+               DECODE(SENTENCE_COUNT, 0, null, SENTENCE_COUNT), 0)*50)) AS ACHIEVEMENT_RATE,
+            ABS.LEARNING_DONE
+        FROM
+            (SELECT ROW_NUMBER() over (ORDER BY LAST_LEARNING_DATE DESC)     AS R_NUM,
+                    U_LEN.USER_LEARNING_SEQ                                  AS USER_LEARNING_SEQ,
+                    U_LEN.LAST_LEARNING_DATE                                 AS LAST_LEARNING_DATE,
+                    U_LEN.LAST_LEARNING_TYPE                                 AS LAST_LEARNING_TYPE,
+                    U_LEN.ARTICLE_SEQ                                        AS ARTICLE_SEQ,
+                    U_LEN.USER_ARTICLE_SHOW                                  AS USER_ARTICLE_SHOW,
+                    A_.URL                                                   AS URL,
+                    C_.CATEGORY                                              AS CATEGORY_TITLE,
+                    A_.HASHTAG                                               AS HASHTAG,
+                    A_.TITLE                                                 AS TITLE,
+                    A_.SUMMARY                                               AS SUMMARY,
+                    A_.REG_DATE                                              AS REG_DATE,
+                    A_.IMAGE_PATH                                            AS IMAGE_PATH,
+                    (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS VOCA_COUNT,
+                    (SELECT COUNT(VOCA) FROM USER_VOCA WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND CHECK_READING != 0) AS VOCA_COUNT_READING,
+                    (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ) AS SENTENCE_COUNT,
+                    (SELECT COUNT(KOR_SENTENCE) FROM USER_SENTENCE WHERE USER_LEARNING_SEQ = U_LEN.USER_LEARNING_SEQ AND KOR_SENTENCE IS NOT NULL) SENTENCE_COUNT_READING,
+                    U_LEN.LEARNING_DONE                                      AS LEARNING_DONE
+             FROM USER_LEARNING U_LEN,
+                  ARTICLE A_,
+                  CATEGORY C_
+             WHERE U_LEN.ARTICLE_SEQ = A_.ARTICLE_SEQ
+               AND A_.CATEGORY_SEQ = C_.CATEGORY_SEQ
+               AND U_LEN.EMAIL = #{email}) ABS
+    </select>
+
+    <!-- [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기 -->
+    <delete id="updateUserArticleShow" parameterType="hashMap">
+        UPDATE USER_LEARNING
+        SET USER_ARTICLE_SHOW = UPPER(#{showState})
+        WHERE EMAIL = #{email}
+          AND ARTICLE_SEQ = ${seq}
+    </delete>
+</mapper>

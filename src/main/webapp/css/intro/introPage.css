@@ -1,37 +1,71 @@
-/* Intro */
-.rectangle {
-    display: flex;
-    height: 1080px;
-    width: 1920px;
-    opacity: 0.98;
+/* introPage */
+.introPage_Rectangle {
+    z-index: 30;
+    display: none;
+    height: 100%;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.08);
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(4px);
 }
 
-.mask {
-    margin-left: 470px;
-    margin-top: 220px;
+.introPage_Container {
     height: 640px;
     width: 980px;
+    position: relative;
     border-radius: 30px;
     background-color: #257FF9;
-    display: flex;
-    flex-direction: column;
+    padding: 50px 60px;
 }
 
-.intro_img {
+.intro_Button_Oval {
+    cursor: pointer;
+    transition: all 0.1s;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    box-sizing: border-box;
+    border-radius: 100%;
+    height: 60px;
+    width: 60px;
+    border: 4px solid #FFFFFF;
+    background-color: #2B2D36;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intro_Button_Oval:hover{
+    transform: scale(1.1);
+}
+
+.intro_Button_X {
+    font-size: 32px;
+    color: #FFFFFF;
+}
+
+.introPage_Mask {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.introPage_img {
+    position: absolute;
     height: 366px;
     width: 775px;
-    margin-left: 145px;
+    bottom: 0;
+    right: 0;
 }
 
-#intro_word {
-    margin-top: 50px;
-    margin-left: 60px;
-}
-
-#intro_word2 {
-    margin-top: 8px;
-    margin-left: 60px;
+.introPage_Word {
+    padding-top: 8px;
+    letter-spacing: -0.4px !important;
+    line-height: 57px !important;
 }
 
 .trendSearchColor {

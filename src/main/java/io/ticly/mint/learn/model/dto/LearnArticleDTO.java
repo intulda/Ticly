@@ -10,6 +10,9 @@ import lombok.*;
 public class LearnArticleDTO {
 
     private int article_seq;
+    private int user_learning_seq;
+    private int last_learning_type;
+    private int learning_done;
     private String title;
     private String summary;
     private String url;
@@ -19,4 +22,5 @@ public class LearnArticleDTO {
     private byte[] file_contents;
     private String file_url;
     private String file_ext;
+    private String image_path;
 }

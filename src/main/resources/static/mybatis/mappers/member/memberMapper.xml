@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+    <!-- ///////////////////// 로그인 로직 ///////////////////// -->
+    <!-- 로그인시 가입 여부와 회원정보를 가져오기 위한 SQL -->
+    <select id="findMemberLogin" resultType="UserDTO">
+        SELECT EMAIL, NICKNAME, AUTH
+        FROM MEMBER
+        WHERE DEL != 1
+        AND EMAIL = #{email} AND PASSWORD = #{password}
+    </select>
+
+    <!-- 로그인한 회원의 카테고리 데이터를 가져오기 위한 SQL -->
+    <select id="getUserCategories" resultType="String">
+        SELECT CATEGORY
+        FROM MEMBER_CATEGORIES MEMBER_CATE, CATEGORY CATE
+        WHERE MEMBER_CATE.CATEGORY_SEQ = CATE.CATEGORY_SEQ
+        AND MEMBER_CATE.EMAIL = #{email}
+    </select>
+    
+    <!-- ///////////////////// 회원가입 로직 ///////////////////// -->
+    <!-- 이메일 중복확인 SQL -->
+    <select id="checkEmail" resultType="UserDTO">
+        SELECT EMAIL, NICKNAME, AUTH, SIGNUP_TYPE
+        FROM MEMBER
+        WHERE DEL != 1 AND EMAIL = #{email}
+    </select>
+
+    <!-- 회원 등록 SQL -->
+    <insert id="signup">
+		insert into MEMBER(EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE, REG_DATE, MARKETING_AGREE)
+		values(#{email}, #{password}, #{nickname}, #{auth}, #{signup_type}, sysdate, #{marketing_agree})
+	</insert>
+
+    <!-- 카테고리 string에 해당하는 seq반환 -->
+    <select id="getCategorySeq" resultType="int">
+		SELECT CATEGORY_SEQ
+		FROM CATEGORY
+		WHERE CATEGORY = #{category_name}
+	</select>
+
+    <!-- 기존 회원에 저장되었 카테고리 정보를 delete -->
+    <delete id="deleteUserCategory">
+        DELETE FROM MEMBER_CATEGORIES WHERE EMAIL = #{email}
+    </delete>
+
+    <!-- 세션에 저장된 관심 카테고리를 DB에 insert -->
+    <insert id="saveUserCategories" parameterType="Map">
+        INSERT INTO MEMBER_CATEGORIES(EMAIL, CATEGORY_SEQ)
+        VALUES(#{email}, #{category_seq})
+	</insert>
+</mapper>

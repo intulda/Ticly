@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Article :: 아티클 정보 input -->
+<mapper namespace="ArticleDAO">
+    <sql id="ArticleColumns">
+		  article_seq
+		, title
+		, summary
+		, file_seq
+		, url
+		, hashtag
+		, category_seq
+		, reg_date
+		, del
+		, apply_count
+		, image_path
+	</sql>
+
+    <select id="ArticleListDao" resultType="ArticleDTO">
+        SELECT
+        <include refid="ArticleColumns" />
+        FROM
+        ARTICLE
+        WHERE
+        del = '0'
+    </select>
+
+    <select id="ArticleDetailDao" resultType="ArticleDTO"  parameterType="java.lang.String" >
+        SELECT
+        <include refid="ArticleColumns" />
+        FROM
+        ARTICLE
+        WHERE
+        article_seq = #{article_seq}
+    </select>
+
+
+    <insert id="writeArticleDao" parameterType="java.util.HashMap">
+        INSERT INTO ARTICLE( article_seq, title, summary, file_seq, url,
+                            hashtag, category_seq, reg_date, del, apply_count, image_path)
+        VALUES ( article_pk_seq.NEXTVAL
+                , #{title}
+                , #{summary}
+                , 1
+                , #{url}
+                , #{hashtag}
+                , #{category_seq}
+                , SYSDATE
+                , 0
+                , 10
+                , #{image_path}
+                )
+    </insert>
+
+
+<!--
+    <insert id="writeArticleDao" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="article_seq">
+        INSERT INTO ARTICLE( article_seq, title, summary, file_seq, url,
+                            hashtag, category_seq, reg_date, del, apply_count, image_path)
+        VALUES ( article_pk_seq.NEXTVAL
+                , #{title}
+                , #{summary}
+                , 1
+                , #{url}
+                , #{hashtag}
+                , 3
+                , SYSDATE
+                , 0
+                , 10
+                , 0
+                )
+
+    </insert>-->
+
+
+    <delete id="deleteArticleDao" parameterType="int">
+		DELETE FROM ARTICLE
+		WHERE
+			article_seq = #{article_seq}
+	</delete>
+
+
+    <select id="ArticleCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			ARTICLE
+		WHERE
+			del = '0'
+	</select>
+
+
+    </mapper>

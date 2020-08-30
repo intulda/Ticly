@@ -1,0 +1,346 @@
+/* MODAL STARTS */
+.ticly-modal {
+  z-index: 12;
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  padding-top: 12px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticly-modal-contents{
+  width: 500px;
+  background-color: white;
+  position: relative;
+  max-height: 100%;
+  border-radius: 30px;
+}
+
+
+.intro_Button_Oval {
+  cursor: pointer;
+  transition: all 0.1s;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 100%;
+  height: 60px;
+  width: 60px;
+  border: 4px solid #FFFFFF;
+  background-color: #2B2D36;
+}
+
+.intro_Button_Oval:hover{
+  transform: scale(1.1);
+}
+
+.intro_Button_X {
+  font-size: 32px;
+  color: #FFFFFF;
+}
+
+
+.modal-close:hover {
+  color: #666;
+}
+
+.hidden{
+  display: none;
+}
+
+/*공통*/
+.login-modal-header{
+  display: block;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-header-content{
+  margin-top: 12px;
+}
+
+.login-modal-footer{
+  display: flex;
+  justify-content: center;
+  line-height: 28px;
+}
+
+.login-input-group{
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.login-label-title{
+  margin-bottom: 4px;
+}
+
+.required-label{
+  color : #FA5F6E;
+}
+
+.login-input-group .eyes-box{
+  display: flex;
+  color: #858899;
+  position: absolute;
+  top: 43px;
+  right: 16px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+/*유효성 검사 텍스트*/
+.validation-message{
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.validation-info-icon{
+  color: #D4505D;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-right: 3px;
+}
+
+/*회원가입-비밀번호 유효성 검사 실시간 메세지*/
+#modal-length-validation-info-icon{
+  color: #525463;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-right: 3px;
+}
+
+#modal-number-validation-info-icon {
+  color: #525463;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-right: 3px;
+}
+
+.submitButton {
+  background-color: #00A881;
+  border: 2px solid white;
+  border-radius: 3px;
+  text-decoration: none;
+  padding: 10px 28px;
+  color: white;
+  margin-top: 24px;
+  display: inline-block;
+}
+
+/*로그인 메인*/
+.main-login-form{
+  text-align: center;
+  padding: 30px 0;
+  position: relative;
+}
+
+.main-login-form .scroll-zone{
+  padding: 66px 50px;
+  max-height: calc(100vh - 192px);
+}
+
+.main-login-form .login-modal-header{
+  margin-bottom: 0;
+}
+
+.login-button-wrapper{
+  padding: 32px 50px;
+}
+
+.login-button{
+  display: block;
+  border-radius: 3px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+
+}
+
+.naver-login-button{
+  color : white;
+  background-color: #5AC452;
+  border: 1px solid #5AC452;
+  margin-bottom: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.email-login-button{
+  color: #2B2D36;
+  background-color: rgba(205,206,214,0.08);
+  border: 1px solid #CDCED6;
+  cursor: pointer;
+}
+
+.login-modal-footer-gosignup{
+  padding-left: 8px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/*이메일로 로그인*/
+.email-signin-form{
+  padding: 30px 0;
+  position: relative;
+}
+.login-content-wrapper{
+  padding: 0 10px;
+}
+
+.email-signup-form{
+  padding: 30px 0;
+  position: relative;
+}
+.scroll-zone {
+  padding: 30px 50px;
+  overflow-x: hidden;
+  overflow-y: auto; /* 스크롤 있는 경우에만 표시*/
+  max-height: calc(100vh - 132px);
+}
+.signin-check{
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-check-box{
+  display: flex;
+  align-items : baseline;
+}
+
+.label-signin-check{
+  cursor: pointer;
+}
+
+/*이메일로 회원가입*/
+.agreements{
+  color: #525463;
+  font-size: 14px;
+  letter-spacing: -0.1px;
+  line-height: 24px;
+  padding-left : 1px;
+}
+
+.agreement-list{
+  display: flex;
+  align-items : baseline;
+}
+
+.agreement-list:nth-child(1){
+  margin-bottom: 8px;
+}
+
+.agreement-list input[type=checkbox]{
+  margin-right: 8px;
+}
+
+.agreement-list label a{
+  color: #525463;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-modal-button button{
+  height: 60px;
+  width: 100%;
+}
+
+.login-modal-button{
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
+
+.alert-primary{
+  color: #CC3B49;
+  background-color: #FFF3F4;
+  border-color: #FA5F6E;
+}
+
+.signin-alert-message{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+}
+
+.signin-alert-message .close{
+  color: #CC3B49;
+  font-size: inherit;
+}
+
+.signin-alert-message span{
+  margin-left: 5px;
+}
+
+
+/*학습완료*/
+.congratulation-box{
+  position: absolute;
+  top: -65px;
+  left: 38%;
+  z-index: 30;
+}
+
+.congratulations{
+  width: 160px;
+}
+
+.complete-modal-form{
+  text-align: center;
+  padding-top: 95px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.complete-modal-form .scroll-zone{
+  padding-top : 37px;
+  padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  max-height: calc(100vh - 192px);
+}
+
+.complete-button-wrapper{
+  padding: 32px 50px;
+}
+
+.complete-button{
+  display: block;
+  border-radius: 3px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  cursor: pointer;
+}
+
+.move-original-article-button{
+  color : white;
+  background-color: #00A881;
+  border: 1px solid #00A881;
+  margin-bottom: 16px;
+}
+
+.move-another-article-button{
+  color: #2B2D36;
+  background-color: rgba(205,206,214,0.08);
+  border: 1px solid #CDCED6;
+}
+
+
+
+@media (min-height: 475px) {
+  .signinup-modal{
+    padding : 5%;
+  }
+}

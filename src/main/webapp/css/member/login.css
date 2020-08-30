@@ -1,0 +1,70 @@
+/*공통*/
+.login-container{
+    padding-top: 120px;
+}
+
+/*메인 로그인 container*/
+.main-login-container{
+    width: 500px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 60px 50px;
+    position: relative;
+    border: 1px solid #e9ecef;
+}
+
+/*이메일 로그인과 회원가입 container*/
+.email-signinup-container{
+    width: 500px;
+    margin: 0 auto;
+    padding: 60px 50px;
+    position: relative;
+    border: 1px solid #e9ecef;
+}
+
+/*로그인 페이지 header*/
+.login-header{
+    text-align: center;
+    display: block;
+    margin-bottom: 24px;
+}
+
+.main-login-container .login-header{
+    margin-bottom: 0;
+}
+
+/*로그인 페이지 footer*/
+.login-footer{
+    display: flex;
+    justify-content: center;
+    line-height: 28px;
+}
+
+.login-footer-moving{
+    padding-left: 8px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/*회원가입-비밀번호 유효성 검사 실시간 메세지*/
+#length-validation-info-icon{
+    color: #525463;
+    font-size: 14px;
+    padding-top: 2px;
+    padding-right: 3px;
+}
+
+#number-validation-info-icon{
+    color: #525463;
+    font-size: 14px;
+    padding-top: 2px;
+    padding-right: 3px;
+}
+
+
+
+@media (max-height: 750px) {
+    .login-container{
+        padding-top : 2%;
+    }
+}
