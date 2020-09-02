@@ -22,6 +22,7 @@ public class PrincipalDetail implements UserDetails {
 
     @Override
     public String getUsername() {
+        System.out.println("PrincipalDetail" + userDTO.getEmail());
         return userDTO.getEmail();
     }
 
@@ -51,7 +52,8 @@ public class PrincipalDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(()->{ return "ROLE_"+userDTO.getAuth();}); //"ROLE은 규칙이다."
+        authorities.add(()->{ return "ROLE_"+userDTO.getAuth();}); //"ROLE_은 규칙이다."
+        System.out.println(authorities);
         return authorities;
 
         /*

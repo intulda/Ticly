@@ -145,6 +145,7 @@ public class MemberController {
     @PostMapping("emailCheck")
     @ResponseBody
     public int checkEmail(@RequestParam(value = "email") String userEmail) {
+        System.out.println("checkEmail 요청 확인");
         int result = memberService.findDuplicateEmail(userEmail);
 
         return result;

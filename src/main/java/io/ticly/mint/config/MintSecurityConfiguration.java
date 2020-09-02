@@ -24,15 +24,15 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private PrincipalDetailService principalDetailService;
 
+    public MintSecurityConfiguration(PrincipalDetailService principalDetailService) {
+        this.principalDetailService = principalDetailService;
+    }
+
     @Autowired
     public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-
-    public MintSecurityConfiguration(PrincipalDetailService principalDetailService) {
-        this.principalDetailService = principalDetailService;
-    }
 
     /**
      * 비밀번호 암호화
@@ -44,16 +44,19 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 회원가입시, 해쉬된 비밀번호를 DB와 비교하기 위한 함수
+     * 권한 인증 받기(로그인)
      * @param auth
      * @throws Exception
      */
-
+    /*
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //실제 인증을 진행할 provider
-        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD()); //유저로 부터 받은 패스워드 값을 넘겨 줘야준다.
+        auth
+                .userDetailsService(principalDetailService)
+                .passwordEncoder(encodePWD()); //유저로 부터 받은 패스워드 값을 넘겨 줘야준다.
     }
+    */
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -66,9 +69,9 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()  // csrf 토큰 비활성화 (테스트시 걸어두는 게 좋음)
             .authorizeRequests() //request가 들어오면
+                //.antMatchers("/", "/member/**").permitAll() //설정한 url은 누구나 접속 가능하다.
                 .antMatchers("/admin/**").access("hasRole('ROLE_1')")
                 .antMatchers("/learn/**").access("hasRole('ROLE_3')")
-                //.antMatchers("/", "/member/**").permitAll() //설정한 url은 누구나 접속 가능하다.
                 //.anyRequest().authenticated() //위에 설정한 것이 아닌 다른 요청들은 인증이 되어야 한다.
                 .anyRequest().permitAll() //다른 주소는 권한이 허용
             .and()
@@ -78,6 +81,7 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
                 .usernameParameter("email") //스프링 시큐리티에서는 username을 기본 아이디 매핑 값으로 사용하는데 이거 쓰면 변경
+                .passwordParameter("password")
                 .permitAll()
             .and()
                 .logout()
