@@ -1,6 +1,9 @@
 package io.ticly.mint.config;
 
 import io.ticly.mint.config.auth.PrincipalDetailService;
+import io.ticly.mint.member.handler.CustomAuthenticationFailureHandler;
+import io.ticly.mint.member.handler.CustomAuthenticationSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 //빈등록 : 스프링 컨테이너에서 객체를 관리할 수 있게 하는
@@ -19,6 +23,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private PrincipalDetailService principalDetailService;
+
+    @Autowired
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     public MintSecurityConfiguration(PrincipalDetailService principalDetailService) {
         this.principalDetailService = principalDetailService;
@@ -42,32 +52,7 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //실제 인증을 진행할 provider
-        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD()); //유저로 부터 받은 패스워드 값을 넘겨 줘야겠죠
-    }
-
-    /*
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**");
-    }*/
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http
-            .csrf().disable()  // csrf 토큰 비활성화 (테스트시 걸어두는 게 좋음)
-            .authorizeRequests() //request가 들어오면
-                .antMatchers("/", "/member/**").permitAll() //설정한 url은 누구나 접속 가능하다.
-                .anyRequest().authenticated() //위에 설정한 것이 아닌 다른 요청들은 인증이 되어야 한다.
-            .and()
-                .formLogin()
-                .loginPage("/member/login") //권한 인증이 안되어 있는 경우 로그인 페이지로 이동한다.
-                .loginProcessingUrl("/member/loginPoc") // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인을 진행한다.
-                .usernameParameter("email") //스프링 시큐리티에서는 username을 기본 아이디 매핑 값으로 사용하는데 이거 쓰면 변경
-                .defaultSuccessUrl("/")
-            .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .deleteCookies("JSESSIONID");
+        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD()); //유저로 부터 받은 패스워드 값을 넘겨 줘야준다.
     }
 
     @Override
@@ -77,9 +62,31 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception{
         http
-                .headers()
-                .frameOptions().disable();
+            .csrf().disable()  // csrf 토큰 비활성화 (테스트시 걸어두는 게 좋음)
+            .authorizeRequests() //request가 들어오면
+                .antMatchers("/admin/**").access("hasRole('ROLE_1')")
+                .antMatchers("/learn/**").access("hasRole('ROLE_3')")
+                //.antMatchers("/", "/member/**").permitAll() //설정한 url은 누구나 접속 가능하다.
+                //.anyRequest().authenticated() //위에 설정한 것이 아닌 다른 요청들은 인증이 되어야 한다.
+                .anyRequest().permitAll() //다른 주소는 권한이 허용
+            .and()
+                .formLogin()
+                .loginPage("/member/login") //권한 인증이 안되어 있는 경우 로그인 페이지로 이동한다.
+                .loginProcessingUrl("/member/loginPoc") // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인을 진행한다.
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
+                .usernameParameter("email") //스프링 시큐리티에서는 username을 기본 아이디 매핑 값으로 사용하는데 이거 쓰면 변경
+                .permitAll()
+            .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .deleteCookies("JSESSIONID");
     }
+    /*
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new CustomAuthenticationSuccessHandler();
+    }*/
 }

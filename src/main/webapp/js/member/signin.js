@@ -66,7 +66,7 @@
 
             let form = new FormData();
             form.append('email', email);
-            form.append('pwd',password);
+            form.append('password',password);
 
             /*
             //json객체에 담기
@@ -82,6 +82,8 @@
                 data : form
             })
                 .then(function (result){
+                    alert("로그인성공");
+                    console.log(result);
                     if(result.data.okay == "true"){
                         window.location.href = result.data.prev_url;
                     } else {
