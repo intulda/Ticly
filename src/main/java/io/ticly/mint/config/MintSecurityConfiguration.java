@@ -88,9 +88,4 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .deleteCookies("JSESSIONID");
     }
-    /*
-    @Bean
-    public AuthenticationSuccessHandler successHandler() {
-        return new CustomAuthenticationSuccessHandler();
-    }*/
 }
