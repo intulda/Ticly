@@ -43,7 +43,9 @@ class LearningListCard {
                     <!-- Button trigger modal -->
                     ${(this.learningDone == '1')? "" : `
                      <button class="learningList__card-delete-btn btn btn-neutral btn-sm" 
-                        ${(this.userArticleShow == 'TRUE')? `data-toggle="modal" data-target="#hideUserArticleCard" name="tooltip" data-placement="left" title="숨기기"` : `name="tooltip" data-toggle="tooltip" data-placement="left" title="보이기" onclick="location.href ='updateUserArticleShow?seq=${this.articleSeq}&showState=TRUE'"` }> 
+                        ${(this.userArticleShow == 'TRUE')? 
+                            `data-toggle="modal" data-target="#hideUserArticleCard" name="tooltip" data-placement="left" title="숨기기"` 
+                            : `name="tooltip" data-toggle="tooltip" data-placement="left" title="보이기" onclick="location.href ='updateUserArticleShow?seq=${this.articleSeq}&showState=TRUE'"` }> 
                         <i class="${(this.userArticleShow == 'TRUE')? 'icon_show' : 'icon_hide' }"></i>
                      </button>`}
                      
@@ -63,7 +65,7 @@ class LearningListCard {
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary" onclick="location.href ='updateUserArticleShow?seq=${this.articleSeq}&showState=FALSE'">숨기기</button>
+                            <button type="button" class="btn btn-primary js-hide-btn" value="updateUserArticleShow?seq=${this.articleSeq}&showState=FALSE">숨기기</button>
                           </div>
                         </div>
                       </div>

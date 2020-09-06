@@ -220,7 +220,7 @@ import LearningListCard from './module/learningListCard.js';
     }
 
     // json 객체를 리스트에 담아주는 비동기 처리
-    function getArticleList(path, section) {
+    function getArticleList(path) {
         axios({
             method: 'get',
             url   : path
@@ -231,7 +231,7 @@ import LearningListCard from './module/learningListCard.js';
 
                 if (json.data.length != 0) {
                     myArticleList = json.data;
-                    paintCard(myArticleList, 0, "TRUE");
+                    paintCard(myArticleList, 0);
                     counting(myArticleList);
 
                 } else {
@@ -250,8 +250,34 @@ import LearningListCard from './module/learningListCard.js';
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
         const path = createPath(MY_ARTICLE_LIST_PATH);
-        const section = learningListSection;
-        getArticleList(path, section);
+        getArticleList(path);
+    }
+
+    function paintArticle(path, state) {
+        axios({
+            method: 'get',
+            url   : path
+        })
+            .then(function (json) {
+                console.log("Receive Success!");
+                console.log(json.data);
+
+                if (json.data.length != 0) {
+                    paintCard(myArticleList, state);
+                    counting(myArticleList);
+
+                } else {
+                    paintDefault(state);
+                }
+            });
+    }
+
+    function handleHideEvent(ev) {
+        if(ev.target.classList.contains("js-hide-btn")){
+            const path = ev.target.value;
+            paintArticle(path, 0);
+            document.querySelector(".modal-backdrop").remove();
+        }
     }
 
     function init() {
@@ -282,6 +308,7 @@ import LearningListCard from './module/learningListCard.js';
             location.href = "../articleBoard/findArticle";
         });
 
+        learningListSection.addEventListener("click", handleHideEvent);
     }
 
     init();
