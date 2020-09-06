@@ -165,7 +165,6 @@ import LearningListCard from './module/learningListCard.js';
 
             if (result.length > 0) {
                 articleCardModule(result, scrollCount);
-                $('[name="tooltip"]').tooltip();
             } else {
                 paintDefault(state);
             }
@@ -220,7 +219,7 @@ import LearningListCard from './module/learningListCard.js';
     }
 
     // json 객체를 리스트에 담아주는 비동기 처리
-    function getArticleList(path) {
+    function getArticleList(path, state) {
         axios({
             method: 'get',
             url   : path
@@ -231,11 +230,10 @@ import LearningListCard from './module/learningListCard.js';
 
                 if (json.data.length != 0) {
                     myArticleList = json.data;
-                    paintCard(myArticleList, 0);
+                    paintCard(myArticleList, state);
                     counting(myArticleList);
-
                 } else {
-                    paintDefault(0);
+                    paintDefault(state);
                 }
             });
     }
@@ -247,37 +245,39 @@ import LearningListCard from './module/learningListCard.js';
         return path;
     }
 
+    // 숨기기 & 보이기 클릭 이벤트 처리
+    function handleShowAndHideClickEvent(ev) {
+        // hide event
+        if(ev.target.classList.contains("js-modal-hide-btn")){
+            scrollCount = 0;
+            $(ev.target).tooltip('hide');
+            const path = ev.target.value;
+            getArticleList(path, 0);
+            document.querySelector("body").className = "";
+            document.querySelector(".modal-backdrop").remove();
+        }
+
+        // show event
+        else if(ev.target.id == "js-show-btn"){
+            $(ev.target).tooltip('hide');
+            scrollCount = 0;
+            const path = ev.target.value;
+            getArticleList(path, 2);
+        }
+    }
+
+    // 숨기기 & 보이기 호버 이벤트 처리
+    function handleShowAndHideHoverEvent(ev) {
+        // show event
+        if (ev.target.id == "js-show-btn" || ev.target.id == "js-hide-btn") {
+            $(ev.target).tooltip('show');
+        }
+    }
+
     // 화면 로드시 아티클 카드를 그려주는 함수
     function pageLoadEvent() {
         const path = createPath(MY_ARTICLE_LIST_PATH);
-        getArticleList(path);
-    }
-
-    function paintArticle(path, state) {
-        axios({
-            method: 'get',
-            url   : path
-        })
-            .then(function (json) {
-                console.log("Receive Success!");
-                console.log(json.data);
-
-                if (json.data.length != 0) {
-                    paintCard(myArticleList, state);
-                    counting(myArticleList);
-
-                } else {
-                    paintDefault(state);
-                }
-            });
-    }
-
-    function handleHideEvent(ev) {
-        if(ev.target.classList.contains("js-hide-btn")){
-            const path = ev.target.value;
-            paintArticle(path, 0);
-            document.querySelector(".modal-backdrop").remove();
-        }
+        getArticleList(path, 0);
     }
 
     function init() {
@@ -308,7 +308,9 @@ import LearningListCard from './module/learningListCard.js';
             location.href = "../articleBoard/findArticle";
         });
 
-        learningListSection.addEventListener("click", handleHideEvent);
+        // 숨기기 & 보이기 관련 이벤트
+        learningListSection.addEventListener("mouseover", handleShowAndHideHoverEvent);
+        learningListSection.addEventListener("click", handleShowAndHideClickEvent);
     }
 
     init();
