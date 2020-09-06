@@ -34,7 +34,6 @@ import LastLearningCard from "./module/lastLearningCard.js";
             .then(function (json) {
                 console.log("Receive Success!");
                 console.log(json.data);
-                console.log(json.data == "");
 
                 // section의 모든 자식 요소 삭제
                 while (lastLearningCardSection.hasChildNodes()) {
@@ -173,12 +172,9 @@ import LastLearningCard from "./module/lastLearningCard.js";
                     , JSON.stringify(key.title)
                     , JSON.stringify(key.summary)
                     , JSON.stringify(key.reg_date)
+                    , JSON.stringify(key.apply_count)
                 ).getElements());
                 count++;
-
-                if (count === 3) {
-                    break;
-                }
             }
         }
     }
@@ -202,11 +198,11 @@ import LastLearningCard from "./module/lastLearningCard.js";
 
     // 스켈레톤 UI 그려주는 함수
     function paintSkeletonCard() {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             newSectionCardOuter.appendChild(new SkeletonCard().getElements());
         }
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             popularSectionCardOuter.appendChild(new SkeletonCard().getElements());
         }
     }

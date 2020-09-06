@@ -47,19 +47,23 @@ public class DashboardController {
     // 학습중인 아티클 정보 가져오는 비동기 처리
     @GetMapping(value = "getMyArticleListInfo")
     @ResponseBody
-    public List<UserArticleInfoDTO> getMyArticleListInfo(Model model, HttpServletRequest req){
-        String email = req.getParameter("email");
+    public List<UserArticleInfoDTO> getMyArticleListInfo(Model model){
+//        String email = req.getParameter("email");
+        String email = ((MemberDTO)model.getAttribute("userInfo")).getEmail();
         List<UserArticleInfoDTO> getMyArticleListInfo = dashboardService.getMyArticleListInfo(email);
         return getMyArticleListInfo;
     }
 
     // [숨김]버튼 클릭시 사용자의 활성화 상태 비활성화하기
     @GetMapping(value = "updateUserArticleShow")
-    public String updateUserArticleShow(Model model, HttpServletRequest req){
+    @ResponseBody
+    public List<UserArticleInfoDTO> updateUserArticleShow(Model model, HttpServletRequest req){
         String seq = req.getParameter("seq");
         String showState = req.getParameter("showState");
         String email = ((MemberDTO)model.getAttribute("userInfo")).getEmail();
         dashboardService.updateUserArticleShow(seq, showState, email);
-        return "dashboard/my";
+
+        List<UserArticleInfoDTO> getMyArticleListInfo = dashboardService.getMyArticleListInfo(email);
+        return getMyArticleListInfo;
     }
 }

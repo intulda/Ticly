@@ -55,7 +55,7 @@
 .card__body {
     cursor: pointer;
     position: relative;
-    padding-top: 1rem;
+    padding-top: 1.25rem;
 }
 
 .card__body-content:hover > .card__body-title{
@@ -70,6 +70,7 @@
 .card__body-tag{
     width: auto;
     margin-left: 0.5rem;
+    font-size: 13px;
     display: -webkit-box;
     word-wrap: break-word;
     -webkit-line-clamp: 1;
@@ -104,12 +105,12 @@
 }
 
 .card__body:hover .card__body-content > p {
-    color: #525463;
+    color: #2B2D36;
 }
 
 .card__footer {
     position: relative;
-    padding-top: 1rem;
+    padding-top: 0.65rem;
     padding-bottom: 1.5rem;
 }
 
@@ -209,13 +210,6 @@
     animation-direction: alternate;
 }
 
-
-@media (max-width: 1440px) {
-    .card__body-title {
-        width: 100%;
-    }
-}
-
 @keyframes hoverLink {
     0% {
         margin-left: 0;
@@ -234,6 +228,8 @@
     background-color: #F7F7FA;
     border-radius: 0.938rem;
 }
+
+
 
 /* last learning Card */
 .lastLearning__Section{
@@ -346,3 +342,18 @@
 .btn > i {
     font-size: 1.125rem;
 }
+
+@media (max-width: 1440px) {
+    .card__body-title {
+        width: 100%;
+    }
+}
+
+@media (max-width: 991px) {
+    .card__outer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 2rem;
+    }
+}
+
