@@ -7,10 +7,11 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 module.exports = {
     mode : 'development',
     entry : {
-        bundle : './src/index.jsx'
+        bundle : './src/components/index.js'
     },
     output : {
-        path : path.resolve(__dirname, './dist'),
+        path : path.resolve(__dirname, 'dist'),
+        publicPath: '/',
         filename : '[name].js',
     },
     resolve: {
@@ -19,7 +20,10 @@ module.exports = {
     devServer: {
         overlay: true,
         stats: "errors-only",
-        hot : true
+        hot : true,
+        writeToDisk: true,
+        historyApiFallback: true,
+        port: 9000
     },
     module: {
         rules: [
@@ -49,6 +53,7 @@ module.exports = {
     plugins : [
         new HtmlWebpackPlugin({
             template : './index.html',
+            // favicon: './images/favicon/favicon.ico',
             templateParameters : {
                 env: process.env.NODE_DEV === 'development' ? '개발' : ''
             },
