@@ -1,0 +1,151 @@
+.adminClientManage_Container {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adminClientManage_Div {
+    width: 100%;
+}
+
+#searchCategory {
+    width: 100px;
+    margin-right: 8px;
+}
+
+.filter_Title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.filter_SubTitle {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.searchCategoryBar {
+    padding: 24px 0 4px 0;
+    display: flex;
+    align-items: center;
+}
+
+.clientRadio {
+    display: flex;
+    padding: 4px 0 4px 0;
+}
+
+.marketingRadio {
+    display: flex;
+    padding: 4px 0 4px 0;
+}
+
+.accountCheckbox {
+    display: flex;
+    padding: 4px 0 4px 0;
+}
+
+.clientRadioContents {
+    width: 130px;
+}
+
+.marketingRadioContents {
+    width: 130px;
+}
+
+.accountCheckboxContents {
+    width: 130px;
+}
+
+.searchButton {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 4px 0;
+}
+
+.adminClientManage_Rectangle {
+    width: 100%;
+    height: 1px;
+    background-color: #E1E1E8;
+    margin: 40px 0 40px 0;
+}
+
+.searchResult {
+    padding: 24px 0 0 0;
+    width: 100%;
+}
+
+/* Table */
+
+.searchResultTable {
+    width: 100%;
+}
+
+.searchResultTable th {
+    position: relative;
+    height: 40px;
+    padding: 8px;
+    background-color: #F7F7FA;
+    box-shadow: 0 1px 0 0 #E1E1E8;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    line-height: 24px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.searchResultTable tr td {
+    height: 50px;
+    padding: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    letter-spacing: -0.1px;
+    line-height: 24px;
+    border-bottom: 1px solid #E1E1E8;
+    vertical-align: middle;
+}
+
+.tableClientAddButton {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 0 0;
+}
+
+.icon_pen.md {
+    font-size: 18px;
+    padding: 0 5px 0 0;
+    cursor: pointer;
+}
+
+.admin-header{
+    position: sticky;
+    top: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border: solid 1px #E1E1E8;
+    z-index: 12;
+}
+
+.admin-header-container{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.Admin-header-menu-tab {
+    display: flex;
+    text-align: justify;
+    align-items: center;
+    height: 40px;
+}
+
+.Admin-header-menu-tab a{
+    margin-right: 17px;
+}
+

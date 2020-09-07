@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+/* font */
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 300;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Light'), url(fonts/Noto_Sans_KR/NotoSansKR-Light.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Light.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Regular'), url(fonts/Noto_Sans_KR/NotoSansKR-Regular.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Regular.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Medium'), url(fonts/Noto_Sans_KR/NotoSansKR-Medium.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Medium.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Medium.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 600;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Bold'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.woff2) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-display: fallback;
+    src: local('NotoSansCJKkr-Black'), url(fonts/Noto_Sans_KR/NotoSansKR-Black.otf) format('woff2'), url(fonts/Noto_Sans_KR/NotoSansKR-Black.woff) format('woff'), url(fonts/Noto_Sans_KR/NotoSansKR-Bold.otf) format('opentype');
+}
+
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* HTML5 display-role reset for older browsers */
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.ticly__basic-layout {
+    position: relative;
+    min-height: calc(100vh - 80px);
+}
+
+.ticly__basic-content-layout{
+    margin-top: 80px;
+    padding-bottom: 150px;
+}
+
+/*admin layout*/
