@@ -10,8 +10,8 @@ import SkeletonCard from './module/skeletonCard.js';
         searchKeyword = document.querySelector(".js-search-keyword").value,
         searchResultCount = document.querySelector(".js-searchResult-count"),
         currentCategoryValue = document.querySelector(".js-category-value"),
-        searchBar = document.querySelector(".js-submit-hashtag-input"),
-        searchBarForm = document.querySelector(".js-submit-hashtag-form"),
+        hashtagInputForSubmit = document.querySelector(".js-submit-hashtag-input"),
+        hashtagFormForSubmit = document.querySelector(".js-submit-hashtag-form"),
         categoriesChoiceElem = document.querySelectorAll('.js-categories-choice'),
         sectionNum = document.querySelector(".js-section-number").value;
 
@@ -47,16 +47,19 @@ import SkeletonCard from './module/skeletonCard.js';
         let target = ev.target.closest('button');
         if (!target) return;
 
-        searchBar.value = target.lastElementChild.innerHTML;
+        hashtagInputForSubmit.value = target.lastElementChild.innerHTML;
         for(let obj of categoryTabBtn) {
             if(obj.classList.contains('active')) {
                 if(obj.innerText === 'ALL') {
                     for(let obj of categoryTabBtn) {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'hidden');
-                        input.name = 'categories';
-                        input.value = `${obj.innerText}`
-                        searchBarForm.appendChild(input);
+                        if(obj.innerText !== 'ALL'){
+                            console.log(obj.innerText);
+                            const input = document.createElement('input');
+                            input.setAttribute('type', 'hidden');
+                            input.name = 'categories';
+                            input.value = `${obj.innerText}`
+                            hashtagFormForSubmit.appendChild(input);
+                        }
                     }
                     break;
                 } else {
@@ -64,12 +67,12 @@ import SkeletonCard from './module/skeletonCard.js';
                     input.setAttribute('type', 'hidden');
                     input.name = 'categories';
                     input.value = `${obj.innerText}`
-                    searchBarForm.appendChild(input);
+                    hashtagFormForSubmit.appendChild(input);
                     break;
                 }
             }
         }
-        searchBarForm.submit();
+        hashtagFormForSubmit.submit();
     }
 
     // 선택한 관심분야에 맞게 해시태그를 찾을 수 있도록 경로를 만들어줄 함수
