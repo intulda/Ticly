@@ -23,7 +23,7 @@
     <!-- ///////////////////// 회원가입 로직 ///////////////////// -->
     <!-- 이메일 중복확인 SQL -->
     <select id="checkEmail" resultType="UserDTO">
-        SELECT EMAIL, NICKNAME, AUTH, SIGNUP_TYPE
+        SELECT EMAIL, PASSWORD, NICKNAME, AUTH, SIGNUP_TYPE
         FROM MEMBER
         WHERE DEL != 1 AND EMAIL = #{email}
     </select>

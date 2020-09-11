@@ -77,7 +77,7 @@ public class MintSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .formLogin()
                 .loginPage("/member/login") //권한 인증이 안되어 있는 경우 로그인 페이지로 이동한다.
-                .loginProcessingUrl("/member/loginPoc") // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인을 진행한다.
+                .loginProcessingUrl("/member/loginProc") // 스프링 시큐리티가 해당 주소로 요청오는 로그인을 가로채서 대신 로그인을 진행한다.(loadUserByUsername으로 이동)
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
                 .usernameParameter("email") //스프링 시큐리티에서는 username을 기본 아이디 매핑 값으로 사용하는데 이거 쓰면 변경

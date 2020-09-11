@@ -77,8 +77,11 @@
 
             axios({
                 method: 'post',
-                url: '/member/loginPoc',
-                headers: { 'content-type': 'application/json' },
+                url: '/member/loginProc',
+                header: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
                 data : form
             })
                 .then(function (result){
