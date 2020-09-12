@@ -178,4 +178,12 @@ public class MemberController {
         sessionStatus.setComplete();
         return "redirect:/";
     }
+
+    @PostMapping("test")
+    @ResponseBody
+    public Map<String, Object> test() {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("test", "success");
+        return resultMap;
+    }
 }
