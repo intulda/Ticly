@@ -3,7 +3,7 @@
 */
 // <img class="card__img card" src="${(this.imgFilePath === "")? '../../../images/articleBoard/ticly_thumbnail.png' : this.imgFilePath }">
 class ArticleCard {
-    constructor(imagePath, articleSeq, url, categoryTitle, hashtag, title, summary, regDate) {
+    constructor(imagePath, articleSeq, url, categoryTitle, hashtag, title, summary, regDate, applyCount) {
         this.imagePath = imagePath.replace(/\"/g, "");
         this.articleSeq = articleSeq.replace(/\"/g, "");
         this.url = url.replace(/\"/g, "");
@@ -12,6 +12,7 @@ class ArticleCard {
         this.title = title.replace(/\"/g, "");
         this.summary = summary.replace(/\"/g, "");
         this.regDate = ((regDate.replace(/\"/g, "")).substr(0,10)).replace(/-/g, ".");
+        this.applyCount = applyCount.replace(/\"/g, "");
         this.element = document.createElement('div');
     }
 
@@ -25,8 +26,8 @@ class ArticleCard {
             </div>
             <div class="card__body" onclick="location.href='../learningApply/goToLeaningApply?seq=${this.articleSeq}'">
                 <div class="card__body-tag-wrapper">
-                    <span class="badge badge-neutral">${this.categoryTitle}</span>
-                    <span class="card__body-tag text body2 text-color-gray300 text-weight-regular">${this.hashtag}</span>
+                    <p class="badge badge-neutral">${this.categoryTitle}</p>
+                    <p class="card__body-tag text text-color-purple text-weight-medium">${this.hashtag}</p>
                 </div>
                 <div class="card__body-content">
                     <h4 class="card__body-title text text-color-gray100 text-weight-medium">${this.title}</h4>
@@ -34,7 +35,7 @@ class ArticleCard {
                 </div>
             </div>
             <div class="card__footer">
-                <p class="text body2 text-color-gray300">${this.regDate}</p>
+                <p class="text body2 text-color-gray300">${(this.applyCount > 100)? `<i class="icon_pen"></i> ${this.applyCount}명` : `<i class="icon_link"></i> ${this.regDate}`}</p>
             </div>
 			`
         return this.element;

@@ -206,6 +206,7 @@ import SkeletonCard from './module/skeletonCard.js';
                 , JSON.stringify(list[i].title)
                 , JSON.stringify(list[i].summary)
                 , JSON.stringify(list[i].reg_date)
+                , JSON.stringify(list[i].apply_count)
             ).getElements());
             count++;
         }

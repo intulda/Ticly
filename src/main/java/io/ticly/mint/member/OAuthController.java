@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -146,6 +147,8 @@ public class OAuthController {
             //이메일이 같은 경우를 찾는다. > DTO로 값 전달 받음
             UserDTO originUser = memberService.findMember(naverUserEmail);
 
+            List<String> categories = new ArrayList<>();
+
             /*처음 로그인 했을 경우(이메일로도 회원가입한적 없고, 회원정보도 없음)*/
             if(originUser == null){
                 System.out.println("새로운 회원입니다.");
@@ -157,7 +160,13 @@ public class OAuthController {
                     System.out.println("로그인 회원 세션 정보 확인");
                     if(model.getAttribute("userInfo")!=null){
                         if(((MemberDTO)model.getAttribute("userInfo")).getCategories()!=null) {
-                            List<String> categories = ((MemberDTO) model.getAttribute("userInfo")).getCategories();
+                            categories = ((MemberDTO) model.getAttribute("userInfo")).getCategories();
+
+                            if(categories.isEmpty()){
+                                //카테고리 정보를 가져온다
+                                categories = memberService.getCategories();
+                            }
+
                             //세션 정보를 User_Categories테이블에 저장한다.
                             memberService.saveUserCategories(userDTO.getEmail(), categories);
                         }
@@ -167,7 +176,9 @@ public class OAuthController {
 
             /*로그인한 회원 세션 정보 저장*/
             //1) 네이버 로그인한 회원의 카테고리 정보를 가져온다.
-            List<String> categories = memberService.getUserCategories(originUser.getEmail());
+            if(originUser!=null){
+                categories = memberService.getUserCategories(originUser.getEmail());
+            }
 
             //2) 세션에 멤버데이터 저장
             MemberDTO memberDTO = new MemberDTO(naverUserEmail, naverUserNickname, 3, categories);
