@@ -23,7 +23,10 @@ module.exports = {
         hot : true,
         writeToDisk: true,
         historyApiFallback: true,
-        port: 9000
+        port: 9000,
+        proxy: {
+            "/**": "http://localhost:8090/"
+        }
     },
     module: {
         rules: [

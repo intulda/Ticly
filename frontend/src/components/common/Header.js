@@ -1,8 +1,18 @@
 import React from 'react';
 import '../../css/layout/globalNav.css';
 import logoColor from '../../images/logo_color.svg';
+import Axios from "axios";
 
 const Header = () => {
+
+
+    const onClickHandler = (event) => {
+        Axios({
+            url: '/member/test',
+            method: 'POST',
+        }).then(response => console.log(response));
+    }
+
     return (
         <header className="globalHeader-wrap">
             <div>
@@ -24,7 +34,7 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="globalHeader-right">
-                    <h6 className="text text-color-gray200 text-weight-medium" id="modal-open-button">로그인</h6>
+                    <h6 className="text text-color-gray200 text-weight-medium" id="modal-open-button" onClick={onClickHandler}>로그인</h6>
                 </div>
             </div>
         </header>
