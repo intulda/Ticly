@@ -4,14 +4,16 @@ import {
     LOGIN_FAILURE,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
-    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAILURE
 } from "../action/member";
 
 export const initialState = {
     isLoginModalOpen: false,
     isLoggedIn: sessionStorage.getItem("userInfo") != null ? true : false,
     fetchingUpdate: false,
-    user: sessionStorage.getItem("userInfo") != null ? JSON.parse(sessionStorage.getItem("userInfo")) : {}
+    user: sessionStorage.getItem("userInfo") != null ? JSON.parse(sessionStornpage.getItem("userInfo")) : {}
 }
 
 const reducer = (state = initialState, action) => {

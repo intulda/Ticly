@@ -1,10 +1,12 @@
-import { all, fork, call, take, put, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
+import { all, fork, call, put, take, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
 
-import memberSaga from "./member";
+import memberSaga from './member';
+import articleSaga from './article';
 
 export default function* rootSaga() {
     yield all([
         fork(memberSaga),
+        fork(articleSaga)
     ])
 }
 
