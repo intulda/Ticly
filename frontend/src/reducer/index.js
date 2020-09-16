@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import member from './member';
-import test from './test';
+import article from  './article';
 
 const rootReducer = combineReducers({
     memberReducer: member,
-    testReducer: test
+    articleReducer: article
 });
 
 export default rootReducer;
