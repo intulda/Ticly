@@ -5,6 +5,7 @@ import io.ticly.mint.learningApply.model.dto.LearningApplyInfoDTO;
 import io.ticly.mint.member.dto.ResponseDto;
 import io.ticly.mint.member.dto.UserDTO;
 import io.ticly.mint.member.service.MemberService;
+import io.ticly.mint.util.CommonUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 @SessionAttributes("userInfo")
 @Controller
-@RequestMapping(value="/member/*")
+@RequestMapping(value="/api/member/*")
 public class MemberController {
 
     private MemberService memberService;
@@ -109,9 +110,9 @@ public class MemberController {
             List<String> categories = memberService.getUserCategories(principal.getEmail());
 
             //session에 로그인한 회원정보 저장
-            MemberDTO memberDTO = new MemberDTO(principal.getEmail(), principal.getNickname(), principal.getAuth(), categories);
+            MemberDTO memberDTO = new MemberDTO(principal.getEmail(), CommonUtil.subStringBytes(principal.getNickname(), 2, 2), principal.getAuth(), categories);
             model.addAttribute("userInfo", memberDTO);
-
+            loginInfo.put("userInfo", memberDTO);
             // 세션 값 꺼내오기
             LearningApplyInfoDTO learningApplyInfoDTO = (LearningApplyInfoDTO)httpSession.getAttribute("learningApplyInfo");
             //System.out.println("로그인한 사용자의 카테고리 정보 확인 : "+learningApplyInfoDTO.getArticle_path());
@@ -129,10 +130,13 @@ public class MemberController {
                 loginInfo.put( "learningApplyInfo", learningApplyInfoDTO.getArticle_path() );
             }
         }else{ //가져온 회원정보가 없으면, 로그인 불가
-            loginInfo.put( "status", HttpStatus.OK.value() );
-            loginInfo.put( "okay", "false" );
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                loginInfo.put( "status", HttpStatus.BAD_REQUEST );
+                loginInfo.put( "okay", "false" );
+            }
         }
-
         return loginInfo;
     }
 
@@ -187,3 +191,4 @@ public class MemberController {
         return resultMap;
     }
 }
+

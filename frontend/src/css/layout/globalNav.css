@@ -82,7 +82,8 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    background: orange;
+    background: orange !important;
+    border-color: #FFFFFF !important;
     border-radius: 5px;
     color: white;
     font-size: 15px;
@@ -98,7 +99,7 @@
 .icon_caret-down{
     color: #858899;
     cursor: pointer;
-    margin-left: 5px;
+    margin-left: 20px;
 }
 
 #modal-open-button{
@@ -123,3 +124,8 @@
         display: none;
     }
 }
+
+.dropdown-toggle:after {
+    display: none !important;
+}
+
