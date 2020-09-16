@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ArticleCard from "./ArticleCard";
 import '../css/articleBoard/findArticleStyle.css';
 import Axios from "axios";
 
-let list = [];
 const ArticleCardList = () => {
-
+    const [list, setList] = useState([]);
     const [imagePath, setImagePath] = React.useState('../../../images/articleBoard/ticly_thumbnail.png');
     const [articleSeq, setArticleSeq] = React.useState(0);
     const [categoryTitle, setCategoryTitle] = React.useState('디자인');
@@ -17,51 +16,29 @@ const ArticleCardList = () => {
 
     const findLatestMyTypeArticle = () => {
         Axios({
-            url: '/articleBoard/findLatestMyTypeArticle',
+            url: '',
             method: 'GET',
             params: {categories: '디자인'}
         }).then(response => {
 
-                console.log(response.data);
-                list = response.data;
-            // for (let i = 0; i < response.data.length; i++){
-            //     console.log(response.data[i].image_path);
-            //     setImagePath(response.data[i].image_path);
-            //     setArticleSeq(response.data[i].article_seq);
-            //     setCategoryTitle(response.data[i].category_title);
-            //     setHashtag(response.data[i].hashtag);
-            //     setTitle(response.data[i].title);
-            //     setSummary(response.data[i].summary);
-            //     setApplyCount(response.data[i].apply_count);
-            //     setRegDate(response.data[i].reg_date);
-            // }
-
-            return response.data;
+            console.log(response.data);
+            setList(response.data);
         });
     }
+    useEffect(findLatestMyTypeArticle, []);
 
         return (
-            <div className="card__outer" onClick={findLatestMyTypeArticle} style={{backgroundColor: "red", margin: "50px"}}>
-                hello
+            <div className="card__outer">
                 {list.map( (it, i) => {
-                    setImagePath(it.image_path);
-                    setArticleSeq(it.article_seq);
-                    setCategoryTitle(it.category_title);
-                    setHashtag(it.hashtag)
-                    setTitle(it.title);
-                    setSummary(it.summary);
-                    setApplyCount(it.apply_count);
-                    setRegDate(it.reg_date);
-
                     return (
-                        <ArticleCard imagePath={imagePath}
-                                     articleSeq={articleSeq}
-                                     categoryTitle={categoryTitle}
-                                     hashtag={hashtag}
-                                     title={title}
-                                     summary={summary}
-                                     applyCount={applyCount}
-                                     regDate={regDate}
+                        <ArticleCard imagePath={it.image_path}
+                                     articleSeq={it.article_seq}
+                                     categoryTitle={it.category_title}
+                                     hashtag={it.hashtag}
+                                     title={it.title}
+                                     summary={it.summary}
+                                     applyCount={it.apply_count}
+                                     regDate={it.reg_date}
                                      key={i}
                         />
                     );

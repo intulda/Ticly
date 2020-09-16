@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @SessionAttributes("userInfo")
-@RequestMapping(value = "/articleBoard/*")
+@RequestMapping(value = "/api/articleBoard/*")
 public class ArticleBoardController {
 
     private ArticleBoardService articleBoardService;
