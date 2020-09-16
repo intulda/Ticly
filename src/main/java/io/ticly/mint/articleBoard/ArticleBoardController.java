@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @SessionAttributes("userInfo")
@@ -109,11 +110,10 @@ public class ArticleBoardController {
     }
 
     // 아티클 찾기 페이지에서 *최신* 아티클 정보 로드를 위한 동적 데이터 처리
-    @GetMapping("findLatestMyTypeArticle")
+    @PostMapping("findLatestMyTypeArticle")
     @ResponseBody
-    public List<ArticleInfoDTO> findLatestMyTypeArticle(Model model, HttpServletRequest req) {
+    public List<ArticleInfoDTO> findLatestMyTypeArticle(@RequestBody List<String> categories) {
         // 관심 분야 데이터를 기반으로 최신 아티클 불러와서 리스트에 담기
-        List<String> categories = articleBoardService.getCategoriesAtParameter(model, req);
         List<ArticleInfoDTO> list = articleBoardService.findLatestMyTypeArticle(categories);
 
         return list;
