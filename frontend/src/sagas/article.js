@@ -4,10 +4,11 @@ import axios from 'axios';
 
 function getArticle(data) {
     return axios('/api/articleBoard/findLatestMyTypeArticle', {
-        method: 'GET',
-        params: {
-            categories: data
-        },
+        method: 'POST',
+        data: JSON.stringify(data.categories),
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
 }
 

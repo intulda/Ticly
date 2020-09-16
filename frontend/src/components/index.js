@@ -13,7 +13,7 @@ const Home = () => {
     return (
         <Provider store={store}>
             <MenuLayout>
-                <h1>기본 컨텐츠</h1>
+                <ArticleCardList/>
             </MenuLayout>
         </Provider>
     )

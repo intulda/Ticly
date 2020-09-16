@@ -13,7 +13,7 @@ export const initialState = {
     isLoginModalOpen: false,
     isLoggedIn: sessionStorage.getItem("userInfo") != null ? true : false,
     fetchingUpdate: false,
-    user: sessionStorage.getItem("userInfo") != null ? JSON.parse(sessionStornpage.getItem("userInfo")) : {}
+    user: sessionStorage.getItem("userInfo") != null ? JSON.parse(sessionStorage.getItem("userInfo")) : {}
 }
 
 const reducer = (state = initialState, action) => {

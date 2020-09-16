@@ -2,30 +2,18 @@ import React, {useState, useEffect} from 'react';
 import ArticleCard from "./ArticleCard";
 import '../css/articleBoard/findArticleStyle.css';
 import Axios from "axios";
+import {useSelector, useDispatch} from "react-redux";
+import {ARTICLE_SEARCH_REQUEST, articleSearchRequestAction} from "../action/acticle";
 
 const ArticleCardList = () => {
-    const [list, setList] = useState([]);
-    const [imagePath, setImagePath] = React.useState('../../../images/articleBoard/ticly_thumbnail.png');
-    const [articleSeq, setArticleSeq] = React.useState(0);
-    const [categoryTitle, setCategoryTitle] = React.useState('디자인');
-    const [hashtag, setHashtag] = React.useState('none');
-    const [title, setTitle] = React.useState('title');
-    const [summary, setSummary] = React.useState('summary');
-    const [applyCount, setApplyCount] = React.useState(0);
-    const [regDate, setRegDate] = React.useState('20.08.10');
 
-    const findLatestMyTypeArticle = () => {
-        Axios({
-            url: '',
-            method: 'GET',
-            params: {categories: '디자인'}
-        }).then(response => {
+    const {categories, list} = useSelector((state) => state.articleReducer);
+    const dispatch = useDispatch();
 
-            console.log(response.data);
-            setList(response.data);
-        });
+    const init = () => {
+        dispatch(articleSearchRequestAction(categories));
     }
-    useEffect(findLatestMyTypeArticle, []);
+    useEffect(init, [])
 
         return (
             <div className="card__outer">
