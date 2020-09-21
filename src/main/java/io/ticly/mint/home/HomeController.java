@@ -35,7 +35,7 @@ public class HomeController {
             user = articleBoardService.setMember(user);
             model.addAttribute("userInfo", user);
 
-            path = "redirect:/articleBoard/findArticle";
+            path = "redirect:/api/articleBoard/findArticle";
         }
 
         // 세션이 등록되어 있을 경우
@@ -45,14 +45,14 @@ public class HomeController {
             if(user.getAuth() != 1) {
                 //test code
                 System.out.println("이미 등록된 Member다!");
-                path = "redirect:/articleBoard/findArticle";
+                path = "redirect:/api/articleBoard/findArticle";
             }
 
             // 한 번 이상 방문한 Guest일 경우
             else {
                 // 카테고리를 선택하지 않았다면,
                     System.out.println("이미 등록된 Guest다!");
-                    path = "redirect:/articleBoard/findArticle";
+                    path = "redirect:/api/articleBoard/findArticle";
             }
         }
         return path;

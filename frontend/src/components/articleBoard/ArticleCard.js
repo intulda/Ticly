@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/articleBoard/findArticleStyle.css';
+import '../../css/articleBoard/findArticleStyle.css';
 
 const ArticleCard = (props) => {
 
@@ -33,7 +33,7 @@ const ArticleCard = (props) => {
             <div className="card__footer">
                 <p className="text body2 text-color-gray300">
                     <i className="{ (props.applyCount > 100) ? icon_show : icon_link }"></i>
-                    { (props.applyCount > 100) ? `${props.applyCount}명}` : `${props.regDate}` }
+                    { (props.applyCount > 100) ? `${props.applyCount}명` : `${props.regDate}` }
                 </p>
             </div>
         </div>

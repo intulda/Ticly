@@ -2,8 +2,13 @@ import {all, put, takeLatest, call, fork} from 'redux-saga/effects';
 import {ARTICLE_SEARCH_FAILURE, ARTICLE_SEARCH_REQUEST, ARTICLE_SEARCH_SUCCESS} from "../action/acticle";
 import axios from 'axios';
 
+/**
+ * 최신 아티클 불러오기
+ * @param data
+ * @returns {AxiosPromise}
+ */
 function getArticle(data) {
-    return axios('/api/articleBoard/findLatestMyTypeArticle', {
+    return axios('/api/articleBoard/' + (JSON.stringify(data.path)).replace(/\"/g, ""), {
         method: 'POST',
         data: JSON.stringify(data.categories),
         headers: {

@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import ArticleCard from "./ArticleCard";
-import '../css/articleBoard/findArticleStyle.css';
-import Axios from "axios";
+import '../../css/articleBoard/findArticleStyle.css';
 import {useSelector, useDispatch} from "react-redux";
-import {ARTICLE_SEARCH_REQUEST, articleSearchRequestAction} from "../action/acticle";
+import {ARTICLE_SEARCH_REQUEST, articleSearchRequestAction} from "../../action/acticle";
 
-const ArticleCardList = () => {
+const ArticleCardList = (props) => {
 
     const {categories, list} = useSelector((state) => state.articleReducer);
     const dispatch = useDispatch();
 
     const init = () => {
-        dispatch(articleSearchRequestAction(categories));
+        dispatch(articleSearchRequestAction(categories, props.sectionPath));
     }
     useEffect(init, [])
 

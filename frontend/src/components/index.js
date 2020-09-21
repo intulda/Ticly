@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import MenuLayout from "./main/MenuLayout";
-import ArticleCardList from "../articleBoard/ArticleCardList";
+import FindArticle from "./articleBoard/FindArticle";
 import '../css/bootstrap.css';
 import {configureStore} from '../store/configureStore'
 import withReduxSaga from 'redux-saga';
@@ -13,7 +13,7 @@ const Home = () => {
     return (
         <Provider store={store}>
             <MenuLayout>
-                <ArticleCardList/>
+                <FindArticle/>
             </MenuLayout>
         </Provider>
     )

@@ -180,12 +180,18 @@ import LastLearningCard from "./module/lastLearningCard.js";
     }
 
     // 아티클 정보 받아와서 리스트에 담아주는 함수
-    function getArticleInfo(section, path, state) {
+    function getArticleInfo(section, path, state, categories) {
 
         // 관심 분야 데이터를 넘겨 아티클 정보 받아오기
         axios({
             method: 'get',
-            url   : path
+            url   : path,
+
+            //TODO- frontend에서는 어떤 형태로 넘겨주는지 확인하기 
+            // data: JSON.stringify(categories),
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // }
         })
             .then(function (json) {
                 console.log("Receive Success!");
